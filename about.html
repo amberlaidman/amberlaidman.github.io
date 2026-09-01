@@ -1,819 +1,126 @@
-/* ============================
-   AMBER LAIDMAN — PORTFOLIO
-   Shared stylesheet
-   ============================ */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Amber Laidman</title>
+<meta name="description" content="About Amber Laidman: instructional designer and learning strategist working across training design, program management, and frontline enablement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body id="top">
 
-:root {
-  --teal: #3D6B7A;
-  --teal-deep: #2E5461;
-  --white: #FFFFFF;
-  --black: #000000;
-  --cream: #F5F1E8;
-  --mint: #C7E0D0;
-  --grey-body: #333333;
-  --grid-max: 1200px;
-}
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="wordmark">Amber Laidman</a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="about.html" class="current">About</a></li>
+    </ul>
+  </div>
+</nav>
 
-*, *::before, *::after { box-sizing: border-box; }
+<header class="page-header">
+  <div class="section-label">About</div>
+  <h1>A career at the intersection of training design, program management, and frontline enablement.</h1>
+</header>
 
-html { scroll-behavior: smooth; }
+<section class="about-content">
+  <div class="about-body">
+    <p class="lead">
+      Building learning that respects the person on the other end of it.
+    </p>
+    <p>
+      My work in L&amp;D has been shaped by years spent inside frontline operations — retail telecom, contact center operations, and hospitality. That background changes how I design: learning has to earn attention, not demand it, and hold up under real workflow, real time constraints, and real days that don't stop.
+    </p>
+    <p>
+      My work spans instructional design, program management, and learning strategy. I've designed onboarding programs that moved measurable business outcomes, built custom interactive courses from scratch, and led facilitation for over 100 trainees across multiple classroom waves.
+    </p>
+    <p>
+      More recently, I've been teaching myself to code well enough to build interactive learning experiences that don't exist in any standard authoring tool — pH-responsive sliders, custom stepped scenarios, live embedded demos. The gin course on the Work page is the most complete version of that experiment so far.
+    </p>
+    <p>
+      Outside work: photography, travel, running, and figuring out how to make things I couldn't build before.
+    </p>
+  </div>
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
-}
+  <aside class="about-sidebar">
+    <dl>
+      <dt>Specializations</dt>
+      <dd>Instructional design, learning strategy, program management</dd>
 
-body {
-  margin: 0;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 400;
-  background: var(--white);
-  color: var(--black);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+      <dt>Tools</dt>
+      <dd>Articulate 360, iSpring, Canva, Google Workspace, Microsoft 365, Claude, OpenAI, Adobe Creative Cloud, Miro</dd>
 
-a { color: inherit; text-decoration: none; }
-a:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+      <dt>Industries</dt>
+      <dd>Telecom, travel &amp; hospitality, spirits, contact center operations</dd>
 
-img { max-width: 100%; height: auto; display: block; }
+      <dt>Education</dt>
+      <dd>M.S., Learning Design and Technology<br>University of Maryland Global Campus, 2025</dd>
 
-/* ============ NAV ============ */
-.site-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-.nav-inner {
-  max-width: var(--grid-max);
-  margin: 0 auto;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.site-nav .wordmark {
-  font-weight: 600;
-  font-size: 16px;
-  letter-spacing: -0.01em;
-  color: var(--black);
-}
-.site-nav ul {
-  display: flex;
-  gap: 32px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: 15px;
-}
-.site-nav a { position: relative; color: var(--black); font-weight: 400; }
-.site-nav a:hover { color: var(--teal); }
-.site-nav a.current { color: var(--teal); font-weight: 500; }
-.site-nav a.current::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: -6px;
-  height: 2px;
-  background: var(--teal);
-}
+      <dt>Based in</dt>
+      <dd>Maryland, US</dd>
+    </dl>
+  </aside>
+</section>
 
-/* ============ HERO (HOME) ============ */
-.hero {
-  background: var(--teal);
-  color: var(--cream);
-  padding: 120px 40px 100px;
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-}
-.hero-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  width: 100%;
-}
-.hero .meta {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--mint);
-  margin-bottom: 12px;
-}
-.hero h1 {
-  font-size: clamp(48px, 8vw, 104px);
-  font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.03em;
-  margin: 0 0 40px 0;
-}
-.hero .intro {
-  font-size: clamp(18px, 2vw, 22px);
-  max-width: 720px;
-  line-height: 1.55;
-  font-weight: 300;
-  margin: 0 0 48px 0;
-}
-.hero-cta {
-  display: inline-block;
-  color: var(--cream);
-  border-bottom: 2px solid var(--cream);
-  padding-bottom: 4px;
-  font-weight: 500;
-  font-size: 17px;
-  transition: color 200ms, border-color 200ms;
-}
-.hero-cta:hover { color: var(--mint); border-color: var(--mint); }
+<section class="selected-experience">
+  <div class="selected-inner">
+    <div class="section-label">Selected experience</div>
+    <ul class="selected-list">
+      <li>
+        <strong>Field Training Manager for a multi-state territory</strong>
+        <span>Led onboarding for 100+ new hires across multiple classroom waves.</span>
+      </li>
+      <li>
+        <strong>Multi-year program lead — weekly learning objectives program</strong>
+        <span>Led a peer-facing program delivering weekly learning objectives to frontline teams, managing timeline, submissions, and cross-regional team coordination.</span>
+      </li>
+      <li>
+        <strong>Market DEI Council Lead</strong>
+        <span>Championed diversity, equity, and inclusion initiatives across a full sales market — including supply drives, PRIDE Day programming, and inclusive community events.</span>
+      </li>
+      <li>
+        <strong>Wrote and championed the business case for a new training facility</strong>
+        <span>Built the proposal, secured leadership buy-in, and the facility opened six months after approval.</span>
+      </li>
+    </ul>
+  </div>
+</section>
 
-/* ============ SHARED SECTION ============ */
-.section-inner {
-  max-width: var(--grid-max);
-  margin: 0 auto;
-}
-.section-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--teal);
-  margin-bottom: 12px;
-}
-.section-label.light { color: var(--mint); }
-.section-title {
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  margin: 0;
-  max-width: 800px;
-  line-height: 1.1;
-}
-.section-title-alt {
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  margin: 0 0 24px 0;
-  line-height: 1.1;
-}
+<section class="credit-band">
+  <div class="credit-inner">
+    <div class="section-label light">What colleagues say</div>
+    <div class="credit-grid">
+      <div class="credit-card">
+        <blockquote>"A process-improvement powerhouse. The rate of success for our recruits rose from ~76% to ~86%."</blockquote>
+        <div class="attribution">— Bré Durnin<br><span>Sr. L&amp;D Specialist, Outdoorsy</span></div>
+      </div>
+      <div class="credit-card">
+        <blockquote>"Amber creates educational materials that engage and empower learners. Her creative approach has a profound impact."</blockquote>
+        <div class="attribution">— Michael Yowell<br><span>Sr. Manager Training, T-Mobile</span></div>
+      </div>
+      <div class="credit-card">
+        <blockquote>"An idea machine, always thinking two steps ahead. She knows how to connect the vision and lead through inspiration."</blockquote>
+        <div class="attribution">— Nik Pearson<br><span>Sr. Instructional Designer, T-Mobile</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-.link-underline {
-  font-size: 15px;
-  font-weight: 500;
-  border-bottom: 2px solid var(--teal);
-  padding-bottom: 3px;
-  color: var(--black);
-}
-.link-underline:hover { color: var(--teal); }
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>© 2026 Amber Laidman</div>
+    <div class="footer-links">
+      <a href="#top" class="back-to-top">Back to top</a>
+      <a href="mailto:laidman.amber@gmail.com?subject=Portfolio%20inquiry">Email</a>
+      <a href="https://www.linkedin.com/in/amber-laidman/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
 
-.link-underline-light {
-  display: inline-block;
-  color: var(--cream);
-  border-bottom: 2px solid var(--cream);
-  padding-bottom: 3px;
-  font-weight: 500;
-  font-size: 17px;
-  transition: color 200ms, border-color 200ms;
-}
-.link-underline-light:hover { color: var(--mint); border-color: var(--mint); }
-
-/* ============ TEASER WORK (HOME) ============ */
-.teaser-work {
-  padding: 120px 40px;
-  background: var(--white);
-}
-.teaser-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 60px;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-}
-.featured-item {
-  display: block;
-  padding: 32px 0 0 0;
-  border-top: 1px solid var(--black);
-  transition: border-top-width 200ms, border-top-color 200ms, padding-top 200ms;
-}
-.featured-item:hover {
-  padding-top: 24px;
-  border-top-color: var(--teal);
-  border-top-width: 8px;
-}
-.featured-tag {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--teal);
-  background: var(--mint);
-  padding: 4px 10px;
-  border-radius: 100px;
-  display: inline-block;
-  margin-bottom: 20px;
-}
-.featured-item h3 {
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  margin: 0 0 12px 0;
-  line-height: 1.2;
-}
-.featured-item p {
-  font-size: 15px;
-  line-height: 1.5;
-  margin: 0;
-  color: var(--grey-body);
-}
-
-/* ============ TEASER ABOUT (HOME) ============ */
-.teaser-about {
-  padding: 120px 40px;
-  background: var(--teal);
-  color: var(--cream);
-}
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-.about-teaser-body {
-  font-size: 18px;
-  line-height: 1.6;
-  margin: 0 0 32px 0;
-  max-width: 480px;
-}
-
-/* ============ PAGE HEADER (WORK, ABOUT, CASE STUDIES) ============ */
-.page-header {
-  padding: 80px 40px 60px;
-  max-width: var(--grid-max);
-  margin: 0 auto;
-}
-.page-header h1 {
-  font-size: clamp(48px, 7vw, 88px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin: 0 0 40px 0;
-}
-.page-header .lead {
-  font-size: 20px;
-  max-width: 700px;
-  line-height: 1.55;
-  margin: 0;
-  font-weight: 300;
-  color: var(--grey-body);
-}
-
-/* ============ WORK LIST ============ */
-.work-list-section {
-  padding: 40px 40px 120px;
-  max-width: var(--grid-max);
-  margin: 0 auto;
-}
-.work-list { border-top: 1px solid var(--black); }
-.work-item {
-  border-bottom: 1px solid var(--black);
-  padding: 32px 0;
-  display: grid;
-  grid-template-columns: 80px 1fr auto;
-  gap: 32px;
-  align-items: baseline;
-  transition: background 200ms ease, padding-left 200ms ease, padding-right 200ms ease, color 200ms;
-}
-.work-item:hover {
-  background: var(--teal);
-  color: var(--cream);
-  padding-left: 24px;
-  padding-right: 24px;
-}
-.work-item:hover .work-tag { background: var(--cream); color: var(--teal); }
-.work-year { font-size: 14px; font-weight: 400; }
-.work-info h3 {
-  font-size: clamp(22px, 2.5vw, 32px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  margin: 0 0 8px 0;
-  line-height: 1.1;
-}
-.work-info p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.5;
-  max-width: 620px;
-}
-.work-tag {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--teal);
-  background: var(--mint);
-  padding: 6px 12px;
-  border-radius: 100px;
-  white-space: nowrap;
-}
-
-/* ============ ABOUT PAGE ============ */
-.about-content {
-  padding: 20px 40px 100px;
-  max-width: var(--grid-max);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 80px;
-  align-items: start;
-}
-.about-body p {
-  font-size: 19px;
-  line-height: 1.65;
-  margin: 0 0 28px 0;
-  max-width: 640px;
-}
-.about-body p.lead {
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--teal);
-  margin-bottom: 40px;
-}
-.about-sidebar {
-  padding: 32px;
-  background: var(--teal);
-  color: var(--cream);
-  border-radius: 4px;
-}
-.about-sidebar dl { margin: 0; }
-.about-sidebar dt {
-  font-size: 12px;
-  color: var(--mint);
-  margin-bottom: 6px;
-  font-weight: 500;
-}
-.about-sidebar dd {
-  margin: 0 0 24px 0;
-  font-size: 16px;
-  line-height: 1.5;
-}
-.about-sidebar dd:last-child { margin-bottom: 0; }
-
-/* ============ SELECTED EXPERIENCE (ABOUT PAGE) ============ */
-.selected-experience {
-  background: var(--cream);
-  padding: 80px 40px;
-}
-.selected-inner {
-  max-width: var(--grid-max);
-  margin: 0 auto;
-}
-.selected-list {
-  list-style: none;
-  padding: 0;
-  margin: 24px 0 0 0;
-  display: grid;
-  gap: 32px;
-}
-.selected-list li {
-  padding: 24px 0 24px 24px;
-  border-left: 3px solid var(--teal);
-}
-.selected-list strong {
-  display: block;
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 8px;
-  letter-spacing: -0.01em;
-}
-.selected-list span {
-  font-size: 16px;
-  line-height: 1.55;
-  color: var(--grey-body);
-}
-
-/* ============ QUOTE BAND ============ */
-.credit-band {
-  background: var(--teal);
-  color: var(--cream);
-  padding: 100px 40px;
-}
-.credit-inner { max-width: var(--grid-max); margin: 0 auto; }
-.credit-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-top: 32px;
-}
-.credit-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(199,224,208,0.15);
-  padding: 32px;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.credit-card blockquote {
-  margin: 0 0 24px 0;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.45;
-  letter-spacing: -0.005em;
-}
-.credit-card .attribution {
-  margin: 0;
-  font-size: 14px;
-  color: var(--mint);
-  line-height: 1.4;
-}
-.credit-card .attribution span {
-  color: rgba(199,224,208,0.7);
-  font-size: 13px;
-}
-.credit-band blockquote {
-  margin: 0;
-  font-size: clamp(22px, 3vw, 32px);
-  font-weight: 400;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
-  max-width: 900px;
-}
-.credit-band .attribution {
-  margin-top: 24px;
-  font-size: 15px;
-  color: var(--mint);
-}
-
-/* ============ CASE STUDY PAGE ============ */
-.cs-back-link {
-  max-width: var(--grid-max);
-  margin: 0 auto;
-  padding: 24px 40px 0;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--teal);
-}
-.cs-back-link a {
-  border-bottom: 1px solid transparent;
-  padding-bottom: 2px;
-  transition: border-color 200ms;
-}
-.cs-back-link a:hover { border-bottom-color: var(--teal); }
-
-.cs-hero {
-  background: var(--teal);
-  color: var(--cream);
-  padding: 100px 40px 80px;
-}
-.cs-hero-inner { max-width: var(--grid-max); margin: 0 auto; }
-.cs-hero .cs-tag {
-  display: inline-block;
-  background: var(--mint);
-  color: var(--teal);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 100px;
-  margin-bottom: 24px;
-}
-.cs-hero h1 {
-  font-size: clamp(40px, 6vw, 72px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  margin: 0 0 24px 0;
-  max-width: 900px;
-}
-.cs-hero .cs-subhead {
-  font-size: clamp(18px, 2vw, 22px);
-  font-weight: 300;
-  line-height: 1.5;
-  max-width: 720px;
-  margin: 0;
-}
-
-.cs-quickfacts {
-  background: var(--white);
-  border-bottom: 1px solid var(--black);
-  padding: 40px 40px;
-}
-.cs-quickfacts-inner {
-  max-width: var(--grid-max);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-}
-.cs-fact dt {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--teal);
-  margin-bottom: 8px;
-}
-.cs-fact dd {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-/* ============ TABS ============ */
-.cs-tabs {
-  padding: 80px 40px 60px;
-  background: var(--white);
-}
-.cs-tabs-inner {
-  max-width: 900px;
-  margin: 0 auto;
-}
-.cs-tab-nav {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--black);
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
-.cs-tab-btn {
-  background: none;
-  border: none;
-  padding: 16px 24px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--grey-body);
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -1px;
-  transition: color 200ms, border-color 200ms;
-  position: relative;
-}
-.cs-tab-btn:hover { color: var(--teal); }
-.cs-tab-btn.active {
-  color: var(--teal);
-  border-bottom-color: var(--teal);
-}
-.cs-tab-btn:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 2px;
-}
-
-.cs-tab-panel {
-  animation: fadeIn 300ms ease;
-}
-.cs-tab-panel p {
-  font-size: 18px;
-  line-height: 1.7;
-  margin: 0 0 20px 0;
-}
-.cs-tab-panel p:last-child { margin-bottom: 0; }
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cs-tab-panel { animation: none; }
-}
-
-/* ============ KIRKPATRICK MEASUREMENT BLOCK ============ */
-.cs-kirkpatrick {
-  margin-top: 32px;
-  display: grid;
-  gap: 20px;
-}
-.cs-kp-item {
-  padding: 24px 28px;
-  background: var(--cream);
-  border-left: 4px solid var(--teal);
-  border-radius: 0 4px 4px 0;
-}
-.cs-kp-level {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--teal);
-  letter-spacing: 0.02em;
-  margin-bottom: 10px;
-}
-.cs-kp-item p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-/* ============ WIDGETS SECTION ============ */
-.cs-widgets-section {
-  background: var(--cream);
-  padding: 80px 40px 100px;
-}
-.cs-widgets-inner {
-  max-width: 900px;
-  margin: 0 auto;
-}
-.cs-widgets-heading {
-  font-size: clamp(28px, 3.5vw, 40px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--teal);
-  margin: 0 0 16px 0;
-  line-height: 1.1;
-}
-.cs-widgets-lead {
-  font-size: 18px;
-  line-height: 1.55;
-  margin: 0 0 40px 0;
-  max-width: 680px;
-  color: var(--grey-body);
-}
-
-.cs-embed {
-  margin: 0 0 40px;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 4px;
-  overflow: hidden;
-  background: var(--white);
-}
-.cs-embed iframe {
-  width: 100%;
-  min-height: 600px;
-  border: none;
-  display: block;
-  background: var(--white);
-}
-.cs-embed-caption {
-  font-size: 14px;
-  color: var(--grey-body);
-  padding: 16px 20px;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  background: var(--white);
-}
-.cs-embed-caption a { border-bottom: 1px solid var(--teal); color: var(--teal); }
-
-.cs-widget-gallery {
-  padding: 32px;
-  background: var(--white);
-  border-radius: 4px;
-  border: 1px solid rgba(0,0,0,0.06);
-}
-.cs-widget-gallery h3 {
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--teal);
-  margin: 0 0 20px 0;
-}
-.cs-widget-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 24px;
-}
-.cs-widget-list li { font-size: 15px; }
-.cs-widget-list a {
-  color: var(--black);
-  border-bottom: 1px solid transparent;
-  padding-bottom: 2px;
-  transition: color 200ms, border-color 200ms;
-}
-.cs-widget-list a:hover {
-  color: var(--teal);
-  border-bottom-color: var(--teal);
-}
-
-/* ============ EXTERNAL COURSE CTA ============ */
-.cs-external-cta {
-  background: var(--white);
-  padding: 48px 40px;
-  border-radius: 4px;
-  border: 1px solid rgba(0,0,0,0.06);
-  text-align: center;
-}
-.cs-platform-choice {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.cs-external-btn {
-  display: inline-block;
-  background: var(--teal);
-  color: var(--cream);
-  padding: 18px 36px;
-  font-size: 17px;
-  font-weight: 500;
-  border-radius: 4px;
-  transition: background 200ms;
-}
-.cs-external-btn:hover { background: var(--teal-deep); color: var(--cream); }
-.cs-external-btn:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 4px;
-}
-.cs-external-note {
-  font-size: 14px;
-  color: var(--grey-body);
-  margin: 20px 0 0 0;
-}
-
-/* ============ CASE STUDY CTA + NAV RETURN ============ */
-.cs-cta {
-  background: var(--cream);
-  padding: 40px;
-  margin: 40px 0;
-  border-radius: 4px;
-}
-.cs-cta p {
-  margin: 0 0 16px 0;
-  font-size: 16px;
-}
-.cs-cta a {
-  font-weight: 500;
-  border-bottom: 2px solid var(--teal);
-  padding-bottom: 3px;
-}
-.cs-cta a:hover { color: var(--teal); }
-
-.cs-nav-return {
-  border-top: 1px solid var(--black);
-  padding: 40px;
-  max-width: var(--grid-max);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.cs-nav-return a {
-  font-weight: 500;
-  border-bottom: 2px solid var(--teal);
-  padding-bottom: 3px;
-}
-.cs-nav-return a:hover { color: var(--teal); }
-
-/* ============ BACK TO TOP ============ */
-.back-to-top {
-  display: inline-block;
-  font-size: 14px;
-  color: var(--teal);
-  border-bottom: 1px solid var(--teal);
-  padding-bottom: 2px;
-  font-weight: 500;
-}
-.back-to-top:hover { opacity: 0.7; }
-
-/* ============ FOOTER ============ */
-.site-footer {
-  padding: 32px 40px;
-  background: var(--white);
-  border-top: 1px solid var(--black);
-  font-size: 14px;
-}
-.footer-inner {
-  max-width: var(--grid-max);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.footer-links { display: flex; gap: 32px; align-items: center; }
-.footer-links a { border-bottom: 1px solid transparent; padding-bottom: 2px; }
-.footer-links a:hover { border-bottom-color: currentColor; }
-
-/* ============ RESPONSIVE ============ */
-@media (max-width: 900px) {
-  .featured-grid { grid-template-columns: 1fr; gap: 32px; }
-  .about-grid { grid-template-columns: 1fr; gap: 40px; }
-  .about-content { grid-template-columns: 1fr; gap: 40px; }
-  .cs-quickfacts-inner { grid-template-columns: 1fr; gap: 24px; }
-  .cs-widget-list { grid-template-columns: 1fr; }
-  .credit-grid { grid-template-columns: 1fr; gap: 20px; }
-}
-@media (max-width: 768px) {
-  .nav-inner { padding: 16px 24px; }
-  .site-nav ul { gap: 20px; font-size: 14px; }
-  .hero { padding: 80px 24px 60px; min-height: 70vh; }
-  .teaser-work, .teaser-about { padding: 80px 24px; }
-  .page-header { padding: 60px 24px 40px; }
-  .work-list-section { padding: 20px 24px 80px; }
-  .about-content { padding: 0 24px 60px; }
-  .selected-experience { padding: 60px 24px; }
-  .cs-back-link { padding: 20px 24px 0; }
-  .cs-hero { padding: 80px 24px 60px; }
-  .cs-quickfacts { padding: 32px 24px; }
-  .cs-tabs { padding: 60px 24px 40px; }
-  .cs-tab-btn { padding: 12px 16px; font-size: 15px; }
-  .cs-widgets-section { padding: 60px 24px 80px; }
-  .cs-widget-gallery { padding: 24px; }
-  .cs-nav-return { padding: 32px 24px; }
-  .credit-band { padding: 80px 24px; }
-  .site-footer { padding: 24px; }
-  .work-item {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-  .work-item:hover { padding-left: 12px; padding-right: 12px; }
-}
+</body>
+</html>
