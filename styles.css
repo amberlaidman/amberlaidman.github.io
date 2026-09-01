@@ -681,6 +681,71 @@ img { max-width: 100%; height: auto; display: block; }
   border-bottom-color: var(--teal);
 }
 
+/* ============ INTERACTIVE WIDGET VIEWER ============ */
+.cs-widget-viewer {
+  background: var(--white);
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.cs-widget-viewer-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 16px 20px;
+  background: var(--cream);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.cs-widget-viewer-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--grey-body);
+  cursor: pointer;
+  border-radius: 100px;
+  transition: background 200ms, color 200ms, border-color 200ms;
+}
+.cs-widget-viewer-tab:hover {
+  color: var(--teal);
+  background: rgba(61, 107, 122, 0.06);
+}
+.cs-widget-viewer-tab.active {
+  background: var(--teal);
+  color: var(--cream);
+}
+.cs-widget-viewer-tab:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+.cs-widget-viewer-frame {
+  background: var(--white);
+}
+.cs-widget-viewer-frame iframe {
+  width: 100%;
+  min-height: 600px;
+  border: none;
+  display: block;
+  background: var(--white);
+}
+.cs-widget-viewer-caption {
+  font-size: 14px;
+  color: var(--grey-body);
+  padding: 16px 20px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  background: var(--white);
+}
+.cs-widget-viewer-caption a {
+  border-bottom: 1px solid var(--teal);
+  color: var(--teal);
+  padding-bottom: 1px;
+}
+.cs-widget-viewer-caption a:hover {
+  opacity: 0.75;
+}
+
 /* ============ EXTERNAL COURSE CTA ============ */
 .cs-external-cta {
   background: var(--white);
