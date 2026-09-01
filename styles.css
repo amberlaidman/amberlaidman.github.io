@@ -511,6 +511,31 @@ img { max-width: 100%; height: auto; display: block; }
   .cs-tab-panel { animation: none; }
 }
 
+/* ============ KIRKPATRICK MEASUREMENT BLOCK ============ */
+.cs-kirkpatrick {
+  margin-top: 32px;
+  display: grid;
+  gap: 20px;
+}
+.cs-kp-item {
+  padding: 24px 28px;
+  background: var(--cream);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 4px 4px 0;
+}
+.cs-kp-level {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+.cs-kp-item p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
 /* ============ WIDGETS SECTION ============ */
 .cs-widgets-section {
   background: var(--cream);
