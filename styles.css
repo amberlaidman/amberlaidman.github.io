@@ -616,6 +616,35 @@ img { max-width: 100%; height: auto; display: block; }
   border-bottom-color: var(--teal);
 }
 
+/* ============ EXTERNAL COURSE CTA ============ */
+.cs-external-cta {
+  background: var(--white);
+  padding: 48px 40px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.06);
+  text-align: center;
+}
+.cs-external-btn {
+  display: inline-block;
+  background: var(--teal);
+  color: var(--cream);
+  padding: 18px 36px;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: background 200ms;
+}
+.cs-external-btn:hover { background: var(--teal-deep); color: var(--cream); }
+.cs-external-btn:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 4px;
+}
+.cs-external-note {
+  font-size: 14px;
+  color: var(--grey-body);
+  margin: 20px 0 0 0;
+}
+
 /* ============ CASE STUDY CTA + NAV RETURN ============ */
 .cs-cta {
   background: var(--cream);
