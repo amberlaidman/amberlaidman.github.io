@@ -444,6 +444,52 @@ img { max-width: 100%; height: auto; display: block; }
   color: var(--mint);
 }
 
+/* ============ PROGRAM HIGHLIGHTS / SNAPSHOTS ============ */
+.snapshots-intro {
+  font-size: 17px;
+  color: var(--mint);
+  margin: 8px 0 32px 0;
+  max-width: 720px;
+  line-height: 1.5;
+}
+.snapshot-card {
+  display: flex;
+  flex-direction: column;
+}
+.snapshot-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+.snapshot-meta {
+  font-size: 13px;
+  color: var(--mint);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+.snapshot-result {
+  font-size: 15px;
+  color: var(--cream);
+  font-weight: 500;
+  padding: 12px 16px;
+  background: rgba(199,224,208,0.08);
+  border-left: 3px solid var(--mint);
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+.snapshot-body {
+  font-size: 14px;
+  color: var(--cream);
+  opacity: 0.85;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 300;
+}
+
 /* ============ CASE STUDY PAGE ============ */
 .cs-back-link {
   max-width: var(--grid-max);
