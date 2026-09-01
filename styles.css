@@ -398,6 +398,38 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 100px 40px;
 }
 .credit-inner { max-width: var(--grid-max); margin: 0 auto; }
+.credit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 32px;
+}
+.credit-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(199,224,208,0.15);
+  padding: 32px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.credit-card blockquote {
+  margin: 0 0 24px 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+.credit-card .attribution {
+  margin: 0;
+  font-size: 14px;
+  color: var(--mint);
+  line-height: 1.4;
+}
+.credit-card .attribution span {
+  color: rgba(199,224,208,0.7);
+  font-size: 13px;
+}
 .credit-band blockquote {
   margin: 0;
   font-size: clamp(22px, 3vw, 32px);
@@ -758,6 +790,7 @@ img { max-width: 100%; height: auto; display: block; }
   .about-content { grid-template-columns: 1fr; gap: 40px; }
   .cs-quickfacts-inner { grid-template-columns: 1fr; gap: 24px; }
   .cs-widget-list { grid-template-columns: 1fr; }
+  .credit-grid { grid-template-columns: 1fr; gap: 20px; }
 }
 @media (max-width: 768px) {
   .nav-inner { padding: 16px 24px; }
