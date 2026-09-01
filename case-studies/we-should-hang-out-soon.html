@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We Should Hang Out Soon — Amber Laidman</title>
+<meta name="description" content="Case study: Award-winning scrollable course about why adult friendships fade. iSpring Course Creation Contest 2026 winner.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body id="top">
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="wordmark">Amber Laidman</a>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../work.html" class="current">Work</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="cs-back-link">
+  <a href="../work.html">← Back to Work</a>
+</div>
+
+<header class="cs-hero">
+  <div class="cs-hero-inner">
+    <span class="cs-tag">Contest Winner</span>
+    <h1>Why We Never Actually Hang Out — And What to Do About It</h1>
+    <p class="cs-subhead">A scrollable behavioral-science course about the cognitive patterns that quietly kill adult friendships — built for the iSpring Course Creation Contest 2026 and scored a perfect 100.</p>
+  </div>
+</header>
+
+<section class="cs-quickfacts">
+  <div class="cs-quickfacts-inner">
+    <dl class="cs-fact">
+      <dt>Role</dt>
+      <dd>Sole Instructional &amp; Visual Designer</dd>
+    </dl>
+    <dl class="cs-fact">
+      <dt>Timeline</dt>
+      <dd>iSpring Course Creation Contest 2026 (~12 min course, 6 chapters)</dd>
+    </dl>
+    <dl class="cs-fact">
+      <dt>Impact</dt>
+      <dd>Winner · Scored 100% · 1 of 65 scrollable entries · Best Visual Experience nomination · 1,501 participants across 103 countries</dd>
+    </dl>
+  </div>
+</section>
+
+<div class="cs-tabs">
+  <div class="cs-tabs-inner">
+    <div class="cs-tab-nav" role="tablist" aria-label="Case study sections">
+      <button class="cs-tab-btn active" role="tab" aria-selected="true" aria-controls="tab-why" id="btn-why" data-target="tab-why">The Why</button>
+      <button class="cs-tab-btn" role="tab" aria-selected="false" aria-controls="tab-challenge" id="btn-challenge" data-target="tab-challenge">Design Challenge</button>
+      <button class="cs-tab-btn" role="tab" aria-selected="false" aria-controls="tab-reflection" id="btn-reflection" data-target="tab-reflection">Reflection</button>
+    </div>
+
+    <div class="cs-tab-panels">
+
+      <div class="cs-tab-panel active" role="tabpanel" id="tab-why" aria-labelledby="btn-why">
+        <p>"We should hang out soon." Most people say it. Most people mean it. Most people never follow through.</p>
+        <p>That gap isn't a character flaw. It's a set of well-documented cognitive patterns — the Planning Fallacy, Optimism Bias, the Intention-Action Gap, Temporal Discounting — that quietly work against good intentions. Most people have never heard of any of them. Half of American adults reported feeling lonely before COVID, many with three or fewer close friends (Office of the Surgeon General, 2023). Research on intention-behavior gaps shows more than half of strong intentions never become action (Sheeran, 2002). Not because people don't care — because their brains aren't wired for the follow-through part.</p>
+        <p>The iSpring Course Creation Contest 2026 asked designers to build something that could actually change learner behavior in under 15 minutes. I wanted to name the patterns behind a near-universal human experience, make them feel recognizable rather than clinical, and give people one small tool they could actually use before they closed the tab.</p>
+      </div>
+
+      <div class="cs-tab-panel" role="tabpanel" id="tab-challenge" aria-labelledby="btn-challenge" hidden>
+        <p>The central tension was awareness vs. behavior change. Teach the psychology with real citations, but keep it personal and warm enough that someone would want to follow through. Backward design from the intended behavior (a specific if-then plan for one real relationship), action mapping to strip out anything that didn't move learners toward that outcome, and implementation intention research (Gollwitzer, 1999) as the spine.</p>
+        <p>Six chapters, 48 screens, roughly 12 minutes. Persona flip cards in Chapter 1 that pay off with a callback in Chapter 6. Concept teaching grounded in named cognitive science — Kahneman &amp; Tversky, Weinstein, Ainslie, Hall — with citations woven into the visual design instead of appended as footnotes. A five-question knowledge check to reinforce recall. An if-then planning widget in Chapter 5 that asks learners to type a real commitment while it's fresh — the strongest action moment in the course. A three-slider reflection at the end that measures self-reported confidence and intent to act.</p>
+        <p>Built end-to-end in iSpring Suite as a scrollable course. The interactive widgets — persona quiz, if-then planner, reflection sliders — went beyond iSpring's native capabilities, so I vibe coded them from scratch using Claude and deployed them as embedded HTML widgets hosted on GitHub Pages. Accessible versions were built alongside every interactive component. Full source rebuild reference for all 48 screens captured before iSpring access ended, so the course can be rebuilt in Rise incorporating judge feedback on measurable objectives and visual consistency.</p>
+      </div>
+
+      <div class="cs-tab-panel" role="tabpanel" id="tab-reflection" aria-labelledby="btn-reflection" hidden>
+        <p>The course was named a winner in the iSpring Course Creation Contest 2026, scored 100% by the judging panel, selected as 1 of 65 scrollable-category entries, and nominated for Best Visual Experience. The contest drew 1,501 participants across 103 countries.</p>
+        <p>Judge feedback highlighted the strength of the concept, the pacing, and the behavioral-change payoff — and flagged two areas to sharpen: making the learning objectives more measurable (revised for the Rise rebuild), and consolidating the illustration system, which drifted across multiple visual styles over 48 screens. Both fair. Both actionable.</p>
+        <p>The biggest craft lesson: for a short scrollable course, the interactive moments have to earn their space. Every widget in the course exists because a passive equivalent wouldn't have moved the learner toward the behavior change. The if-then planner is the whole course's payoff — if it isn't there, the previous 11 minutes are just interesting reading.</p>
+        <p>What I'd do differently: commit to a single illustration system from screen one. Mixing styles felt like variety in the moment. In review, it read as inconsistency. The Rise rebuild will use one system throughout.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<section class="cs-widgets-section">
+  <div class="cs-widgets-inner">
+    <h2 class="cs-widgets-heading">About the course</h2>
+    <p class="cs-widgets-lead">The contest version was built in iSpring Suite as a scrollable behavioral-science course. Access to the original build ended when the contest closed. A rebuild in Articulate Rise is underway, incorporating judge feedback on measurable objectives and visual consistency.</p>
+    <p class="cs-widgets-lead">Custom-built interactive widgets — persona quiz, if-then planning tool, and reflection sliders — are live and accessible.</p>
+
+    <div class="cs-external-cta">
+      <a href="https://alaidma12.github.io/weshouldhangout/ifthenplanning/" target="_blank" rel="noopener" class="cs-external-btn">Try the if-then planning widget →</a>
+      <p class="cs-external-note">Opens in a new tab. Custom-coded widget, keyboard accessible, no data submitted or stored.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cs-nav-return">
+  <a href="ice-scream.html">← Previous case study: Ice SCREAM</a>
+  <a href="../work.html">All work →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>© 2026 Amber Laidman</div>
+    <div class="footer-links">
+      <a href="#top" class="back-to-top">Back to top</a>
+      <a href="mailto:Laidman.Amber@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/amber-laidman/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    const tabButtons = document.querySelectorAll('.cs-tab-btn');
+    const tabPanels = document.querySelectorAll('.cs-tab-panel');
+
+    function activateTab(targetId) {
+      tabButtons.forEach(btn => {
+        const isTarget = btn.dataset.target === targetId;
+        btn.classList.toggle('active', isTarget);
+        btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+      });
+      tabPanels.forEach(panel => {
+        const isTarget = panel.id === targetId;
+        panel.classList.toggle('active', isTarget);
+        if (isTarget) {
+          panel.removeAttribute('hidden');
+        } else {
+          panel.setAttribute('hidden', '');
+        }
+      });
+    }
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => activateTab(btn.dataset.target));
+      btn.addEventListener('keydown', (e) => {
+        const buttons = Array.from(tabButtons);
+        const currentIndex = buttons.indexOf(btn);
+        let newIndex;
+        if (e.key === 'ArrowRight') {
+          newIndex = (currentIndex + 1) % buttons.length;
+        } else if (e.key === 'ArrowLeft') {
+          newIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+        } else {
+          return;
+        }
+        e.preventDefault();
+        buttons[newIndex].focus();
+        activateTab(buttons[newIndex].dataset.target);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
