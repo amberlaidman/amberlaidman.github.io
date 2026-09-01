@@ -657,6 +657,12 @@ img { max-width: 100%; height: auto; display: block; }
   border: 1px solid rgba(0,0,0,0.06);
   text-align: center;
 }
+.cs-platform-choice {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 .cs-external-btn {
   display: inline-block;
   background: var(--teal);
