@@ -95,24 +95,24 @@
       <p class="cs-external-note">Opens in a new tab. Hosted on iSpring — best experienced on desktop.</p>
     </div>
 
-    <h2 class="cs-widgets-heading" style="margin-top: 60px;">See the widgets in action</h2>
-    <p class="cs-widgets-lead">Custom-built interactive widgets from the course are standalone and accessible. Start with the if-then planner — the moment intention becomes a specific commitment.</p>
+    <h2 class="cs-widgets-heading" style="margin-top: 60px;">Try the widgets</h2>
+    <p class="cs-widgets-lead">Every custom interactive widget from the course is standalone and accessible. Select any widget below to load it directly in the frame.</p>
 
-    <div class="cs-embed">
-      <iframe src="https://alaidma12.github.io/weshouldhangout/ifthenplanning/" title="If-Then Planning Widget — live widget from We Should Hang Out Soon course" loading="lazy"></iframe>
-      <div class="cs-embed-caption">If-Then Planning Widget — the strongest action moment in the course. Interact directly, or <a href="https://alaidma12.github.io/weshouldhangout/ifthenplanning/" target="_blank" rel="noopener">open in a new tab</a>.</div>
-    </div>
-
-    <div class="cs-widget-gallery">
-      <h3>Explore every widget from the course</h3>
-      <ul class="cs-widget-list">
-        <li><a href="https://alaidma12.github.io/weshouldhangout/ifthenplanning/" target="_blank" rel="noopener">If-Then Planning Widget</a></li>
-        <li><a href="https://alaidma12.github.io/weshouldhangout/personaquizforplanning/" target="_blank" rel="noopener">Persona Quiz</a></li>
-        <li><a href="https://alaidma12.github.io/weshouldhangout/bythenumbersplanning/" target="_blank" rel="noopener">By the Numbers</a></li>
-        <li><a href="https://alaidma12.github.io/weshouldhangout/reflectionpromptplanning/" target="_blank" rel="noopener">Reflection Prompt</a></li>
-        <li><a href="https://alaidma12.github.io/weshouldhangout/chapter6reflectionplanning/" target="_blank" rel="noopener">Chapter 6 Reflection Sliders</a></li>
-        <li><a href="https://alaidma12.github.io/weshouldhangout/about-author/" target="_blank" rel="noopener">About the Author</a></li>
-      </ul>
+    <div class="cs-widget-viewer">
+      <div class="cs-widget-viewer-tabs" role="tablist" aria-label="Course widgets">
+        <button class="cs-widget-viewer-tab active" role="tab" aria-selected="true" data-widget-url="https://alaidma12.github.io/weshouldhangout/ifthenplanning/" data-widget-name="If-Then Planning Widget">If-Then Planner</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/weshouldhangout/personaquizforplanning/" data-widget-name="Persona Quiz">Persona Quiz</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/weshouldhangout/bythenumbersplanning/" data-widget-name="By the Numbers">By the Numbers</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/weshouldhangout/reflectionpromptplanning/" data-widget-name="Reflection Prompt">Reflection Prompt</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/weshouldhangout/chapter6reflectionplanning/" data-widget-name="Chapter 6 Reflection Sliders">Reflection Sliders</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/weshouldhangout/about-author/" data-widget-name="About the Author">About the Author</button>
+      </div>
+      <div class="cs-widget-viewer-frame">
+        <iframe id="widget-viewer-iframe" src="https://alaidma12.github.io/weshouldhangout/ifthenplanning/" title="If-Then Planning Widget — live widget from We Should Hang Out Soon course" loading="lazy"></iframe>
+      </div>
+      <div class="cs-widget-viewer-caption">
+        <span id="widget-viewer-name">If-Then Planning Widget</span> — <a id="widget-viewer-external" href="https://alaidma12.github.io/weshouldhangout/ifthenplanning/" target="_blank" rel="noopener">Open in a new tab ↗</a>
+      </div>
     </div>
   </div>
 </section>
@@ -127,7 +127,7 @@
     <div>© 2026 Amber Laidman</div>
     <div class="footer-links">
       <a href="#top" class="back-to-top">Back to top</a>
-      <a href="mailto:Laidman.Amber@gmail.com">Email</a>
+      <a href="mailto:laidman.amber@gmail.com?subject=Portfolio%20inquiry">Email</a>
       <a href="https://www.linkedin.com/in/amber-laidman/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </div>
@@ -171,6 +171,33 @@
         e.preventDefault();
         buttons[newIndex].focus();
         activateTab(buttons[newIndex].dataset.target);
+      });
+    });
+  })();
+
+  // Widget viewer functionality
+  (function() {
+    const widgetTabs = document.querySelectorAll('.cs-widget-viewer-tab');
+    const iframe = document.getElementById('widget-viewer-iframe');
+    const nameSpan = document.getElementById('widget-viewer-name');
+    const externalLink = document.getElementById('widget-viewer-external');
+
+    widgetTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const url = tab.dataset.widgetUrl;
+        const name = tab.dataset.widgetName;
+
+        widgetTabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        iframe.src = url;
+        iframe.title = name + ' — live widget from We Should Hang Out Soon course';
+        nameSpan.textContent = name;
+        externalLink.href = url;
       });
     });
   })();
