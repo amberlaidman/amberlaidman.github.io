@@ -52,51 +52,65 @@
   </div>
 </section>
 
-<article class="cs-content">
-  <div class="cs-section">
-    <h2>Pedagogical Goal</h2>
-    <p>Most product education in the spirits industry is brand-led — start with the bottle, work backward, position one label over another. I wanted to build something different: category education that gives beverage sales professionals enough genuine depth in gin that the understanding itself becomes the sales tool. Selling without pushing. Equipping rather than persuading. The audience: people selling gin into on-premise accounts who know the industry but not the category in depth.</p>
-  </div>
+<div class="cs-tabs">
+  <div class="cs-tabs-inner">
+    <div class="cs-tab-nav" role="tablist" aria-label="Case study sections">
+      <button class="cs-tab-btn active" role="tab" aria-selected="true" aria-controls="tab-why" id="btn-why" data-target="tab-why">The Why</button>
+      <button class="cs-tab-btn" role="tab" aria-selected="false" aria-controls="tab-challenge" id="btn-challenge" data-target="tab-challenge">Design Challenge</button>
+      <button class="cs-tab-btn" role="tab" aria-selected="false" aria-controls="tab-reflection" id="btn-reflection" data-target="tab-reflection">Reflection</button>
+    </div>
 
-  <div class="cs-section">
-    <h2>Design Challenge</h2>
-    <p>A typical authoring tool like Articulate Rise gives you a fixed interaction library — accordions, flashcards, labeled graphics, standard knowledge checks. Useful, but none of them could carry the moments this course needed: a pH-responsive colour shift demonstrating butterfly pea flower chemistry, a botanical specimen journal styled as a field naturalist's notebook, a client-conversation stepper with revealed coaching moves, a history timeline with a conditional callout debunking a 350-year-old myth. The instructional design called for interactions that didn't exist in any standard library. The challenge wasn't whether to build custom — it was whether a solo designer with zero prior coding experience could pull it off.</p>
-  </div>
+    <div class="cs-tab-panels">
 
-  <div class="cs-section">
-    <h2>Solution</h2>
-    <p>Six chapters, ~15 minutes, structured around a naturalist's field-journal metaphor — Latin chapter subtitles, botanical illustrations, specimen cards, archive-gold typography on deep green. Backward design drove the structure (learning objectives before content), Bloom's leveled the knowledge checks, action mapping shaped the final two chapters into real client scenarios, and the Made to Stick SUCCESs framework structured the history chapter around surprise and concrete story.</p>
-    <p>Twelve custom widgets were vibe-coded in plain-language conversation with Claude, refined visually, deployed to GitHub Pages, and embedded via iframe — letting the design lead the technology rather than the reverse. The full design system was documented in a reference sheet that doubles as a job aid, with a WCAG AA-compliant palette and intentional typography pairing (IM Fell English for headings, Inter for body). The vibe coding approach proved transferable: I taught it to a colleague before the course was finished.</p>
-  </div>
+      <div class="cs-tab-panel active" role="tabpanel" id="tab-why" aria-labelledby="btn-why">
+        <p>Most product education in the spirits industry is brand-led — start with the bottle, work backward, position one label over another. I wanted to build something different: category education that gives beverage sales professionals enough genuine depth in gin that the understanding itself becomes the sales tool. Selling without pushing. Equipping rather than persuading.</p>
+        <p>The audience: people selling gin into on-premise accounts who know the industry but not the category in depth.</p>
+      </div>
 
-  <div class="cs-embed">
-    <iframe src="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" title="Butterfly Pea pH Slider — live widget from The Genus Gin course" loading="lazy"></iframe>
-    <div class="cs-embed-caption">Butterfly Pea pH Slider — one of twelve custom widgets built for this course. Interact directly, or <a href="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" target="_blank" rel="noopener">open in a new tab</a>.</div>
-  </div>
+      <div class="cs-tab-panel" role="tabpanel" id="tab-challenge" aria-labelledby="btn-challenge" hidden>
+        <p>A typical authoring tool like Articulate Rise gives you a fixed interaction library — accordions, flashcards, labeled graphics, standard knowledge checks. Useful, but none of them could carry the moments this course needed: a pH-responsive colour shift demonstrating butterfly pea flower chemistry, a botanical specimen journal styled as a field naturalist's notebook, a client-conversation stepper with revealed coaching moves, a history timeline with a conditional callout debunking a 350-year-old myth.</p>
+        <p>The instructional design called for interactions that didn't exist in any standard library. The challenge wasn't whether to build custom — it was whether a solo designer with zero prior coding experience could pull it off.</p>
+        <p>Six chapters, ~15 minutes, structured around a naturalist's field-journal metaphor — Latin chapter subtitles, botanical illustrations, specimen cards, archive-gold typography on deep green. Backward design drove the structure (learning objectives before content), Bloom's leveled the knowledge checks, action mapping shaped the final two chapters into real client scenarios, and the Made to Stick SUCCESs framework structured the history chapter around surprise and concrete story.</p>
+        <p>Twelve custom widgets were vibe-coded in plain-language conversation with Claude, refined visually, deployed to GitHub Pages, and embedded via iframe — letting the design lead the technology rather than the reverse. The full design system was documented in a reference sheet that doubles as a job aid, with a WCAG AA-compliant palette and intentional typography pairing (IM Fell English for headings, Inter for body). The vibe coding approach proved transferable: I taught it to a colleague before the course was finished.</p>
+      </div>
 
-  <div class="cs-widget-gallery">
-    <h3>Explore every widget from the course</h3>
-    <ul class="cs-widget-list">
-      <li><a href="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" target="_blank" rel="noopener">Butterfly Pea pH Slider</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/botanical-journal-v9.html" target="_blank" rel="noopener">Botanical Specimen Journal</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/production-methods-v3.html" target="_blank" rel="noopener">Production Methods Flow</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/client-scenarios-stepper.html" target="_blank" rel="noopener">Client Conversation Stepper</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/gin-history-timeline.html" target="_blank" rel="noopener">Gin History Timeline</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/gin-styles-cards.html" target="_blank" rel="noopener">Gin Styles Reference</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/base-spirit-grains.html" target="_blank" rel="noopener">Base Spirit &amp; Grains</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/gin-design-exercise.html" target="_blank" rel="noopener">Design Your Own Gin</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/cocktails-widget.html" target="_blank" rel="noopener">Classic Cocktails</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/chapter1-reflection.html" target="_blank" rel="noopener">Chapter 1 Reflection</a></li>
-      <li><a href="https://alaidma12.github.io/Gin-Course/about-author-gin.html" target="_blank" rel="noopener">About the Author</a></li>
-    </ul>
-  </div>
+      <div class="cs-tab-panel" role="tabpanel" id="tab-reflection" aria-labelledby="btn-reflection" hidden>
+        <p>Building this confirmed that vibe coding rewards patience and attention to detail — the widgets that worked best were the ones I refused to ship until every interaction flowed cleanly. I'd still build content and widgets in parallel; seeing what a learner will actually experience is how I know if the design is working. What I'm testing next is whether the same approach holds up in other tools beyond Rise — Claude Design, Mindsmith, and Chameleon Creator.</p>
+        <p>The course was piloted by my partner and friends.</p>
+      </div>
 
-  <div class="cs-section">
-    <h2>Reflection</h2>
-    <p>Building this confirmed that vibe coding rewards patience and attention to detail — the widgets that worked best were the ones I refused to ship until every interaction flowed cleanly. I'd still build content and widgets in parallel; seeing what a learner will actually experience is how I know if the design is working. What I'm testing next is whether the same approach holds up in other tools beyond Rise — Claude Design, Mindsmith, and Chameleon Creator.</p>
-    <p>The course was piloted by my partner and friends.</p>
+    </div>
   </div>
-</article>
+</div>
+
+<section class="cs-widgets-section">
+  <div class="cs-widgets-inner">
+    <h2 class="cs-widgets-heading">See the widgets in action</h2>
+    <p class="cs-widgets-lead">Every custom widget from the course is live and interactive. Start with the pH slider — the moment butterfly pea chemistry becomes a demonstration instead of a description.</p>
+
+    <div class="cs-embed">
+      <iframe src="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" title="Butterfly Pea pH Slider — live widget from The Genus Gin course" loading="lazy"></iframe>
+      <div class="cs-embed-caption">Butterfly Pea pH Slider — one of twelve custom widgets built for this course. Interact directly, or <a href="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" target="_blank" rel="noopener">open in a new tab</a>.</div>
+    </div>
+
+    <div class="cs-widget-gallery">
+      <h3>Explore every widget from the course</h3>
+      <ul class="cs-widget-list">
+        <li><a href="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" target="_blank" rel="noopener">Butterfly Pea pH Slider</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/botanical-journal-v9.html" target="_blank" rel="noopener">Botanical Specimen Journal</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/production-methods-v3.html" target="_blank" rel="noopener">Production Methods Flow</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/client-scenarios-stepper.html" target="_blank" rel="noopener">Client Conversation Stepper</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/gin-history-timeline.html" target="_blank" rel="noopener">Gin History Timeline</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/gin-styles-cards.html" target="_blank" rel="noopener">Gin Styles Reference</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/base-spirit-grains.html" target="_blank" rel="noopener">Base Spirit &amp; Grains</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/gin-design-exercise.html" target="_blank" rel="noopener">Design Your Own Gin</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/cocktails-widget.html" target="_blank" rel="noopener">Classic Cocktails</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/chapter1-reflection.html" target="_blank" rel="noopener">Chapter 1 Reflection</a></li>
+        <li><a href="https://alaidma12.github.io/Gin-Course/about-author-gin.html" target="_blank" rel="noopener">About the Author</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <div class="cs-nav-return">
   <a href="../work.html">← All work</a>
@@ -113,6 +127,49 @@
     </div>
   </div>
 </footer>
+
+<script>
+  (function() {
+    const tabButtons = document.querySelectorAll('.cs-tab-btn');
+    const tabPanels = document.querySelectorAll('.cs-tab-panel');
+
+    function activateTab(targetId) {
+      tabButtons.forEach(btn => {
+        const isTarget = btn.dataset.target === targetId;
+        btn.classList.toggle('active', isTarget);
+        btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+      });
+      tabPanels.forEach(panel => {
+        const isTarget = panel.id === targetId;
+        panel.classList.toggle('active', isTarget);
+        if (isTarget) {
+          panel.removeAttribute('hidden');
+        } else {
+          panel.setAttribute('hidden', '');
+        }
+      });
+    }
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => activateTab(btn.dataset.target));
+      btn.addEventListener('keydown', (e) => {
+        const buttons = Array.from(tabButtons);
+        const currentIndex = buttons.indexOf(btn);
+        let newIndex;
+        if (e.key === 'ArrowRight') {
+          newIndex = (currentIndex + 1) % buttons.length;
+        } else if (e.key === 'ArrowLeft') {
+          newIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+        } else {
+          return;
+        }
+        e.preventDefault();
+        buttons[newIndex].focus();
+        activateTab(buttons[newIndex].dataset.target);
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>
