@@ -474,7 +474,7 @@ img { max-width: 100%; height: auto; display: block; }
 .cs-section p:last-child { margin-bottom: 0; }
 
 .cs-embed {
-  margin: 60px 0;
+  margin: 60px 0 40px;
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 4px;
   overflow: hidden;
@@ -482,9 +482,10 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .cs-embed iframe {
   width: 100%;
-  min-height: 500px;
+  min-height: 600px;
   border: none;
   display: block;
+  background: var(--white);
 }
 .cs-embed-caption {
   font-size: 14px;
@@ -492,6 +493,39 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 16px 20px;
   border-top: 1px solid rgba(0,0,0,0.1);
   background: var(--white);
+}
+.cs-embed-caption a { border-bottom: 1px solid var(--teal); color: var(--teal); }
+
+.cs-widget-gallery {
+  margin: 40px 0 60px;
+  padding: 32px;
+  background: var(--cream);
+  border-radius: 4px;
+}
+.cs-widget-gallery h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--teal);
+  margin: 0 0 20px 0;
+}
+.cs-widget-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+.cs-widget-list li { font-size: 15px; }
+.cs-widget-list a {
+  color: var(--black);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: color 200ms, border-color 200ms;
+}
+.cs-widget-list a:hover {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
 }
 
 .cs-cta {
@@ -566,6 +600,7 @@ img { max-width: 100%; height: auto; display: block; }
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .about-content { grid-template-columns: 1fr; gap: 40px; }
   .cs-quickfacts-inner { grid-template-columns: 1fr; gap: 24px; }
+  .cs-widget-list { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   .nav-inner { padding: 16px 24px; }
@@ -579,6 +614,7 @@ img { max-width: 100%; height: auto; display: block; }
   .cs-hero { padding: 80px 24px 60px; }
   .cs-quickfacts { padding: 32px 24px; }
   .cs-content { padding: 60px 24px; }
+  .cs-widget-gallery { padding: 24px; }
   .cs-nav-return { padding: 32px 24px; }
   .credit-band { padding: 80px 24px; }
   .site-footer { padding: 24px; }
