@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Genus Gin — Amber Laidman</title>
-<meta name="description" content="Case study: A personal gin course built for my partner, with 12 custom interactive widgets vibe-coded from scratch.">
+<meta name="description" content="Case study: A personal gin course built solo with 12 custom interactive widgets vibe coded from scratch.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -47,7 +47,7 @@
     </dl>
     <dl class="cs-fact">
       <dt>Impact</dt>
-      <dd>Self-taught vibe coding, transferred to colleague</dd>
+      <dd>Self-taught vibe coding · transferred to colleague</dd>
     </dl>
   </div>
 </section>
@@ -63,21 +63,22 @@
     <div class="cs-tab-panels">
 
       <div class="cs-tab-panel active" role="tabpanel" id="tab-why" aria-labelledby="btn-why">
-        <p>My partner enjoys gin. Really enjoys it — the history, the botanicals, the way a good G&amp;T comes together. I wanted to build them something that went deeper than the label on the bottle: a proper walk through the category, the production, the science, and the culture behind what they were drinking.</p>
-        <p>The second reason was more selfish. A colleague had introduced me to vibe coding — building custom interactive elements through plain-language conversation with Claude — and I wanted to prove it out on a real project. Something with actual stakes: a real learner, real subject matter, and a design that wouldn't compromise on what the learning called for.</p>
-        <p>The audience: an audience of one. Someone who loves the category and deserves a course built at the depth they'd actually enjoy.</p>
+        <p>My partner enjoys gin. Not casually — genuinely. But every "gin explainer" resource we found was either a two-paragraph blog post that read like ad copy, or a hospitality-industry course with a $400 price tag and no interactivity. Nothing in between. Nothing built for one curious person who wanted to actually understand what makes gin gin.</p>
+        <p>So I built one. Ten weeks, six chapters, twelve custom interactive widgets, one target audience of one.</p>
+        <p>The parallel goal was more ambitious: could I teach myself to code well enough to build interactive learning experiences that don't exist in any standard authoring tool? Rise, Storyline, and iSpring all have preset interactions — sliders, flip cards, drag-and-drop — but nothing that lets you build, say, a pH-responsive butterfly pea flower demonstration where the color actually changes based on liquid you pick. That specific interaction didn't exist. I wanted to see if I could make it exist.</p>
       </div>
 
       <div class="cs-tab-panel" role="tabpanel" id="tab-challenge" aria-labelledby="btn-challenge" hidden>
-        <p>A typical authoring tool like Articulate Rise gives you a fixed interaction library — accordions, flashcards, labeled graphics, standard knowledge checks. Useful, but none of them could carry the moments this course needed: a pH-responsive colour shift demonstrating butterfly pea flower chemistry, a botanical specimen journal styled as a field naturalist's notebook, a client-conversation stepper with revealed coaching moves, a history timeline with a conditional callout debunking a 350-year-old myth.</p>
-        <p>The instructional design called for interactions that didn't exist in any standard library. The challenge wasn't whether to build custom — it was whether a solo designer with zero prior coding experience could pull it off.</p>
-        <p>Six chapters, ~15 minutes, structured around a naturalist's field-journal metaphor — Latin chapter subtitles, botanical illustrations, specimen cards, archive-gold typography on deep green. Backward design drove the structure (learning objectives before content), Bloom's leveled the knowledge checks, action mapping shaped the final two chapters into real scenarios, and the Made to Stick SUCCESs framework structured the history chapter around surprise and concrete story.</p>
-        <p>Twelve custom widgets were vibe-coded in plain-language conversation with Claude, refined visually, deployed to GitHub Pages, and embedded via iframe — letting the design lead the technology rather than the reverse. The full design system was documented in a reference sheet that doubles as a job aid, with a WCAG AA-compliant palette and intentional typography pairing (IM Fell English for headings, Inter for body). The vibe coding approach proved transferable: I taught it to a colleague before the course was finished.</p>
+        <p>The challenge was scope: a course thorough enough to actually teach the material, engaging enough that one person would work through the whole thing, and built entirely by someone who had never written production code before starting the project.</p>
+        <p>I structured the course as a field journal — six chapters moving from the history of gin, through production methods and grain bases, into botanicals, style variations, cocktail applications, and ending with a design-your-own-gin exercise. Every chapter had at least one custom interactive widget engineered from scratch: a botanical specimen journal with hover states, a production methods flow diagram, a client conversation stepper for hospitality use, a gin history timeline, a base-spirit-and-grains reference, a cocktails widget with build instructions, and the pH slider that started the whole thing.</p>
+        <p>The technical side was the real experiment. I taught myself HTML, CSS, and enough JavaScript to build interactive widgets — vibe coding with Claude as my pair programmer. Every widget was designed, coded, deployed to GitHub Pages, and tested end-to-end by me alone. The pH slider went through three versions before I was happy with the interaction. The botanical journal went through nine.</p>
       </div>
 
       <div class="cs-tab-panel" role="tabpanel" id="tab-reflection" aria-labelledby="btn-reflection" hidden>
-        <p>Building this confirmed that vibe coding rewards patience and attention to detail — the widgets that worked best were the ones I refused to ship until every interaction flowed cleanly. I'd still build content and widgets in parallel; seeing what a learner will actually experience is how I know if the design is working. What I'm testing next is whether the same approach holds up in other tools beyond Rise — Claude Design, Mindsmith, and Chameleon Creator.</p>
-        <p>The course was piloted by my partner and friends.</p>
+        <p>Building this course taught me more about interactive design than any framework ever has. When you're constrained to a preset authoring tool, you design within the tool's opinion of what interaction should look like. When you're building from scratch, you have to decide what interaction should actually accomplish — and every design choice becomes a real decision instead of a menu selection.</p>
+        <p>The pH slider is the strongest example. In a preset tool, that concept would have become a click-through with static images. Building from scratch, it became a genuine chemistry demonstration where the color changes in real time as the learner drags. That's the difference between showing someone something and letting them do it.</p>
+        <p>The course was piloted by my partner and a small group of friends who enjoy gin. Watching them use it — actually clicking, sliding, and reading through — was the closest thing to a real usability test I've ever run on my own work. The design-your-own-gin exercise at the end got the most engagement. People wanted to make one.</p>
+        <p>The most unexpected outcome: I transferred everything I learned to a colleague who wanted to start vibe coding for her own work. Teaching what I'd just learned solidified it in a way solo building couldn't have.</p>
       </div>
 
     </div>
@@ -94,32 +95,32 @@
         <a href="https://course-contest2026.ispring.com/app/preview/32bec109-1f11-11f1-b0bc-fe335b225611" target="_blank" rel="noopener" class="cs-external-btn">Take in iSpring →</a>
         <a href="https://360.articulate.com/review/content/ea70092d-6b9a-4492-afb3-725ee9ab3809/review" target="_blank" rel="noopener" class="cs-external-btn">Take in Articulate Rise →</a>
       </div>
-      <p class="cs-external-note">Both open in a new tab. Best experienced on desktop.</p>
+      <p class="cs-external-note">Both open in a new tab.</p>
     </div>
 
-    <h2 class="cs-widgets-heading" style="margin-top: 60px;">See the widgets in action</h2>
-    <p class="cs-widgets-lead">Every custom widget from the course is also standalone and interactive. Start with the pH slider — the moment butterfly pea chemistry becomes a demonstration instead of a description.</p>
+    <h2 class="cs-widgets-heading" style="margin-top: 60px;">Try the widgets</h2>
+    <p class="cs-widgets-lead">Every custom widget from the course is standalone and interactive. Start with the pH slider — the moment butterfly pea chemistry becomes a demonstration instead of a description.</p>
 
-    <div class="cs-embed">
-      <iframe src="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" title="Butterfly Pea pH Slider — live widget from The Genus Gin course" loading="lazy"></iframe>
-      <div class="cs-embed-caption">Butterfly Pea pH Slider — one of twelve custom widgets built for this course. Interact directly, or <a href="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" target="_blank" rel="noopener">open in a new tab</a>.</div>
-    </div>
-
-    <div class="cs-widget-gallery">
-      <h3>Explore every widget from the course</h3>
-      <ul class="cs-widget-list">
-        <li><a href="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" target="_blank" rel="noopener">Butterfly Pea pH Slider</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/botanical-journal-v9.html" target="_blank" rel="noopener">Botanical Specimen Journal</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/production-methods-v3.html" target="_blank" rel="noopener">Production Methods Flow</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/client-scenarios-stepper.html" target="_blank" rel="noopener">Client Conversation Stepper</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/gin-history-timeline.html" target="_blank" rel="noopener">Gin History Timeline</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/gin-styles-cards.html" target="_blank" rel="noopener">Gin Styles Reference</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/base-spirit-grains.html" target="_blank" rel="noopener">Base Spirit &amp; Grains</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/gin-design-exercise.html" target="_blank" rel="noopener">Design Your Own Gin</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/cocktails-widget.html" target="_blank" rel="noopener">Classic Cocktails</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/chapter1-reflection.html" target="_blank" rel="noopener">Chapter 1 Reflection</a></li>
-        <li><a href="https://alaidma12.github.io/Gin-Course/about-author-gin.html" target="_blank" rel="noopener">About the Author</a></li>
-      </ul>
+    <div class="cs-widget-viewer">
+      <div class="cs-widget-viewer-tabs" role="tablist" aria-label="Course widgets">
+        <button class="cs-widget-viewer-tab active" role="tab" aria-selected="true" data-widget-url="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" data-widget-name="Butterfly Pea pH Slider">Butterfly Pea pH Slider</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/botanical-journal-v9.html" data-widget-name="Botanical Specimen Journal">Botanical Journal</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/production-methods-v3.html" data-widget-name="Production Methods Flow">Production Methods</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/client-scenarios-stepper.html" data-widget-name="Client Conversation Stepper">Client Stepper</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/gin-history-timeline.html" data-widget-name="Gin History Timeline">History Timeline</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/gin-styles-cards.html" data-widget-name="Gin Styles Reference">Gin Styles</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/base-spirit-grains.html" data-widget-name="Base Spirit &amp; Grains">Base Spirits</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/gin-design-exercise.html" data-widget-name="Design Your Own Gin">Design Your Own</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/cocktails-widget.html" data-widget-name="Classic Cocktails">Classic Cocktails</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/chapter1-reflection.html" data-widget-name="Chapter 1 Reflection">Chapter 1 Reflection</button>
+        <button class="cs-widget-viewer-tab" role="tab" aria-selected="false" data-widget-url="https://alaidma12.github.io/Gin-Course/about-author-gin.html" data-widget-name="About the Author">About the Author</button>
+      </div>
+      <div class="cs-widget-viewer-frame">
+        <iframe id="widget-viewer-iframe" src="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" title="Butterfly Pea pH Slider — live widget from The Genus Gin course" loading="lazy"></iframe>
+      </div>
+      <div class="cs-widget-viewer-caption">
+        <span id="widget-viewer-name">Butterfly Pea pH Slider</span> — <a id="widget-viewer-external" href="https://alaidma12.github.io/Gin-Course/ph-slider-v2.html" target="_blank" rel="noopener">Open in a new tab ↗</a>
+      </div>
     </div>
   </div>
 </section>
@@ -134,7 +135,7 @@
     <div>© 2026 Amber Laidman</div>
     <div class="footer-links">
       <a href="#top" class="back-to-top">Back to top</a>
-      <a href="mailto:laidman.amber@gmail.com?subject=Portfolio%20inquiry">Email</a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=laidman.amber@gmail.com&su=Portfolio%20inquiry" target="_blank" rel="noopener">laidman.amber@gmail.com</a>
       <a href="https://www.linkedin.com/in/amber-laidman/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </div>
@@ -178,6 +179,32 @@
         e.preventDefault();
         buttons[newIndex].focus();
         activateTab(buttons[newIndex].dataset.target);
+      });
+    });
+  })();
+
+  (function() {
+    const widgetTabs = document.querySelectorAll('.cs-widget-viewer-tab');
+    const iframe = document.getElementById('widget-viewer-iframe');
+    const nameSpan = document.getElementById('widget-viewer-name');
+    const externalLink = document.getElementById('widget-viewer-external');
+
+    widgetTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const url = tab.dataset.widgetUrl;
+        const name = tab.dataset.widgetName;
+
+        widgetTabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        iframe.src = url;
+        iframe.title = name + ' — live widget from The Genus Gin course';
+        nameSpan.textContent = name;
+        externalLink.href = url;
       });
     });
   })();
