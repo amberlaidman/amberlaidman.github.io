@@ -452,33 +452,96 @@ img { max-width: 100%; height: auto; display: block; }
   line-height: 1.4;
 }
 
-.cs-content {
-  max-width: 800px;
+/* ============ TABS ============ */
+.cs-tabs {
+  padding: 80px 40px 60px;
+  background: var(--white);
+}
+.cs-tabs-inner {
+  max-width: 900px;
   margin: 0 auto;
-  padding: 80px 40px;
 }
-.cs-section { margin-bottom: 60px; }
-.cs-section:last-child { margin-bottom: 0; }
-.cs-section h2 {
-  font-size: 28px;
+.cs-tab-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--black);
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.cs-tab-btn {
+  background: none;
+  border: none;
+  padding: 16px 24px;
+  font-family: inherit;
+  font-size: 16px;
   font-weight: 500;
-  letter-spacing: -0.01em;
-  color: var(--teal);
-  margin: 0 0 20px 0;
+  color: var(--grey-body);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  transition: color 200ms, border-color 200ms;
+  position: relative;
 }
-.cs-section p {
+.cs-tab-btn:hover { color: var(--teal); }
+.cs-tab-btn.active {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
+}
+.cs-tab-btn:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.cs-tab-panel {
+  animation: fadeIn 300ms ease;
+}
+.cs-tab-panel p {
   font-size: 18px;
   line-height: 1.7;
   margin: 0 0 20px 0;
 }
-.cs-section p:last-child { margin-bottom: 0; }
+.cs-tab-panel p:last-child { margin-bottom: 0; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-tab-panel { animation: none; }
+}
+
+/* ============ WIDGETS SECTION ============ */
+.cs-widgets-section {
+  background: var(--cream);
+  padding: 80px 40px 100px;
+}
+.cs-widgets-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.cs-widgets-heading {
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--teal);
+  margin: 0 0 16px 0;
+  line-height: 1.1;
+}
+.cs-widgets-lead {
+  font-size: 18px;
+  line-height: 1.55;
+  margin: 0 0 40px 0;
+  max-width: 680px;
+  color: var(--grey-body);
+}
 
 .cs-embed {
-  margin: 60px 0 40px;
+  margin: 0 0 40px;
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 4px;
   overflow: hidden;
-  background: var(--cream);
+  background: var(--white);
 }
 .cs-embed iframe {
   width: 100%;
@@ -497,10 +560,10 @@ img { max-width: 100%; height: auto; display: block; }
 .cs-embed-caption a { border-bottom: 1px solid var(--teal); color: var(--teal); }
 
 .cs-widget-gallery {
-  margin: 40px 0 60px;
   padding: 32px;
-  background: var(--cream);
+  background: var(--white);
   border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.06);
 }
 .cs-widget-gallery h3 {
   font-size: 18px;
@@ -528,6 +591,7 @@ img { max-width: 100%; height: auto; display: block; }
   border-bottom-color: var(--teal);
 }
 
+/* ============ CASE STUDY CTA + NAV RETURN ============ */
 .cs-cta {
   background: var(--cream);
   padding: 40px;
@@ -613,7 +677,9 @@ img { max-width: 100%; height: auto; display: block; }
   .cs-back-link { padding: 20px 24px 0; }
   .cs-hero { padding: 80px 24px 60px; }
   .cs-quickfacts { padding: 32px 24px; }
-  .cs-content { padding: 60px 24px; }
+  .cs-tabs { padding: 60px 24px 40px; }
+  .cs-tab-btn { padding: 12px 16px; font-size: 15px; }
+  .cs-widgets-section { padding: 60px 24px 80px; }
   .cs-widget-gallery { padding: 24px; }
   .cs-nav-return { padding: 32px 24px; }
   .credit-band { padding: 80px 24px; }
