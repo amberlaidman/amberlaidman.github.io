@@ -557,6 +557,7 @@ h2.credit-band-heading {
 .snapshot-card {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 .snapshot-title {
   font-size: 18px;
