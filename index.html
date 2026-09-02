@@ -12,16 +12,20 @@
 </head>
 <body>
 
-<nav class="site-nav">
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="wordmark">Amber Laidman</a>
     <ul>
-      <li><a href="index.html" class="current">Home</a></li>
+      <li><a href="index.html" class="current" aria-current="page">Home</a></li>
       <li><a href="work.html">Work</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
   </div>
 </nav>
+
+<main id="main">
 
 <header class="hero">
   <div class="hero-inner">
@@ -79,12 +83,14 @@
   </div>
 </section>
 
+</main>
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div>© 2026 Amber Laidman</div>
     <div class="footer-links">
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=laidman.amber@gmail.com&su=Portfolio%20inquiry" target="_blank" rel="noopener">laidman.amber@gmail.com</a>
-      <a href="https://www.linkedin.com/in/amber-laidman/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=laidman.amber@gmail.com&su=Portfolio%20inquiry" target="_blank" rel="noopener">laidman.amber@gmail.com <span class="sr-only">(opens in new window)</span></a>
+      <a href="https://www.linkedin.com/in/amber-laidman/" target="_blank" rel="noopener">LinkedIn <span class="sr-only">(opens in new window)</span></a>
     </div>
   </div>
 </footer>
