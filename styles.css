@@ -463,12 +463,12 @@ img { max-width: 100%; height: auto; display: block; }
 .cs-hero-image img {
   width: 100%;
   height: auto;
-  max-height: 520px;
+  max-height: 360px;
   object-fit: cover;
   object-position: center;
   display: block;
   border-radius: 4px;
-  margin: 40px 0;
+  margin: 32px 0;
 }
 
 /* ============ CASE STUDY RESULTS CALLOUT ============ */
@@ -963,7 +963,7 @@ img { max-width: 100%; height: auto; display: block; }
   .credit-grid { grid-template-columns: 1fr; gap: 20px; }
   .cs-results-inner { grid-template-columns: 1fr; gap: 32px; }
   .cs-hero-image-inner { padding: 0 24px; }
-  .cs-hero-image img { max-height: 320px; margin: 24px 0; }
+  .cs-hero-image img { max-height: 240px; margin: 20px 0; }
   .cs-results { padding: 48px 24px; }
 }
 @media (max-width: 768px) {
