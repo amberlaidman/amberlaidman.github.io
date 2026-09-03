@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><script src="./course-shared.js"></script><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap"><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#10151c}.m3-root{position:fixed;inset:0;cursor:pointer;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#eef2f5;-webkit-user-select:none;user-select:none;background:#10151c}.m3-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 90% 70% at 50% 110%,rgba(99,184,194,.07),transparent 60%)}.m3-label{position:absolute;top:26px;left:0;right:0;text-align:center;font-size:11px;font-weight:500;letter-spacing:.24em;color:rgba(238,242,245,.58);text-transform:uppercase;pointer-events:none}.m3-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 28px;pointer-events:none;opacity:1;transition:opacity .5s ease}.m3-stage.out{opacity:0}.m3-title{font-family:'Source Serif 4',Georgia,serif;font-weight:300;font-size:clamp(42px,6.6vw,84px);line-height:1.06;margin:0;animation:m3Rise 1.6s .3s cubic-bezier(.22,1,.36,1) both}.m3-sub{font-size:clamp(14px,1.4vw,18px);letter-spacing:.04em;color:rgba(238,242,245,.78);margin:22px 0 0;animation:m3Rise 1.6s .9s cubic-bezier(.22,1,.36,1) both}.m3-para{font-family:'Source Serif 4',Georgia,serif;font-weight:400;font-size:clamp(20px,2.1vw,27px);line-height:1.62;max-width:640px;margin:0;color:rgba(238,242,245,.94);text-wrap:pretty;animation:m3Rise 1s .1s cubic-bezier(.22,1,.36,1) both}.m3-motif{height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:38px;animation:m3Rise 1s .1s cubic-bezier(.22,1,.36,1) both}.m3-stepnum{font-size:11px;font-weight:500;letter-spacing:.26em;color:#63b8c2;text-transform:uppercase;margin:0 0 14px;animation:m3Rise 1s .25s cubic-bezier(.22,1,.36,1) both}.m3-stephead{font-family:'Source Serif 4',Georgia,serif;font-weight:300;font-size:clamp(32px,3.8vw,50px);margin:0 0 18px;animation:m3Rise 1s .35s cubic-bezier(.22,1,.36,1) both}.m3-stepbody{font-size:clamp(15px,1.5vw,18px);line-height:1.7;max-width:520px;margin:0;color:rgba(238,242,245,.78);text-wrap:pretty;animation:m3Rise 1s .5s cubic-bezier(.22,1,.36,1) both}.m3-ringwrap{position:relative;width:110px;height:110px}.m3-core{position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#63b8c2}.m3-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(99,184,194,.7);animation:m3Ping 2.6s cubic-bezier(.2,.6,.4,1) infinite}.m3-ring.r2{animation-delay:.85s}.m3-ring.r3{animation-delay:1.7s}.m3-pathwrap{position:relative;width:240px;height:40px}.m3-path{position:absolute;left:0;right:0;top:50%;border-top:2px dashed rgba(99,184,194,.4)}.m3-mover{position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:#63b8c2;animation:m3Along 3.4s ease-in-out infinite}.m3-choices{display:flex;gap:26px}.m3-choice{width:12px;height:12px;border-radius:50%;background:rgba(238,242,245,.22);animation:m3Pick 2.7s ease-in-out infinite}.m3-choice.c2{animation-delay:.9s}.m3-choice.c3{animation-delay:1.8s}.m3-lanewrap{position:relative;width:260px;height:40px}.m3-lane{position:absolute;left:0;right:0;top:50%;border-top:1px solid rgba(238,242,245,.22)}.m3-glide{position:absolute;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:#63b8c2;box-shadow:0 0 14px rgba(99,184,194,.7);animation:m3Glide 4.5s cubic-bezier(.45,.05,.55,.95) infinite}.m3-endcap{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(238,242,245,.58);margin:38px 0 0;animation:m3Rise 1.4s 1.4s cubic-bezier(.22,1,.36,1) both}.m3-endlink{pointer-events:auto;animation:m3Rise 1.2s 1.9s cubic-bezier(.22,1,.36,1) both}.m3-btn{margin-top:20px;padding:11px 30px;background:transparent;border:1px solid rgba(238,242,245,.3);border-radius:999px;color:rgba(238,242,245,.85);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:border-color .3s,color .3s;text-decoration:none;display:inline-block}.m3-btn:hover{border-color:#63b8c2;color:#fff}.m3-hint{position:absolute;bottom:64px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(238,242,245,.58);pointer-events:none;opacity:0;transition:opacity .8s ease;animation:m3Breathe 3.2s ease-in-out infinite}.m3-hint.on{opacity:1}.m3-dots{position:absolute;bottom:30px;left:0;right:0;display:flex;justify-content:center;gap:9px;pointer-events:none}.m3-dot{width:5px;height:5px;border-radius:50%;background:rgba(238,242,245,.22)}.m3-dot.on{background:#63b8c2}@keyframes m3Rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes m3Ping{0%{transform:scale(.12);opacity:.9}80%{transform:scale(1);opacity:0}100%{transform:scale(1);opacity:0}}@keyframes m3Along{0%{left:0}50%{left:calc(100% - 10px)}100%{left:0}}@keyframes m3Pick{0%,100%{background:rgba(238,242,245,.22);transform:scale(1)}12%,28%{background:#63b8c2;transform:scale(1.35)}40%{background:rgba(238,242,245,.22);transform:scale(1)}}@keyframes m3Glide{0%{left:0}100%{left:calc(100% - 12px)}}@keyframes m3Breathe{0%,100%{filter:brightness(1)}50%{filter:brightness(1.5)}}.cnav{position:fixed;bottom:22px;z-index:30;pointer-events:auto;background:rgba(16,21,28,.5);border:1px solid rgba(238,242,245,.25);border-radius:999px;padding:10px 22px;color:rgba(238,242,245,.8);font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;transition:border-color .3s,color .3s,opacity .4s}.cnav:hover{border-color:#63b8c2;color:#fff}.cnav.prev{left:26px}.cnav.next{right:26px;border-color:rgba(99,184,194,.55);color:#8ccbd3}.cnav.next:hover{color:#fff;border-color:#63b8c2}.cnav.hid{opacity:0;pointer-events:none}.mveil{position:fixed;inset:0;background:#10151c;z-index:100;pointer-events:none;opacity:0;transition:opacity .65s ease}.mveil.on{opacity:1}.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important}}.mvoicewrap{position:absolute;top:18px;right:20px;z-index:40;display:flex;align-items:center;gap:8px;pointer-events:auto}.mvoice{font-family:inherit;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(238,242,245,.6);background:rgba(16,21,28,.72);border:1px solid rgba(238,242,245,.16);border-radius:100px;padding:8px 11px;cursor:pointer;outline:none;max-width:130px}.mvoice:focus{border-color:rgba(140,203,211,.55)}.mlisten{position:relative;z-index:40;display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(238,242,245,.58);background:rgba(16,21,28,.55);border:1px solid rgba(238,242,245,.16);border-radius:100px;padding:8px 15px;cursor:pointer;pointer-events:auto;transition:color .25s ease,border-color .25s ease,background .25s ease}.mlisten:hover{color:#eef2f5;border-color:rgba(238,242,245,.58)}.mlisten.on{color:#8ccbd3;border-color:rgba(140,203,211,.55);background:rgba(140,203,211,.1)}.mlisten .mldot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5}.mlisten.on .mldot{opacity:1;animation:mlPulse 1.6s ease-in-out infinite}@keyframes mlPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}@media (max-width:700px){.mvoicewrap{top:14px;left:50%;right:auto;transform:translateX(-50%)}.m3-label{top:58px;padding:0 18px}}.mcallback{font-size:13px;line-height:1.5;letter-spacing:.02em;color:#8ccbd3;margin:28px 0 0;max-width:44ch;text-wrap:pretty}.mvoicewrap{flex-direction:column;align-items:flex-end;gap:8px}.mtune{display:flex;align-items:center;gap:12px;padding:7px 13px;background:rgba(16,21,28,.55);border:1px solid rgba(238,242,245,.14);border-radius:100px}.mtl{display:flex;align-items:center;gap:7px;font-family:inherit;font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(238,242,245,.58)}.mtr{-webkit-appearance:none;appearance:none;width:56px;height:2px;background:rgba(238,242,245,.22);border-radius:2px;outline:none;cursor:pointer}.mtr::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:10px;height:10px;border-radius:50%;background:#8ccbd3;cursor:pointer}.mtr::-moz-range-thumb{width:10px;height:10px;border:0;border-radius:50%;background:#8ccbd3;cursor:pointer}@media (max-width:700px){.mvoicewrap{gap:6px}.mtune{gap:10px;padding:6px 11px}.mtr{width:48px}.m3-label{top:134px}}</style></helmet><div class="m3-root" onClick="{{ advance }}"><div class="mvoicewrap"><sc-if value="{{ listenOn }}" hint-placeholder-val="{{ false }}"><select class="mvoice" aria-label="Narration voice" value="{{ voiceName }}" onChange="{{ onVoice }}" onClick="{{ swallow }}"><sc-for list="{{ voiceOpts }}" as="v" hint-placeholder-count="4"><option value="{{ v.name }}">{{ v.name }}</option></sc-for></select><div class="mtune"><label class="mtl"><span>Pace</span><input type="range" class="mtr" min="0.55" max="1.25" step="0.01" value="{{ rate }}" onInput="{{ onRate }}" onClick="{{ swallow }}" aria-label="Narration pace"></label><label class="mtl"><span>Pitch</span><input type="range" class="mtr" min="0.6" max="1.4" step="0.01" value="{{ pitch }}" onInput="{{ onPitch }}" onClick="{{ swallow }}" aria-label="Narration pitch"></label></div></sc-if><button class="mlisten {{ listenClass }}" aria-pressed="{{ listenOn }}" onClick="{{ toggleListen }}"><span class="mldot"></span>{{ listenLabel }}</button></div><div class="m3-glow"></div><div class="m3-label">Riding With No Driver — Module 3 of 6</div><div class="m3-stage {{ stageClass }}"><sc-if value="{{ b0 }}" hint-placeholder-val="{{ true }}"><h1 class="m3-title">Always Attentive</h1><p class="m3-sub">How a car with no driver actually drives.</p><sc-if value="{{ hasCallback }}" hint-placeholder-val="{{ false }}"><p class="mcallback">{{ callbackLine }}</p></sc-if></sc-if><sc-if value="{{ b1 }}" hint-placeholder-val="{{ false }}"><p class="m3-para">Here’s what people picture: a computer “guessing” its way down the road. That’s not it. The car does the same four things you do when you drive. It just does them constantly, in every direction at once, and never checks its phone.</p></sc-if><sc-if value="{{ b2 }}" hint-placeholder-val="{{ false }}"><div class="m3-motif" role="img" aria-label="Concentric rings pulsing outward from a central point, standing in for the car sensing in every direction at once."><div aria-hidden="true" class="m3-ringwrap"><span class="m3-ring"></span><span class="m3-ring r2"></span><span class="m3-ring r3"></span><span class="m3-core"></span></div></div><p data-no-speak="true" class="m3-stepnum">01 / 04</p><h2 class="m3-stephead">It senses.</h2><p class="m3-stepbody">A cyclist comes up on your right, half-hidden behind a parked van. Cameras, radar, and laser sensors have already placed her on the car’s map. So are the van, the curb, and the car behind you. The whole 360° picture gets rebuilt many times a second, day or night.</p></sc-if><sc-if value="{{ b3 }}" hint-placeholder-val="{{ false }}"><div class="m3-motif" role="img" aria-label="A marker tracing forward along a dotted path, standing in for the car projecting where a moving object is headed."><div aria-hidden="true" class="m3-pathwrap"><span class="m3-path"></span><span class="m3-mover"></span></div></div><p data-no-speak="true" class="m3-stepnum">02 / 04</p><h2 class="m3-stephead">It predicts.</h2><p class="m3-stepbody">She starts drifting left to get around the van. The car doesn’t just see her — it works out where she’ll be in the next two seconds, and treats that space as already taken.</p></sc-if><sc-if value="{{ b4 }}" hint-placeholder-val="{{ false }}"><div class="m3-motif" role="img" aria-label="Three short bars rising and falling in turn, standing in for the car weighing several possible moves."><div aria-hidden="true" class="m3-choices"><span class="m3-choice"></span><span class="m3-choice c2"></span><span class="m3-choice c3"></span></div></div><p data-no-speak="true" class="m3-stepnum">03 / 04</p><h2 class="m3-stephead">It decides.</h2><p class="m3-stepbody">Hold back, or steer wide? Dozens of times a second it re-runs that choice as she moves, and settles on whichever leaves her the most room.</p></sc-if><sc-if value="{{ b5 }}" hint-placeholder-val="{{ false }}"><div class="m3-motif" role="img" aria-label="A marker gliding steadily along a straight lane, standing in for the car driving smoothly within the rules of the road."><div aria-hidden="true" class="m3-lanewrap"><span class="m3-lane"></span><span class="m3-glide"></span></div></div><p data-no-speak="true" class="m3-stepnum">04 / 04</p><h2 class="m3-stephead">It drives.</h2><p class="m3-stepbody">It eases off, lets her clear the van, then goes. Smoothly, inside the rules of the road. No impatience, no squeeze, no horn.</p></sc-if><sc-if value="{{ b6 }}" hint-placeholder-val="{{ false }}"><p class="m3-para">That’s the whole idea. Not magic, not a guess — a careful driver that never gets tired, never checks its phone, and never loses its temper.</p><p data-no-speak="true" class="m3-endcap">End of Module 3</p><div data-no-speak="true" class="m3-endlink"><a class="m3-btn" href="module-4-is-it-actually-safe.html" onClick="{{ exitNext }}">Module 4 · Is It Actually Safe? →</a></div></sc-if></div><div class="m3-hint {{ hintClass }}">Tap anywhere to continue</div><div aria-hidden="true" class="m3-dots"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="6"><span class="m3-dot {{ d.cls }}"></span></sc-for></div><button class="cnav prev {{ prevClass }}" onClick="{{ goPrev }}">← Back</button><button class="cnav next {{ nextClass }}" onClick="{{ goNext }}">Next →</button><div class="mveil {{ veilClass }}"></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  // Beats: 0 title · 1 intro · 2-5 steps · 6 close/end
+  constructor(props) {
+    super(props);
+    this.state = { listen: false, voices: [], voice: '', rate: (window.RWND_GET_RATE ? window.RWND_GET_RATE() : 0.74), pitch: (window.RWND_GET_PITCH ? window.RWND_GET_PITCH() : 1.12), beat: 0, fading: false, hint: false, veil: true };
+    this.LAST = 6;
+    try { const s = parseInt(localStorage.getItem('rwnd.m3.beat'), 10); if (s > 0 && s <= 6) this.state.beat = s; } catch (err) {}
+  }
+  renderVals() {
+    const b = this.state.beat;
+    const vals = {
+      advance: () => { if (b !== 6) this.goTo(b + 1); },
+      swallow: (e) => e.stopPropagation(),
+      hasCallback: !!this.cbLine(),
+      callbackLine: this.cbLine(),
+      listenOn: this.state.listen,
+      rate: this.state.rate,
+      pitch: this.state.pitch,
+      onRate: (e) => { e.stopPropagation(); const v = parseFloat(e.target.value); this.setState({ rate: v }); if (window.RWND_SET_RATE) window.RWND_SET_RATE(v); this.retune(); },
+      onPitch: (e) => { e.stopPropagation(); const v = parseFloat(e.target.value); this.setState({ pitch: v }); if (window.RWND_SET_PITCH) window.RWND_SET_PITCH(v); this.retune(); },
+      voiceName: this.state.voice || '',
+      voiceOpts: (this.state.voices || []).map((nm) => ({ name: nm })),
+      onVoice: (e) => {
+        e.stopPropagation();
+        const nm = e.target.value;
+        this.setState({ voice: nm });
+        if (window.RWND_SET_VOICE) window.RWND_SET_VOICE(nm);
+        setTimeout(() => this.speak(), 60);
+      },
+      listenClass: this.state.listen ? 'on' : '',
+      listenLabel: this.state.listen ? 'Listening' : 'Listen',
+      toggleListen: (e) => {
+        e.stopPropagation();
+        const on = !this.state.listen;
+        try { localStorage.setItem('rwnd.listen', on ? '1' : '0'); } catch (err) {}
+        this.setState({ listen: on }, () => { if (on) setTimeout(() => this.speak(), 60); else this.stopSpeaking(); });
+      },
+      veilClass: this.state.veil ? 'on' : '',
+      exitNext: (e) => { e.stopPropagation(); e.preventDefault(); const href = e.currentTarget.getAttribute('href'); this.setState({ veil: true }); setTimeout(() => { window.location.href = href; }, this.rmDur(700)); },
+      goNext: (e) => { e.stopPropagation(); this.goTo(b + 1); },
+      goPrev: (e) => { e.stopPropagation(); if (b === 0) { this.exitTo("module-2-why-this-exists.html"); return; } this.goTo(b - 1); },
+      prevClass: '',
+      nextClass: b === 6 ? 'hid' : '',
+      stageClass: this.state.fading ? 'out' : '',
+      hintClass: this.state.hint && b === 0 ? 'on' : '',
+      dots: [0, 1, 2, 3, 4, 5].map(i => ({ cls: i === 2 ? 'on' : '' }))
+    };
+    for (let i = 0; i <= 6; i++) vals['b' + i] = b === i;
+    return vals;
+  }
+  goTo(next) {
+    if (this.state.fading) return;
+    if (next < 0 || next > this.LAST) return;
+    this.saveBeat(next);
+    this.setState({ fading: true, hint: false });
+    setTimeout(() => { if (!this._disposed) this.setState({ beat: next, fading: false }, () => setTimeout(() => this.speak(), 80)); }, this.rmDur(520));
+  }
+  cbLine() { try { return window.RWND_CALLBACK_LINE ? window.RWND_CALLBACK_LINE(3, localStorage.getItem('rwnd.objection')) : ''; } catch (err) { return ''; } }
+  retune() {
+    clearTimeout(this._tune);
+    this._tune = setTimeout(() => { if (!this._disposed && this.state.listen) this.speak(); }, 650);
+  }
+
+  speak() {
+    if (!this.state.listen) return;
+    var el = document.querySelector('.m3-stage');
+    var txt = (window.RWND_TEXT_FROM ? window.RWND_TEXT_FROM(el) : (el ? el.innerText : '')) || '';
+    var key = window.RWND_AUDIO_KEY ? window.RWND_AUDIO_KEY(3, this.state.beat) : null;
+    if (window.RWND_SPEAK) window.RWND_SPEAK(txt, key);
+  }
+  stopSpeaking() { if (window.RWND_STOP) window.RWND_STOP(); }
+  rmDur(ms) { try { return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 0 : ms; } catch (err) { return ms; } }
+  exitTo(href) { if (this._exiting) return; this._exiting = true; this.stopSpeaking(); this.setState({ veil: true, hint: false }); setTimeout(() => { window.location.href = href; }, this.rmDur(700)); }
+  saveBeat(n) { try { localStorage.setItem('rwnd.m3.beat', String(n)); const f = parseInt(localStorage.getItem('rwnd.furthest'), 10); if (!(f >= 3)) localStorage.setItem('rwnd.furthest', '3'); } catch (err) {} }
+  componentDidMount() {
+    this._disposed = false;
+    const loadVoices = () => {
+      if (!window.RWND_VOICE_LIST) return;
+      const list = window.RWND_VOICE_LIST();
+      if (list.length && !this._disposed) {
+        let cur = '';
+        try { cur = localStorage.getItem('rwnd.voice') || ''; } catch (err) {}
+        // Re-apply the stored pick so the engine, not just the dropdown, honours it.
+        if (cur && window.RWND_SET_VOICE) window.RWND_SET_VOICE(cur);
+        const active = (window.RWND_VOICE_NAME && window.RWND_VOICE_NAME()) || '';
+        const shown = list.indexOf(cur) > -1 ? cur : (list.indexOf(active) > -1 ? active : list[0]);
+        this.setState({ voices: list, voice: shown });
+      }
+    };
+    loadVoices();
+    setTimeout(loadVoices, 600);
+    try { if (window.speechSynthesis) window.speechSynthesis.addEventListener('voiceschanged', loadVoices); } catch (err) {}
+    try { if (localStorage.getItem('rwnd.listen') === '1') this.setState({ listen: true }, () => setTimeout(() => this.speak(), 400)); } catch (err) {}
+    setTimeout(() => { if (!this._disposed) this.setState({ veil: false }); }, 120);
+    this._hintTimer = setTimeout(() => { if (!this._disposed && this.state.beat === 0) this.setState({ hint: true }); }, 3800);
+    this._onKey = (e) => {
+      const b = this.state.beat;
+      if (b === 6) return;
+      if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') this.goTo(b + 1);
+      else if (e.key === 'ArrowLeft') { if (b === 0) this.exitTo("module-2-why-this-exists.html"); else this.goTo(b - 1); }
+    };
+    window.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount() {
+    this._disposed = true;
+    this.stopSpeaking();
+    clearTimeout(this._hintTimer);
+    window.removeEventListener('keydown', this._onKey);
+  }
+}
+</script>
+</body>
+</html>
