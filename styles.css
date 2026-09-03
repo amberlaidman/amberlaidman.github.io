@@ -1313,10 +1313,21 @@ h2.credit-band-heading {
   text-transform: uppercase;
   margin-bottom: 8px;
 }
+.journal-entry-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0 0 16px;
+}
 .journal-entry p {
   font-size: 15px;
   line-height: 1.65;
   color: var(--grey-body);
+}
+.journal-entry p + p {
+  margin-top: 14px;
 }
 
 /* Responsive */
