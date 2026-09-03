@@ -1195,6 +1195,45 @@ h2.credit-band-heading {
   max-width: 480px;
   margin: 0 auto;
 }
+.preview-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* Single full-width "What's on my mind" section (no two-column grid) */
+.project-section-single {
+  max-width: 720px;
+  margin: 48px auto 0;
+}
+
+/* CTA link below project content */
+.project-cta {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.project-cta-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal-deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--teal-deep);
+  padding-bottom: 2px;
+  transition: opacity 0.2s ease;
+}
+.project-cta-link:hover {
+  opacity: 0.7;
+}
+.project-cta-link:focus-visible {
+  outline: 2px solid var(--teal-deep);
+  outline-offset: 4px;
+}
 
 /* Detail sections */
 .project-sections {
