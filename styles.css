@@ -1038,28 +1038,18 @@ h2.credit-band-heading {
 }
 
 /* ============================================================
-   LAB PAGE — DIGITAL WORKSPACE
-   Tablet-centered design with project tabs inside tablet,
-   personality items (AirPods, phone, coffee mug) around it
+   LAB PAGE — WIDGET VIEWER STYLE
    ============================================================ */
-
-:root {
-  --desk-bg: #E8E9EB;
-  --tablet-frame: #2C2E33;
-  --tablet-screen: #F7F5F0;
-  --airpod-white: #FEFEFE;
-  --mug-brown: #6B4E3D;
-}
 
 /* Lab header */
 .lab-header {
   background: var(--white);
   padding: 100px 40px 40px;
+  text-align: center;
 }
 .lab-header-inner {
   max-width: 900px;
   margin: 0 auto;
-  text-align: center;
 }
 .lab-header .section-label {
   color: var(--teal);
@@ -1087,126 +1077,75 @@ h2.credit-band-heading {
   margin: 0 auto;
 }
 
-/* ============ THE DESK ============ */
-.desk {
-  position: relative;
-  width: 100%;
-  max-width: 1100px;
-  aspect-ratio: 3 / 2;
-  background: var(--desk-bg);
-  background-image:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
-    linear-gradient(225deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%);
-  background-size: 60px 60px;
-  border-radius: 8px;
-  margin: 0 auto;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), inset 0 0 100px rgba(0, 0, 0, 0.02);
-}
-
-/* ============ LARGE TABLET (center) ============ */
-.tablet-large {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 62%;
-  aspect-ratio: 4 / 3;
-  z-index: 5;
-}
-.tablet-frame-large {
-  width: 100%;
-  height: 100%;
-  background: var(--tablet-frame);
-  border-radius: 16px;
-  padding: 16px 16px 34px 16px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-  position: relative;
-}
-.tablet-screen-large {
-  width: 100%;
-  height: 100%;
-  background: var(--tablet-screen);
-  border-radius: 6px;
-  overflow: hidden;
+/* Tab bar (widget viewer pattern) */
+.lab-tabs {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
-.tablet-home-button-large {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 36px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-}
-
-/* Tabs inside the tablet */
-.tablet-tabs {
-  display: flex;
-  gap: 4px;
-  padding: 12px 12px 0 12px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  overflow-x: auto;
-  flex-shrink: 0;
-}
-.tablet-tab {
-  padding: 8px 14px;
-  border: none;
+.lab-tab {
+  padding: 10px 20px;
+  border-radius: 100px;
   background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   font-family: inherit;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--grey-body);
   cursor: pointer;
-  border-radius: 6px 6px 0 0;
-  white-space: nowrap;
-  transition: all 150ms;
+  transition: all 150ms ease;
 }
-.tablet-tab:hover {
-  background: rgba(61, 107, 122, 0.06);
+.lab-tab:hover {
+  border-color: var(--teal);
   color: var(--teal);
 }
-.tablet-tab.active {
-  background: var(--white);
-  color: var(--teal-deep);
-  border-bottom: 2px solid var(--teal);
-  margin-bottom: -1px;
+.lab-tab.active {
+  background: var(--teal);
+  color: var(--cream);
+  border-color: var(--teal);
 }
-.tablet-tab:focus-visible {
+.lab-tab:focus-visible {
   outline: 2px solid var(--teal);
-  outline-offset: 2px;
+  outline-offset: 4px;
+}
+.lab-tab.journal-tab {
+  background: transparent;
+  color: var(--teal-deep);
+  border-color: var(--teal-deep);
+}
+.lab-tab.journal-tab.active {
+  background: var(--teal-deep);
+  color: var(--cream);
 }
 
-/* Project content area inside tablet */
-.tablet-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px 20px;
+/* Project panels */
+.project-panel,
+.journal-panel {
+  animation: labFadeIn 250ms ease;
 }
-.project-panel {
-  display: none;
-  animation: fadeIn 250ms ease;
-}
-.project-panel.active {
-  display: block;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+@keyframes labFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Project header */
+.project-header {
+  margin-bottom: 40px;
 }
 .project-status {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 .status-dot {
-  width: 7px;
-  height: 7px;
-  background: var(--terracotta, #B87259);
+  width: 8px;
+  height: 8px;
+  background: #B87259;
   border-radius: 50%;
 }
 .status-dot.thinking {
@@ -1214,350 +1153,118 @@ h2.credit-band-heading {
 }
 .status-text {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   color: var(--grey-body);
   text-transform: uppercase;
 }
 .project-title {
-  font-size: 18px;
+  font-size: clamp(32px, 4vw, 42px);
   font-weight: 500;
-  letter-spacing: -0.01em;
-  color: var(--teal-deep);
-  margin-bottom: 8px;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  line-height: 1.1;
+  margin-bottom: 16px;
 }
 .project-description {
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.55;
   color: var(--grey-body);
-  margin-bottom: 14px;
+  max-width: 720px;
 }
-.project-preview-area {
-  background: rgba(61, 107, 122, 0.04);
-  border: 1px dashed rgba(61, 107, 122, 0.2);
-  border-radius: 4px;
-  padding: 20px 16px;
+
+/* Featured preview area */
+.project-preview {
+  background: var(--cream);
+  border-radius: 6px;
+  padding: 60px 40px;
+  margin: 32px 0 48px;
   text-align: center;
 }
 .preview-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   color: var(--teal);
-  margin-bottom: 6px;
-}
-.preview-placeholder p {
-  font-size: 11px;
-  color: var(--grey-body);
-  line-height: 1.4;
-}
-
-/* Tablet footer (journal button) */
-.tablet-footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 10px 16px;
-  flex-shrink: 0;
-}
-.journal-button {
-  width: 100%;
-  padding: 8px 12px;
-  background: rgba(61, 107, 122, 0.06);
-  border: 1px solid rgba(61, 107, 122, 0.15);
-  border-radius: 6px;
-  font-family: inherit;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-align: left;
-  transition: all 150ms;
-}
-.journal-button:hover {
-  background: rgba(61, 107, 122, 0.1);
-  border-color: var(--teal);
-}
-.journal-button:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 2px;
-}
-.journal-button-icon {
-  font-size: 18px;
-  flex-shrink: 0;
-}
-.journal-button-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--teal-deep);
-  display: block;
-  line-height: 1.2;
-}
-.journal-button-sub {
-  font-size: 10px;
-  color: var(--grey-body);
-  display: block;
-  line-height: 1.2;
-  margin-top: 1px;
-}
-.journal-button > div,
-.journal-button-label,
-.journal-button-sub {
-  flex-direction: column;
-}
-.journal-button {
-  flex-wrap: nowrap;
-}
-.journal-button-label + .journal-button-sub {
-  display: block;
-}
-
-/* Restructure journal button layout */
-.journal-button {
-  align-items: center;
-}
-.journal-button-icon {
-  align-self: center;
-}
-
-/* ============ AIRPODS ============ */
-button.airpods {
-  position: absolute;
-  top: 8%;
-  right: 4%;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  background: transparent;
-  display: flex;
-  gap: 4px;
-  transform: rotate(-15deg);
-  z-index: 4;
-  transition: transform 200ms ease;
-}
-button.airpods:hover {
-  transform: rotate(-15deg) translateY(-3px);
-}
-button.airpods:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 6px;
-  border-radius: 4px;
-}
-.airpod {
-  width: 20px;
-  height: 34px;
-  background: var(--airpod-white);
-  border-radius: 8px 8px 6px 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), inset 0 -2px 4px rgba(0, 0, 0, 0.08);
-  position: relative;
-}
-.airpod::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-}
-
-/* ============ COFFEE MUG ============ */
-.mug {
-  position: absolute;
-  bottom: 10%;
-  right: 4%;
-  width: 70px;
-  height: 70px;
-  z-index: 4;
-}
-.mug-body {
-  width: 70px;
-  height: 70px;
-  background: radial-gradient(circle at 30% 30%, #FEFEFE 15%, #F0F0F0 45%, #E0E0E0 100%);
-  border-radius: 50%;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), inset 0 -3px 8px rgba(0, 0, 0, 0.05);
-  position: relative;
-}
-.mug-body::after {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
-  background: radial-gradient(circle at center, var(--mug-brown) 20%, #4A3628 100%);
-  border-radius: 50%;
-}
-.mug-handle {
-  position: absolute;
-  right: -10px;
-  top: 22px;
-  width: 20px;
-  height: 26px;
-  border: 4px solid #E0E0E0;
-  border-left: none;
-  border-radius: 0 14px 14px 0;
-  z-index: -1;
-}
-.mug-steam {
-  position: absolute;
-  width: 3px;
-  height: 22px;
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.5), transparent);
-  border-radius: 3px;
-  top: -24px;
-  opacity: 0.6;
-}
-.steam-1 {
-  left: 26px;
-  animation: steam 3s ease-in-out infinite;
-}
-.steam-2 {
-  left: 38px;
-  animation: steam 3s ease-in-out infinite 0.8s;
-}
-@keyframes steam {
-  0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.6; }
-  50% { transform: translateY(-4px) scaleY(1.1); opacity: 0.4; }
-}
-
-/* ============ PHONE ============ */
-button.phone {
-  position: absolute;
-  bottom: 8%;
-  left: 4%;
-  width: 55px;
-  height: 105px;
-  background: #1a1a1c;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transform: rotate(-8deg);
-  z-index: 4;
-  padding: 6px;
-  cursor: pointer;
-  transition: transform 200ms ease;
-}
-button.phone:hover {
-  transform: rotate(-8deg) translateY(-3px);
-}
-button.phone:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 6px;
-  border-radius: 12px;
-}
-.phone-screen {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #3D6B7A, #2E5461);
-  border-radius: 6px;
-  position: relative;
-}
-.phone-notch {
-  position: absolute;
-  top: 3px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 16px;
-  height: 4px;
-  background: #1a1a1c;
-  border-radius: 3px;
-  z-index: 2;
-}
-
-/* ============ OVERLAYS (shared patterns) ============ */
-.journal-overlay,
-.listening-overlay,
-.phone-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 300ms ease;
-}
-.journal-overlay.is-open,
-.listening-overlay.is-open,
-.phone-overlay.is-open {
-  opacity: 1;
-}
-.journal-overlay-backdrop,
-.listening-overlay-backdrop,
-.phone-overlay-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  cursor: pointer;
-}
-
-/* Journal overlay */
-.journal-overlay-content {
-  position: relative;
-  background: var(--cream);
-  max-width: 720px;
-  width: 90%;
-  max-height: 85vh;
-  padding: 60px 60px 50px;
-  border-radius: 6px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
-  overflow-y: auto;
-  transform: scale(0.95);
-  transition: transform 300ms ease;
-  border-left: 6px solid var(--teal);
-}
-.journal-overlay.is-open .journal-overlay-content {
-  transform: scale(1);
-}
-.journal-close,
-.listening-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: transparent;
-  font-size: 32px;
-  line-height: 1;
-  color: var(--grey-body);
-  cursor: pointer;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 150ms;
-}
-.journal-close:hover,
-.listening-close:hover {
-  background: rgba(0, 0, 0, 0.06);
-}
-.journal-close:focus-visible,
-.listening-close:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 2px;
-}
-.journal-overlay-content h2 {
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
   margin-bottom: 12px;
-  color: var(--teal-deep);
+  text-transform: uppercase;
 }
-.journal-intro {
+.preview-placeholder-text {
   font-size: 14px;
   color: var(--grey-body);
-  margin-bottom: 32px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(61, 107, 122, 0.15);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Detail sections */
+.project-sections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin-top: 48px;
+}
+.project-section h4 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.project-section p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--grey-body);
+}
+.project-section ul {
+  list-style: none;
+  padding: 0;
+}
+.project-section li {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--grey-body);
+  padding: 8px 0 8px 20px;
+  border-bottom: 1px dashed rgba(0,0,0,0.08);
+  position: relative;
+}
+.project-section li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-weight: 500;
+}
+.project-section li:last-child { border-bottom: none; }
+
+/* Journal panel */
+.journal-panel {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.journal-panel h3 {
+  font-size: clamp(28px, 3.5vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  color: var(--black);
+}
+.journal-intro {
+  font-size: 15px;
+  color: var(--grey-body);
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 .journal-entries {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
+}
+.journal-entry {
+  padding-left: 20px;
+  border-left: 3px solid var(--teal);
 }
 .journal-entry-date {
   font-family: 'IBM Plex Mono', monospace;
@@ -1569,167 +1276,14 @@ button.phone:focus-visible {
 }
 .journal-entry p {
   font-size: 15px;
-  line-height: 1.6;
-  color: var(--black);
-}
-
-/* Listening overlay */
-.listening-overlay-content {
-  position: relative;
-  background: var(--white);
-  max-width: 420px;
-  width: 90%;
-  padding: 40px 40px 36px;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  transform: scale(0.9);
-  transition: transform 300ms ease;
-}
-.listening-overlay.is-open .listening-overlay-content { transform: scale(1); }
-.listening-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--teal);
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.listening-title {
-  font-size: 24px;
-  font-weight: 500;
-  color: var(--black);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  margin-bottom: 24px;
-}
-.listening-wave {
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-  align-items: flex-end;
-  height: 24px;
-}
-.listening-wave span {
-  display: block;
-  width: 3px;
-  background: var(--teal);
-  border-radius: 2px;
-  animation: wave 1.2s ease-in-out infinite;
-}
-.listening-wave span:nth-child(1) { height: 40%; animation-delay: 0s; }
-.listening-wave span:nth-child(2) { height: 80%; animation-delay: 0.15s; }
-.listening-wave span:nth-child(3) { height: 100%; animation-delay: 0.3s; }
-.listening-wave span:nth-child(4) { height: 70%; animation-delay: 0.45s; }
-.listening-wave span:nth-child(5) { height: 50%; animation-delay: 0.6s; }
-@keyframes wave {
-  0%, 100% { transform: scaleY(0.5); }
-  50% { transform: scaleY(1.2); }
-}
-
-/* Phone notification overlay */
-.phone-overlay-content {
-  position: relative;
-  max-width: 440px;
-  width: 90%;
-  transform: translateY(-30px) scale(0.9);
-  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.phone-overlay.is-open .phone-overlay-content {
-  transform: translateY(0) scale(1);
-}
-.phone-close {
-  position: absolute;
-  top: -40px;
-  right: 0;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 24px;
-  line-height: 1;
+  line-height: 1.65;
   color: var(--grey-body);
-  cursor: pointer;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 150ms;
-  z-index: 2;
-}
-.phone-close:hover { background: rgba(255, 255, 255, 1); }
-.phone-close:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
-.phone-notification {
-  background: rgba(45, 45, 48, 0.85);
-  backdrop-filter: blur(20px);
-  color: var(--white);
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-}
-.phone-notif-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 10px;
-}
-.phone-notif-icon {
-  width: 32px;
-  height: 32px;
-  background: var(--teal);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  color: var(--cream);
-  font-size: 16px;
-  flex-shrink: 0;
-}
-.phone-notif-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-}
-.phone-notif-app {
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.phone-notif-body h2.phone-notif-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--white);
-  line-height: 1.3;
-  margin: 4px 0 6px 0;
-  letter-spacing: -0.01em;
-}
-.phone-notif-text {
-  font-size: 14px;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 400;
 }
 
-/* ============ RESPONSIVE ============ */
-@media (max-width: 900px) {
+/* Responsive */
+@media (max-width: 700px) {
   .lab-header { padding: 60px 24px 30px; }
   .lab-content { padding: 20px 24px 60px; }
-  .desk {
-    aspect-ratio: 3 / 4;
-    max-width: 500px;
-  }
-  .tablet-large { width: 80%; }
-  .tablet-tab { font-size: 10px; padding: 6px 8px; }
-  .project-title { font-size: 15px; }
-  button.airpods { top: 3%; right: 6%; }
-  .mug { width: 50px; height: 50px; bottom: 4%; right: 6%; }
-  .mug-body { width: 50px; height: 50px; }
-  .mug-handle { top: 15px; height: 20px; width: 16px; border-width: 3px; }
-  button.phone { width: 45px; height: 85px; bottom: 4%; left: 6%; }
-  .journal-overlay-content { padding: 40px 24px 32px; }
+  .project-sections { grid-template-columns: 1fr; gap: 24px; }
+  .project-preview { padding: 40px 24px; }
 }
