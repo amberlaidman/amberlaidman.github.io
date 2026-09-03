@@ -38,23 +38,87 @@
 <section class="lab-content" aria-labelledby="lab-projects-heading">
   <h2 id="lab-projects-heading" class="sr-only">Current projects</h2>
 
-  <div class="lab-tabs" role="tablist" aria-label="Select a project to explore">
-    <button class="lab-tab active" role="tab" aria-selected="true" data-project="menstrual-cycle">Menstrual Cycle Course</button>
-    <button class="lab-tab" role="tab" aria-selected="false" data-project="autonomous-vehicle">Autonomous Vehicle Course</button>
-    <button class="lab-tab" role="tab" aria-selected="false" data-project="feedback">Feedback Course</button>
-  </div>
-
   <div class="desk" role="region" aria-label="Workspace desk view">
-    <!-- Interactive decorative items -->
+
+    <!-- Center: Large tablet with project tabs and content -->
+    <div class="tablet-large" aria-label="Tablet showing current project">
+      <div class="tablet-frame-large">
+        <div class="tablet-screen-large">
+
+          <!-- Project tabs inside the tablet -->
+          <div class="tablet-tabs" role="tablist" aria-label="Select a project">
+            <button class="tablet-tab active" role="tab" aria-selected="true" data-project="menstrual-cycle">Menstrual Cycle Course</button>
+            <button class="tablet-tab" role="tab" aria-selected="false" data-project="autonomous-vehicle">Autonomous Vehicle Course</button>
+            <button class="tablet-tab" role="tab" aria-selected="false" data-project="feedback">Feedback Course</button>
+          </div>
+
+          <!-- Project content area -->
+          <div class="tablet-content">
+            <div class="project-panel active" data-panel="menstrual-cycle">
+              <div class="project-status">
+                <span class="status-dot"></span>
+                <span class="status-text">IN PROGRESS · SEPT 2026</span>
+              </div>
+              <h3 class="project-title">Menstrual Cycle Course</h3>
+              <p class="project-description">Placeholder — project preview or featured content will appear here.</p>
+              <div class="project-preview-area">
+                <div class="preview-placeholder">
+                  <div class="preview-label">PROJECT PREVIEW</div>
+                  <p>Screenshots, wireframes, or interactive embeds will live here.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-panel" data-panel="autonomous-vehicle">
+              <div class="project-status">
+                <span class="status-dot"></span>
+                <span class="status-text">IN PROGRESS · SEPT 2026</span>
+              </div>
+              <h3 class="project-title">Autonomous Vehicle Course</h3>
+              <p class="project-description">Placeholder — project preview or featured content will appear here.</p>
+              <div class="project-preview-area">
+                <div class="preview-placeholder">
+                  <div class="preview-label">PROJECT PREVIEW</div>
+                  <p>Screenshots, wireframes, or interactive embeds will live here.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-panel" data-panel="feedback">
+              <div class="project-status">
+                <span class="status-dot thinking"></span>
+                <span class="status-text">THINKING · NOT YET STARTED</span>
+              </div>
+              <h3 class="project-title">Feedback Course</h3>
+              <p class="project-description">Placeholder — project preview or featured content will appear here.</p>
+              <div class="project-preview-area">
+                <div class="preview-placeholder">
+                  <div class="preview-label">EARLY THINKING</div>
+                  <p>Notes, frameworks, and early ideas will live here as this develops.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Journal button (bottom of tablet) -->
+          <div class="tablet-footer">
+            <button class="journal-button" aria-label="Open journal">
+              <span class="journal-button-icon" aria-hidden="true">📔</span>
+              <span class="journal-button-label">Open Journal</span>
+              <span class="journal-button-sub">General thoughts &amp; ideas</span>
+            </button>
+          </div>
+
+        </div>
+        <div class="tablet-home-button-large"></div>
+      </div>
+    </div>
+
+    <!-- Personality items around the tablet -->
     <button class="desk-item airpods" data-listening="lofi" aria-label="See what I'm currently listening to">
       <div class="airpod airpod-left"></div>
       <div class="airpod airpod-right"></div>
     </button>
-
-    <div class="desk-item pencil" aria-hidden="true">
-      <div class="pencil-body"></div>
-      <div class="pencil-tip"></div>
-    </div>
 
     <div class="desk-item mug" aria-hidden="true">
       <div class="mug-body"></div>
@@ -68,44 +132,6 @@
       <div class="phone-notch"></div>
     </button>
 
-    <!-- Central tablet -->
-    <div class="tablet" role="img" aria-label="Tablet showing current project preview">
-      <div class="tablet-frame">
-        <div class="tablet-screen">
-          <div class="tablet-placeholder">
-            <div class="tablet-placeholder-label">PROJECT PREVIEW</div>
-            <div class="tablet-placeholder-text">Content will load here when a project is selected</div>
-          </div>
-        </div>
-        <div class="tablet-home-button"></div>
-      </div>
-    </div>
-
-    <!-- Interactive sticky notes -->
-    <button class="sticky-note note-1" data-note="what-this-is" aria-label="Read note about what this project is">
-      <span class="note-header">What this is</span>
-      <span class="note-preview">Click to read</span>
-    </button>
-
-    <button class="sticky-note note-2" data-note="wrestling-with" aria-label="Read note about what I'm wrestling with">
-      <span class="note-header">Wrestling with</span>
-      <span class="note-preview">Click to read</span>
-    </button>
-
-    <button class="sticky-note note-3" data-note="open-questions" aria-label="Read note about open questions">
-      <span class="note-header">Open questions</span>
-      <span class="note-preview">Click to read</span>
-    </button>
-
-    <!-- Journal (persistent, clickable) -->
-    <button class="journal" aria-label="Open journal — general thoughts and ideas">
-      <div class="journal-cover">
-        <div class="journal-band"></div>
-        <div class="journal-title">Journal</div>
-        <div class="journal-subtitle">Thoughts &amp; ideas</div>
-      </div>
-      <div class="journal-pages"></div>
-    </button>
   </div>
 </section>
 
@@ -125,18 +151,6 @@
         <p>Journal content will live here — short notes, ideas, questions I'm sitting with. Not project-specific, just what's on my mind.</p>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- Sticky note overlay (hidden by default) -->
-<div class="note-overlay" hidden aria-hidden="true">
-  <div class="note-overlay-backdrop"></div>
-  <div class="note-overlay-content" role="dialog" aria-labelledby="note-overlay-heading" aria-modal="true">
-    <button class="note-close" aria-label="Close note">
-      <span aria-hidden="true">×</span>
-    </button>
-    <h2 id="note-overlay-heading">Note</h2>
-    <p class="note-overlay-body">Note content will appear here when a project is loaded.</p>
   </div>
 </div>
 
@@ -192,21 +206,31 @@
 
 <script>
 (function() {
-  // Tab switching (visual only for now — content loading comes later)
-  var tabs = document.querySelectorAll('.lab-tab');
-  tabs.forEach(function(tab) {
+  // Tablet tab switching (swaps project panels)
+  var tablet_tabs = document.querySelectorAll('.tablet-tab');
+  var project_panels = document.querySelectorAll('.project-panel');
+
+  tablet_tabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      tabs.forEach(function(t) {
+      var projectId = tab.getAttribute('data-project');
+      tablet_tabs.forEach(function(t) {
         t.classList.remove('active');
         t.setAttribute('aria-selected', 'false');
       });
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
+      project_panels.forEach(function(p) {
+        if (p.getAttribute('data-panel') === projectId) {
+          p.classList.add('active');
+        } else {
+          p.classList.remove('active');
+        }
+      });
     });
   });
 
-  // Journal overlay open/close
-  var journal = document.querySelector('.journal');
+  // Journal overlay
+  var journalButton = document.querySelector('.journal-button');
   var journalOverlay = document.querySelector('.journal-overlay');
   var journalClose = document.querySelector('.journal-close');
   var journalBackdrop = document.querySelector('.journal-overlay-backdrop');
@@ -225,63 +249,11 @@
     }, 300);
     document.body.style.overflow = '';
   }
-
-  if (journal) journal.addEventListener('click', openJournal);
+  if (journalButton) journalButton.addEventListener('click', openJournal);
   if (journalClose) journalClose.addEventListener('click', closeJournal);
   if (journalBackdrop) journalBackdrop.addEventListener('click', closeJournal);
 
-  // Sticky note overlay
-  var stickyNotes = document.querySelectorAll('.sticky-note');
-  var noteOverlay = document.querySelector('.note-overlay');
-  var noteClose = document.querySelector('.note-close');
-  var noteBackdrop = document.querySelector('.note-overlay-backdrop');
-  var noteHeading = document.querySelector('#note-overlay-heading');
-  var noteBody = document.querySelector('.note-overlay-body');
-
-  var notePlaceholderContent = {
-    'what-this-is': {
-      title: 'What this is',
-      body: 'Placeholder — project description will appear here when a project is loaded.'
-    },
-    'wrestling-with': {
-      title: 'Wrestling with',
-      body: 'Placeholder — design tensions and open decisions will appear here.'
-    },
-    'open-questions': {
-      title: 'Open questions',
-      body: 'Placeholder — questions being explored will appear here.'
-    }
-  };
-
-  function openNote(noteKey) {
-    var content = notePlaceholderContent[noteKey];
-    if (content) {
-      noteHeading.textContent = content.title;
-      noteBody.textContent = content.body;
-    }
-    noteOverlay.hidden = false;
-    noteOverlay.setAttribute('aria-hidden', 'false');
-    setTimeout(function() { noteOverlay.classList.add('is-open'); }, 10);
-    document.body.style.overflow = 'hidden';
-  }
-  function closeNote() {
-    noteOverlay.classList.remove('is-open');
-    setTimeout(function() {
-      noteOverlay.hidden = true;
-      noteOverlay.setAttribute('aria-hidden', 'true');
-    }, 300);
-    document.body.style.overflow = '';
-  }
-
-  stickyNotes.forEach(function(note) {
-    note.addEventListener('click', function() {
-      openNote(note.getAttribute('data-note'));
-    });
-  });
-  if (noteClose) noteClose.addEventListener('click', closeNote);
-  if (noteBackdrop) noteBackdrop.addEventListener('click', closeNote);
-
-  // AirPods (currently listening) overlay
+  // AirPods overlay
   var airpods = document.querySelector('.airpods');
   var listeningOverlay = document.querySelector('.listening-overlay');
   var listeningClose = document.querySelector('.listening-close');
@@ -305,7 +277,7 @@
   if (listeningClose) listeningClose.addEventListener('click', closeListening);
   if (listeningBackdrop) listeningBackdrop.addEventListener('click', closeListening);
 
-  // Phone notification overlay
+  // Phone overlay
   var phone = document.querySelector('.phone');
   var phoneOverlay = document.querySelector('.phone-overlay');
   var phoneClose = document.querySelector('.phone-close');
@@ -329,11 +301,10 @@
   if (phoneClose) phoneClose.addEventListener('click', closePhone);
   if (phoneBackdrop) phoneBackdrop.addEventListener('click', closePhone);
 
-  // ESC key closes overlays
+  // ESC key closes any open overlay
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       if (!journalOverlay.hidden) closeJournal();
-      if (!noteOverlay.hidden) closeNote();
       if (!listeningOverlay.hidden) closeListening();
       if (!phoneOverlay.hidden) closePhone();
     }
