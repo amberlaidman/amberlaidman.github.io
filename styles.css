@@ -1657,3 +1657,239 @@ h2.credit-band-heading {
   .journal-overlay-content { padding: 40px 24px 32px; }
   .note-overlay-content { padding: 32px 24px 28px; }
 }
+
+/* ============ AIRPODS & PHONE — INTERACTIVE STYLING ============ */
+/* Reset button defaults for AirPods and Phone since they're now clickable */
+button.airpods,
+button.phone {
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  background: transparent;
+}
+button.airpods {
+  background: transparent;
+}
+/* Preserve original phone visual (dark background) */
+button.phone {
+  background: #1a1a1c;
+}
+button.airpods:hover,
+button.phone:hover {
+  transform: translateY(-2px) rotate(-15deg);
+}
+button.phone:hover {
+  transform: translateY(-2px) rotate(15deg);
+}
+button.airpods:focus-visible,
+button.phone:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 6px;
+  border-radius: 4px;
+}
+button.airpods {
+  transition: transform 200ms ease;
+}
+button.phone {
+  transition: transform 200ms ease;
+}
+
+/* ============ LISTENING OVERLAY (AirPods click) ============ */
+.listening-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.listening-overlay.is-open { opacity: 1; }
+.listening-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+.listening-overlay-content {
+  position: relative;
+  background: var(--white);
+  max-width: 420px;
+  width: 90%;
+  padding: 40px 40px 36px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform 300ms ease;
+}
+.listening-overlay.is-open .listening-overlay-content { transform: scale(1); }
+.listening-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--grey-body);
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms;
+}
+.listening-close:hover { background: rgba(0, 0, 0, 0.06); }
+.listening-close:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.listening-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.listening-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--black);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+.listening-wave {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: flex-end;
+  height: 24px;
+}
+.listening-wave span {
+  display: block;
+  width: 3px;
+  background: var(--teal);
+  border-radius: 2px;
+  animation: wave 1.2s ease-in-out infinite;
+}
+.listening-wave span:nth-child(1) { height: 40%; animation-delay: 0s; }
+.listening-wave span:nth-child(2) { height: 80%; animation-delay: 0.15s; }
+.listening-wave span:nth-child(3) { height: 100%; animation-delay: 0.3s; }
+.listening-wave span:nth-child(4) { height: 70%; animation-delay: 0.45s; }
+.listening-wave span:nth-child(5) { height: 50%; animation-delay: 0.6s; }
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1.2); }
+}
+
+/* ============ PHONE NOTIFICATION OVERLAY ============ */
+.phone-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.phone-overlay.is-open { opacity: 1; }
+.phone-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+.phone-overlay-content {
+  position: relative;
+  max-width: 440px;
+  width: 90%;
+  transform: translateY(-30px) scale(0.9);
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.phone-overlay.is-open .phone-overlay-content {
+  transform: translateY(0) scale(1);
+}
+.phone-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 24px;
+  line-height: 1;
+  color: var(--grey-body);
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms;
+  z-index: 2;
+}
+.phone-close:hover { background: rgba(255, 255, 255, 1); }
+.phone-close:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+
+.phone-notification {
+  background: rgba(45, 45, 48, 0.85);
+  backdrop-filter: blur(20px);
+  color: var(--white);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+.phone-notif-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+.phone-notif-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--teal);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--cream);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.phone-notif-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.phone-notif-app {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.phone-notif-body h2.phone-notif-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+  margin: 4px 0 6px 0;
+  letter-spacing: -0.01em;
+}
+.phone-notif-text {
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+}
