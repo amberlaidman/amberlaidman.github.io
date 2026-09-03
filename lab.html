@@ -45,11 +45,11 @@
   </div>
 
   <div class="desk" role="region" aria-label="Workspace desk view">
-    <!-- Decorative items (non-interactive) -->
-    <div class="desk-item airpods" aria-hidden="true">
+    <!-- Interactive decorative items -->
+    <button class="desk-item airpods" data-listening="lofi" aria-label="See what I'm currently listening to">
       <div class="airpod airpod-left"></div>
       <div class="airpod airpod-right"></div>
-    </div>
+    </button>
 
     <div class="desk-item pencil" aria-hidden="true">
       <div class="pencil-body"></div>
@@ -63,10 +63,10 @@
       <div class="mug-steam steam-2"></div>
     </div>
 
-    <div class="desk-item phone" aria-hidden="true">
+    <button class="desk-item phone" aria-label="Read Amber's latest notification">
       <div class="phone-screen"></div>
       <div class="phone-notch"></div>
-    </div>
+    </button>
 
     <!-- Central tablet -->
     <div class="tablet" role="img" aria-label="Tablet showing current project preview">
@@ -137,6 +137,44 @@
     </button>
     <h2 id="note-overlay-heading">Note</h2>
     <p class="note-overlay-body">Note content will appear here when a project is loaded.</p>
+  </div>
+</div>
+
+<!-- AirPods overlay (currently listening) -->
+<div class="listening-overlay" hidden aria-hidden="true">
+  <div class="listening-overlay-backdrop"></div>
+  <div class="listening-overlay-content" role="dialog" aria-labelledby="listening-heading" aria-modal="true">
+    <button class="listening-close" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <div class="listening-label">Currently listening to</div>
+    <h2 id="listening-heading" class="listening-title">Lofi beats to build a course to</h2>
+    <div class="listening-wave" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- Phone notification overlay -->
+<div class="phone-overlay" hidden aria-hidden="true">
+  <div class="phone-overlay-backdrop"></div>
+  <div class="phone-overlay-content" role="dialog" aria-labelledby="phone-heading" aria-modal="true">
+    <button class="phone-close" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <div class="phone-notification">
+      <div class="phone-notif-header">
+        <div class="phone-notif-icon">A</div>
+        <div class="phone-notif-meta">
+          <div class="phone-notif-app">Amber's Notes</div>
+          <div class="phone-notif-time">now</div>
+        </div>
+      </div>
+      <div class="phone-notif-body">
+        <h2 id="phone-heading" class="phone-notif-title">Thought I had this morning</h2>
+        <p class="phone-notif-text">Placeholder for a quick thought or update — the kind of thing I'd normally scribble in a notes app before it disappears. Update this whenever something's on my mind that fits.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -243,11 +281,61 @@
   if (noteClose) noteClose.addEventListener('click', closeNote);
   if (noteBackdrop) noteBackdrop.addEventListener('click', closeNote);
 
+  // AirPods (currently listening) overlay
+  var airpods = document.querySelector('.airpods');
+  var listeningOverlay = document.querySelector('.listening-overlay');
+  var listeningClose = document.querySelector('.listening-close');
+  var listeningBackdrop = document.querySelector('.listening-overlay-backdrop');
+
+  function openListening() {
+    listeningOverlay.hidden = false;
+    listeningOverlay.setAttribute('aria-hidden', 'false');
+    setTimeout(function() { listeningOverlay.classList.add('is-open'); }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+  function closeListening() {
+    listeningOverlay.classList.remove('is-open');
+    setTimeout(function() {
+      listeningOverlay.hidden = true;
+      listeningOverlay.setAttribute('aria-hidden', 'true');
+    }, 300);
+    document.body.style.overflow = '';
+  }
+  if (airpods) airpods.addEventListener('click', openListening);
+  if (listeningClose) listeningClose.addEventListener('click', closeListening);
+  if (listeningBackdrop) listeningBackdrop.addEventListener('click', closeListening);
+
+  // Phone notification overlay
+  var phone = document.querySelector('.phone');
+  var phoneOverlay = document.querySelector('.phone-overlay');
+  var phoneClose = document.querySelector('.phone-close');
+  var phoneBackdrop = document.querySelector('.phone-overlay-backdrop');
+
+  function openPhone() {
+    phoneOverlay.hidden = false;
+    phoneOverlay.setAttribute('aria-hidden', 'false');
+    setTimeout(function() { phoneOverlay.classList.add('is-open'); }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+  function closePhone() {
+    phoneOverlay.classList.remove('is-open');
+    setTimeout(function() {
+      phoneOverlay.hidden = true;
+      phoneOverlay.setAttribute('aria-hidden', 'true');
+    }, 300);
+    document.body.style.overflow = '';
+  }
+  if (phone) phone.addEventListener('click', openPhone);
+  if (phoneClose) phoneClose.addEventListener('click', closePhone);
+  if (phoneBackdrop) phoneBackdrop.addEventListener('click', closePhone);
+
   // ESC key closes overlays
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       if (!journalOverlay.hidden) closeJournal();
       if (!noteOverlay.hidden) closeNote();
+      if (!listeningOverlay.hidden) closeListening();
+      if (!phoneOverlay.hidden) closePhone();
     }
   });
 })();
