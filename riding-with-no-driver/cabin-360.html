@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000}.pano-wrap{position:fixed;inset:0;cursor:grab;touch-action:none}.pano-wrap.grabbing{cursor:grabbing}.hs-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden}.hs{position:absolute;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;pointer-events:auto;cursor:pointer;opacity:0}.hs-pulse{position:absolute;inset:10px;border-radius:50%;border:2px solid rgba(255,255,255,.85);animation:hsPulse 2.2s ease-out infinite}.hs-dot{position:absolute;inset:16px;border-radius:50%;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.55)}.hs-pop{position:absolute;left:0;top:0;pointer-events:auto;width:172px;background:rgba(14,19,27,.92);color:#f2f5f8;border-radius:9px;padding:9px 11px;font:12px/1.4 -apple-system,'Helvetica Neue',Helvetica,sans-serif;backdrop-filter:blur(8px);box-shadow:0 5px 20px rgba(0,0,0,.4)}.hs-pop-t{font-weight:600;margin:0 20px 3px 0}.hs-pop-b{color:rgba(242,245,248,.8)}.hs-pop-x{position:absolute;top:7px;right:7px;width:22px;height:22px;border:0;border-radius:50%;background:transparent;color:rgba(255,255,255,.55);cursor:pointer;font-size:13px;line-height:1;padding:0}@keyframes hsPulse{0%{transform:scale(.55);opacity:.9}70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}</style><script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script></helmet><div class="pano-wrap" ref="{{ wrapRef }}"></div><div class="hs-layer" ref="{{ layerRef }}"><sc-for list="{{ hotspots }}" as="h" hint-placeholder-count="5"><div class="hs" data-hs="{{ h.id }}" onClick="{{ h.open }}"><span class="hs-pulse"></span><span class="hs-dot"></span></div></sc-for><sc-if value="{{ active }}" hint-placeholder-val="{{ false }}"><div class="hs-pop" data-hs-pop="1"><button class="hs-pop-x" onClick="{{ close }}">✕</button><div class="hs-pop-t">{{ activeTitle }}</div><div class="hs-pop-b">{{ activeText }}</div></div></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startFov&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:75,&quot;min&quot;:40,&quot;max&quot;:95,&quot;step&quot;:1,&quot;unit&quot;:&quot;°&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;View&quot;},&quot;dragSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;View&quot;},&quot;momentum&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;View&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.wrapRef = React.createRef();
+    this.layerRef = React.createRef();
+    this.state = { active: null };
+    // Placeholder positions — adjust lon (0-360, horizontal) / lat (-90..90, vertical) per marker.
+    // lon 180 ≈ straight ahead through the windshield in the current mapping.
+    this.hotspots = [
+      { id: 'screen',  lon: 179, lat: -3,  title: 'The screen',              text: 'Your route, what the car sees, and your trip controls.' },
+      { id: 'support', lon: 181, lat: -42, title: 'Support button',          text: 'One tap reaches a real person, any time — or asks the car to pull over.' },
+      { id: 'seat',    lon: 133, lat: 14,  title: 'The empty driver’s seat', text: 'No one’s here. After a few minutes, you stop noticing.' },
+      { id: 'belt',    lon: 48,  lat: -2,  title: 'Seatbelt',                text: 'The ride won’t start until you’re buckled.' },
+      { id: 'doors',   lon: 72,  lat: -12, title: 'Doors',                   text: 'Tap to unlock; the car confirms when it’s safe to step out.' }
+    ];
+  }
+  renderVals() {
+    const activeHs = this.hotspots.find(h => h.id === this.state.active);
+    return {
+      wrapRef: this.wrapRef,
+      layerRef: this.layerRef,
+      hotspots: this.hotspots.map(h => ({ ...h, open: () => this.setState({ active: h.id }) })),
+      active: !!activeHs,
+      activeTitle: activeHs ? activeHs.title : '',
+      activeText: activeHs ? activeHs.text : '',
+      close: () => this.setState({ active: null })
+    };
+  }
+  componentDidMount() {
+    this._raf = 0;
+    this._disposed = false;
+    const tryInit = () => {
+      if (this._disposed) return;
+      if (window.THREE && this.wrapRef.current) this.init();
+      else setTimeout(tryInit, 60);
+    };
+    tryInit();
+  }
+  componentWillUnmount() {
+    this._disposed = true;
+    cancelAnimationFrame(this._raf);
+    if (this._cleanup) this._cleanup();
+  }
+  init() {
+    const THREE = window.THREE;
+    const wrap = this.wrapRef.current;
+    const startFov = Number(this.props.startFov ?? 75);
+    const momentumOn = this.props.momentum ?? true;
+    const dragSpeed = Number(this.props.dragSpeed ?? 1);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(startFov, wrap.clientWidth / wrap.clientHeight, 0.1, 1100);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+    wrap.appendChild(renderer.domElement);
+
+    const geo = new THREE.SphereGeometry(500, 64, 48);
+    geo.scale(-1, 1, 1);
+    const tex = new THREE.TextureLoader().load((window.__resources && window.__resources.panoTex) || 'uploads/2b89b71e-8a0e-4f28-a97b-82cb1769160a.webp');
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: tex }));
+    scene.add(mesh);
+
+    // view state
+    let lon = 180, lat = 0;
+    let vLon = 0, vLat = 0;
+    let fov = startFov;
+    let targetFov = startFov;
+    const FOV_MIN = 30, FOV_MAX = 95;
+
+    // pointer / touch
+    const pointers = new Map();
+    let lastX = 0, lastY = 0, pinchDist = 0, dragging = false;
+    let downX = 0, downY = 0, moved = 0;
+
+    const speedFactor = () => 0.11 * (fov / 75) * dragSpeed;
+
+    const onDown = (e) => {
+      wrap.setPointerCapture(e.pointerId);
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size === 1) {
+        dragging = true;
+        wrap.classList.add('grabbing');
+        lastX = e.clientX; lastY = e.clientY;
+        downX = e.clientX; downY = e.clientY; moved = 0;
+        vLon = 0; vLat = 0;
+      } else if (pointers.size === 2) {
+        const p = [...pointers.values()];
+        pinchDist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
+      }
+    };
+    const onMove = (e) => {
+      if (!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size === 2) {
+        const p = [...pointers.values()];
+        const d = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
+        if (pinchDist > 0) {
+          targetFov = Math.max(FOV_MIN, Math.min(FOV_MAX, targetFov * (pinchDist / d)));
+        }
+        pinchDist = d;
+        return;
+      }
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      lastX = e.clientX; lastY = e.clientY;
+      moved = Math.max(moved, Math.hypot(e.clientX - downX, e.clientY - downY));
+      const s = speedFactor();
+      lon -= dx * s;
+      lat += dy * s;
+      vLon = -dx * s;
+      vLat = dy * s;
+    };
+    const onUp = (e) => {
+      pointers.delete(e.pointerId);
+      if (pointers.size < 2) pinchDist = 0;
+      if (pointers.size === 0) {
+        dragging = false;
+        wrap.classList.remove('grabbing');
+        if (!momentumOn) { vLon = 0; vLat = 0; }
+        // a click (not a drag) on the background dismisses any open popup
+        if (moved < 6 && this.state.active) this.setState({ active: null });
+      } else if (pointers.size === 1) {
+        const p = [...pointers.values()][0];
+        lastX = p.x; lastY = p.y;
+      }
+    };
+    const onWheel = (e) => {
+      e.preventDefault();
+      targetFov = Math.max(FOV_MIN, Math.min(FOV_MAX, targetFov + e.deltaY * 0.05));
+    };
+    const onResize = () => {
+      camera.aspect = wrap.clientWidth / wrap.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+    };
+
+    wrap.addEventListener('pointerdown', onDown);
+    wrap.addEventListener('pointermove', onMove);
+    wrap.addEventListener('pointerup', onUp);
+    wrap.addEventListener('pointercancel', onUp);
+    wrap.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('resize', onResize);
+
+    // hotspot projection helpers (allocated once)
+    const camDir = new THREE.Vector3();
+    const hsWorld = {};
+    for (const h of this.hotspots) {
+      const phi = THREE.MathUtils.degToRad(90 - h.lat);
+      const theta = THREE.MathUtils.degToRad(h.lon);
+      hsWorld[h.id] = new THREE.Vector3(
+        500 * Math.sin(phi) * Math.cos(theta),
+        500 * Math.cos(phi),
+        500 * Math.sin(phi) * Math.sin(theta)
+      );
+    }
+    const proj = new THREE.Vector3();
+
+    const animate = () => {
+      if (this._disposed) return;
+      this._raf = requestAnimationFrame(animate);
+      if (!dragging && momentumOn) {
+        lon += vLon; lat += vLat;
+        vLon *= 0.94; vLat *= 0.94;
+        if (Math.abs(vLon) < 0.0005) vLon = 0;
+        if (Math.abs(vLat) < 0.0005) vLat = 0;
+      }
+      lat = Math.max(-85, Math.min(85, lat));
+      fov += (targetFov - fov) * 0.18;
+      if (Math.abs(camera.fov - fov) > 0.01) {
+        camera.fov = fov;
+        camera.updateProjectionMatrix();
+      }
+      const phi = THREE.MathUtils.degToRad(90 - lat);
+      const theta = THREE.MathUtils.degToRad(lon);
+      camera.lookAt(
+        500 * Math.sin(phi) * Math.cos(theta),
+        500 * Math.cos(phi),
+        500 * Math.sin(phi) * Math.sin(theta)
+      );
+      renderer.render(scene, camera);
+
+      // keep markers + popup locked to their 3D anchors
+      const layer = this.layerRef.current;
+      if (layer) {
+        const w = wrap.clientWidth, hgt = wrap.clientHeight;
+        camera.getWorldDirection(camDir);
+        const mScale = Math.max(0.75, Math.min(1.35, 75 / fov));
+        const pop = layer.querySelector('[data-hs-pop]');
+        for (const h of this.hotspots) {
+          const el = layer.querySelector('[data-hs="' + h.id + '"]');
+          if (!el) continue;
+          const world = hsWorld[h.id];
+          const front = world.dot(camDir) > 0;
+          proj.copy(world).project(camera);
+          const x = (proj.x * 0.5 + 0.5) * w;
+          const y = (-proj.y * 0.5 + 0.5) * hgt;
+          const visible = front && proj.z < 1;
+          el.style.opacity = visible ? '1' : '0';
+          el.style.pointerEvents = visible ? 'auto' : 'none';
+          if (visible) el.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + mScale + ')';
+          if (pop && this.state.active === h.id) {
+            if (visible) {
+              pop.style.opacity = '1';
+              pop.style.pointerEvents = 'auto';
+              // open away from screen center so the object stays visible
+              const side = x < w / 2 ? -1 : 1;
+              pop.style.left = (x + side * 26) + 'px';
+              pop.style.top = Math.max(70, Math.min(hgt - 70, y)) + 'px';
+              pop.style.transform = side < 0 ? 'translate(-100%,-50%)' : 'translateY(-50%)';
+            } else {
+              pop.style.opacity = '0';
+              pop.style.pointerEvents = 'none';
+            }
+          }
+        }
+      }
+    };
+    animate();
+
+    // debug/tuning hook: window.__panoView(lon, lat, fov)
+    window.__panoView = (l, la, f) => { lon = l; lat = la; if (f) { targetFov = f; fov = f; } vLon = 0; vLat = 0; };
+
+    this._cleanup = () => {
+      wrap.removeEventListener('pointerdown', onDown);
+      wrap.removeEventListener('pointermove', onMove);
+      wrap.removeEventListener('pointerup', onUp);
+      wrap.removeEventListener('pointercancel', onUp);
+      wrap.removeEventListener('wheel', onWheel);
+      window.removeEventListener('resize', onResize);
+      renderer.dispose();
+      geo.dispose();
+      tex.dispose();
+      if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
+    };
+  }
+}
+</script>
+</body>
+</html>

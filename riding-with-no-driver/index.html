@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600&display=swap"><style>html,body{margin:0;padding:0;width:100%;min-height:100%;background:#10151c}a{color:#8ccbd3}a:hover{color:#b3e0e6}@keyframes shRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important}}.sh-cta:hover{background:#b3e0e6!important;transform:translateY(-1px)}.sh-restart:hover{color:#eef2f5!important;border-bottom-color:rgba(238,242,245,.58)!important}.sh-row:hover{background:rgba(140,203,211,.05)}.sh-foot:hover{border-bottom-color:rgba(179,224,230,.7)!important}</style></helmet>
+<div style="min-height:100vh;background:#10151c;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#eef2f5;padding:0;position:relative;overflow-x:hidden">
+  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(99,184,194,.1),transparent 62%)"></div>
+  <div style="position:relative;max-width:1080px;margin:0 auto;padding:clamp(56px,9vh,120px) 32px clamp(64px,10vh,120px);display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(48px,7vh,80px)">
+
+    <header style="display:flex;flex-direction:column;align-items:flex-start;animation:shRise 1.1s .1s cubic-bezier(.22,1,.36,1) both">
+      <p style="font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:rgba(238,242,245,.58);margin:0 0 26px">A short self-paced course</p>
+      <h1 style="font-family:'Source Serif 4',Georgia,serif;font-weight:300;font-size:clamp(44px,7vw,92px);line-height:1.02;letter-spacing:.01em;margin:0;max-width:15ch">Riding With No Driver</h1>
+      <p style="font-family:'Source Serif 4',Georgia,serif;font-size:clamp(19px,2vw,26px);line-height:1.5;color:rgba(238,242,245,.8);margin:28px 0 0;max-width:34ch;text-wrap:pretty">What it&rsquo;s actually like to ride in a car that drives itself &mdash; and whether you&rsquo;d get in one.</p>
+      <div style="margin:36px 0 0;max-width:46ch">
+        <p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,242,245,.58);margin:0 0 14px">By the end, you should be able to</p>
+        <ul style="margin:0;padding:0;list-style:none;display:grid;gap:0">
+          <li style="display:grid;grid-template-columns:14px 1fr;gap:0 12px;align-items:baseline;padding:9px 0;border-top:1px solid rgba(238,242,245,.11);font-size:14px;line-height:1.5;color:rgba(238,242,245,.78)"><span style="color:#8ccbd3">&mdash;</span><span>Say what the car does when it isn&rsquo;t sure what to do.</span></li>
+          <li style="display:grid;grid-template-columns:14px 1fr;gap:0 12px;align-items:baseline;padding:9px 0;border-top:1px solid rgba(238,242,245,.11);font-size:14px;line-height:1.5;color:rgba(238,242,245,.78)"><span style="color:#8ccbd3">&mdash;</span><span>Describe what the safety evidence shows &mdash; and what it doesn&rsquo;t cover.</span></li>
+          <li style="display:grid;grid-template-columns:14px 1fr;gap:0 12px;align-items:baseline;padding:9px 0;border-top:1px solid rgba(238,242,245,.11);font-size:14px;line-height:1.5;color:rgba(238,242,245,.78)"><span style="color:#8ccbd3">&mdash;</span><span>Walk through a first ride, from hailing the car to closing the door.</span></li>
+          <li style="display:grid;grid-template-columns:14px 1fr;gap:0 12px;align-items:baseline;padding:9px 0;border-top:1px solid rgba(238,242,245,.11);border-bottom:1px solid rgba(238,242,245,.11);font-size:14px;line-height:1.5;color:rgba(238,242,245,.78)"><span style="color:#8ccbd3">&mdash;</span><span>Decide, with a clearer picture, whether you&rsquo;d take one.</span></li>
+        </ul>
+      </div>
+      <p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,242,245,.58);margin:30px 0 0">Six modules &middot; about 12 minutes &middot; no quiz &middot; read-aloud available</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;margin:38px 0 0">
+        <a href="{{ ctaHref }}" style="display:inline-block;font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#0d1117;background:#8ccbd3;text-decoration:none;padding:16px 30px;border-radius:2px;transition:background .25s ease,transform .25s ease" class="sh-cta">{{ ctaLabel }}</a>
+        <sc-if value="{{ resuming }}" hint-placeholder-val="{{ false }}"><button onClick="{{ restart }}" style="font-family:inherit;font-size:13px;letter-spacing:.05em;color:rgba(238,242,245,.6);background:none;border:0;border-bottom:1px solid rgba(238,242,245,.22);padding:0 0 3px;cursor:pointer;transition:color .25s ease,border-color .25s ease" class="sh-restart">Start over from the beginning</button></sc-if>
+      </div>
+    </header>
+
+    <nav aria-label="Course modules" style="display:grid;grid-template-columns:minmax(0,1fr);gap:0;animation:shRise 1.1s .35s cubic-bezier(.22,1,.36,1) both">
+      <p style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(238,242,245,.58);margin:0 0 4px">Modules</p>
+      <sc-for list="{{ mods }}" as="m" hint-placeholder-count="6">
+        <a href="{{ m.href }}" style="display:grid;grid-template-columns:44px minmax(0,1fr) 90px;gap:0 20px;align-items:baseline;padding:22px 4px;border-top:1px solid rgba(238,242,245,.11);text-decoration:none;color:inherit;transition:background .2s ease,padding .2s ease" class="sh-row">
+          <span style="font-family:'Source Serif 4',Georgia,serif;font-size:15px;color:#8ccbd3;font-variant-numeric:tabular-nums">{{ m.num }}</span>
+          <span style="display:block">
+            <span style="display:block;font-family:'Source Serif 4',Georgia,serif;font-size:clamp(21px,2.3vw,30px);font-weight:400;line-height:1.2;color:#eef2f5">{{ m.title }}</span>
+            <span style="display:block;font-size:14px;line-height:1.55;color:rgba(238,242,245,.6);margin-top:8px;max-width:52ch;text-wrap:pretty">{{ m.blurb }}</span>
+          </span>
+          <span style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(238,242,245,.58);text-align:right">{{ m.state }}</span>
+        </a>
+      </sc-for>
+      <div style="border-top:1px solid rgba(238,242,245,.11)"></div>
+    </nav>
+
+    <div style="animation:shRise 1.1s .45s cubic-bezier(.22,1,.36,1) both;border-top:1px solid rgba(238,242,245,.11);padding-top:20px;max-width:60ch">
+      <p style="font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,242,245,.58);margin:0 0 12px">About the evidence</p>
+      <p style="font-size:13px;line-height:1.6;color:rgba(238,242,245,.6);margin:0;text-wrap:pretty">Safety figures, crash comparisons and the incidents named in Module 4 are drawn from published Waymo and Swiss Re research and from public NHTSA records. This is a fast-moving field &mdash; figures get revised and new incidents occur. Treat the numbers as accurate to the review date, not as current.</p>
+      <p style="font-size:13px;line-height:1.6;color:rgba(238,242,245,.58);margin:12px 0 0">Content last reviewed <strong style="font-weight:500;color:rgba(238,242,245,.7)">September 2026</strong>. Next review due March 2027.</p>
+    </div>
+
+    <footer style="display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;animation:shRise 1.1s .55s cubic-bezier(.22,1,.36,1) both">
+      <a href="course-document.html" style="font-size:13px;letter-spacing:.05em;color:#8ccbd3;text-decoration:none;border-bottom:1px solid rgba(140,203,211,.35);padding-bottom:3px;transition:border-color .25s ease" class="sh-foot">Read the whole thing as a document &rarr;</a>
+      <a href="cabin-360.html" style="font-size:13px;letter-spacing:.05em;color:rgba(238,242,245,.55);text-decoration:none;border-bottom:1px solid rgba(238,242,245,.2);padding-bottom:3px">Open the 360&deg; cabin on its own &rarr;</a>
+    </footer>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.defs = [
+      ['01', 'The Empty Seat', 'A car pulls up and the driver\u2019s seat is empty. Where the strangeness comes from.', 'module-1-the-empty-seat.html'],
+      ['02', 'Why This Exists', 'The mobility problem these cars were actually built to solve.', 'module-2-why-this-exists.html'],
+      ['03', 'Always Attentive', 'The four things the car does, constantly, in every direction at once.', 'module-3-always-attentive.html'],
+      ['04', 'Is It Actually Safe?', 'What the crash record shows, and the rigor behind the number.', 'module-4-is-it-actually-safe.html'],
+      ['05', 'What to Expect on a Ride', 'Step by step, plus a look around the cabin you can turn in every direction.', 'module-5-what-to-expect.html'],
+      ['06', 'Which One Sounds Like You?', 'The empty seat, revisited \u2014 and where you land now.', 'module-6-which-one-sounds-like-you.html']
+    ];
+    let furthest = 0, beats = {};
+    try {
+      const f = parseInt(localStorage.getItem('rwnd.furthest'), 10);
+      if (f >= 1 && f <= 6) furthest = f;
+      for (let i = 1; i <= 6; i++) {
+        const b = parseInt(localStorage.getItem('rwnd.m' + i + '.beat'), 10);
+        if (b > 0) beats[i] = b;
+      }
+    } catch (err) {}
+    this.state = { furthest: furthest, beats: beats };
+  }
+  renderVals() {
+    const f = this.state.furthest;
+    const resuming = f >= 1 && !(f === 1 && !this.state.beats[1]);
+    return {
+      resuming: resuming,
+      ctaLabel: resuming ? 'Resume \u00b7 Module ' + f + ' \u2192' : 'Start the course \u2192',
+      ctaHref: resuming ? this.defs[f - 1][3] : this.defs[0][3],
+      mods: this.defs.map((d, i) => ({
+        num: d[0],
+        title: d[1],
+        blurb: d[2],
+        href: d[3],
+        state: i + 1 < f ? 'Done' : (i + 1 === f ? 'In progress' : '')
+      })),
+      restart: (e) => {
+        e.preventDefault();
+        try {
+          localStorage.removeItem('rwnd.hesitation');
+          localStorage.removeItem('rwnd.ready1');
+          localStorage.removeItem('rwnd.furthest');
+          for (let i = 1; i <= 6; i++) localStorage.removeItem('rwnd.m' + i + '.beat');
+        } catch (err) {}
+        this.setState({ furthest: 0, beats: {} });
+        window.location.href = this.defs[0][3];
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
