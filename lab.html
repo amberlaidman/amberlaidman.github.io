@@ -7,7 +7,7 @@
 <meta name="description" content="Where I share what I'm actively building — in-progress work, experiments, and ideas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body id="top">
@@ -31,166 +31,126 @@
   <div class="lab-header-inner">
     <div class="section-label">The Lab</div>
     <h1>Welcome to the Lab.</h1>
-    <p class="lead">This is where I share what I'm actively building — the messy version, not the case-study-ready one. Peek into what's on my desk right now.</p>
+    <p class="lead">This is where I share what I'm actively building — the messy version, not the case-study-ready one. Peek into what's in motion.</p>
   </div>
 </header>
 
 <section class="lab-content" aria-labelledby="lab-projects-heading">
-  <h2 id="lab-projects-heading" class="sr-only">Current projects</h2>
+  <h2 id="lab-projects-heading" class="sr-only">Current projects and journal</h2>
 
-  <div class="desk" role="region" aria-label="Workspace desk view">
+  <div class="lab-tabs" role="tablist" aria-label="Select a project or journal">
+    <button class="lab-tab active" role="tab" aria-selected="true" data-panel="menstrual-cycle">Menstrual Cycle Course</button>
+    <button class="lab-tab" role="tab" aria-selected="false" data-panel="autonomous-vehicle">Autonomous Vehicle Course</button>
+    <button class="lab-tab" role="tab" aria-selected="false" data-panel="feedback">Feedback Course</button>
+    <button class="lab-tab journal-tab" role="tab" aria-selected="false" data-panel="journal">Journal</button>
+  </div>
 
-    <!-- Center: Large tablet with project tabs and content -->
-    <div class="tablet-large" aria-label="Tablet showing current project">
-      <div class="tablet-frame-large">
-        <div class="tablet-screen-large">
+  <!-- Menstrual Cycle Course panel -->
+  <div class="project-panel active" data-panel="menstrual-cycle" role="tabpanel">
+    <div class="project-header">
+      <div class="project-status">
+        <span class="status-dot"></span>
+        <span class="status-text">IN PROGRESS · SEPT 2026</span>
+      </div>
+      <h3 class="project-title">Menstrual Cycle Course</h3>
+      <p class="project-description">A course for young girls and women filling the massive gap in period education. Building this because commercial and school resources consistently underdeliver on something universal.</p>
+    </div>
 
-          <!-- Project tabs inside the tablet -->
-          <div class="tablet-tabs" role="tablist" aria-label="Select a project">
-            <button class="tablet-tab active" role="tab" aria-selected="true" data-project="menstrual-cycle">Menstrual Cycle Course</button>
-            <button class="tablet-tab" role="tab" aria-selected="false" data-project="autonomous-vehicle">Autonomous Vehicle Course</button>
-            <button class="tablet-tab" role="tab" aria-selected="false" data-project="feedback">Feedback Course</button>
-          </div>
+    <div class="project-preview">
+      <div class="preview-label">Current Progress</div>
+      <p class="preview-placeholder-text">Featured screenshot, wireframe, or interactive embed will live here as the course develops.</p>
+    </div>
 
-          <!-- Project content area -->
-          <div class="tablet-content">
-            <div class="project-panel active" data-panel="menstrual-cycle">
-              <div class="project-status">
-                <span class="status-dot"></span>
-                <span class="status-text">IN PROGRESS · SEPT 2026</span>
-              </div>
-              <h3 class="project-title">Menstrual Cycle Course</h3>
-              <p class="project-description">Placeholder — project preview or featured content will appear here.</p>
-              <div class="project-preview-area">
-                <div class="preview-placeholder">
-                  <div class="preview-label">PROJECT PREVIEW</div>
-                  <p>Screenshots, wireframes, or interactive embeds will live here.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="project-panel" data-panel="autonomous-vehicle">
-              <div class="project-status">
-                <span class="status-dot"></span>
-                <span class="status-text">IN PROGRESS · SEPT 2026</span>
-              </div>
-              <h3 class="project-title">Autonomous Vehicle Course</h3>
-              <p class="project-description">Placeholder — project preview or featured content will appear here.</p>
-              <div class="project-preview-area">
-                <div class="preview-placeholder">
-                  <div class="preview-label">PROJECT PREVIEW</div>
-                  <p>Screenshots, wireframes, or interactive embeds will live here.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="project-panel" data-panel="feedback">
-              <div class="project-status">
-                <span class="status-dot thinking"></span>
-                <span class="status-text">THINKING · NOT YET STARTED</span>
-              </div>
-              <h3 class="project-title">Feedback Course</h3>
-              <p class="project-description">Placeholder — project preview or featured content will appear here.</p>
-              <div class="project-preview-area">
-                <div class="preview-placeholder">
-                  <div class="preview-label">EARLY THINKING</div>
-                  <p>Notes, frameworks, and early ideas will live here as this develops.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Journal button (bottom of tablet) -->
-          <div class="tablet-footer">
-            <button class="journal-button" aria-label="Open journal">
-              <span class="journal-button-icon" aria-hidden="true">📔</span>
-              <span class="journal-button-label">Open Journal</span>
-              <span class="journal-button-sub">General thoughts &amp; ideas</span>
-            </button>
-          </div>
-
-        </div>
-        <div class="tablet-home-button-large"></div>
+    <div class="project-sections">
+      <div class="project-section">
+        <h4>What I'm wrestling with</h4>
+        <p>Placeholder — design tensions and open decisions will go here. This is where I share what I haven't figured out yet.</p>
+      </div>
+      <div class="project-section">
+        <h4>Open questions</h4>
+        <ul>
+          <li>Placeholder — real question being explored</li>
+          <li>Placeholder — another real question</li>
+          <li>Placeholder — a third question</li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <!-- Personality items around the tablet -->
-    <button class="desk-item airpods" data-listening="lofi" aria-label="See what I'm currently listening to">
-      <div class="airpod airpod-left"></div>
-      <div class="airpod airpod-right"></div>
-    </button>
-
-    <div class="desk-item mug" aria-hidden="true">
-      <div class="mug-body"></div>
-      <div class="mug-handle"></div>
-      <div class="mug-steam steam-1"></div>
-      <div class="mug-steam steam-2"></div>
+  <!-- Autonomous Vehicle Course panel -->
+  <div class="project-panel" data-panel="autonomous-vehicle" role="tabpanel" hidden>
+    <div class="project-header">
+      <div class="project-status">
+        <span class="status-dot"></span>
+        <span class="status-text">IN PROGRESS · SEPT 2026</span>
+      </div>
+      <h3 class="project-title">Autonomous Vehicle Course</h3>
+      <p class="project-description">Demystifying Waymo and similar self-driving technology so people feel confident understanding — and eventually riding in — autonomous vehicles.</p>
     </div>
 
-    <button class="desk-item phone" aria-label="Read Amber's latest notification">
-      <div class="phone-screen"></div>
-      <div class="phone-notch"></div>
-    </button>
+    <div class="project-preview">
+      <div class="preview-label">Current Progress</div>
+      <p class="preview-placeholder-text">Featured screenshot, wireframe, or interactive embed will live here as the course develops.</p>
+    </div>
 
+    <div class="project-sections">
+      <div class="project-section">
+        <h4>What I'm wrestling with</h4>
+        <p>Placeholder — design tensions and open decisions will go here.</p>
+      </div>
+      <div class="project-section">
+        <h4>Open questions</h4>
+        <ul>
+          <li>Placeholder — real question being explored</li>
+          <li>Placeholder — another real question</li>
+        </ul>
+      </div>
+    </div>
   </div>
-</section>
 
-<!-- Journal overlay (hidden by default) -->
-<div class="journal-overlay" hidden aria-hidden="true">
-  <div class="journal-overlay-backdrop"></div>
-  <div class="journal-overlay-content" role="dialog" aria-labelledby="journal-heading" aria-modal="true">
-    <button class="journal-close" aria-label="Close journal">
-      <span aria-hidden="true">×</span>
-    </button>
-    <h2 id="journal-heading">Journal</h2>
-    <p class="journal-intro">General thoughts, ideas, and things I'm mulling over — outside of active projects.</p>
+  <!-- Feedback Course panel -->
+  <div class="project-panel" data-panel="feedback" role="tabpanel" hidden>
+    <div class="project-header">
+      <div class="project-status">
+        <span class="status-dot thinking"></span>
+        <span class="status-text">THINKING · NOT YET STARTED</span>
+      </div>
+      <h3 class="project-title">Feedback Course</h3>
+      <p class="project-description">Thinking about a course on feedback — one of the highest-leverage skills at work and one of the most poorly taught.</p>
+    </div>
 
+    <div class="project-preview">
+      <div class="preview-label">Early Thinking</div>
+      <p class="preview-placeholder-text">Notes, frameworks, and early ideas will live here as this develops. Right now, this is a "sitting with it" project.</p>
+    </div>
+
+    <div class="project-sections">
+      <div class="project-section">
+        <h4>What I'm wrestling with</h4>
+        <p>Placeholder — design tensions and open decisions will go here.</p>
+      </div>
+      <div class="project-section">
+        <h4>Open questions</h4>
+        <ul>
+          <li>Placeholder — real question being explored</li>
+          <li>Placeholder — another real question</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Journal panel -->
+  <div class="journal-panel" data-panel="journal" role="tabpanel" hidden>
+    <h3>Journal</h3>
+    <p class="journal-intro">General thoughts, ideas, and things I'm mulling over — outside of active projects. Updated when something's worth writing down.</p>
     <div class="journal-entries">
       <div class="journal-entry">
-        <div class="journal-entry-date">Placeholder entry</div>
-        <p>Journal content will live here — short notes, ideas, questions I'm sitting with. Not project-specific, just what's on my mind.</p>
+        <div class="journal-entry-date">Placeholder entry · September 2026</div>
+        <p>Placeholder — real thoughts, questions, and observations that don't belong to any single project will live here. Short, honest, in-progress.</p>
       </div>
     </div>
   </div>
-</div>
-
-<!-- AirPods overlay (currently listening) -->
-<div class="listening-overlay" hidden aria-hidden="true">
-  <div class="listening-overlay-backdrop"></div>
-  <div class="listening-overlay-content" role="dialog" aria-labelledby="listening-heading" aria-modal="true">
-    <button class="listening-close" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
-    <div class="listening-label">Currently listening to</div>
-    <h2 id="listening-heading" class="listening-title">Lofi beats to build a course to</h2>
-    <div class="listening-wave" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
-  </div>
-</div>
-
-<!-- Phone notification overlay -->
-<div class="phone-overlay" hidden aria-hidden="true">
-  <div class="phone-overlay-backdrop"></div>
-  <div class="phone-overlay-content" role="dialog" aria-labelledby="phone-heading" aria-modal="true">
-    <button class="phone-close" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
-    <div class="phone-notification">
-      <div class="phone-notif-header">
-        <div class="phone-notif-icon">A</div>
-        <div class="phone-notif-meta">
-          <div class="phone-notif-app">Amber's Notes</div>
-          <div class="phone-notif-time">now</div>
-        </div>
-      </div>
-      <div class="phone-notif-body">
-        <h2 id="phone-heading" class="phone-notif-title">Thought I had this morning</h2>
-        <p class="phone-notif-text">Placeholder for a quick thought or update — the kind of thing I'd normally scribble in a notes app before it disappears. Update this whenever something's on my mind that fits.</p>
-      </div>
-    </div>
-  </div>
-</div>
+</section>
 
 </main>
 
@@ -206,108 +166,28 @@
 
 <script>
 (function() {
-  // Tablet tab switching (swaps project panels)
-  var tablet_tabs = document.querySelectorAll('.tablet-tab');
-  var project_panels = document.querySelectorAll('.project-panel');
+  var tabs = document.querySelectorAll('.lab-tab');
+  var panels = document.querySelectorAll('.project-panel, .journal-panel');
 
-  tablet_tabs.forEach(function(tab) {
+  tabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      var projectId = tab.getAttribute('data-project');
-      tablet_tabs.forEach(function(t) {
+      var panelName = tab.getAttribute('data-panel');
+      tabs.forEach(function(t) {
         t.classList.remove('active');
         t.setAttribute('aria-selected', 'false');
       });
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
-      project_panels.forEach(function(p) {
-        if (p.getAttribute('data-panel') === projectId) {
+      panels.forEach(function(p) {
+        if (p.getAttribute('data-panel') === panelName) {
           p.classList.add('active');
+          p.hidden = false;
         } else {
           p.classList.remove('active');
+          p.hidden = true;
         }
       });
     });
-  });
-
-  // Journal overlay
-  var journalButton = document.querySelector('.journal-button');
-  var journalOverlay = document.querySelector('.journal-overlay');
-  var journalClose = document.querySelector('.journal-close');
-  var journalBackdrop = document.querySelector('.journal-overlay-backdrop');
-
-  function openJournal() {
-    journalOverlay.hidden = false;
-    journalOverlay.setAttribute('aria-hidden', 'false');
-    setTimeout(function() { journalOverlay.classList.add('is-open'); }, 10);
-    document.body.style.overflow = 'hidden';
-  }
-  function closeJournal() {
-    journalOverlay.classList.remove('is-open');
-    setTimeout(function() {
-      journalOverlay.hidden = true;
-      journalOverlay.setAttribute('aria-hidden', 'true');
-    }, 300);
-    document.body.style.overflow = '';
-  }
-  if (journalButton) journalButton.addEventListener('click', openJournal);
-  if (journalClose) journalClose.addEventListener('click', closeJournal);
-  if (journalBackdrop) journalBackdrop.addEventListener('click', closeJournal);
-
-  // AirPods overlay
-  var airpods = document.querySelector('.airpods');
-  var listeningOverlay = document.querySelector('.listening-overlay');
-  var listeningClose = document.querySelector('.listening-close');
-  var listeningBackdrop = document.querySelector('.listening-overlay-backdrop');
-
-  function openListening() {
-    listeningOverlay.hidden = false;
-    listeningOverlay.setAttribute('aria-hidden', 'false');
-    setTimeout(function() { listeningOverlay.classList.add('is-open'); }, 10);
-    document.body.style.overflow = 'hidden';
-  }
-  function closeListening() {
-    listeningOverlay.classList.remove('is-open');
-    setTimeout(function() {
-      listeningOverlay.hidden = true;
-      listeningOverlay.setAttribute('aria-hidden', 'true');
-    }, 300);
-    document.body.style.overflow = '';
-  }
-  if (airpods) airpods.addEventListener('click', openListening);
-  if (listeningClose) listeningClose.addEventListener('click', closeListening);
-  if (listeningBackdrop) listeningBackdrop.addEventListener('click', closeListening);
-
-  // Phone overlay
-  var phone = document.querySelector('.phone');
-  var phoneOverlay = document.querySelector('.phone-overlay');
-  var phoneClose = document.querySelector('.phone-close');
-  var phoneBackdrop = document.querySelector('.phone-overlay-backdrop');
-
-  function openPhone() {
-    phoneOverlay.hidden = false;
-    phoneOverlay.setAttribute('aria-hidden', 'false');
-    setTimeout(function() { phoneOverlay.classList.add('is-open'); }, 10);
-    document.body.style.overflow = 'hidden';
-  }
-  function closePhone() {
-    phoneOverlay.classList.remove('is-open');
-    setTimeout(function() {
-      phoneOverlay.hidden = true;
-      phoneOverlay.setAttribute('aria-hidden', 'true');
-    }, 300);
-    document.body.style.overflow = '';
-  }
-  if (phone) phone.addEventListener('click', openPhone);
-  if (phoneClose) phoneClose.addEventListener('click', closePhone);
-  if (phoneBackdrop) phoneBackdrop.addEventListener('click', closePhone);
-
-  // ESC key closes any open overlay
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      if (!journalOverlay.hidden) closeJournal();
-      if (!listeningOverlay.hidden) closeListening();
-      if (!phoneOverlay.hidden) closePhone();
-    }
   });
 })();
 </script>
