@@ -95,6 +95,9 @@ button:focus-visible{outline:2px solid #e8c07a;outline-offset:3px}
 .xpp{font-size:13.5px;line-height:1.7;color:#aab1c6;margin:0 0 12px}
 .xpq{font-size:13.5px;line-height:1.65;color:#c9cfe0;font-style:italic;
  border-left:2px solid rgba(232,192,122,.4);padding:2px 0 2px 12px;margin:12px 0}
+.xpdiv{display:flex;align-items:center;gap:10px;margin:30px 0 4px}
+.xpdiv::before,.xpdiv::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.09)}
+.xpdiv i{width:4px;height:4px;border-radius:50%;background:var(--gold-dim);opacity:.85;display:block}
 .xpend{font-family:var(--serif);font-size:15px;color:#c0aa80;margin:26px 0 4px;text-align:center}
 .xpmore{background:none;border:0;color:#a08c66;font:inherit;font-size:13px;cursor:pointer;padding:8px 0;text-decoration:underline}
 .src{margin:6px 0 20px;border-top:1px solid rgba(255,255,255,.09);padding-top:14px}
@@ -546,8 +549,10 @@ function draw(stars,top,second,low,fsel,carry,hobB,norm){
    <div class="xph">Ways to learn more about it</div>
    <div id="xproutes"></div>
    <button class="xpmore" id="xpmore" type="button">Show the other routes</button>
+      <div class="xpdiv"><i></i></div>
    <div class="xph">Talking to someone who does the work</div>
    <div class="xpp">Career advisors call this an informational interview. It&rsquo;s a conversation about someone&rsquo;s job, not a request for one. Most people are glad to talk about their work. Short messages do better than long ones. Three sentences is enough: who you are, that you&rsquo;re looking into their field, and one question. Ask what a normal day looks like, or what they wish they&rsquo;d known starting out. Some people won&rsquo;t reply. That&rsquo;s normal, and it usually isn&rsquo;t personal.</div>
+      <div class="xpdiv"><i></i></div>
    <div class="xph">Researching it on your own first</div>
    <div class="xpp">An AI assistant &mdash; ChatGPT, Claude, Gemini, whichever you use &mdash; is a decent way to map out a field before you talk to anyone. They answer better when you give them context. Include four things: who you are, what you&rsquo;re looking into, what you want back, and how specific to get.</div>
    <div class="xpq">&ldquo;I&rsquo;m 34, working retail, no degree, in Maryland. I&rsquo;m looking into becoming an electrician. Walk me through what the work involves day to day, the routes in from where I am, roughly what training costs and how long it takes, and what people in it say the hard parts are.&rdquo;</div>
