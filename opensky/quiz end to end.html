@@ -141,58 +141,58 @@ B5:"organising and driving forward",B6:"caring and supporting",B7:"ventures and 
 
 // --- question bank (abridged to the 23-item core for this runnable build) ---
 const Q=[
-{s:"Context",t:"Where are you right now?",k:"ctx",o:["Just starting out","A few years in","Been at this a while","Coming back after time away","Building something of my own"]},
-{s:"Context",t:"If a direction meant learning something new, what's your appetite right now?",k:"ctx2",
+{s:"Where you're starting from",t:"Where are you in your working life right now?",k:"ctx",o:["Just starting out","A few years in","Been at this a while","Coming back after time away","Building something of my own"]},
+{s:"Where you're starting from",t:"If a direction meant learning something new, what's your appetite right now?",k:"ctx2",
  o:["Big — I want something to sink my teeth into","Decent — if it's worth it, I'll do the work","Modest — I'd rather build on what I've got","Not sure yet"]},
-{s:"Resourcefulness",t:"You want to do something you've never done. What actually happens?",k:"res",
+{s:"When you're figuring something out",t:"You want to do something you've never done. What actually happens?",k:"res",
  o:[["I just start and figure it out as I go",3],["I find a guide and follow it closely",2],["I ask someone who's done it",2],["I usually don't get past wanting to",0],["I haven't had the chance to find out",0,1]]},
-{s:"Resourcefulness",t:"Something around you stops working — an app, an appliance, a routine.",k:"res1",
+{s:"When you're figuring something out",t:"Something around you stops working — an app, an appliance, a routine.",k:"res1",
  o:[["I dig in and figure out how to fix it myself",3],["I ask someone who'd know",2],["I find someone to hire",1],["I live with it",0],["I'd want to, but I wouldn't know where to start",0,1]]},
-{s:"Resourcefulness",t:"Someone asks you for help with something you don't know how to do.",k:"res3",
+{s:"When you're figuring something out",t:"Someone asks you for help with something you don't know how to do.",k:"res3",
  o:[["I go learn enough to help them",3],["I say I don't know, and help them find who does",2],["I try it anyway and see what happens",2],["I point them elsewhere",0],["I'd want to help, but I'd worry about getting it wrong",0,1]]},
-{s:"Pulls",t:"A friend comes to you upset about something. What do you find yourself doing?",b:"B1",
+{s:"What you're drawn to",t:"A friend comes to you upset about something. What do you find yourself doing?",b:"B1",
  o:[["Listening, mostly — letting them get it out",3],["Asking questions until the real thing surfaces",2],["Looking for what would actually fix it",1],["Sitting with them without needing to talk",2]]},
-{s:"Pulls",t:"Someone new joins a group you've been in a while and looks lost.",b:"B1",
+{s:"What you're drawn to",t:"Someone new joins a group you've been in a while and looks lost.",b:"B1",
  o:[["I go over and bring them in",3],["I catch their eye so they know someone sees them",2],["I wait — they'll find their feet",0],["I tell someone else to look after them",1]]},
-{s:"Pulls",t:"You're making a big decision with a pile of options in front of you.",b:"B2",
+{s:"What you're drawn to",t:"You're making a big decision with a pile of options in front of you.",b:"B2",
  o:[["I lay it all out and compare properly",3],["I narrow fast to two and go deep",2],["I go with what feels right and check after",1],["I ask people I trust and weigh what they say",1]]},
-{s:"Pulls",t:"Something you're told doesn't quite add up.",b:"B2",
+{s:"What you're drawn to",t:"Something you're told doesn't quite add up.",b:"B2",
  o:[["I go looking for where the gap is",3],["I file it and watch whether it happens again",2],["I ask them directly",2],["I let it go — probably nothing",0]]},
-{s:"Pulls",t:"Think of something you've made purely because you wanted to.",b:"B3",
+{s:"What you're drawn to",t:"Think of something you've made purely because you wanted to.",b:"B3",
  o:[["Loads of things — I'm always making something",3],["A few, when something got hold of me",2],["One thing, and I still think about it",2],["Not really my thing",0]]},
-{s:"Pulls",t:"When you're putting something together — a space, a meal, a playlist — what are you chasing?",b:"B3",
+{s:"What you're drawn to",t:"When you're putting something together — a space, a meal, a playlist — what are you chasing?",b:"B3",
  o:[["A feeling I can picture before I start",3],["Something nobody would expect",3],["Getting each part exactly right",1],["I don't really chase anything, I just do it",0]]},
-{s:"Pulls",t:"Something in your space needs real work — a repair, an install.",b:"B4",
+{s:"What you're drawn to",t:"Something in your space needs real work — a repair, an install.",b:"B4",
  o:[["I look up how and do it myself",3],["I have a go and call someone if I'm stuck",2],["I get someone in",0],["I live with it",0],["I'd want to, but I wouldn't know where to start",0,1]]},
-{s:"Pulls",t:"Someone hands you something broken and no instructions.",b:"B4",
+{s:"What you're drawn to",t:"Someone hands you something broken and no instructions.",b:"B4",
  o:[["Open it up and see how it works",3],["Look it up first, then open it",2],["Try the obvious things",1],["Hand it back",0]]},
-{s:"Pulls",t:"A group plan is happening and nobody's driving it.",b:"B5",
+{s:"What you're drawn to",t:"A group plan is happening and nobody's driving it.",b:"B5",
  o:[["I pick it up — someone has to",3],["I start a list and share it",3],["I help whoever steps up",1],["I wait to be told what to do",0]]},
-{s:"Pulls",t:"A shared space or system is a mess — a schedule, a kitchen, a shared drive.",b:"B5",
+{s:"What you're drawn to",t:"A shared space or system is a mess — a schedule, a kitchen, a shared drive.",b:"B5",
  o:[["I sort it out and set it up so it stays sorted",3],["I sort my own part of it",1],["I mention it and hope",1],["Doesn't bother me",0]]},
-{s:"Pulls",t:"You notice someone is a bit off, though they haven't said anything.",b:"B6",
+{s:"What you're drawn to",t:"You notice someone is a bit off, though they haven't said anything.",b:"B6",
  o:[["I ask, gently and directly",3],["I make space and let them come to me",2],["I do something practical for them",2],["I assume they'd say if they wanted to",0]]},
-{s:"Pulls",t:"Have you ever been the person someone leaned on for a long stretch?",b:"B6",
+{s:"What you're drawn to",t:"Have you ever been the person someone leaned on for a long stretch?",b:"B6",
  o:[["Yes — for a long time",3],["Yes, for a while",2],["Briefly",1],["No",0]]},
-{s:"Pulls",t:"You spot something that doesn't exist but should.",b:"B7",
+{s:"What you're drawn to",t:"You spot something that doesn't exist but should.",b:"B7",
  o:[["I start working out how to make it",3],["I tell people about it constantly",2],["I note it down and move on",1],["I assume someone's already on it",0]]},
-{s:"Pulls",t:"Have you ever made money, or tried to, from something you started yourself?",b:"B7",
+{s:"What you're drawn to",t:"Have you ever made money, or tried to, from something you started yourself?",b:"B7",
  o:[["Yes, more than once",3],["Once, and I learned a lot",2],["I've thought about it seriously",1],["Never crossed my mind",0]]},
-{s:"Pulls",t:"A group you're part of disagrees about a decision, and people are taking sides.",b:"B1",
+{s:"What you're drawn to",t:"A group you're part of disagrees about a decision, and people are taking sides.",b:"B1",
  o:[["I try to find the version both sides can live with",3],["I work out which side is right and argue for it",2],["I keep people talking to each other",3],["I stay out of it",0]]},
-{s:"Pulls",t:"You have to explain something complicated to someone with no background in it.",b:"B2",
+{s:"What you're drawn to",t:"You have to explain something complicated to someone with no background in it.",b:"B2",
  o:[["I enjoy it — finding the right way in is satisfying",3],["I manage, but it takes effort",1],["I'd rather hand them something written",1],["I tend to lose them and get frustrated",0]]},
-{s:"Pulls",t:"Blank page, empty room, empty screen. How does that feel?",b:"B3",
+{s:"What you're drawn to",t:"Blank page, empty room, empty screen. How does that feel?",b:"B3",
  o:[["Exciting — I want to fill it",3],["Fine, once someone gives me a starting point",2],["A bit paralysing",0],["I'd rather improve something that already exists",1]]},
-{s:"Pulls",t:"Work you can see the result of by the end of the day. How does that land?",b:"B4",
+{s:"What you're drawn to",t:"Work you can see the result of by the end of the day. How does that land?",b:"B4",
  o:[["Deeply satisfying — I want to see what I made",3],["Nice, but not necessary",1],["I prefer things that build over months",0],["Don't think about it much",0]]},
-{s:"Pulls",t:"A deadline's close and things aren't where they should be.",b:"B5",
+{s:"What you're drawn to",t:"A deadline's close and things aren't where they should be.",b:"B5",
  o:[["Break it down and start handing pieces out",3],["Head down and grind it out myself",2],["Work out what we can cut",3],["Push through, but it costs me",1]]},
-{s:"Pulls",t:"What kind of help feels most natural to give?",b:"B6",
+{s:"What you're drawn to",t:"What kind of help feels most natural to give?",b:"B6",
  o:[["Practical — I show up and do the thing",3],["Emotional — I sit with people in it",3],["Informational — I go find out what they need",2],["Advocacy — I push on their behalf",2]]},
-{s:"Pulls",t:"Getting someone to say yes to your idea. How does that sit with you?",b:"B7",
+{s:"What you're drawn to",t:"Getting someone to say yes to your idea. How does that sit with you?",b:"B7",
  o:[["I like it — convincing people is part of the fun",3],["I can do it when I believe in the thing",2],["I'd rather the idea speak for itself",1],["I avoid it",0]]},
-{s:"Friction",t:"Which of these actually wear you down?",k:"fr",multi:1,
+{s:"What wears on you",t:"Which of these actually wear you down?",k:"fr",multi:1,
  o:["Being around a lot of people","Being alone with no one to think out loud with","Detail work with no room for error",
     "Open-ended work with no clear finish line","Managing other people's emotions","The same task over and over",
     "Constant interruptions","Sitting still for a long stretch","Being on my feet, physically taxed",
@@ -208,11 +208,11 @@ const Q=[
     "Somewhere different most days","The same familiar place","Fast, with real deadlines",
     "Unhurried, with time to get it right","Where I decide how it gets done",
     "Where other people are counting on me"]},
-{s:"Friction",t:"What's the thing you keep pushing to tomorrow?",k:"fr3",multi:1,
+{s:"What wears on you",t:"What's the thing you keep pushing to tomorrow?",k:"fr3",multi:1,
  o:["Reading something long and dense","Making a phone call","A hard conversation","Paperwork or admin",
     "Starting something from scratch","Asking someone for something","Anything with numbers",
     "Tidying or organizing","Following up with people","Nothing really — I just do them"]},
-{s:"Friction",t:"When you've been most miserable in a job, class, or volunteer role — what was it?",k:"fr4",multi:1,
+{s:"What wears on you",t:"When you've been most miserable in a job, class, or volunteer role — what was it?",k:"fr4",multi:1,
  o:["The work itself bored me","The people","No say in how things were done","Too much pressure","Too little to do","It didn't seem to matter to anyone","The pace"]},
 {s:"What you'd protect",t:"If you could only protect one, which?",k:"w1",o:["Steady, predictable income","A shot at something bigger, with real risk"]},
 {s:"What you'd protect",t:"If you could only protect one, which?",k:"w2",o:["Knowing exactly what's expected","Being handed the problem and left alone"]},
@@ -547,11 +547,11 @@ function draw(stars,top,second,low,fsel,carry,hobB,norm){
    <div id="xproutes"></div>
    <button class="xpmore" id="xpmore" type="button">Show the other routes</button>
    <div class="xph">Talking to someone who does the work</div>
-   <div class="xpp">Career advisors call this an informational interview &mdash; a conversation about someone&rsquo;s job, not a request for one. Most people are willing to talk about their own work, and short messages tend to do better than long ones. Three sentences covers it: who you are, that you&rsquo;re looking into their field, and one specific question. Questions about what a normal day looks like, or what someone wishes they&rsquo;d known starting out, tend to get better answers than broad ones. Some people won&rsquo;t reply &mdash; that&rsquo;s normal, and it usually isn&rsquo;t personal.</div>
+   <div class="xpp">Career advisors call this an informational interview. It&rsquo;s a conversation about someone&rsquo;s job, not a request for one. Most people are glad to talk about their work. Short messages do better than long ones. Three sentences is enough: who you are, that you&rsquo;re looking into their field, and one question. Ask what a normal day looks like, or what they wish they&rsquo;d known starting out. Some people won&rsquo;t reply. That&rsquo;s normal, and it usually isn&rsquo;t personal.</div>
    <div class="xph">Researching it on your own first</div>
-   <div class="xpp">Asking an AI assistant &mdash; ChatGPT, Claude, Gemini, whichever you use &mdash; is a reasonable way to map out a field before talking to anyone. They answer better with context than without. Four things to include: who you are, what you&rsquo;re looking into, what you want back, and how specific to get.</div>
+   <div class="xpp">An AI assistant &mdash; ChatGPT, Claude, Gemini, whichever you use &mdash; is a decent way to map out a field before you talk to anyone. They answer better when you give them context. Include four things: who you are, what you&rsquo;re looking into, what you want back, and how specific to get.</div>
    <div class="xpq">&ldquo;I&rsquo;m 34, working retail, no degree, in Maryland. I&rsquo;m looking into becoming an electrician. Walk me through what the work involves day to day, the routes in from where I am, roughly what training costs and how long it takes, and what people in it say the hard parts are.&rdquo;</div>
-   <div class="xpp">Then keep going &mdash; ask what it left out, ask where it&rsquo;s unsure, ask it to be specific about your state. They sound confident even when they&rsquo;re wrong, especially about pay and licensing, so anything specific is worth checking against the state licensing board or bls.gov.</div>
+   <div class="xpp">Then keep going. Ask what it left out. Ask where it&rsquo;s unsure. Ask it to be specific about your state. These tools sound confident even when they&rsquo;re wrong, especially about pay and licensing. Check anything specific against your state licensing board or bls.gov.</div>
    <div class="xpend">Nothing here has to be decided today.</div>
  </details>
  <details class="src" style="margin-top:22px">
@@ -918,10 +918,10 @@ if(saved && saved.i>0 && saved.i<Q.length){
 
  const TRADE={'47-2022.00':1,'47-2111.00':1,'47-2132.00':1,'47-2211.00':1,'49-3011.00':1,'49-3041.00':1,'49-3042.00':1,'49-3053.00':1,'49-9044.00':1,'53-7021.00':1};
  const ROUTES=[
-  ['open','Open-door roles','Work that hires and trains on the spot. Staffing and temp agencies place a lot of these directly, so a short paid assignment can be a way to see whether the work suits you before anything longer.'],
-  ['trade','Trades','Trades are usually learned on the job and paid from the start. Pre-apprenticeship programs are typically free and exist to recruit \u2014 they turn up under a trade name plus \u201Cpre-apprenticeship\u201D and a state.'],
-  ['cert','Certificate and licence paths','Months rather than years. Many programs let people sit in on a class before enrolling, and community colleges are the usual place they run.'],
-  ['deg','Degree paths','The longest route, and the easiest to sample early. Community colleges often allow auditing a single course, and many universities post introductory lectures free online.']
+  ['open','Open-door roles','Work that hires and trains on the spot. Staffing agencies place a lot of these directly, so a short paid job can show you whether the work suits you.'],
+  ['trade','Trades','Trades are learned on the job and paid from the start. Pre-apprenticeship programs are usually free, and they exist to recruit. Search a trade name plus \\u201Cpre-apprenticeship\\u201D and your state.'],
+  ['cert','Certificate and licence paths','Months rather than years. Many programs let people sit in on a class first. Community colleges are the usual place they run.'],
+  ['deg','Degree paths','The longest route, and the easiest to try early. Community colleges often let you audit one course. Many universities post intro lectures free online.']
  ];
  function routeOf(p){if(TRADE[p.code])return'trade';const z=+p.r.jz;
   return z<=2?'open':(z===3?'cert':'deg');}
