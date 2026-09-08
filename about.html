@@ -78,6 +78,17 @@ letter-spacing:.14em;text-transform:uppercase;color:#4A443C;cursor:pointer;trans
 *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
 .hs:hover,.hs.on{transform:none}
 }
+.modal-backdrop{position:fixed;inset:0;background:rgba(44,40,34,.62);opacity:0;visibility:hidden;transition:opacity .22s,visibility .22s;z-index:100;backdrop-filter:blur(2px)}
+.modal-backdrop.on{opacity:1;visibility:visible}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-45%);background:var(--white);border-radius:14px;padding:clamp(24px,5vw,40px);width:min(560px,92vw);max-height:82vh;overflow-y:auto;box-shadow:0 24px 60px rgba(44,40,34,.35);opacity:0;visibility:hidden;transition:opacity .22s,visibility .22s,transform .22s;z-index:101}
+.modal.on{opacity:1;visibility:visible;transform:translate(-50%,-50%)}
+.modal:focus{outline:none}
+.modal-close{position:absolute;top:12px;right:14px;background:none;border:none;font-size:24px;line-height:1;cursor:pointer;color:var(--ink2);padding:8px 12px;border-radius:6px;transition:.15s}
+.modal-close:hover{background:rgba(44,40,34,.08);color:var(--ink)}
+.modal-close:focus-visible{outline:2px solid #2E5461;outline-offset:2px}
+.modal-kick{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#2E5461;margin-bottom:8px}
+.modal-title{font-family:'Space Grotesk',system-ui,sans-serif;font-size:clamp(19px,4vw,22px);font-weight:600;color:var(--ink);margin:0 0 14px;line-height:1.2;padding-right:32px}
+.modal-body{font-family:'Space Grotesk',system-ui,sans-serif;font-size:clamp(13.5px,3vw,14.5px);line-height:1.7;color:var(--ink2)}
 .tools{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
 .tools-note{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#7A7268}
 @media (max-width:900px){
@@ -156,19 +167,19 @@ letter-spacing:.14em;text-transform:uppercase;color:#4A443C;cursor:pointer;trans
 <rect x="0" y="548" width="960" height="10" fill="#2C2822" opacity=".10"/>
 <!-- Sage wall About placard -->
 <g class="wall-placard">
-  <rect x="20" y="342" width="246" height="192" rx="3" fill="#2C2822" opacity=".14"/>
-  <rect x="18" y="338" width="246" height="192" rx="3" fill="#F4F1E7"/>
-  <rect x="18" y="338" width="246" height="192" rx="3" fill="none" stroke="#D8CEBA" stroke-width="2.4"/>
-  <foreignObject x="32" y="352" width="218" height="168">
+  <rect x="20" y="12" width="246" height="166" rx="3" fill="#2C2822" opacity=".14"/>
+  <rect x="18" y="8" width="246" height="166" rx="3" fill="#F4F1E7"/>
+  <rect x="18" y="8" width="246" height="166" rx="3" fill="none" stroke="#D8CEBA" stroke-width="2.4"/>
+  <foreignObject x="30" y="20" width="222" height="148">
     <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'Space Grotesk',system-ui,sans-serif;color:#2C2822;line-height:1.35">
-      <div style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;font-weight:600;letter-spacing:3px;color:#2E5461;margin-bottom:8px">ABOUT</div>
-      <div style="font-size:20px;font-weight:600;margin-bottom:10px;line-height:1.15">Amber Laidman</div>
-      <div style="font-size:11.5px;font-style:italic;color:#3A342E;line-height:1.5;margin-bottom:10px">&#8220;I think about learning the way I think about any experience worth making &#8212; every part matters, and so does how they fit together.&#8221;</div>
-      <div style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:9px;font-weight:500;letter-spacing:1.5px;color:#7A7268">LEARNING DESIGN &#183; MARYLAND</div>
+      <div style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;font-weight:600;letter-spacing:2.8px;color:#2E5461;margin-bottom:9px">ABOUT</div>
+      <div style="font-size:20px;font-weight:600;margin-bottom:11px;line-height:1.15">Amber Laidman</div>
+      <div style="font-size:12px;color:#3A342E;line-height:1.55;margin-bottom:11px">I think about learning the way I think about any experience worth making &#8212; every part matters, and so does how they fit together.</div>
+      <div style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:9.5px;font-weight:500;letter-spacing:1.4px;color:#7A7268">LEARNING DESIGN &#183; MARYLAND</div>
     </div>
   </foreignObject>
 </g>
-<g class="hs" data-k="floralwall">
+<g class="hs" data-k="floralwall" transform="translate(-68,62)">
 <circle class="hs-dot" cx="150" cy="232" r="2.6"/><rect class="hs-ring" x="112" y="146" width="76" height="176" rx="6"/>
 <rect x="119" y="154" width="68" height="168" rx="2" fill="#2C2822" opacity=".18"/>
 <rect x="116" y="150" width="68" height="168" rx="2" fill="#F4F1E7"/>
@@ -194,6 +205,46 @@ letter-spacing:.14em;text-transform:uppercase;color:#4A443C;cursor:pointer;trans
 <circle cx="174" cy="234" r="4.4"/><circle cx="170" cy="230" r="3.6"/><circle cx="178" cy="230" r="3.2"/>
 <circle cx="150" cy="166" r="4"/><circle cx="154" cy="163" r="3.4"/><circle cx="146" cy="163" r="3"/>
 </g>
+</g>
+<!-- Cliffs photo on sage wall -->
+<g class="hs" data-k="cliffs">
+<circle class="hs-dot" cx="212" cy="250" r="2.6"/>
+<rect class="hs-ring" x="152" y="204" width="112" height="98" rx="5"/>
+<!-- Shadow -->
+<rect x="155" y="207" width="112" height="98" rx="1.5" fill="#2C2822" opacity=".18"/>
+<!-- Frame outer -->
+<rect x="152" y="204" width="112" height="98" rx="1.5" fill="#F4F1E7" stroke="#8A6E50" stroke-width="2.2"/>
+<!-- Mat inside -->
+<rect x="158" y="210" width="100" height="86" fill="#EFE7DA"/>
+<!-- Sky -->
+<rect x="164" y="220" width="88" height="42" fill="#C4D6DE"/>
+<rect x="164" y="220" width="88" height="20" fill="#DCE4E8" opacity=".7"/>
+<!-- Ocean -->
+<rect x="164" y="262" width="88" height="24" fill="#4A7690"/>
+<rect x="164" y="262" width="88" height="4" fill="#7EA0B0" opacity=".7"/>
+<!-- Wave lines -->
+<path d="M170 270 q6-2 12 0 t12 0 t12 0 t12 0 t12 0" fill="none" stroke="#7EA0B0" stroke-width=".8" opacity=".5"/>
+<path d="M164 278 q8-1 16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#7EA0B0" stroke-width=".8" opacity=".4"/>
+<!-- Cliff on right -->
+<path d="M216 262 L252 246 L252 286 L216 286 Z" fill="#8A6E52"/>
+<path d="M216 262 L228 254 L240 258 L252 246 L252 258 L240 264 L228 262 L216 268 Z" fill="#A88A6A" opacity=".6"/>
+<!-- Cliff greenery on top -->
+<path d="M216 260 L228 251 L240 254 L252 246 L252 252 L240 258 L228 256 L216 264 Z" fill="#6E8A5C"/>
+<!-- Horizon line -->
+<line x1="164" y1="262" x2="216" y2="262" stroke="#5A7686" stroke-width=".6" opacity=".6"/>
+</g>
+<!-- Landscape photo (moved from right wall) below cliffs -->
+<g class="landscape-frame">
+  <rect x="155" y="332" width="112" height="98" rx="1.5" fill="#2C2822" opacity=".16"/>
+  <rect x="152" y="328" width="112" height="98" rx="1.5" fill="#F4F1E7" stroke="#8A6E50" stroke-width="2.2"/>
+  <rect x="158" y="334" width="100" height="86" fill="#EFE7DA"/>
+  <!-- Sky -->
+  <rect x="164" y="340" width="88" height="42" fill="#B4C4CC"/>
+  <rect x="164" y="340" width="88" height="14" fill="#C8D4D8"/>
+  <!-- Rolling hills back -->
+  <path d="M164 370 q22-24 44-12 q22-18 44 4 v32 h-88 z" fill="#5C7A54"/>
+  <!-- Hills darker foreground -->
+  <path d="M164 386 q28-14 55-6 q18-6 33 8 v14 h-88 z" fill="#44603E"/>
 </g>
 <g class="hs" data-k="diploma">
 <circle class="hs-dot" cx="360" cy="76" r="2.6"/><rect class="hs-ring" x="334" y="52" width="54" height="58" rx="5"/>
@@ -403,14 +454,6 @@ letter-spacing:.14em;text-transform:uppercase;color:#4A443C;cursor:pointer;trans
 <circle cx="888" cy="166" r="8.6" fill="#3A6E4C"/><circle cx="888" cy="166" r="5" fill="#4C8A5C"/>
 <circle cx="903" cy="169" r="8.6" fill="#C9A03C"/><circle cx="903" cy="169" r="5" fill="#E0BC5C"/>
 </g>
-<g>
-<rect x="831" y="232" width="70" height="56" rx="2" fill="#2C2822" opacity=".18"/>
-<rect x="828" y="228" width="70" height="56" rx="2" fill="#7E8A84"/>
-<rect x="834" y="234" width="58" height="44" fill="#B4C4CC"/>
-<path d="M834 264 q15-18 27-11 q13-13 31 2 v23 h-58z" fill="#5C7A54"/>
-<path d="M834 270 q18-11 35-4 q12-5 23 3 v9 h-58z" fill="#44603E"/>
-<rect x="834" y="234" width="58" height="13" fill="#C8D4D8"/>
-</g>
 <ellipse cx="616" cy="418" rx="288" ry="5" fill="#2C2822" opacity=".09"/>
 <rect x="326" y="416" width="580" height="24" fill="url(#dsk)"/>
 <rect x="326" y="416" width="580" height="5" fill="#C2E0D8"/>
@@ -533,13 +576,9 @@ letter-spacing:.14em;text-transform:uppercase;color:#4A443C;cursor:pointer;trans
 
 </div>
 
-<div class="panel" id="panel" role="status" aria-live="polite" aria-atomic="true">
-  <div class="p-empty"><strong style="color:#2C2822;font-style:normal;font-weight:600;">Amber Laidman</strong> — learning designer, program manager, and photographer based in Maryland.<br><br>Everything here is something I kept.<br><span class="p-empty-sub">Pick one and I'll tell you why.</span></div>
-</div>
-
 <div class="tools">
-  <button class="toggle" id="tg">Read it all as text</button>
-  <span class="tools-note">27 things to find</span>
+  <button class="toggle" id="tg">Read everything as text</button>
+  <span class="tools-note"><span id="trackerCount">0</span> of 28 explored</span>
 </div>
 <div class="list" id="list" role="region" aria-label="Text version of every object"></div>
 
@@ -558,6 +597,14 @@ letter-spacing:.14em;text-transform:uppercase;color:#4A443C;cursor:pointer;trans
     </div>
   </div>
 </footer>
+
+<div class="modal-backdrop" id="modalBackdrop" aria-hidden="true"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+  <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+  <div class="modal-kick" id="modalKick"></div>
+  <h2 class="modal-title" id="modalTitle"></h2>
+  <div class="modal-body" id="modalBody"></div>
+</div>
 
 <script>
 const DATA={
@@ -591,38 +638,64 @@ const DATA={
  imac:{k:'The room',t:'The iMac',b:'My best working space, for art and for the day to day. I\'m fully Mac for my own work — though the business world runs on Windows, and I move between both without much fuss.'},
  headphones:{k:'The room',t:'Headphones',b:'Over-the-ear, in-ear, or just open on the device — depends on the day. I like having options. The only rule is wireless, because I\'m not staying in one place.'},
  chair:{k:'The room',t:'The saddle chair',b:'I can\'t sit still. The saddle chair and the standing desk exist because I need to be able to shift, stand, move, and get up without breaking focus. Designing for how people actually work applies to my own setup too.'},
- tools:{k:'The room',t:'The tool jar',b:'Everything I work in day to day. Articulate Rise 360, iSpring, Canva, Google Workspace, Microsoft 365, Adobe Creative Cloud, Miro, Claude, and OpenAI. Industries: telecom, travel and hospitality, spirits, contact center operations.'}
+ tools:{k:'The room',t:'The tool jar',b:'Everything I work in day to day. Articulate Rise 360, iSpring, Canva, Google Workspace, Microsoft 365, Adobe Creative Cloud, Miro, Claude, and OpenAI. Industries: telecom, travel and hospitality, spirits, contact center operations.'},
+ cliffs:{k:'The room',t:'Cliffs, framed',b:'A photo I took, framed and hanging. One of the ones I keep looking at &mdash; the reason the photography moved from portraits toward landscape and architecture. Somewhere on a coast, on a trip that made me want to keep going.'}
 };
 
-const scene=document.getElementById('scene'),panel=document.getElementById('panel');
+const scene=document.getElementById('scene');
+const modalEl=document.getElementById('modal'),modalBackdrop=document.getElementById('modalBackdrop');
+const modalKick=document.getElementById('modalKick'),modalTitle=document.getElementById('modalTitle'),modalBody=document.getElementById('modalBody'),modalClose=document.getElementById('modalClose');
+const trackerCount=document.getElementById('trackerCount');
 const seen=new Set();
+let lastFocused=null;
+
+function updateTracker(){
+  if(trackerCount) trackerCount.textContent=seen.size;
+}
 
 function show(k){
   const d=DATA[k]; if(!d)return;
   document.querySelectorAll('.hs').forEach(e=>e.classList.remove('on'));
-  document.querySelector('.hs[data-k="'+k+'"]').classList.add('on');
-  panel.innerHTML='<div class="p-kick">'+d.k+'</div><div class="p-title">'+d.t+'</div><div class="p-body">'+d.b+'</div>';
+  const el=document.querySelector('.hs[data-k="'+k+'"]');
+  el.classList.add('on');
+  el.classList.add('seen');
   seen.add(k);
-  document.querySelector('.hs[data-k="'+k+'"]').classList.add('seen');
+  updateTracker();
   scene.classList.remove('hint');
   scene.classList.add('focused');
 }
+function openModal(k){
+  const d=DATA[k]; if(!d)return;
+  lastFocused=document.activeElement;
+  modalKick.innerHTML=d.k;
+  modalTitle.innerHTML=d.t;
+  modalBody.innerHTML=d.b;
+  modalBackdrop.classList.add('on');
+  modalEl.classList.add('on');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>modalEl.focus(),40);
+}
+function closeModal(){
+  modalBackdrop.classList.remove('on');
+  modalEl.classList.remove('on');
+  document.body.style.overflow='';
+  if(lastFocused&&lastFocused.focus)lastFocused.focus();
+}
+modalClose.addEventListener('click',closeModal);
+modalBackdrop.addEventListener('click',closeModal);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalEl.classList.contains('on'))closeModal();});
+
 document.querySelectorAll('.hs').forEach(el=>{
   const k=el.dataset.k;
   el.setAttribute('tabindex','0'); el.setAttribute('role','button');
   el.setAttribute('aria-label',DATA[k]?(DATA[k].t+', '+DATA[k].k.replace(/&amp;/g,'and')):k);
-  el.addEventListener('pointerdown',e=>{e.stopPropagation();show(k);});
-  el.addEventListener('click',e=>{e.stopPropagation();show(k);});
-  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(k);}});
-  if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
-    el.addEventListener('mouseenter',()=>show(k));
-  }
+  el.addEventListener('click',e=>{e.stopPropagation();show(k);openModal(k);});
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(k);openModal(k);}});
 });
 scene.addEventListener('pointerdown',e=>{
   if(!e.target.closest('.hs')){
     document.querySelectorAll('.hs').forEach(x=>x.classList.remove('on'));
     scene.classList.remove('focused');
-    panel.innerHTML='<div class="p-empty">Everything here is something I kept.<br><span class="p-empty-sub">Pick one and I&rsquo;ll tell you why.</span></div>';
   }
 });
 const groups={};
