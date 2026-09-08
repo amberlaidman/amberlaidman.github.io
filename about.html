@@ -4,15 +4,103 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — Amber Laidman</title>
-<meta name="description" content="About Amber Laidman: instructional designer and learning strategist working across training design, program management, and frontline enablement.">
+<meta name="description" content="An illustrated office you can explore. The story of a career at the intersection of training design, program management, and photography.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<noscript></noscript>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--sage:#6E7A72; --cream:#EAE4D9; --mint:#9CC8BE; --white:#FBFAF7;
+--oak:#C9A46C; --ink:#2C2822; --ink2:#6A625A; --accent:#C4623C;
+}
+body{background:#DDD6CA;min-height:100vh;
+font-family:'Space Grotesk',system-ui,-apple-system,sans-serif}
+.about-scene-wrap{display:flex;align-items:center;justify-content:center;padding:clamp(30px,5vw,60px) clamp(8px,2.5vw,14px)}
+.wrap{width:100%;max-width:min(960px,100%)}
+.scene{position:relative;border-radius:clamp(10px,2vw,16px);overflow:hidden;background:var(--cream);
+box-shadow:0 3px 8px rgba(44,40,34,.10),0 18px 54px rgba(44,40,34,.20);line-height:0}
+.scene svg{width:100%;height:auto;display:block}
+.hs:hover .olab,.hs.on 
+.hs{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transform-box:fill-box;transform-origin:center bottom;
+transition:transform .26s cubic-bezier(.34,1.5,.64,1),opacity .3s}
+@media (hover:hover) and (pointer:fine){
+.hs:hover{transform:translateY(-6px) scale(1.04)}
+}
+.hs.on{transform:translateY(-4px) scale(1.03)}
+.hs:focus-visible{outline:none}
+.hs:focus-visible .hs-ring{opacity:1;stroke-width:2.6;stroke-dasharray:none}
+.hs-ring{fill:rgba(196,98,60,.10);stroke:var(--accent);stroke-width:1.8;opacity:0;
+transition:opacity .2s;pointer-events:none}
+.hs:hover .hs-ring{opacity:.55}
+.hs.on .hs-ring{opacity:1;fill:rgba(196,98,60,.16)}
+.hs-dot{fill:var(--accent);opacity:.42;transition:opacity .25s,r .25s}
+.hs:hover .hs-dot{opacity:1}
+.hs.on .hs-dot{opacity:0}
+.hs.seen .hs-dot{fill:#4E6448;opacity:.7}
+.hs.seen:hover .hs-dot{fill:var(--accent);opacity:1}
+.scene.focused .hs:not(.on){opacity:.34}
+.scene.focused .hs:not(.on):hover{opacity:1}
+.scene.focused .dimmable{opacity:.42;transition:opacity .3s}
+.scene.hint .hs-dot{animation:pl 2.4s ease-in-out infinite}
+@keyframes pl{0%,100%{opacity:.35;r:2.6}50%{opacity:.9;r:4.2}}
+.nudge{position:absolute;left:50%;bottom:clamp(7px,2vw,12px);transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;
+background:rgba(44,40,34,.9);color:var(--white);font-size:clamp(9px,2.2vw,10px);font-weight:600;
+padding:clamp(6px,1.6vw,7px) clamp(11px,3vw,15px);border-radius:20px;display:flex;align-items:center;gap:8px;
+white-space:nowrap;box-shadow:0 4px 16px rgba(44,40,34,.3);transition:opacity .4s;
+pointer-events:none;line-height:1}
+.nudge b{color:var(--accent)}
+.nudge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pl2 2s ease-in-out infinite}
+@keyframes pl2{0%,100%{opacity:.4}50%{opacity:1}}
+.scene:not(.hint) .nudge{opacity:0}
+.panel{background:var(--white);padding:clamp(13px,3vw,18px) clamp(14px,3.5vw,22px);min-height:clamp(120px,26vw,150px);
+border-top:1px solid rgba(44,40,34,.08);line-height:1.5}
+.p-empty-sub{font-size:11.5px;font-style:normal;opacity:.72}
+.p-empty{font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;font-style:normal;font-size:clamp(13px,3vw,15px);color:var(--ink2);line-height:1.7}
+.p-kick{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#2E5461;margin-bottom:8px}
+.p-title{font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;font-size:clamp(.98rem,3vw,1.1rem);font-weight:600;color:var(--ink);margin-bottom:6px}
+.p-body{font-size:clamp(11.5px,2.6vw,12.5px);color:var(--ink2);line-height:1.75;max-width:680px}
+.toggle{background:none;border:1px solid rgba(44,40,34,.18);border-radius:20px;
+padding:6px 14px;font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;font-size:9.5px;font-weight:700;
+letter-spacing:.14em;text-transform:uppercase;color:#4A443C;cursor:pointer;transition:.2s}
+.toggle:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.list{display:none;margin-top:14px;background:var(--white);border-radius:12px;padding:18px 22px}
+.list.show{display:block}
+.list h3{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#2E5461;margin:14px 0 9px}
+.list h3:first-child{margin-top:0}
+.list dl{display:grid;grid-template-columns:auto 1fr;gap:7px 18px}
+.list dt{font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.list dd{font-size:11.5px;color:var(--ink2);line-height:1.65}
+@media(max-width:640px){.list dl{grid-template-columns:1fr;gap:2px}.list dd{margin-bottom:9px}}
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+.hs:hover,.hs.on{transform:none}
+}
+.tools{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.tools-note{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#7A7268}
+@media (max-width:900px){
+.hs-dot{opacity:.55}
+.scene.hint .hs-dot{animation-duration:2s}
+}
+@media (max-width:620px){
+.hs-dot{opacity:.65}
+@keyframes pl{0%,100%{opacity:.5;r:3.4}50%{opacity:1;r:5.4}}
+.hs-ring{stroke-width:2.6}
+.list dl{grid-template-columns:1fr;gap:2px}
+.list dd{margin-bottom:10px}
+}
+@media (max-width:420px){
+.hs-dot{opacity:.72;r:3.4}
+.hs-ring{stroke-width:3}
+.nudge{white-space:normal;text-align:center;max-width:88%}
+}
+</style>
 </head>
-<body id="top">
+<body>
 
-<a href="#main" class="skip-link">Skip to main content</a>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <nav class="site-nav" aria-label="Main navigation">
   <div class="nav-inner">
@@ -28,93 +116,435 @@
 
 <main id="main">
 
-<header class="page-header">
-  <div class="section-label">About</div>
-  <h1>A career at the intersection of training design, program management, and frontline enablement.</h1>
-</header>
+<div class="about-scene-wrap">
+<div class="wrap">
 
-<section class="about-content">
-  <div class="about-body">
-    <p class="lead">
-      I think about learning the way I think about any experience worth making — every part matters, and so does how they fit together.
-    </p>
-    <p>
-      My work in L&amp;D has been shaped by years spent inside frontline operations — retail telecom, contact center operations, and hospitality. That background changes how I design: learning has to feel worth showing up for, and hold up under real workflow, time constraints, and days that don't stop.
-    </p>
-    <p>
-      I work across instructional design, program management, and learning strategy — which usually means I'm holding the whole thing at once: what needs to be built, how it'll get delivered, and whether it'll actually land. I've built custom interactive courses from scratch, designed and delivered onboarding for over 100 employees globally and across industries, and led training sessions for teams across regions.
-    </p>
-    <p>
-      More recently, I've been teaching myself to vibe code well enough to build interactive learning experiences that don't exist in any standard authoring tool — pH-responsive sliders, custom stepped scenarios, live embedded demos. It's the kind of work I get fully immersed in until the thing is built. The gin course on the Work page is the most complete version of that experiment so far.
-    </p>
-    <p>
-      Outside work: photography, travel, running, and figuring out how to make things I couldn't build before.
-    </p>
-  </div>
-
-  <aside class="about-sidebar">
-    <dl>
-      <dt>Specializations</dt>
-      <dd>Instructional design, learning strategy, program management</dd>
-
-      <dt>Tools</dt>
-      <dd>Articulate 360, iSpring, Canva, Google Workspace, Microsoft 365, Claude, OpenAI, Adobe Creative Cloud, Miro</dd>
-
-      <dt>Industries</dt>
-      <dd>Telecom, travel &amp; hospitality, spirits, contact center operations</dd>
-
-      <dt>Education</dt>
-      <dd>M.S., Learning Design and Technology<br>University of Maryland Global Campus, 2025</dd>
-
-      <dt>Based in</dt>
-      <dd>Maryland, US</dd>
-    </dl>
-  </aside>
-</section>
-
-<section class="selected-experience">
-  <div class="selected-inner">
-    <div class="section-label">Selected experience</div>
-    <ul class="selected-list">
-      <li>
-        <strong>Field Training Manager for a multi-state territory (MD/DE/DC/VA)</strong>
-        <span>Owned the onboarding curriculum, delivery schedule, and instructor development across four states.</span>
-      </li>
-      <li>
-        <strong>Multi-year program lead — weekly learning objectives program</strong>
-        <span>Led a peer-facing program delivering weekly learning objectives to frontline teams, managing timeline, submissions, and cross-regional team coordination.</span>
-      </li>
-      <li>
-        <strong>Market DEI Council Lead</strong>
-        <span>Championed diversity, equity, and inclusion initiatives across a full sales market — including supply drives, PRIDE Day programming, and inclusive community events.</span>
-      </li>
-      <li>
-        <strong>Wrote and championed the business case for a new training facility</strong>
-        <span>Built the proposal, secured leadership buy-in, and the facility opened six months after approval.</span>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<section class="credit-band">
-  <div class="credit-inner">
-    <h2 class="section-label light credit-band-heading">What colleagues say</h2>
-    <div class="credit-grid">
-      <div class="credit-card">
-        <blockquote>"A process-improvement powerhouse. The rate of success for our recruits rose from ~76% to ~86%."</blockquote>
-        <div class="attribution">— Bré Durnin<br><span>Sr. L&amp;D Specialist, Outdoorsy</span></div>
-      </div>
-      <div class="credit-card">
-        <blockquote>"Amber creates educational materials that engage and empower learners. Her creative approach has a profound impact."</blockquote>
-        <div class="attribution">— Michael Yowell<br><span>Sr. Manager Training, T-Mobile</span></div>
-      </div>
-      <div class="credit-card">
-        <blockquote>"An idea machine, always thinking two steps ahead. She knows how to connect the vision and lead through inspiration."</blockquote>
-        <div class="attribution">— Nik Pearson<br><span>Sr. Instructional Designer, T-Mobile</span></div>
-      </div>
+<div class="scene hint" id="scene" role="application" aria-label="Interactive office. Use Tab to move between objects and Enter to read about one.">
+<svg viewBox="0 0 960 640" xmlns="http://www.w3.org/2000/svg" role="group" aria-labelledby="svgTitle svgDesc">
+<title id="svgTitle">Amber's office — an interactive career shelf</title>
+<desc id="svgDesc">An illustrated home office. Three wall shelves hold objects representing stages of a career, alongside a desk, chair, and a rack of running medals. Twenty-six objects can be selected to read the story behind each. A full text version is available using the button below the illustration.</desc>
+<defs>
+<linearGradient id="dsk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B0D6CC"/><stop offset="1" stop-color="#8FBDB2"/></linearGradient>
+<linearGradient id="plk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9B57C"/><stop offset=".38" stop-color="#C9A46C"/><stop offset=".8" stop-color="#A8834C"/><stop offset="1" stop-color="#8A6838"/></linearGradient>
+<linearGradient id="scr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A3E42"/><stop offset="1" stop-color="#22262A"/></linearGradient>
+<linearGradient id="flr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A89A88"/><stop offset="1" stop-color="#8C7E6E"/></linearGradient>
+<linearGradient id="wallgrad" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F2ECE0"/><stop offset=".55" stop-color="#EAE4D9"/><stop offset="1" stop-color="#DED7C9"/>
+</linearGradient>
+<linearGradient id="sagegrad" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#7A867E"/><stop offset="1" stop-color="#5E6A62"/>
+</linearGradient>
+<filter id="softdrop" x="-30%" y="-30%" width="170%" height="180%">
+<feDropShadow dx="0" dy="2.5" stdDeviation="2" flood-color="#2C2822" flood-opacity=".22"/>
+</filter>
+</defs>
+<rect width="960" height="548" fill="url(#wallgrad)"/>
+<path d="M0 0 H286 V548 H0 Z" fill="url(#sagegrad)"/>
+<path d="M286 0 H326 V548 H286 Z" fill="#000" opacity=".07"/>
+<path d="M286 0 H298 V548 H286 Z" fill="#000" opacity=".09"/>
+<ellipse cx="640" cy="-40" rx="380" ry="190" fill="#FBFAF7" opacity=".26"/>
+<rect x="326" y="440" width="634" height="108" fill="#2C2822" opacity=".045"/>
+<rect x="0" y="540" width="960" height="10" fill="#F2EEE6"/>
+<rect x="0" y="548" width="960" height="92" fill="url(#flr)"/>
+<rect x="0" y="548" width="960" height="26" fill="#B8AA98" opacity=".45"/>
+<g opacity=".13" stroke="#5A4E40" stroke-width="1">
+<path d="M0 566 H960 M0 586 H960 M0 610 H960"/>
+</g>
+<g opacity=".16" stroke="#5A4E40" stroke-width="1">
+<path d="M180 548 L120 640 M400 548 L370 640 M600 548 L610 640 M820 548 L880 640"/>
+</g>
+<rect x="0" y="548" width="960" height="10" fill="#2C2822" opacity=".10"/>
+<!-- Sage wall About placard -->
+<g class="wall-placard">
+  <rect x="20" y="342" width="246" height="192" rx="3" fill="#2C2822" opacity=".14"/>
+  <rect x="18" y="338" width="246" height="192" rx="3" fill="#F4F1E7"/>
+  <rect x="18" y="338" width="246" height="192" rx="3" fill="none" stroke="#D8CEBA" stroke-width="2.4"/>
+  <foreignObject x="32" y="352" width="218" height="168">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family:'Space Grotesk',system-ui,sans-serif;color:#2C2822;line-height:1.35">
+      <div style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;font-weight:600;letter-spacing:3px;color:#2E5461;margin-bottom:8px">ABOUT</div>
+      <div style="font-size:20px;font-weight:600;margin-bottom:10px;line-height:1.15">Amber Laidman</div>
+      <div style="font-size:11.5px;font-style:italic;color:#3A342E;line-height:1.5;margin-bottom:10px">&#8220;I think about learning the way I think about any experience worth making &#8212; every part matters, and so does how they fit together.&#8221;</div>
+      <div style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:9px;font-weight:500;letter-spacing:1.5px;color:#7A7268">LEARNING DESIGN &#183; MARYLAND</div>
     </div>
-  </div>
-</section>
+  </foreignObject>
+</g>
+<g class="hs" data-k="floralwall">
+<circle class="hs-dot" cx="150" cy="232" r="2.6"/><rect class="hs-ring" x="112" y="146" width="76" height="176" rx="6"/>
+<rect x="119" y="154" width="68" height="168" rx="2" fill="#2C2822" opacity=".18"/>
+<rect x="116" y="150" width="68" height="168" rx="2" fill="#F4F1E7"/>
+<rect x="116" y="150" width="68" height="168" rx="2" fill="none" stroke="#D8CEBA" stroke-width="2.6"/>
+<path d="M150 310 q-3-44 -1-88 q1-30 4-50" stroke="#8C9A88" stroke-width="1.8" fill="none"/>
+<path d="M132 302 q3-40 8-72" stroke="#A89880" stroke-width="1.4" fill="none"/>
+<path d="M168 304 q-5-38 -12-74" stroke="#A89880" stroke-width="1.4" fill="none"/>
+<ellipse cx="133" cy="284" rx="10" ry="6.4" fill="#A8B8A4" transform="rotate(-24 133 284)"/>
+<ellipse cx="167" cy="276" rx="10" ry="6.4" fill="#96A892" transform="rotate(22 167 276)"/>
+<ellipse cx="128" cy="256" rx="9" ry="5.8" fill="#B4C2AE" transform="rotate(-32 128 256)"/>
+<ellipse cx="172" cy="250" rx="9" ry="5.8" fill="#A8B8A4" transform="rotate(30 172 250)"/>
+<ellipse cx="135" cy="228" rx="8.4" ry="5.4" fill="#96A892" transform="rotate(-20 135 228)"/>
+<ellipse cx="165" cy="220" rx="8.4" ry="5.4" fill="#B4C2AE" transform="rotate(26 165 220)"/>
+<ellipse cx="139" cy="198" rx="7.6" ry="5" fill="#A8B8A4" transform="rotate(-28 139 198)"/>
+<ellipse cx="161" cy="192" rx="7.6" ry="5" fill="#96A892" transform="rotate(24 161 192)"/>
+<circle cx="143" cy="270" r="6.4" fill="#DFA893"/><circle cx="143" cy="270" r="2.8" fill="#E8C86A"/>
+<circle cx="160" cy="242" r="5.8" fill="#C4849A"/><circle cx="160" cy="242" r="2.4" fill="#F0DCC0"/>
+<circle cx="137" cy="240" r="5" fill="#E8C8A0"/><circle cx="137" cy="240" r="2.2" fill="#C9A03C"/>
+<circle cx="157" cy="210" r="5.4" fill="#DFA893"/><circle cx="157" cy="210" r="2.2" fill="#E8C86A"/>
+<circle cx="148" cy="184" r="5" fill="#F0DCC0"/><circle cx="148" cy="184" r="2.2" fill="#C4849A"/>
+<g fill="#FBFAF7">
+<circle cx="127" cy="212" r="4.4"/><circle cx="131" cy="208" r="3.6"/><circle cx="123" cy="207" r="3.2"/>
+<circle cx="174" cy="234" r="4.4"/><circle cx="170" cy="230" r="3.6"/><circle cx="178" cy="230" r="3.2"/>
+<circle cx="150" cy="166" r="4"/><circle cx="154" cy="163" r="3.4"/><circle cx="146" cy="163" r="3"/>
+</g>
+</g>
+<g class="hs" data-k="diploma">
+<circle class="hs-dot" cx="360" cy="76" r="2.6"/><rect class="hs-ring" x="334" y="52" width="54" height="58" rx="5"/>
+<rect x="338" y="56" width="46" height="36" rx="2" fill="#FFFCF2" stroke="#C9A03C" stroke-width="2.4"/>
+<g fill="#C4B79A"><rect x="345" y="64" width="26" height="2" rx="1"/><rect x="345" y="70" width="19" height="2" rx="1"/><rect x="345" y="76" width="23" height="2" rx="1"/></g>
+<circle cx="375" cy="83" r="4.4" fill="#C9A03C"/><path d="M372 87 v6 l3-2.4 3 2.4 v-6z" fill="#C4623C"/>
+</g>
+<g class="hs" data-k="invoices">
+<circle class="hs-dot" cx="412" cy="74" r="2.6"/><rect class="hs-ring" x="394" y="50" width="42" height="60" rx="5"/>
+<path d="M400 56 h26 v38 l-3.2-3-3.2 3-3.2-3-3.2 3-3.2-3-3.2 3-3.2-3-3.6 3z" fill="#FDF8EA" stroke="#D4C4A0" stroke-width="1.2"/>
+<g fill="#B5A588"><rect x="405" y="63" width="16" height="1.8" rx=".9"/><rect x="405" y="68" width="12" height="1.8" rx=".9"/><rect x="405" y="73" width="14" height="1.8" rx=".9"/></g>
+<rect x="405" y="80" width="9" height="2.4" rx="1.2" fill="#C4623C"/>
+</g>
+<g class="hs" data-k="grocery">
+<circle class="hs-dot" cx="470" cy="74" r="2.6"/><rect class="hs-ring" x="448" y="48" width="46" height="62" rx="5"/>
+<path d="M456 62 h30 l-2 32 q0 2-2 2 h-22 q-2 0-2-2z" fill="#C89A62"/>
+<path d="M456 62 h30 l-.7 9 h-28.6z" fill="#D9AC74"/>
+<path d="M464 62 q0-9 7-9 t7 9" fill="none" stroke="#A87A42" stroke-width="2"/>
+<ellipse cx="466" cy="56" rx="4.4" ry="5.4" fill="#5F7D5C"/><circle cx="475" cy="56" r="3.8" fill="#C4623C"/>
+<rect x="479" y="49" width="3" height="11" rx="1.5" fill="#7A9662"/>
+</g>
+<g class="hs" data-k="guest">
+<circle class="hs-dot" cx="528" cy="78" r="2.6"/><rect class="hs-ring" x="504" y="60" width="50" height="50" rx="5"/>
+<rect x="509" y="86" width="40" height="9" rx="1.6" fill="#B8846C"/><rect x="509" y="86" width="40" height="3" rx="1.4" fill="#CD9880"/>
+<rect x="511" y="76" width="36" height="9" rx="1.6" fill="#DCC8A0"/><rect x="511" y="76" width="36" height="3" rx="1.4" fill="#E9D9B8"/>
+<rect x="514" y="66" width="30" height="9" rx="1.6" fill="#8FA894"/><rect x="514" y="66" width="30" height="3" rx="1.4" fill="#A6BCAA"/>
+</g>
+<g class="hs" data-k="studio">
+<circle class="hs-dot" cx="594" cy="70" r="2.6"/><rect class="hs-ring" x="566" y="46" width="58" height="64" rx="5"/>
+<rect x="570" y="52" width="30" height="24" rx="1.5" fill="#E8E0D0" stroke="#B8AC98" stroke-width="1.2"/>
+<circle cx="585" cy="62" r="5" fill="#C4A088"/><path d="M577 76 q0-8 8-8 t8 8z" fill="#8CACC0"/>
+<rect x="583" y="76" width="4" height="18" fill="#6A625A"/>
+<path d="M575 96 h20 l-10-4z" fill="#4A4844"/>
+<circle cx="612" cy="58" r="7" fill="#F4EFE2" stroke="#9A9490" stroke-width="1.6"/>
+<rect x="610" y="65" width="4" height="26" fill="#6A625A"/>
+<path d="M604 94 h16 l-8-4z" fill="#4A4844"/>
+</g>
+<g class="hs" data-k="earlyreads">
+<circle class="hs-dot" cx="668" cy="72" r="2.6"/><rect class="hs-ring" x="644" y="46" width="52" height="64" rx="5"/>
+<rect x="649" y="58" width="13" height="38" rx="1.4" fill="#A8442A"/><rect x="649" y="58" width="3" height="38" fill="#000" opacity=".18"/>
+<rect x="664" y="64" width="11" height="32" rx="1.4" fill="#3A5638"/><rect x="664" y="64" width="3" height="32" fill="#000" opacity=".18"/>
+<rect x="677" y="54" width="14" height="42" rx="1.4" fill="#2A3E4C"/><rect x="677" y="54" width="3" height="42" fill="#000" opacity=".18"/>
+</g>
+<g class="hs" data-k="camera">
+<circle class="hs-dot" cx="748" cy="66" r="2.6"/><rect class="hs-ring" x="716" y="50" width="66" height="60" rx="5"/>
+<rect x="720" y="66" width="58" height="30" rx="4" fill="#3A3632"/>
+<path d="M736 66 l4-7 h18 l4 7z" fill="#3A3632"/>
+<circle cx="749" cy="81" r="12" fill="#22201E"/><circle cx="749" cy="81" r="8.5" fill="#4A6272"/>
+<circle cx="749" cy="81" r="4.6" fill="#22303A"/><circle cx="746" cy="78" r="2.4" fill="#C8D8E0" opacity=".7"/>
+<circle cx="769" cy="72" r="2.6" fill="#C4623C"/>
+<rect x="724" y="71" width="8" height="4" rx="1" fill="#5A554E"/>
+</g>
+<ellipse cx="562" cy="110" rx="230" ry="4" fill="#2C2822" opacity=".10"/>
+<rect x="322" y="110" width="480" height="11" fill="url(#plk)"/>
+<rect x="322" y="111" width="480" height="1.5" fill="#F0DCAC" opacity=".55"/>
+<path d="M336 121 h8 v6z" fill="#8A6838" opacity=".5"/>
+<rect x="322" y="121" width="480" height="5" fill="#6A4614" opacity=".55"/>
+<rect x="322" y="126" width="480" height="14" fill="#000" opacity=".07"/>
+<g class="hs" data-k="aa">
+<circle class="hs-dot" cx="358" cy="186" r="2.6"/><rect class="hs-ring" x="334" y="162" width="50" height="56" rx="5"/>
+<rect x="338" y="166" width="42" height="34" rx="2" fill="#FFFCF2" stroke="#9A8452" stroke-width="2.2"/>
+<g fill="#C4B79A"><rect x="344" y="174" width="24" height="2" rx="1"/><rect x="344" y="180" width="18" height="2" rx="1"/></g>
+<circle cx="371" cy="191" r="4.2" fill="#9A8452"/><path d="M368 195 v6 l3-2.4 3 2.4 v-6z" fill="#5F7D5C"/>
+</g>
+<g class="hs" data-k="bs">
+<circle class="hs-dot" cx="418" cy="186" r="2.6"/><rect class="hs-ring" x="394" y="162" width="50" height="56" rx="5"/>
+<rect x="398" y="166" width="42" height="34" rx="2" fill="#FFFCF2" stroke="#C9A03C" stroke-width="2.4"/>
+<g fill="#C4B79A"><rect x="404" y="174" width="24" height="2" rx="1"/><rect x="404" y="180" width="18" height="2" rx="1"/></g>
+<circle cx="431" cy="191" r="4.4" fill="#C9A03C"/><path d="M428 195 v6 l3-2.4 3 2.4 v-6z" fill="#C4623C"/>
+</g>
+<g class="hs" data-k="aavw">
+<circle class="hs-dot" cx="486" cy="182" r="2.6"/><rect class="hs-ring" x="458" y="156" width="56" height="62" rx="5"/>
+<rect x="466" y="176" width="40" height="26" fill="#F0E4CE"/>
+<path d="M464 176 l4-12 h36 l4 12z" fill="#C4623C"/>
+<path d="M470 164 l-2 12 M478 164 l-1 12 M486 164 v12 M494 164 l1 12 M502 164 l2 12" stroke="#F0E4CE" stroke-width="2.4"/>
+<rect x="471" y="182" width="13" height="12" rx="1" fill="#8CACC0"/>
+<rect x="490" y="182" width="13" height="20" rx="1" fill="#6A5040"/>
+<circle cx="499" cy="192" r="1.3" fill="#C9A03C"/>
+</g>
+<g class="hs" data-k="tmobile">
+<circle class="hs-dot" cx="566" cy="180" r="2.6"/><rect class="hs-ring" x="536" y="156" width="60" height="62" rx="5"/>
+<rect x="548" y="164" width="36" height="38" rx="4" fill="#3A3630"/>
+<rect x="551" y="169" width="30" height="26" rx="1.5" fill="#E4497E"/>
+<circle cx="566" cy="199" r="2.2" fill="#6A625A"/>
+<path d="M559 178 h14 M566 173 v14" stroke="#FBFAF7" stroke-width="3" stroke-linecap="round"/>
+</g>
+<g class="hs" data-k="dei">
+<circle class="hs-dot" cx="644" cy="184" r="2.6"/><rect class="hs-ring" x="612" y="160" width="64" height="58" rx="5"/>
+<circle cx="626" cy="180" r="6" fill="#8CACC0"/><path d="M617 200 q0-11 9-11 t9 11z" fill="#8CACC0"/>
+<circle cx="662" cy="180" r="6" fill="#DFA893"/><path d="M653 200 q0-11 9-11 t9 11z" fill="#DFA893"/>
+<circle cx="644" cy="177" r="7.5" fill="#C4623C"/><path d="M633 202 q0-12 11-12 t11 12z" fill="#C4623C"/>
+</g>
+<g class="hs" data-k="reading">
+<circle class="hs-dot" cx="736" cy="182" r="2.6"/><rect class="hs-ring" x="700" y="152" width="76" height="66" rx="5"/>
+<rect x="705" y="168" width="14" height="34" rx="1.4" fill="#A8442A"/><rect x="705" y="168" width="3" height="34" fill="#000" opacity=".18"/>
+<rect x="721" y="174" width="11" height="28" rx="1.4" fill="#3A5638"/><rect x="721" y="174" width="3" height="28" fill="#000" opacity=".18"/>
+<rect x="734" y="162" width="15" height="40" rx="1.4" fill="#2A3E4C"/><rect x="734" y="162" width="3" height="40" fill="#000" opacity=".18"/>
+<rect x="751" y="172" width="11" height="30" rx="1.4" fill="#8E6C18"/><rect x="751" y="172" width="3" height="30" fill="#000" opacity=".18"/>
+<rect x="764" y="178" width="10" height="24" rx="1.4" fill="#4E3448"/><rect x="764" y="178" width="3" height="24" fill="#000" opacity=".18"/>
+</g>
+<ellipse cx="562" cy="218" rx="230" ry="4" fill="#2C2822" opacity=".10"/>
+<rect x="322" y="218" width="480" height="11" fill="url(#plk)"/>
+<rect x="322" y="219" width="480" height="1.5" fill="#F0DCAC" opacity=".55"/>
+<rect x="322" y="229" width="480" height="5" fill="#6A4614" opacity=".55"/>
+<rect x="322" y="234" width="480" height="14" fill="#000" opacity=".07"/>
+<g class="hs" data-k="ms">
+<circle class="hs-dot" cx="352" cy="294" r="2.6"/><rect class="hs-ring" x="330" y="270" width="46" height="58" rx="5"/>
+<rect x="334" y="274" width="38" height="30" rx="2" fill="#FFFCF2" stroke="#A87828" stroke-width="2.6"/>
+<g fill="#C4B79A"><rect x="340" y="282" width="21" height="2" rx="1"/><rect x="340" y="288" width="15" height="2" rx="1"/></g>
+<path d="M344 306 l9-4 9 4 -9 4z" fill="#2C2822"/><path d="M353 310 v6" stroke="#C4623C" stroke-width="1.8"/>
+</g>
+<g class="hs" data-k="cert">
+<circle class="hs-dot" cx="404" cy="292" r="2.6"/><rect class="hs-ring" x="384" y="270" width="42" height="58" rx="5"/>
+<rect x="388" y="276" width="34" height="28" rx="2" fill="#F4F0E4" stroke="#9A9490" stroke-width="2" stroke-dasharray="4 3"/>
+<g fill="#C4BCB0"><rect x="394" y="284" width="19" height="2" rx="1"/><rect x="394" y="290" width="13" height="2" rx="1"/></g>
+<circle cx="416" cy="299" r="4" fill="none" stroke="#9A9490" stroke-width="1.6" stroke-dasharray="3 2"/>
+</g>
+<g class="hs" data-k="outdoorsy">
+<circle class="hs-dot" cx="464" cy="290" r="2.6"/><rect class="hs-ring" x="436" y="266" width="56" height="62" rx="5"/>
+<path d="M444 302 h40 l-4 -14 h-32z" fill="#DCE4E8"/>
+<rect x="448" y="278" width="32" height="12" rx="2" fill="#4A7A6A"/>
+<circle cx="452" cy="304" r="4.4" fill="#2C2822"/><circle cx="476" cy="304" r="4.4" fill="#2C2822"/>
+<rect x="452" y="281" width="9" height="6" rx="1" fill="#C8D8E0"/>
+<path d="M486 288 l6-6 v20 l-6-6z" fill="#5F7D5C"/>
+</g>
+<g class="hs" data-k="southwest">
+<circle class="hs-dot" cx="530" cy="288" r="2.6"/><rect class="hs-ring" x="502" y="266" width="56" height="62" rx="5"/>
+<path d="M508 296 l44-10 q6-1 6 3 t-6 4 l-44 10 q-4 1-4-3 t4-4z" fill="#2C5AA8"/>
+<path d="M520 292 l-8-14 h7 l12 12z" fill="#3A6EC4"/>
+<path d="M520 300 l-8 12 h7 l12-10z" fill="#3A6EC4"/>
+<path d="M548 288 l-4-8 h4 l6 7z" fill="#E8B03C"/>
+<circle cx="552" cy="290" r="2.4" fill="#FBFAF7"/>
+</g>
+<g class="hs" data-k="visa">
+<circle class="hs-dot" cx="596" cy="288" r="2.6"/><rect class="hs-ring" x="570" y="262" width="54" height="66" rx="5"/>
+<circle cx="596" cy="288" r="20" fill="#5A8CA8"/>
+<path d="M596 268 q-11 20 0 40 q11-20 0-40z" fill="#4A7A94" opacity=".5"/>
+<ellipse cx="596" cy="288" rx="20" ry="7.4" fill="none" stroke="#A8CCD8" stroke-width="1" opacity=".6"/>
+<path d="M583 281 q5-4 10-1 q2 5-3 7 q-6-1-7-6z" fill="#6E9464"/>
+<path d="M600 275 q7 1 8 7 q-3 4-7 1 q-3-4-1-8z" fill="#6E9464"/>
+<path d="M598 293 q6 1 7 6 q-5 3-8-1z" fill="#6E9464"/>
+<path d="M596 308 v6" stroke="#8A7050" stroke-width="2.4"/><path d="M588 317 q8-6 16 0z" fill="#8A7050"/>
+</g>
+<g class="hs" data-k="travel">
+<circle class="hs-dot" cx="660" cy="292" r="2.6"/><rect class="hs-ring" x="634" y="268" width="54" height="60" rx="5"/>
+<path d="M652 280 q0-6 8-6 t8 6" fill="none" stroke="#6A5040" stroke-width="2.2"/>
+<rect x="638" y="280" width="44" height="28" rx="3" fill="#8A7050" stroke="#6A5040" stroke-width="1"/>
+<rect x="638" y="288" width="44" height="3" fill="#6A5040"/><rect x="638" y="298" width="44" height="3" fill="#6A5040"/>
+<rect x="655" y="284" width="7" height="4" rx="1" fill="#C9A03C"/>
+<rect x="642" y="293" width="8" height="6" rx="1" fill="#C4623C" opacity=".85" transform="rotate(-8 646 296)"/>
+<rect x="668" y="301" width="8" height="6" rx="1" fill="#5F7D5C" opacity=".85" transform="rotate(6 672 304)"/>
+</g>
+<g class="hs" data-k="floral">
+<circle class="hs-dot" cx="722" cy="288" r="2.6"/><rect class="hs-ring" x="696" y="262" width="54" height="66" rx="5"/>
+<rect x="700" y="268" width="46" height="42" rx="2" fill="#F4F1E7" stroke="#B8967A" stroke-width="2.4"/>
+<path d="M723 306 q-3-16 0-28" stroke="#8C9A88" stroke-width="1.6" fill="none"/>
+<ellipse cx="711" cy="292" rx="7" ry="5" fill="#DFA893" transform="rotate(-24 711 292)"/>
+<ellipse cx="735" cy="288" rx="7" ry="5" fill="#C4849A" transform="rotate(22 735 288)"/>
+<ellipse cx="714" cy="280" rx="6" ry="4.4" fill="#A8B8A4" transform="rotate(-32 714 280)"/>
+<ellipse cx="733" cy="276" rx="6" ry="4.4" fill="#E8C8A0" transform="rotate(30 733 276)"/>
+<circle cx="723" cy="283" r="4.4" fill="#FBFAF7"/><circle cx="723" cy="283" r="2" fill="#E8C86A"/>
+</g>
+<g class="hs" data-k="home">
+<circle class="hs-dot" cx="778" cy="290" r="2.6"/><rect class="hs-ring" x="758" y="270" width="42" height="58" rx="5"/>
+<path d="M779 308 q-16-11-16-21 q0-8 8-8 q5 0 8 5 q3-5 8-5 q8 0 8 8 q0 10-16 21z" fill="#C4623C"/>
+<path d="M772 285 q4-2 7 2" stroke="#E09070" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+</g>
+<g class="hs" data-k="mdhall">
+<circle class="hs-dot" cx="836" cy="290" r="2.6"/><rect class="hs-ring" x="812" y="266" width="50" height="62" rx="5"/>
+<path d="M816 288 h40 l-20-14z" fill="#C4623C"/>
+<rect x="820" y="288" width="32" height="20" fill="#F0E4CE"/>
+<path d="M824 288 v20 M832 288 v20 M840 288 v20 M848 288 v20" stroke="#DCCEB4" stroke-width="2"/>
+<rect x="830" y="296" width="12" height="12" fill="#8CACC0"/>
+</g>
+<g>
+<path d="M896 288 h22 l-2 20 q0 2-2 2 h-14 q-2 0-2-2z" fill="#C4783C"/>
+<ellipse cx="907" cy="288" rx="11" ry="3.2" fill="#DC9456"/>
+<ellipse cx="907" cy="288" rx="7" ry="2" fill="#A05C28"/>
+<path d="M918 293 q7 .5 6.4 6.4 q-.6 5.4-7 5" fill="none" stroke="#C4783C" stroke-width="2.6"/>
+<path d="M900 285 q2-6 6-7" stroke="#5F7D5C" stroke-width="1.6" fill="none"/>
+</g>
+<g>
+<rect x="866" y="286" width="9" height="24" rx="1.2" fill="#C4423C"/><rect x="866" y="286" width="2.4" height="24" fill="#000" opacity=".18"/>
+<rect x="877" y="290" width="8" height="20" rx="1.2" fill="#E8B03C"/><rect x="877" y="290" width="2.2" height="20" fill="#000" opacity=".18"/>
+</g>
+<ellipse cx="626" cy="328" rx="295" ry="4.5" fill="#2C2822" opacity=".10"/>
+<rect x="322" y="328" width="608" height="12" fill="url(#plk)"/>
+<rect x="322" y="329" width="608" height="1.8" fill="#F0DCAC" opacity=".6"/>
+<path d="M336 340 h9 v7z" fill="#8A6838" opacity=".5"/>
+<rect x="322" y="340" width="608" height="6" fill="#6A4614" opacity=".55"/>
+<rect x="322" y="346" width="608" height="16" fill="#000" opacity=".07"/>
+<g class="hs" data-k="medals">
+<circle class="hs-dot" cx="866" cy="152" r="2.6"/><rect class="hs-ring" x="820" y="60" width="94" height="150" rx="8"/>
+<rect x="829" y="70" width="82" height="32" rx="3" fill="#2C2822" opacity=".16"/>
+<rect x="826" y="66" width="82" height="32" rx="3" fill="#C9A46C" stroke="#B08E52" stroke-width="1.5"/>
+<text x="843" y="89" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="700" fill="#8C6C3C" letter-spacing="1">run.</text>
+<g stroke="#9A8460" stroke-width="1.8"><path d="M834 98 v5 M847 98 v5 M860 98 v5 M873 98 v5 M886 98 v5 M898 98 v5"/></g>
+<path d="M831 100 l-2 52 h10 l-1-52z" fill="#3A6E4C"/>
+<path d="M844 100 l-2 58 h10 l-1-58z" fill="#C4423C"/>
+<path d="M857 100 l-1 50 h10 l-1-50z" fill="#2C5AA8"/>
+<path d="M870 100 v60 h10 v-60z" fill="#E8E4DC"/>
+<path d="M883 100 l1 52 h10 l-2-52z" fill="#C4423C"/>
+<path d="M895 100 l2 56 h10 l-3-56z" fill="#4A9AC4"/>
+<circle cx="835" cy="166" r="8.6" fill="#C9A03C"/><circle cx="835" cy="166" r="5" fill="#E0BC5C"/>
+<circle cx="852" cy="170" r="8.6" fill="#B8B0A4"/><circle cx="852" cy="170" r="5" fill="#D0C8BC"/>
+<circle cx="870" cy="173" r="9.6" fill="#C4423C"/><circle cx="870" cy="173" r="6" fill="#D9604C"/>
+<circle cx="888" cy="166" r="8.6" fill="#3A6E4C"/><circle cx="888" cy="166" r="5" fill="#4C8A5C"/>
+<circle cx="903" cy="169" r="8.6" fill="#C9A03C"/><circle cx="903" cy="169" r="5" fill="#E0BC5C"/>
+</g>
+<g>
+<rect x="831" y="232" width="70" height="56" rx="2" fill="#2C2822" opacity=".18"/>
+<rect x="828" y="228" width="70" height="56" rx="2" fill="#7E8A84"/>
+<rect x="834" y="234" width="58" height="44" fill="#B4C4CC"/>
+<path d="M834 264 q15-18 27-11 q13-13 31 2 v23 h-58z" fill="#5C7A54"/>
+<path d="M834 270 q18-11 35-4 q12-5 23 3 v9 h-58z" fill="#44603E"/>
+<rect x="834" y="234" width="58" height="13" fill="#C8D4D8"/>
+</g>
+<ellipse cx="616" cy="418" rx="288" ry="5" fill="#2C2822" opacity=".09"/>
+<rect x="326" y="416" width="580" height="24" fill="url(#dsk)"/>
+<rect x="326" y="416" width="580" height="5" fill="#C2E0D8"/>
+<rect x="326" y="440" width="580" height="7" fill="#6E9E94"/>
+<rect x="326" y="447" width="580" height="16" fill="#000" opacity=".08"/>
+<rect x="358" y="447" width="16" height="93" fill="#FBFAF7"/><rect x="358" y="447" width="5" height="93" fill="#E4E0D6"/>
+<rect x="862" y="447" width="16" height="93" fill="#FBFAF7"/><rect x="862" y="447" width="5" height="93" fill="#E4E0D6"/>
+<rect x="760" y="447" width="48" height="9" rx="2" fill="#2C2822"/>
+<g stroke="#9A9490" stroke-width="1.3"><path d="M768 451 h4 M777 451 h4 M786 451 h4 M795 451 h4"/></g>
+<g>
+<rect x="386" y="356" width="104" height="50" rx="3.5" fill="#22262A"/>
+<rect x="390" y="360" width="96" height="42" rx="2" fill="url(#scr)"/>
+<rect x="431" y="402" width="13" height="10" fill="#3A3E42"/>
+<ellipse cx="438" cy="414" rx="22" ry="4.5" fill="#2C3034"/>
+</g>
+<g class="hs" data-k="imac">
+<circle class="hs-dot" cx="600" cy="374" r="2.6"/><rect class="hs-ring" x="524" y="348" width="152" height="72" rx="7"/>
+<rect x="530" y="352" width="140" height="52" rx="5" fill="#FBFAF7"/>
+<rect x="536" y="357" width="128" height="38" rx="2.5" fill="url(#scr)"/>
+<path d="M536 357 L664 395 V357z" fill="#4A5258" opacity=".3"/>
+<path d="M530 393 h140 v6 q0 5-5 5 h-130 q-5 0-5-5z" fill="#9CC8BE"/>
+<rect x="588" y="402" width="22" height="10" fill="#B8DAD2"/>
+<ellipse cx="599" cy="414" rx="32" ry="4.5" fill="#9CC8BE"/>
+</g>
+<g>
+<rect x="336" y="408" width="104" height="8" rx="1" fill="#3A3E42"/>
+<rect x="336" y="408" width="104" height="2" rx="1" fill="#5A6268"/>
+</g>
+<g>
+<rect x="524" y="418" width="160" height="10" rx="1.5" fill="#DCE8E4"/>
+<g fill="#C4D6D0">
+<rect x="532" y="421" width="8" height="5" rx="1"/><rect x="544" y="421" width="8" height="5" rx="1"/>
+<rect x="556" y="421" width="8" height="5" rx="1"/><rect x="568" y="421" width="8" height="5" rx="1"/>
+<rect x="580" y="421" width="8" height="5" rx="1"/><rect x="592" y="421" width="8" height="5" rx="1"/>
+<rect x="604" y="421" width="8" height="5" rx="1"/><rect x="616" y="421" width="8" height="5" rx="1"/>
+<rect x="628" y="421" width="8" height="5" rx="1"/><rect x="640" y="421" width="8" height="5" rx="1"/>
+<rect x="652" y="421" width="8" height="5" rx="1"/><rect x="664" y="421" width="8" height="5" rx="1"/>
+</g>
+<g fill="#9CC8BE">
+<ellipse cx="536" cy="434" rx="9" ry="5.5"/><ellipse cx="554" cy="434" rx="9" ry="5.5"/>
+<ellipse cx="572" cy="434" rx="9" ry="5.5"/><ellipse cx="590" cy="434" rx="9" ry="5.5"/>
+<ellipse cx="608" cy="434" rx="9" ry="5.5"/><ellipse cx="626" cy="434" rx="9" ry="5.5"/>
+<ellipse cx="644" cy="434" rx="9" ry="5.5"/><ellipse cx="662" cy="432" rx="9" ry="5.5"/>
+</g>
+</g>
+<g>
+<path d="M714 378 h26 l-3 34 q-.2 3-3.2 3 h-13.6 q-3 0-3.2-3z" fill="#EFE7DA" opacity=".92"/>
+<path d="M715.6 390 h22.8 l-2 22 h-18.8z" fill="#8A5A38"/>
+<path d="M716 384 h22 l-.5 6 h-21z" fill="#C4A282"/>
+<ellipse cx="727" cy="378" rx="13" ry="3.6" fill="#F6F1E7"/>
+<rect x="733" y="356" width="4" height="24" rx="2" fill="#DFA893" transform="rotate(11 735 368)"/>
+<ellipse cx="800" cy="412" rx="30" ry="8" fill="#F2EDE2"/>
+<ellipse cx="800" cy="410" rx="30" ry="8" fill="#FBFAF7"/>
+<ellipse cx="800" cy="410" rx="24" ry="5.6" fill="#F0EADE"/>
+<g>
+<ellipse cx="787" cy="407" rx="7" ry="5" fill="#F7F4EC"/><path d="M781 405 q6-4 12 0 q-1 4-6 4 q-5 0-6-4z" fill="#E8825C"/>
+<ellipse cx="800" cy="406" rx="7" ry="5" fill="#F7F4EC"/><path d="M794 404 q6-4 12 0 q-1 4-6 4 q-5 0-6-4z" fill="#EFA060"/>
+<ellipse cx="813" cy="407" rx="7" ry="5" fill="#F7F4EC"/><path d="M807 405 q6-4 12 0 q-1 4-6 4 q-5 0-6-4z" fill="#D9635C"/>
+<rect x="782" y="401" width="11" height="2.6" rx="1.3" fill="#3E4A3C"/>
+<rect x="795" y="400" width="11" height="2.6" rx="1.3" fill="#3E4A3C"/>
+<rect x="808" y="401" width="11" height="2.6" rx="1.3" fill="#3E4A3C"/>
+</g>
+<path d="M824 398 l16-6 M825 401 l16-6" stroke="#C9A46C" stroke-width="1.8" stroke-linecap="round"/>
+</g>
+<g>
+<path d="M876 426 l32-2 -2 30 q0 4-4 4 h-21 q-4 0-4-4z" fill="#6A5240"/>
+<ellipse cx="892" cy="425" rx="16" ry="4.2" fill="#7E6250"/>
+<ellipse cx="892" cy="425" rx="11" ry="2.8" fill="#4A3A2C"/>
+<rect x="885" y="407" width="5" height="19" rx="2" fill="#3A3630"/>
+<rect x="896" y="410" width="7" height="16" rx="3" fill="#DCE8E4"/>
+</g>
+<g class="hs" data-k="headphones">
+<circle class="hs-dot" cx="357" cy="460" r="2.6"/><rect class="hs-ring" x="332" y="440" width="50" height="44" rx="5"/>
+<path d="M344 458 q0-11 13-11 t13 11" fill="none" stroke="#3A3E42" stroke-width="4" stroke-linecap="round"/>
+<rect x="338" y="456" width="12" height="20" rx="5" fill="#4A5258"/>
+<rect x="364" y="456" width="12" height="20" rx="5" fill="#4A5258"/>
+</g>
+<path d="M876 444 q11 18 4 34 q-7 14 4 22" fill="none" stroke="#DCE8E4" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="616" cy="586" rx="182" ry="30" fill="#2C2822" opacity=".13"/>
+<path d="M470 556 h292 q8 0 10 5 l30 44 q3 6-6 6 h-360 q-9 0-6-6 l30-44 q2-5 10-5z" fill="#41464A"/>
+<path d="M470 556 h292 q8 0 10 5 l2 4 h-316 l2-4 q2-5 10-5z" fill="#585E63"/>
+<path d="M436 605 h360 q9 0 6-6 l-1-2 q1 4-6 4 h-358 q-7 0-6-4 l-1 2 q-3 6 6 6z" fill="#31363A"/>
+<g stroke="#585E63" stroke-width="1.3" opacity=".5">
+<path d="M496 561 l-14 40 M528 561 l-11 40 M560 561 l-7 40 M592 561 l-4 40 M624 561 l0 40 M656 561 l4 40 M688 561 l7 40 M720 561 l11 40"/>
+</g>
+<path d="M456 578 h320" stroke="#585E63" stroke-width="1.1" opacity=".4"/>
+<path d="M446 592 h340" stroke="#585E63" stroke-width="1.1" opacity=".35"/>
+<g class="hs" data-k="tools">
+<circle class="hs-dot" cx="695" cy="404" r="2.6"/><rect class="hs-ring" x="676" y="378" width="42" height="42" rx="5"/>
+<!-- Antique jar shadow -->
+<ellipse cx="695" cy="418" rx="15" ry="2.4" fill="#2C2822" opacity=".22"/>
+<!-- Jar body (amber glass) -->
+<path d="M682 400 q0-2 2-2 h22 q2 0 2 2 v14 q0 4-3 4 h-20 q-3 0-3-4z" fill="#D9B57C" opacity=".78"/>
+<!-- Glass highlight left -->
+<path d="M685 402 v13" stroke="#F4E4B8" stroke-width="1.4" opacity=".65" stroke-linecap="round"/>
+<!-- Contents peeking above rim -->
+<path d="M688 396 v4 M692 394 v6 M697 395 v5 M702 396 v4" stroke="#8A6838" stroke-width="1.3" opacity=".85" stroke-linecap="round"/>
+<!-- Neck/rim band -->
+<rect x="681" y="395" width="28" height="4" rx="1" fill="#B8945C"/>
+<!-- Top ridge -->
+<rect x="680" y="392" width="30" height="3" rx="1" fill="#8A6838"/>
+</g>
+<g class="hs" data-k="chair">
+<circle class="hs-dot" cx="560" cy="496" r="2.6"/><rect class="hs-ring" x="470" y="464" width="196" height="112" rx="10"/>
+<path d="M478 492 q0-20 42-24 h78 q40 4 40 24 q0 17-40 19 h-46 q-9-10-23-6 l-23 4 q-28-2-28-17z" fill="#A8A29C"/>
+<path d="M482 488 q0-19 40-22 h76 q38 3 38 22 q0 15-38 17 h-44 q-9-9-22-5 l-22 4 q-28-2-28-16z" fill="#9A9490"/>
+<rect x="554" y="526" width="10" height="16" fill="#B4B0AA"/>
+<path d="M506 556 h108" stroke="#9A9490" stroke-width="7" stroke-linecap="round"/>
+<circle cx="508" cy="560" r="7" fill="#7A7570"/><circle cx="612" cy="560" r="7" fill="#7A7570"/>
+</g>
+<g>
+
+</g>
+<rect x="812" y="476" width="17" height="25" rx="2" fill="#FBFAF7"/>
+<circle cx="820" cy="484" r="2.4" fill="#DDD5C6"/><circle cx="820" cy="493" r="2.4" fill="#DDD5C6"/>
+
+</svg>
+
+<div class="nudge" id="nudge" aria-hidden="true"><span class="nudge-dot"></span>Tap any <b>dot</b> to hear the story</div>
+
+</div>
+
+<div class="panel" id="panel" role="status" aria-live="polite" aria-atomic="true">
+  <div class="p-empty"><strong style="color:#2C2822;font-style:normal;font-weight:600;">Amber Laidman</strong> — learning designer, program manager, and photographer based in Maryland.<br><br>Everything here is something I kept.<br><span class="p-empty-sub">Pick one and I'll tell you why.</span></div>
+</div>
+
+<div class="tools">
+  <button class="toggle" id="tg">Read it all as text</button>
+  <span class="tools-note">27 things to find</span>
+</div>
+<div class="list" id="list" role="region" aria-label="Text version of every object"></div>
+
+</div>
+</div>
 
 </main>
 
@@ -122,7 +552,6 @@
   <div class="footer-inner">
     <div>© 2026 Amber Laidman</div>
     <div class="footer-links">
-      <a href="#top" class="back-to-top">Back to top</a>
       <a href="https://mail.google.com/mail/?view=cm&fs=1&to=laidman.amber@gmail.com&su=Portfolio%20inquiry" target="_blank" rel="noopener">laidman.amber@gmail.com <span class="sr-only">(opens in new window)</span></a>
       <a href="https://www.linkedin.com/in/amber-laidman/" target="_blank" rel="noopener">LinkedIn <span class="sr-only">(opens in new window)</span></a>
       <a href="https://tally.so/r/A7XMM0" target="_blank" rel="noopener">Have thoughts? <span class="sr-only">(opens in new window)</span></a>
@@ -130,5 +559,85 @@
   </div>
 </footer>
 
+<script>
+const DATA={
+ diploma:{k:'Chapter I · Foundation',t:'Where it starts',b:'Graduated high school at 16 and went straight into college — already working the whole time. There was never a version of this where school and work happened separately. Doing both at once became the default early, and it stuck.'},
+ invoices:{k:'Chapter I · Foundation',t:"My dad's invoices",b:'Once we got a computer, I helped my dad with the invoices for his small business — the same thing my mom did for him. That\'s how I learned the paperwork side of running something. It\'s also where I learned to take the small jobs. He never turned down a little one, because small clients still pay the bills and they\'re the ones who refer you. That business took care of our family.'},
+ grocery:{k:'Chapter I · Foundation',t:'Grocery',b:'Cashier, deli, food service, customer service — a stack of different roles in the same building. Retail work gets flattened into "you were a cashier," but the actual lesson was range: every counter had its own rhythm, its own regulars, its own way things could go wrong. I still put away carts when I see them loose in a lot.'},
+ guest:{k:'Chapter I · Foundation',t:'Guest experience',b:'Gap and Target, where the word wasn\'t customer — it was guest. That\'s not a branding trick. Someone in your store is a guest in that space, and your job is to figure out what they actually need, not just ring them up. Folding and presentation mattered, but the real skill was reading the person in front of you and right-fitting them to what they came in for. It was my first introduction to selling, without a single commission attached.'},
+ studio:{k:'Chapter I · Foundation',t:'Sears Portrait Studio',b:'The first time photography was a job and not a hobby. Sessions on a clock, families who didn\'t want to be there, kids who wouldn\'t sit still — and you still had to come out with something they\'d want to keep. Then you sold them the package.'},
+ earlyreads:{k:'Chapter I · Foundation',t:'Early reads',b:'Been reading since I was little and never stopped. 1984, Go Ask Alice, Cut — a few from the high school stack. Formal tracking didn\'t start until 2016; 550 books later, it\'s still going.'},
+ camera:{k:'Chapter I · Foundation',t:'The camera',b:'Fell in love with photography in middle school. Got a camera, started taking pictures, and that was that. People were always the subject — still are — though lately it\'s been travel and architecture.'},
+
+ aa:{k:'Chapter II · Craft &amp; Ownership',t:'Harford Community College',b:'Associate\'s in photography, 2009. Probably my most creative stretch — the work was the point, and I met some of my closest friends there, the ones I still have.'},
+ bs:{k:'Chapter II · Craft &amp; Ownership',t:'BS Photography — Towson',b:'Continued straight into the bachelor\'s. One of the harder stretches of my life, but I finished it. Then went right back to work after — I wasn\'t chasing a dream job, I was focused on stability. That came first.'},
+ aavw:{k:'Chapter II · Craft &amp; Ownership',t:'A&amp;A Visual Works',b:'The brand my friend and I built — portraits mostly, engagements and proposals, the occasional event, plus real estate, drone work, travel, and architecture. Running it meant client conversations, contracts, invoices, and licensing, not just showing up with a camera.'},
+ tmobile:{k:'Chapter II · Craft &amp; Ownership',t:'T-Mobile — twelve years',b:'Started on the sales floor as a Mobile Expert in 2011 and left in 2023 as a Field Training Manager. Retail Associate Manager, District Trainer, Sr. Sales Trainer along the way. I didn\'t set out to work in L&amp;D — I found it by training the people around me and realizing that was the part I liked most. Fourteen PEAK nominations and two Quarterly Winner\'s Circle awards over those years, from mobile experts to market directors, plus six Circle of Achievement nominations at Sprint.'},
+ dei:{k:'Chapter II · Craft &amp; Ownership',t:'DEI Council',b:'Co-led the local Maryland/Delaware chapter from 2021 to 2023. After a restructure, the chapter needed rebuilding — starting with whoever was still in and what they could realistically commit to, then building relationships across retail, government affairs, legal, and advertising to give it footing again.'},
+ reading:{k:'Chapter II · Craft &amp; Ownership',t:'The reading shelf',b:'Started listening to audiobooks in 2023, and it changed everything — about 78% of what I read now is audio, and the yearly count went from 27 books to over 100. The Overstory, Razorblade Tears, The Violin Conspiracy, The Cartographers, Lessons in Chemistry — five stars, 2023 to now.'},
+
+ ms:{k:'Chapter III · L&amp;D Leadership',t:'MS — Learning Design &amp; Technology',b:'Master of Science in Learning Design &amp; Technology, University of Maryland.'},
+ cert:{k:'Chapter III · L&amp;D Leadership',t:'Graduate Certificate — Project Management',b:'Graduate certificate in Project Management at University of Maryland, in progress — expected March 2027.'},
+ outdoorsy:{k:'Chapter III · L&amp;D Leadership',t:'Outdoorsy',b:'Learning Development Consultant, early 2024. Converted the e-learning library from Absorb to Articulate Rise — 22 new courses — and rewrote the 2024 new hire curriculum to better support facilitators. Recruit success rate went from 76% in 2023 to 86% in 2024. Also ran the seasonal onboarding events for 105 new customer support agents.'},
+ southwest:{k:'Chapter III · L&amp;D Leadership',t:'Southwest Airlines',b:'Learning Developer intern on the TechOps team, summer 2024. Built eight Rise courses for supervisors auditing 100+ stations, and a course catalog tracking the 85 courses provided to vendors — used for monthly audits against both the company and vendor LMS.'},
+ visa:{k:'Chapter III · L&amp;D Leadership',t:'Visa',b:'Sr. Consultant, Training &amp; Development — content and instructional design for Visa\'s Risk and Identity solutions. Led onboarding for new Risk Solutions Services team members, and worked across a global team on a flexible schedule. Also ran off-cycle training for the product and sales engineering teams.'},
+ travel:{k:'Chapter III · Personal',t:'Travel',b:'Didn\'t really start until 2017, when I met my partner. Japan, Ireland, Italy, Iceland, Spain, Portugal, Morocco, the Philippines, Singapore, Korea since then. It\'s where the photography went from portraits to architecture — and where the Japanese and Spanish study came from.'},
+ floralwall:{k:'The room',t:'Floral work',b:'I take frames and found objects and build arrangements into them — all artificial florals. It\'s something I picked up and genuinely love doing. Mostly it\'s soothing: figure out what belongs in the frame and what doesn\'t, and take as long as it takes.'},
+ floral:{k:'Chapter III · Personal',t:'Floral work',b:'I take frames and found objects and build arrangements into them — all artificial florals. It\'s something I picked up and genuinely love doing. Mostly it\'s soothing: figure out what belongs in the frame and what doesn\'t, and take as long as it takes.'},
+ home:{k:'Chapter III · Personal',t:'Home',b:'Found my person in 2017. Still going, still new every day — still learning each other, still growing with each other. Wherever we are, that\'s home.'},
+ mdhall:{k:'Chapter III · Personal',t:'Maryland Hall',b:'Started volunteering a little over a year ago, mostly with teaching and arts units — supporting the teaching staff, and making sure students get to their classes safely.'},
+
+ medals:{k:'The room',t:'The medal rack',b:'Started running in 2011. 5Ks up through half marathons since then. I love it — it\'s therapeutic and freeing, and I genuinely enjoy the training part, for myself.'},
+ imac:{k:'The room',t:'The iMac',b:'My best working space, for art and for the day to day. I\'m fully Mac for my own work — though the business world runs on Windows, and I move between both without much fuss.'},
+ headphones:{k:'The room',t:'Headphones',b:'Over-the-ear, in-ear, or just open on the device — depends on the day. I like having options. The only rule is wireless, because I\'m not staying in one place.'},
+ chair:{k:'The room',t:'The saddle chair',b:'I can\'t sit still. The saddle chair and the standing desk exist because I need to be able to shift, stand, move, and get up without breaking focus. Designing for how people actually work applies to my own setup too.'},
+ tools:{k:'The room',t:'The tool jar',b:'Everything I work in day to day. Articulate Rise 360, iSpring, Canva, Google Workspace, Microsoft 365, Adobe Creative Cloud, Miro, Claude, and OpenAI. Industries: telecom, travel and hospitality, spirits, contact center operations.'}
+};
+
+const scene=document.getElementById('scene'),panel=document.getElementById('panel');
+const seen=new Set();
+
+function show(k){
+  const d=DATA[k]; if(!d)return;
+  document.querySelectorAll('.hs').forEach(e=>e.classList.remove('on'));
+  document.querySelector('.hs[data-k="'+k+'"]').classList.add('on');
+  panel.innerHTML='<div class="p-kick">'+d.k+'</div><div class="p-title">'+d.t+'</div><div class="p-body">'+d.b+'</div>';
+  seen.add(k);
+  document.querySelector('.hs[data-k="'+k+'"]').classList.add('seen');
+  scene.classList.remove('hint');
+  scene.classList.add('focused');
+}
+document.querySelectorAll('.hs').forEach(el=>{
+  const k=el.dataset.k;
+  el.setAttribute('tabindex','0'); el.setAttribute('role','button');
+  el.setAttribute('aria-label',DATA[k]?(DATA[k].t+', '+DATA[k].k.replace(/&amp;/g,'and')):k);
+  el.addEventListener('pointerdown',e=>{e.stopPropagation();show(k);});
+  el.addEventListener('click',e=>{e.stopPropagation();show(k);});
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(k);}});
+  if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    el.addEventListener('mouseenter',()=>show(k));
+  }
+});
+scene.addEventListener('pointerdown',e=>{
+  if(!e.target.closest('.hs')){
+    document.querySelectorAll('.hs').forEach(x=>x.classList.remove('on'));
+    scene.classList.remove('focused');
+    panel.innerHTML='<div class="p-empty">Everything here is something I kept.<br><span class="p-empty-sub">Pick one and I&rsquo;ll tell you why.</span></div>';
+  }
+});
+const groups={};
+Object.values(DATA).forEach(d=>{(groups[d.k]=groups[d.k]||[]).push(d);});
+let html='';
+Object.entries(groups).forEach(([k,items])=>{
+  html+='<h3>'+k+'</h3><dl>';
+  items.forEach(d=>{html+='<dt>'+d.t+'</dt><dd>'+d.b+'</dd>';});
+  html+='</dl>';
+});
+document.getElementById('list').innerHTML=html;
+document.getElementById('tg').addEventListener('click',e=>{
+  const l=document.getElementById('list'); l.classList.toggle('show');
+  e.target.textContent=l.classList.contains('show')?'Hide text version':'Read everything as text';
+});
+</script>
 </body>
 </html>
