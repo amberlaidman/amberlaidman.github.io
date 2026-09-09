@@ -9,6 +9,159 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* ============================================================
+   LAB PAGE — Option C: grouped sidebar layout
+   ============================================================ */
+
+.lab-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem;
+}
+
+/* ----- Sidebar ----- */
+.lab-sidebar {
+  position: sticky;
+  top: 2rem;
+  align-self: start;
+  border-right: 1px solid rgba(46, 84, 97, 0.15);
+  padding-right: 1.5rem;
+}
+
+.lab-category-group {
+  margin-bottom: 2rem;
+}
+.lab-category-group:last-child {
+  margin-bottom: 0;
+}
+
+.lab-category-heading {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2E5461;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(46, 84, 97, 0.15);
+}
+
+.lab-project-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lab-project-list li {
+  margin: 0;
+}
+
+.lab-tab {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  margin: 0.15rem 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  color: #2E5461;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  border-radius: 0 4px 4px 0;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.lab-tab:hover {
+  background: rgba(199, 224, 208, 0.25);
+}
+
+.lab-tab:focus-visible {
+  outline: 2px solid #2E5461;
+  outline-offset: 2px;
+}
+
+.lab-tab.active {
+  background: rgba(199, 224, 208, 0.4);
+  border-left-color: #2E5461;
+  font-weight: 500;
+}
+
+.lab-empty-state {
+  padding: 0.5rem 0.75rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(46, 84, 97, 0.6);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ----- Mobile dropdown selector ----- */
+.lab-mobile-selector {
+  display: none;
+  margin-bottom: 2rem;
+}
+
+.lab-mobile-selector label {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2E5461;
+  margin-bottom: 0.5rem;
+}
+
+.lab-mobile-selector select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: #2E5461;
+  background: #fff;
+  border: 1px solid rgba(46, 84, 97, 0.25);
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3e%3cpath fill='%232E5461' d='M6 8L0 0h12z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.lab-mobile-selector select:focus-visible {
+  outline: 2px solid #2E5461;
+  outline-offset: 2px;
+}
+
+/* ----- Content area ----- */
+.lab-content-area {
+  min-width: 0; /* prevent grid overflow */
+}
+
+/* ----- Responsive breakpoint ----- */
+@media (max-width: 768px) {
+  .lab-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 1.5rem 1.25rem 3rem;
+  }
+  .lab-sidebar {
+    display: none;
+  }
+  .lab-mobile-selector {
+    display: block;
+  }
+}
+</style>
 </head>
 <body id="top">
 
@@ -39,112 +192,205 @@
 <section class="lab-content" aria-labelledby="lab-projects-heading">
   <h2 id="lab-projects-heading" class="sr-only">Current projects and journal</h2>
 
-  <div class="lab-tabs" role="tablist" aria-label="Select a project or journal">
-    <button class="lab-tab active" role="tab" aria-selected="true" data-panel="menstrual-cycle">Understanding Your Cycle</button>
-    <button class="lab-tab" role="tab" aria-selected="false" data-panel="autonomous-vehicle">Riding with No Driver</button>
-    <button class="lab-tab" role="tab" aria-selected="false" data-panel="feedback">Feedback</button>
-    <button class="lab-tab journal-tab" role="tab" aria-selected="false" data-panel="journal">Journal</button>
-  </div>
+  <div class="lab-layout">
 
-  <!-- Understanding Your Cycle panel -->
-  <div class="project-panel active" data-panel="menstrual-cycle" role="tabpanel">
-    <div class="project-header">
-      <div class="project-status">
-        <span class="status-dot"></span>
-        <span class="status-text">IN PROGRESS · SEPT 2026</span>
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="lab-sidebar" aria-label="Projects and journal">
+
+      <!-- LIVE -->
+      <div class="lab-category-group">
+        <div class="lab-category-heading">Live</div>
+        <p class="lab-empty-state">Nothing here yet. Projects move up to Live once they're stable enough to stand on their own without me hovering.</p>
       </div>
-      <h3 class="project-title">Understanding Your Cycle</h3>
-      <p class="project-description">A course about what happens in your body during puberty and the menstrual cycle — and how to recognize when to reach out for extra support. Built to be accessible on its own, so questions can be answered whenever they come up rather than waiting for someone to bring it up first.</p>
-      <p class="project-description">Module 1 (Body &amp; Cycle) is drafted. Module 2 (Products) is underway. Built in Parta.</p>
-    </div>
 
-    <div class="project-preview">
-      <div class="preview-label">Current Progress</div>
-      <img src="images/understanding-your-cycle-preview.png" alt="Cover page of the Understanding Your Cycle course, showing the title and a warm illustration of pads, chocolate bars, cozy socks, and hearts." class="preview-image">
-    </div>
-
-    <div class="project-section project-section-single">
-      <h4>What's on my mind</h4>
-      <ul>
-        <li><strong>Medical accuracy vs. approachability.</strong> Making sure the medical parts are accurate while keeping the tone warm.</li>
-        <li><strong>Interaction density.</strong> Module 1 has a lot going on — flip cards, drag-and-drops, click-to-reveals, knowledge checks. Feels right for the content, but I'm watching for cognitive load.</li>
-        <li><strong>Where does a course like this go once it's finished?</strong> Public web, partnership with an organization, something else?</li>
-      </ul>
-    </div>
-
-    <div class="project-cta">
-      <a href="https://app.parta.io/#/public/e9bac6f4-cea3-4f20-b4f9-77a527e6a26c" target="_blank" rel="noopener" class="project-cta-link">View course preview <span aria-hidden="true">→</span><span class="sr-only">(opens in new window)</span></a>
-    </div>
-  </div>
-
-  <!-- Riding with No Driver panel -->
-  <div class="project-panel" data-panel="autonomous-vehicle" role="tabpanel" hidden>
-    <div class="project-header">
-      <div class="project-status">
-        <span class="status-dot"></span>
-        <span class="status-text">IN PROGRESS · DRAFT READY · SEPT 2026</span>
+      <!-- BUILDING -->
+      <div class="lab-category-group">
+        <div class="lab-category-heading">Building</div>
+        <ul class="lab-project-list" role="tablist" aria-label="Building">
+          <li>
+            <button class="lab-tab active" role="tab" aria-selected="true" data-panel="menstrual-cycle">Understanding Your Cycle</button>
+          </li>
+          <li>
+            <button class="lab-tab" role="tab" aria-selected="false" data-panel="autonomous-vehicle">Riding with No Driver</button>
+          </li>
+          <li>
+            <button class="lab-tab" role="tab" aria-selected="false" data-panel="open-sky">Open Sky</button>
+          </li>
+        </ul>
       </div>
-      <h3 class="project-title">Riding with No Driver</h3>
-      <p class="project-description">A course for anyone who's said "oh no, I can't do it" when autonomous vehicles come up. Because they're coming — sooner than later — and most of the reluctance I hear isn't really about the cars. It's about not knowing what's actually happening under the hood.</p>
-      <p class="project-description">This one is about getting comfortable with the concept: what autonomous vehicles are, how they've been built and tested, and why "hey, here it is, whatever happens" isn't remotely how the technology works. A second course on the deeper technology is planned separately.</p>
-      <p class="project-description">Built as a first pass at a resource for people who probably wouldn't seek this information out on their own — the ones who wouldn't land on Waymo's site unprompted, but might click through if it showed up somewhere friendlier.</p>
-    </div>
 
-    <div class="project-preview">
-      <div class="preview-label">Current Progress</div>
-      <img src="images/riding-with-no-driver-preview.png" alt="Cover page of the Riding with No Driver course. Deep navy background with a large serif title 'Riding With No Driver,' the subhead 'What it's actually like to ride in a car that drives itself — and whether you'd get in one,' and a list of learning objectives." class="preview-image">
-    </div>
-
-    <div class="project-section project-section-single">
-      <h4>What's on my mind</h4>
-      <ul>
-        <li><strong>Does this actually meet the objective?</strong> The goal is comfort and understanding for someone reluctant. But I'm not fully sure yet whether the content moves the needle — that's something I need real feedback on.</li>
-        <li><strong>Is a course the right format?</strong> There's no shortage of quick videos and explainers about autonomous vehicles. But for someone who's actively uncomfortable with the technology, does a walk-through course reach them better than a two-minute clip — or worse? Still figuring out.</li>
-        <li><strong>Scoping the second course.</strong> The deeper technology dive is planned as a separate course, but I'm still brainstorming what that actually covers — sensor systems, machine learning, edge cases, safety testing, the regulatory landscape. Trying to figure out what someone would need to feel like they <em>understand</em> the tech, not just heard about it.</li>
-        <li><strong>How much of my own experience belongs in the course?</strong> I have real hands-on time with autonomous features. That's useful context — but this course isn't a personal essay, and I don't want it to read like an endorsement of one company. Figuring out how to draw on that experience honestly without making the course about my car.</li>
-      </ul>
-    </div>
-
-    <div class="project-cta">
-      <a href="https://amberlaidman.github.io/riding-with-no-driver/" target="_blank" rel="noopener" class="project-cta-link">Take the course <span aria-hidden="true">→</span><span class="sr-only">(opens in new window)</span></a>
-    </div>
-  </div>
-
-  <!-- Feedback panel -->
-  <div class="project-panel" data-panel="feedback" role="tabpanel" hidden>
-    <div class="project-header">
-      <div class="project-status">
-        <span class="status-dot thinking"></span>
-        <span class="status-text">BRAINSTORMING · SEPT 2026</span>
+      <!-- THINKING -->
+      <div class="lab-category-group">
+        <div class="lab-category-heading">Thinking</div>
+        <ul class="lab-project-list" role="tablist" aria-label="Thinking">
+          <li>
+            <button class="lab-tab" role="tab" aria-selected="false" data-panel="feedback">Feedback</button>
+          </li>
+        </ul>
       </div>
-      <h3 class="project-title">Feedback</h3>
-      <p class="project-description">A course I keep coming back to but haven't started yet. Years of workplace experience plus ongoing conversations with friends and colleagues have me thinking less about the frameworks for giving feedback and more about the psychology underneath — the questions we skip on the way to delivering it.</p>
-      <p class="project-description">Currently in the "discovery interview with myself" stage: figuring out what this actually is before I start building.</p>
-    </div>
 
-    <div class="project-section project-section-single">
-      <h4>What's on my mind</h4>
-      <ul>
-        <li><strong>Is the person actually ready to receive it?</strong> Most feedback guidance starts with how to deliver. Very little starts with whether the moment is right for the person hearing it.</li>
-        <li><strong>Whose benefit is this really for?</strong> There's a difference between feedback that helps the receiver grow and feedback that helps the giver feel heard. Not always easy to tell which one you're giving.</li>
-        <li><strong>The "feedback is a gift" framing.</strong> The metaphor assumes everyone wants gifts, that gifts are inherently good, and that the receiver should be grateful. None of those hold up on inspection — so why do we still use it?</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Journal panel -->
-  <div class="journal-panel" data-panel="journal" role="tabpanel" hidden>
-    <h3>Journal</h3>
-    <p class="journal-intro">General thoughts, ideas, and things I'm mulling over — outside of active projects. Updated when something's worth writing down.</p>
-    <div class="journal-entries">
-      <div class="journal-entry">
-        <div class="journal-entry-date">September 3, 2026</div>
-        <h4 class="journal-entry-title">Experimenting on purpose</h4>
-        <p>Been having ongoing conversations with a friend and former colleague about AI and L&amp;D. Where it's going, what it can do, what we're still figuring out. The thing we keep coming back to is that playing with it matters more than we give it credit for.</p>
-        <p>L&amp;D has real foundations. Frameworks. Methodologies. And then on top of that, every organization has its own guidance, every industry has its own conventions, and you get shaped by whatever room you're in. Long enough in one place and "how we do it here" starts to feel like "how it's done."</p>
-        <p>Experimenting punctures that. When you're just playing with AI, with no deliverable and no stakeholder and no scope, you find out what's actually possible before you ask whether you're supposed to. And what's possible is almost always bigger than what's allowed.</p>
-        <p>We're both in that stage right now. Not building anything for a client. Just seeing.</p>
+      <!-- JOURNAL -->
+      <div class="lab-category-group">
+        <div class="lab-category-heading">Journal</div>
+        <ul class="lab-project-list" role="tablist" aria-label="Journal">
+          <li>
+            <button class="lab-tab" role="tab" aria-selected="false" data-panel="journal">Journal</button>
+          </li>
+        </ul>
       </div>
+
+    </aside>
+
+    <!-- ============ CONTENT AREA ============ -->
+    <div class="lab-content-area">
+
+      <!-- Mobile selector (hidden on desktop) -->
+      <div class="lab-mobile-selector">
+        <label for="lab-project-select">Select a project or journal</label>
+        <select id="lab-project-select" aria-label="Select a project or journal">
+          <optgroup label="Building">
+            <option value="menstrual-cycle" selected>Understanding Your Cycle</option>
+            <option value="autonomous-vehicle">Riding with No Driver</option>
+            <option value="open-sky">Open Sky</option>
+          </optgroup>
+          <optgroup label="Thinking">
+            <option value="feedback">Feedback</option>
+          </optgroup>
+          <optgroup label="Journal">
+            <option value="journal">Journal</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <!-- Understanding Your Cycle panel -->
+      <div class="project-panel active" data-panel="menstrual-cycle" role="tabpanel">
+        <div class="project-header">
+          <div class="project-status">
+            <span class="status-dot"></span>
+            <span class="status-text">IN PROGRESS · SEPT 2026</span>
+          </div>
+          <h3 class="project-title">Understanding Your Cycle</h3>
+          <p class="project-description">A course about what happens in your body during puberty and the menstrual cycle — and how to recognize when to reach out for extra support. Built to be accessible on its own, so questions can be answered whenever they come up rather than waiting for someone to bring it up first.</p>
+          <p class="project-description">Module 1 (Body &amp; Cycle) is drafted. Module 2 (Products) is underway. Built in Parta.</p>
+        </div>
+
+        <div class="project-preview">
+          <div class="preview-label">Current Progress</div>
+          <img src="images/understanding-your-cycle-preview.png" alt="Cover page of the Understanding Your Cycle course, showing the title and a warm illustration of pads, chocolate bars, cozy socks, and hearts." class="preview-image">
+        </div>
+
+        <div class="project-section project-section-single">
+          <h4>What's on my mind</h4>
+          <ul>
+            <li><strong>Medical accuracy vs. approachability.</strong> Making sure the medical parts are accurate while keeping the tone warm.</li>
+            <li><strong>Interaction density.</strong> Module 1 has a lot going on — flip cards, drag-and-drops, click-to-reveals, knowledge checks. Feels right for the content, but I'm watching for cognitive load.</li>
+            <li><strong>Where does a course like this go once it's finished?</strong> Public web, partnership with an organization, something else?</li>
+          </ul>
+        </div>
+
+        <div class="project-cta">
+          <a href="https://app.parta.io/#/public/e9bac6f4-cea3-4f20-b4f9-77a527e6a26c" target="_blank" rel="noopener" class="project-cta-link">View course preview <span aria-hidden="true">→</span><span class="sr-only">(opens in new window)</span></a>
+        </div>
+      </div>
+
+      <!-- Riding with No Driver panel -->
+      <div class="project-panel" data-panel="autonomous-vehicle" role="tabpanel" hidden>
+        <div class="project-header">
+          <div class="project-status">
+            <span class="status-dot"></span>
+            <span class="status-text">IN PROGRESS · DRAFT READY · SEPT 2026</span>
+          </div>
+          <h3 class="project-title">Riding with No Driver</h3>
+          <p class="project-description">A course for anyone who's said "oh no, I can't do it" when autonomous vehicles come up. Because they're coming — sooner than later — and most of the reluctance I hear isn't really about the cars. It's about not knowing what's actually happening under the hood.</p>
+          <p class="project-description">This one is about getting comfortable with the concept: what autonomous vehicles are, how they've been built and tested, and why "hey, here it is, whatever happens" isn't remotely how the technology works. A second course on the deeper technology is planned separately.</p>
+          <p class="project-description">Built as a first pass at a resource for people who probably wouldn't seek this information out on their own — the ones who wouldn't land on Waymo's site unprompted, but might click through if it showed up somewhere friendlier.</p>
+        </div>
+
+        <div class="project-preview">
+          <div class="preview-label">Current Progress</div>
+          <img src="images/riding-with-no-driver-preview.png" alt="Cover page of the Riding with No Driver course. Deep navy background with a large serif title 'Riding With No Driver,' the subhead 'What it's actually like to ride in a car that drives itself — and whether you'd get in one,' and a list of learning objectives." class="preview-image">
+        </div>
+
+        <div class="project-section project-section-single">
+          <h4>What's on my mind</h4>
+          <ul>
+            <li><strong>Does this actually meet the objective?</strong> The goal is comfort and understanding for someone reluctant. But I'm not fully sure yet whether the content moves the needle — that's something I need real feedback on.</li>
+            <li><strong>Is a course the right format?</strong> There's no shortage of quick videos and explainers about autonomous vehicles. But for someone who's actively uncomfortable with the technology, does a walk-through course reach them better than a two-minute clip — or worse? Still figuring out.</li>
+            <li><strong>Scoping the second course.</strong> The deeper technology dive is planned as a separate course, but I'm still brainstorming what that actually covers — sensor systems, machine learning, edge cases, safety testing, the regulatory landscape. Trying to figure out what someone would need to feel like they <em>understand</em> the tech, not just heard about it.</li>
+            <li><strong>How much of my own experience belongs in the course?</strong> I have real hands-on time with autonomous features. That's useful context — but this course isn't a personal essay, and I don't want it to read like an endorsement of one company. Figuring out how to draw on that experience honestly without making the course about my car.</li>
+          </ul>
+        </div>
+
+        <div class="project-cta">
+          <a href="https://amberlaidman.github.io/riding-with-no-driver/" target="_blank" rel="noopener" class="project-cta-link">Take the course <span aria-hidden="true">→</span><span class="sr-only">(opens in new window)</span></a>
+        </div>
+      </div>
+
+      <!-- Open Sky panel -->
+      <div class="project-panel" data-panel="open-sky" role="tabpanel" hidden>
+        <div class="project-header">
+          <div class="project-status">
+            <span class="status-dot"></span>
+            <span class="status-text">IN TESTING · SEPT 2026</span>
+          </div>
+          <h3 class="project-title">Open Sky</h3>
+          <p class="project-description"><em>Nothing here has a ceiling.</em></p>
+          <p class="project-description">This started as a conversation with my friend Tara — about strengths, skills, experience, and how much better work goes when you lean into what you're actually good at. We kept coming back to the same thing: the assessments that pull all of it together — strengths, skills, interests, values — tend to live behind a campus or a paywall. The free ones that anyone can reach are usually thin.</p>
+          <p class="project-description">So I built the one I wanted. A skills-based career quiz on real O*NET and BLS data — free, private, no account, no email. It brings together the whole picture, including the parts most quizzes skip: how much money actually motivates you, and whether a company's values line up with your own. Results come back as a sky of star-shaped role matches rather than a ranked list. It's for anyone at one of those moments — wondering what they're doing, what they could be doing, or what they want to be doing next.</p>
+        </div>
+
+        <div class="project-section project-section-single">
+          <h4>What's on my mind</h4>
+          <ul>
+            <li><strong>The parts other quizzes leave out.</strong> Money motivation and values alignment are huge in real career decisions — some people won't take a role that isn't lucrative, others won't work for a company they don't believe in. Both belong in the picture, not treated as afterthoughts.</li>
+            <li><strong>A bias I found in the scoring.</strong> The math was quietly connecting work-value answers to the status level of matched roles — people who valued stability were being steered toward lower-status jobs while people who picked risk got the high-status ones. It contradicted the whole point of the quiz, and no one designed it that way; it emerged from the data. Caught, fixed.</li>
+            <li><strong>What happens after the results.</strong> Most free assessments hand you a list and stop. The rigorous ones assume you'll go see a career advisor to make sense of it — which leaves out anyone without a campus or an alumni network to walk into. Open Sky's results screen carries a "where to start" section written for that person: real exploration steps matched to the specific results the sky returned.</li>
+          </ul>
+        </div>
+
+        <div class="project-cta">
+          <a href="https://amberlaidman.github.io/opensky/" target="_blank" rel="noopener" class="project-cta-link">Take the quiz <span aria-hidden="true">→</span><span class="sr-only">(opens in new window)</span></a>
+        </div>
+      </div>
+
+      <!-- Feedback panel -->
+      <div class="project-panel" data-panel="feedback" role="tabpanel" hidden>
+        <div class="project-header">
+          <div class="project-status">
+            <span class="status-dot thinking"></span>
+            <span class="status-text">BRAINSTORMING · SEPT 2026</span>
+          </div>
+          <h3 class="project-title">Feedback</h3>
+          <p class="project-description">A course I keep coming back to but haven't started yet. Years of workplace experience plus ongoing conversations with friends and colleagues have me thinking less about the frameworks for giving feedback and more about the psychology underneath — the questions we skip on the way to delivering it.</p>
+          <p class="project-description">Currently in the "discovery interview with myself" stage: figuring out what this actually is before I start building.</p>
+        </div>
+
+        <div class="project-section project-section-single">
+          <h4>What's on my mind</h4>
+          <ul>
+            <li><strong>Is the person actually ready to receive it?</strong> Most feedback guidance starts with how to deliver. Very little starts with whether the moment is right for the person hearing it.</li>
+            <li><strong>Whose benefit is this really for?</strong> There's a difference between feedback that helps the receiver grow and feedback that helps the giver feel heard. Not always easy to tell which one you're giving.</li>
+            <li><strong>The "feedback is a gift" framing.</strong> The metaphor assumes everyone wants gifts, that gifts are inherently good, and that the receiver should be grateful. None of those hold up on inspection — so why do we still use it?</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Journal panel -->
+      <div class="journal-panel" data-panel="journal" role="tabpanel" hidden>
+        <h3>Journal</h3>
+        <p class="journal-intro">General thoughts, ideas, and things I'm mulling over — outside of active projects. Updated when something's worth writing down.</p>
+        <div class="journal-entries">
+          <div class="journal-entry">
+            <div class="journal-entry-date">September 3, 2026</div>
+            <h4 class="journal-entry-title">Experimenting on purpose</h4>
+            <p>Been having ongoing conversations with a friend and former colleague about AI and L&amp;D. Where it's going, what it can do, what we're still figuring out. The thing we keep coming back to is that playing with it matters more than we give it credit for.</p>
+            <p>L&amp;D has real foundations. Frameworks. Methodologies. And then on top of that, every organization has its own guidance, every industry has its own conventions, and you get shaped by whatever room you're in. Long enough in one place and "how we do it here" starts to feel like "how it's done."</p>
+            <p>Experimenting punctures that. When you're just playing with AI, with no deliverable and no stakeholder and no scope, you find out what's actually possible before you ask whether you're supposed to. And what's possible is almost always bigger than what's allowed.</p>
+            <p>We're both in that stage right now. Not building anything for a client. Just seeing.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -166,27 +412,61 @@
 (function() {
   var tabs = document.querySelectorAll('.lab-tab');
   var panels = document.querySelectorAll('.project-panel, .journal-panel');
+  var mobileSelect = document.getElementById('lab-project-select');
 
+  function switchTo(panelName) {
+    tabs.forEach(function(t) {
+      var isMatch = t.getAttribute('data-panel') === panelName;
+      t.classList.toggle('active', isMatch);
+      t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+    });
+    panels.forEach(function(p) {
+      var isMatch = p.getAttribute('data-panel') === panelName;
+      p.classList.toggle('active', isMatch);
+      p.hidden = !isMatch;
+    });
+    if (mobileSelect && mobileSelect.value !== panelName) {
+      mobileSelect.value = panelName;
+    }
+  }
+
+  // Sidebar clicks
   tabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      var panelName = tab.getAttribute('data-panel');
-      tabs.forEach(function(t) {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      panels.forEach(function(p) {
-        if (p.getAttribute('data-panel') === panelName) {
-          p.classList.add('active');
-          p.hidden = false;
-        } else {
-          p.classList.remove('active');
-          p.hidden = true;
+      switchTo(tab.getAttribute('data-panel'));
+    });
+  });
+
+  // Keyboard navigation within each tablist (arrow keys)
+  document.querySelectorAll('.lab-project-list[role="tablist"]').forEach(function(list) {
+    var listTabs = list.querySelectorAll('.lab-tab');
+    listTabs.forEach(function(tab, idx) {
+      tab.addEventListener('keydown', function(e) {
+        var target = null;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+          target = listTabs[idx + 1] || listTabs[0];
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          target = listTabs[idx - 1] || listTabs[listTabs.length - 1];
+        } else if (e.key === 'Home') {
+          target = listTabs[0];
+        } else if (e.key === 'End') {
+          target = listTabs[listTabs.length - 1];
+        }
+        if (target) {
+          e.preventDefault();
+          target.focus();
+          switchTo(target.getAttribute('data-panel'));
         }
       });
     });
   });
+
+  // Mobile dropdown
+  if (mobileSelect) {
+    mobileSelect.addEventListener('change', function() {
+      switchTo(mobileSelect.value);
+    });
+  }
 })();
 </script>
 
