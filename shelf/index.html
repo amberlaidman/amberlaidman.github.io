@@ -337,13 +337,11 @@ th{color:var(--muted);font-weight:700;border-top:none}
     <div class="bar-row">
       <div class="chips" id="years" role="group" aria-label="Year"></div>
       <div style="display:flex;gap:10px;align-items:center;margin-left:auto">
-        <span class="status" id="xstatus" aria-live="polite"></span>
         <div class="theme" role="group" aria-label="Color mode" id="theme">
           <button type="button" data-t="auto" title="Follow my device setting">Auto</button>
           <button type="button" data-t="light">Day</button>
           <button type="button" data-t="dark">Night</button>
         </div>
-        <button type="button" class="export" id="export" hidden>Export to Excel</button>
       </div>
     </div>
   </div>
@@ -1030,35 +1028,6 @@ var themePref="auto";try{themePref=localStorage.getItem("ss-theme")||"auto"}catc
 applyTheme(themePref);
 $("theme").addEventListener("click",function(e){var b=e.target.closest("button[data-t]");if(!b)return;themePref=b.dataset.t;try{localStorage.setItem("ss-theme",themePref)}catch(err){}applyTheme(themePref)});
 
-/* ---------- export ---------- */
-var XLSX_URL="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js",downloads=null;
-function loadXlsx(){return new Promise(function(res,rej){if(window.XLSX)return res(window.XLSX);var s=document.createElement("script");s.src=XLSX_URL;s.onload=function(){res(window.XLSX)};s.onerror=function(){rej(new Error("load"))};document.head.appendChild(s)})}
-function sheet(X,rows,widths){var ws=X.utils.aoa_to_sheet(rows);ws["!cols"]=widths.map(function(w){return {wch:w}});return ws}
-$("export").addEventListener("click",function(){
-  var btn=this,st=$("xstatus");
-  if(!downloads){st.textContent="Saving files isn’t available in this view.";return}
-  btn.disabled=true;st.textContent="Building workbook…";
-  loadXlsx().then(function(X){
-    var wb=X.utils.book_new(),own=D.owner;
-    var bh=["Title","Format","Year Read","Author","Genre","Genre group","Rating","Local Author","Publication year","Pages","Page count source","Series (per Goodreads)","Audio length (minutes)"];if(own)bh=bh.concat(["Pub. year status","Candidate year","Pub. year source / note"]);
-    X.utils.book_append_sheet(wb,sheet(X,[bh].concat(D.books.map(function(b){var p=D.privP[b.id]||{};var r=[b.t,b.f||"",b.y==="pre"?"Before tracking":b.y,b.a||"",b.g||"",b.gg||"",b.r==null?"":b.r,b.loc||"",b.py==null?"":b.py,typeof b.pp==="number"?b.pp:(b.ppChk?"Needs check":""),typeof b.pp==="number"?(b.ppSrc||"Goodreads edition (print)"):"",b.ser==null?"Not on Goodreads":(b.ser||"Standalone"),typeof b.min==="number"?b.min:""];return own?r.concat([p.st||"",p.cand||"",p.note||""]):r})),[36,10,14,24,24,24,8,22,12,22,14,50]),"Book Tracker");
-    var ah=["Author","Books read","Region","Debut year","Self-stated LGBTQ+","Gender (grouped)"];if(own)ah=ah.concat(["Country of origin","Gender identity","Sexual orientation (self-identified)","Source / notes","Confidence","Debut status","Debut source / note"]);
-    if(!authorBooks)indexAuthors();
-    X.utils.book_append_sheet(wb,sheet(X,[ah].concat(D.authors.map(function(a){var p=D.privA[a.id]||{};var r=[a.n,(authorBooks[a.id]||[]).length,a.reg||"",a.debut==null?"":a.debut,a.lgbtq?"Yes":"",a.gen||"Unverified"];return own?r.concat([p.country||"",p.gender||"",p.orient||"",p.note||"",p.conf||"",p.dst||"",p.dnote||""]):r})),[26,10,22,10,12,20,18,26,50,10,20,50]),"Authors");
-    X.utils.book_append_sheet(wb,sheet(X,[["Show","Genre/Theme","Genre group","Status","Rating","Platform"]].concat(D.tv.map(function(x){return [x.t,x.g||"",x.gg||"",x.s||"",x.r==null?"":x.r,x.p||""]})),[30,26,26,20,8,20]),"TV Shows");
-    X.utils.book_append_sheet(wb,sheet(X,[["Title","Type","Source","Verdict","Notes","Genre","Rating"]].concat(D.recs.map(function(r){return [r.t,r.type==="TV"?"TV Show":"Book",r.src||"",r.v||"",r.notes||"",r.g||"",r.rt||""]})),[34,10,30,14,40,24,40]),"Recommendations");
-    X.utils.book_append_sheet(wb,sheet(X,[["Book","Location","Year Acquired","Continent"]].concat(D.local.map(function(l){return [l.t,l.place||"",l.y==null?"":l.y,l.cont||""]})),[34,26,12,16]),"Local Author Books");
-    var m=D.meta||{},g=m.goals||{},gr=m.goodreads||{};
-    X.utils.book_append_sheet(wb,sheet(X,[["Year","Goal","Read (this tracker)","Goodreads challenge total"]].concat(Object.keys(Object.assign({},g,gr)).sort().map(function(y){return [Number(y),g[y]==null?"":g[y],D.books.filter(function(b){return String(b.y)===y}).length,gr[y]==null?"":gr[y]]})),[8,8,18,24]),"Goals");
-    var out=X.write(wb,{bookType:"xlsx",type:"array"});
-    var d=new Date(),stamp=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-    st.textContent="Waiting for you to confirm the save…";
-    return downloads.save({filename:"Spines_and_Screens_"+stamp+".xlsx",data:new Blob([out])});
-  }).then(function(r){if(r)st.textContent=r.status==="saved"?"Saved.":"Sent."},function(e){
-    var c=e&&e.code;st.textContent=c==="declined"?"Save cancelled.":c==="rate_limited"?"A save prompt is already open.":e&&e.message==="load"?"Couldn’t load the Excel builder. Check your connection and try again.":"Couldn’t save the file here.";
-  }).then(function(){btn.disabled=false});
-});
-
 /* ---------- data ---------- */
 function items(snap){var out=[];snap.docs.forEach(function(d){var v=d.data();if(v&&Array.isArray(v.items))out=out.concat(v.items)});return out}
 function lgCount(au){if(D.live||!D.lgSnap)return au.filter(function(a){return a.lgbtq}).length;return D.lgSnap[String(S.year)]||0}
@@ -1075,11 +1044,10 @@ render();
   var user=await c.use("user");
   D.owner=user?await user.isOwner():false;
   
-  if(!D.owner)return; /* visitors use the built-in snapshot; no database or export */
+  if(!D.owner)return; /* visitors use the built-in snapshot; no database */
   var db=await c.use("db");
   if(!db){return}
   DB=db;D.dbOk=true;
-  c.use("downloads").then(function(x){downloads=x;$("export").hidden=!x});
   function err(){}
   db.collection("books").onSnapshot(function(s){if(s.empty)return;live();D.books=items(s).sort(function(a,b){return a.id<b.id?-1:1});D.loaded.books=1;authorBooks=null;bookAuthors=null;render()},err);
   db.doc("authors/list").onSnapshot(function(s){if(!s.exists)return;D.authors=s.data().items||[];authorBooks=null;bookAuthors=null;D.loaded.authors=1;render()},err);
