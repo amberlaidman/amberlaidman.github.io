@@ -380,10 +380,28 @@
       <div class="journal-panel" data-panel="journal" role="tabpanel" hidden>
         <h3>Journal</h3>
         <p class="journal-intro">General thoughts, ideas, and things I'm mulling over — outside of active projects. Updated when something's worth writing down.</p>
+        <div class="journal-tools" id="journal-tools" hidden>
+          <div class="journal-search">
+            <label for="journal-search" class="sr-only">Search journal entries</label>
+            <input type="search" id="journal-search" placeholder="Search entries" autocomplete="off">
+          </div>
+          <div class="journal-filters" role="group" aria-label="Filter by topic">
+            <button type="button" class="journal-filter" data-topic="all" aria-pressed="true">All topics</button>
+            <button type="button" class="journal-filter" data-topic="personal-projects" aria-pressed="false">Personal projects</button>
+            <button type="button" class="journal-filter" data-topic="ai-learning" aria-pressed="false">AI and learning</button>
+          </div>
+          <p class="journal-count" id="journal-count" role="status" aria-live="polite"></p>
+        </div>
+        <p class="journal-empty" id="journal-empty" hidden>No entries match that search. Try a different word, or choose All topics.</p>
         <div class="journal-entries">
-          <div class="journal-entry">
-            <div class="journal-entry-date">October 15, 2026</div>
-            <h4 class="journal-entry-title">Where personal projects fit in</h4>
+          <details class="journal-entry" id="where-personal-projects-fit-in" data-topics="personal-projects ai-learning" open>
+            <summary>
+              <span class="journal-entry-date">October 15, 2026</span>
+              <h4 class="journal-entry-title">Where personal projects fit in</h4>
+              <span class="journal-entry-summary">A conversation with a former coworker about why the skills behind learning and development are really thinking skills, and why a portfolio can show them through projects built out of curiosity.</span>
+              <span class="journal-entry-tags"><span class="journal-tag">Personal projects</span><span class="journal-tag">AI and learning</span></span>
+            </summary>
+            <div class="journal-entry-body">
             <p>Had a conversation recently with Chelsea, a former coworker, about something we've both been circling. The skills that make us good at learning and development &mdash; making sense of messy information, turning it into something people can actually use, caring about how something gets delivered &mdash; those aren't learning and development skills. They're thinking skills. They show up in whatever we're doing, including the personal projects neither of us gets paid for.</p>
             <p>We've both been playing with AI tools for things that have nothing to do with L&amp;D. I've been using them to build a tracker for everything I read, watch, and listen to. Chelsea is working on her own personal data stuff. We just wanted to make the thing we actually wanted. But looking at what we each ended up with, it is a demonstration. Of creativity, of knowing what to ask for, of pushing a tool past the obvious use and seeing what comes out.</p>
             <p>I think a portfolio should show that. Not just the deliverables that came out of a job, but the ones that came out of curiosity. The things built on nights and weekends with AI as a collaborator are evidence of how someone thinks when nobody's telling them what to build.</p>
@@ -392,15 +410,24 @@
               <iframe src="shelf/" title="Spines, Screens, Shuffle &amp; Stamps &mdash; my personal media tracker" style="display:block;width:100%;height:600px;border:0;background:transparent" loading="lazy"></iframe>
             </div>
             <p style="font-size:13px;color:var(--grey-body);margin-top:10px"><em>Can&rsquo;t see the embed above? </em><a href="shelf/" target="_blank" rel="noopener" style="color:var(--teal-deep,#2E5461);text-decoration:underline">Open Spines, Screens, Shuffle &amp; Stamps in a new tab &rarr;</a></p>
-          </div>
-          <div class="journal-entry">
-            <div class="journal-entry-date">September 3, 2026</div>
-            <h4 class="journal-entry-title">Experimenting on purpose</h4>
+              <p class="journal-entry-link"><a href="#where-personal-projects-fit-in">Link to this entry</a></p>
+            </div>
+          </details>
+          <details class="journal-entry" id="experimenting-on-purpose" data-topics="ai-learning">
+            <summary>
+              <span class="journal-entry-date">September 3, 2026</span>
+              <h4 class="journal-entry-title">Experimenting on purpose</h4>
+              <span class="journal-entry-summary">Playing with AI without a deliverable, a stakeholder or a scope shows what is possible before anyone asks whether it is allowed.</span>
+              <span class="journal-entry-tags"><span class="journal-tag">AI and learning</span></span>
+            </summary>
+            <div class="journal-entry-body">
             <p>Been having ongoing conversations with a friend and former colleague about AI and L&amp;D. Where it's going, what it can do, what we're still figuring out. The thing we keep coming back to is that playing with it matters more than we give it credit for.</p>
             <p>L&amp;D has real foundations. Frameworks. Methodologies. And then on top of that, every organization has its own guidance, every industry has its own conventions, and you get shaped by whatever room you're in. Long enough in one place and "how we do it here" starts to feel like "how it's done."</p>
             <p>Experimenting punctures that. When you're just playing with AI, with no deliverable and no stakeholder and no scope, you find out what's actually possible before you ask whether you're supposed to. And what's possible is almost always bigger than what's allowed.</p>
             <p>We're both in that stage right now. Not building anything for a client. Just seeing.</p>
-          </div>
+              <p class="journal-entry-link"><a href="#experimenting-on-purpose">Link to this entry</a></p>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -482,6 +509,79 @@
   }
 })();
 </script>
+<script>
+(function() {
+  var panel = document.querySelector('.journal-panel');
+  if (!panel) return;
+  var tools = document.getElementById('journal-tools');
+  var search = document.getElementById('journal-search');
+  var filters = panel.querySelectorAll('.journal-filter');
+  var entries = Array.prototype.slice.call(panel.querySelectorAll('.journal-entry'));
+  var countEl = document.getElementById('journal-count');
+  var emptyEl = document.getElementById('journal-empty');
+  var topic = 'all';
+  var openBeforeSearch = null;
+
+  tools.hidden = false;
+
+  var searchText = entries.map(function(e) { return e.textContent.toLowerCase(); });
+
+  function apply() {
+    var term = search.value.trim().toLowerCase();
+    var shown = 0;
+    entries.forEach(function(e, i) {
+      var topics = (e.getAttribute('data-topics') || '').split(' ');
+      var okTopic = topic === 'all' || topics.indexOf(topic) !== -1;
+      var okText = !term || searchText[i].indexOf(term) !== -1;
+      var show = okTopic && okText;
+      e.hidden = !show;
+      if (show) shown++;
+      if (show && term) e.open = true;
+    });
+    if (!term && openBeforeSearch) {
+      entries.forEach(function(e, i) { e.open = openBeforeSearch[i]; });
+      openBeforeSearch = null;
+    }
+    countEl.textContent = 'Showing ' + shown + ' of ' + entries.length + (entries.length === 1 ? ' entry' : ' entries');
+    emptyEl.hidden = shown !== 0;
+  }
+
+  search.addEventListener('input', function() {
+    if (search.value.trim() && !openBeforeSearch) {
+      openBeforeSearch = entries.map(function(e) { return e.open; });
+    }
+    apply();
+  });
+
+  filters.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      topic = btn.getAttribute('data-topic');
+      filters.forEach(function(b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      apply();
+    });
+  });
+
+  // A link to one entry: open the Journal tab, show the entry, and scroll to it.
+  function showFromHash() {
+    var id = decodeURIComponent((location.hash || '').replace('#', ''));
+    var target = id && document.getElementById(id);
+    if (!target || entries.indexOf(target) === -1) return;
+    var tab = document.querySelector('.lab-tab[data-panel="journal"]');
+    if (tab) tab.click();
+    search.value = '';
+    openBeforeSearch = null;
+    topic = 'all';
+    filters.forEach(function(b) { b.setAttribute('aria-pressed', b.getAttribute('data-topic') === 'all' ? 'true' : 'false'); });
+    apply();
+    target.open = true;
+    target.scrollIntoView();
+  }
+  window.addEventListener('hashchange', showFromHash);
+  showFromHash();
+  apply();
+})();
+</script>
+
 
 </body>
 </html>
