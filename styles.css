@@ -1030,6 +1030,9 @@ h2.credit-band-heading {
   .cs-nav-return { padding: 32px 24px; }
   .credit-band { padding: 80px 24px; }
   .site-footer { padding: 24px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .footer-links { flex-wrap: wrap; gap: 4px 24px; }
+  .footer-links a { white-space: nowrap; padding: 8px 0; }
   .work-item {
     grid-template-columns: 1fr;
     gap: 8px;
