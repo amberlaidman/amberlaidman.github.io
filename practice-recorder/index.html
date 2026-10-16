@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Practice Recorder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F1F4F3; --surface:#FFFFFF; --sunk:#E5EAE8; --fg:#16201E; --muted:#56635F; --line:#D2DAD7;
+  --accent:#0D7369; --accent-ink:#FFFFFF; --accent-soft:#D7EEEA; --rec:#B4321F; --rec-soft:#F6DDD7;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#111715; --surface:#19211F; --sunk:#222C29; --fg:#E5ECEA; --muted:#9BA9A4; --line:#2E3936;
+  --accent:#4CC2B4; --accent-ink:#0B1513; --accent-soft:#16332F; --rec:#F07A64; --rec-soft:#3A1F1A; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--body)}
+.wrap{max-width:720px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:18px}
+h1{font:700 1.5rem var(--display);margin:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;min-width:0}
+.muted{color:var(--muted)} .small{font-size:.9rem}
+label{font-weight:700;font-size:.92rem}
+textarea,input{width:100%;font:1rem var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:12px}
+textarea{min-height:240px;resize:vertical;line-height:1.55}
+button{font:700 1rem var(--body);border-radius:10px;padding:12px 18px;min-height:48px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+button:disabled{opacity:.5;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.rec{background:var(--rec);border-color:var(--rec);color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--sunk);border-radius:10px;padding:10px 12px}
+.stat .n{font:500 1.5rem var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font:500 .72rem var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.live{display:flex;align-items:center;gap:10px;color:var(--rec);font-weight:700}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--rec);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){.dot{animation:none}}
+.interim{color:var(--muted);font-style:italic;min-height:1.5em}
+.note{background:var(--accent-soft);border-radius:10px;padding:12px 14px}
+.warn{background:var(--rec-soft);border-radius:10px;padding:12px 14px}
+audio{width:100%}
+a{color:var(--accent)}
+ul{margin:0;padding-left:20px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header style="display:grid;gap:4px">
+    <h1>Practice Recorder</h1>
+    <span class="muted small">Answer out loud, then copy the text into Interview Story Studio for feedback.</span>
+  </header>
+
+  <div class="warn small" id="unsupported" hidden>This browser can't turn speech into text. Open this page in Chrome, Edge, or Safari.</div>
+
+  <section class="panel">
+    <div style="display:grid;gap:6px">
+      <label for="question">Question (optional)</label>
+      <input id="question" type="text" placeholder="Paste the question from the Studio so it's in front of you">
+    </div>
+    <div class="row">
+      <button class="primary" id="startBtn" type="button">Start recording</button>
+      <button id="stopBtn" type="button" hidden>Stop</button>
+      <span class="live" id="liveTag" hidden><span class="dot" aria-hidden="true"></span>Recording</span>
+    </div>
+    <div class="stats" aria-live="polite">
+      <div class="stat"><div class="eyebrow">Time</div><div class="n" id="time">0:00</div></div>
+      <div class="stat"><div class="eyebrow">Words</div><div class="n" id="words">0</div></div>
+      <div class="stat"><div class="eyebrow">Words/min</div><div class="n" id="wpm">–</div></div>
+    </div>
+    <span class="small muted">Aim for about 1.5 to 3 minutes. Keep talking through pauses; the recorder restarts itself if speech-to-text drops out.</span>
+  </section>
+
+  <section class="panel">
+    <div style="display:grid;gap:6px">
+      <label for="transcript">Your answer as text</label>
+      <span class="small muted">You can fix misheard words here once you stop.</span>
+      <textarea id="transcript" placeholder="Your words appear here as you speak…"></textarea>
+      <div class="interim small" id="interim" aria-live="polite"></div>
+    </div>
+    <div class="row">
+      <button class="primary" id="copyBtn" type="button">Copy text</button>
+      <button id="clearBtn" type="button">Start over</button>
+      <span class="small muted" id="copyMsg" role="status"></span>
+    </div>
+    <a class="small" href="https://claude.ai/artifact/Po9ZeHHntAQaUGjoJRxbRH" target="_blank" rel="noopener">Open Interview Story Studio</a>
+  </section>
+
+  <section class="panel" id="playbackPanel" hidden>
+    <strong>Listen back</strong>
+    <audio id="player" controls></audio>
+    <div id="fillers" class="small"></div>
+  </section>
+
+  <section class="note small">
+    <strong>Privacy</strong>
+    <ul>
+      <li>The audio recording stays in this browser tab. It isn't uploaded or saved, and it's gone when you close the tab or select Start over.</li>
+      <li>Speech-to-text is done by your browser. In Chrome and Edge, that can mean your audio is sent to the browser company's servers to be turned into text, so leave out anything confidential.</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const ta = $("transcript");
+  let rec = null, media = null, chunks = [], stream = null;
+  let recording = false, finalText = "", startedAt = 0, timer = null, audioUrl = null;
+
+  if (!SR) { $("unsupported").hidden = false; $("startBtn").disabled = true; }
+
+  const countWords = t => (t.trim().match(/\S+/g) || []).length;
+  const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+  function updateStats(){
+    const text = recording ? finalText : ta.value;
+    const w = countWords(text); $("words").textContent = String(w);
+    const secs = startedAt ? (recording ? (Date.now() - startedAt) / 1000 : lastSecs) : 0;
+    $("time").textContent = fmt(secs);
+    $("wpm").textContent = secs >= 10 && w ? String(Math.round(w / (secs / 60))) : "–";
+  }
+  let lastSecs = 0;
+
+  function makeRecognizer(){
+    const r = new SR();
+    r.continuous = true; r.interimResults = true; r.lang = "en-US";
+    r.onresult = e => {
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++){
+        const t = e.results[i][0].transcript.trim();
+        if (!t) continue;
+        if (e.results[i].isFinal){ finalText = finalText ? finalText + " " + t : t; }
+        else interim += t + " ";
+      }
+      ta.value = finalText; $("interim").textContent = interim.trim();
+      ta.scrollTop = ta.scrollHeight; updateStats();
+    };
+    r.onerror = e => {
+      if (e.error === "not-allowed" || e.error === "service-not-allowed"){
+        stop(); showMsg("Microphone access was blocked. Allow the microphone for this site in your browser settings, then try again.");
+      }
+    };
+    r.onend = () => { if (recording) { try { r.start(); } catch {} } };
+    return r;
+  }
+  function showMsg(t){ $("copyMsg").textContent = t; }
+
+  async function start(){
+    showMsg("");
+    finalText = ta.value.trim();
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio:true }); }
+    catch { showMsg("Microphone access was blocked. Allow the microphone for this site in your browser settings, then try again."); return; }
+    chunks = [];
+    try {
+      media = new MediaRecorder(stream);
+      media.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+      media.onstop = () => {
+        if (audioUrl) URL.revokeObjectURL(audioUrl);
+        audioUrl = URL.createObjectURL(new Blob(chunks, { type: media.mimeType || "audio/webm" }));
+        $("player").src = audioUrl; $("playbackPanel").hidden = false; showFillers();
+      };
+      media.start();
+    } catch { media = null; }
+    rec = makeRecognizer();
+    recording = true; if (!startedAt) startedAt = Date.now(); else startedAt = Date.now() - lastSecs * 1000;
+    try { rec.start(); } catch {}
+    ta.readOnly = true;
+    $("startBtn").hidden = true; $("stopBtn").hidden = false; $("liveTag").hidden = false;
+    timer = setInterval(updateStats, 500);
+    $("stopBtn").focus();
+  }
+  function stop(){
+    if (!recording) return;
+    recording = false;
+    lastSecs = (Date.now() - startedAt) / 1000;
+    clearInterval(timer);
+    try { rec && rec.stop(); } catch {}
+    try { media && media.state !== "inactive" && media.stop(); } catch {}
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    ta.readOnly = false; $("interim").textContent = "";
+    $("startBtn").hidden = false; $("startBtn").textContent = "Keep recording"; $("stopBtn").hidden = true; $("liveTag").hidden = true;
+    updateStats();
+    if (!media) showFillers();
+  }
+  function showFillers(){
+    const text = " " + ta.value.toLowerCase().replace(/[^a-z' ]+/g, " ") + " ";
+    const list = ["um","uh","like","you know","kind of","sort of","just","basically","actually"];
+    const found = list.map(f => [f, (text.match(new RegExp(" " + f + " ", "g")) || []).length]).filter(([,n]) => n);
+    $("fillers").replaceChildren();
+    const intro = document.createElement("p"); intro.style.margin = "0";
+    intro.textContent = found.length ? "Filler and hedge words in your text:" : "No common filler or hedge words found in the text.";
+    $("fillers").append(intro);
+    if (found.length){
+      const ul = document.createElement("ul");
+      for (const [f,n] of found){ const li = document.createElement("li"); li.textContent = `"${f}": ${n}`; ul.append(li); }
+      $("fillers").append(ul);
+    }
+    const note = document.createElement("p"); note.className = "muted"; note.style.margin = "6px 0 0";
+    note.textContent = "Speech-to-text often leaves out \"um\" and \"uh,\" so listen back for those.";
+    $("fillers").append(note);
+  }
+
+  $("startBtn").addEventListener("click", start);
+  $("stopBtn").addEventListener("click", stop);
+  ta.addEventListener("input", updateStats);
+  $("clearBtn").addEventListener("click", () => {
+    stop(); finalText = ""; ta.value = ""; startedAt = 0; lastSecs = 0;
+    if (audioUrl) { URL.revokeObjectURL(audioUrl); audioUrl = null; }
+    $("player").removeAttribute("src"); $("playbackPanel").hidden = true;
+    $("startBtn").textContent = "Start recording"; showMsg(""); updateStats();
+  });
+  $("copyBtn").addEventListener("click", async () => {
+    const t = ta.value.trim(); if (!t) { showMsg("There's no text to copy yet."); return; }
+    try { await navigator.clipboard.writeText(t); showMsg("Copied. Paste it into the answer box in the Studio."); }
+    catch { ta.focus(); ta.select(); showMsg("Copy was blocked. The text is selected, so press Command and C (or Control and C) to copy it."); }
+  });
+})();
+</script>
+</body>
+</html>
