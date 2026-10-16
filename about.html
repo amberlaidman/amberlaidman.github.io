@@ -1026,6 +1026,19 @@ function closeModal(){
 modalClose.addEventListener('click',closeModal);
 modalBackdrop.addEventListener('click',closeModal);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalEl.classList.contains('on'))closeModal();});
+// Keep Tab and Shift+Tab inside the open pop-up so keyboard users do not end up on the page behind it.
+modalEl.addEventListener('keydown',e=>{
+  if(e.key!=='Tab')return;
+  const items=Array.from(modalEl.querySelectorAll('a[href],button:not([disabled])')).filter(x=>x.getClientRects().length);
+  if(!items.length){e.preventDefault();modalEl.focus();return;}
+  const first=items[0],last=items[items.length-1],a=document.activeElement;
+  if(e.shiftKey&&(a===first||a===modalEl)){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&a===last){e.preventDefault();first.focus();}
+});
+// If focus ever lands outside the open pop-up (for example after a click on the backdrop edge), bring it back.
+document.addEventListener('focusin',e=>{
+  if(modalEl.classList.contains('on')&&!modalEl.contains(e.target))modalEl.focus();
+});
 
 document.querySelectorAll('.hs').forEach(el=>{
   const k=el.dataset.k;
