@@ -110,7 +110,10 @@ li > a{display:inline-block;padding-block:10px}
 .fold{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
 .fold-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
 .fold-row .fold[open], .fold-row .fold-wide{grid-column:1 / -1}
-.fold > summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg) translateY(-3px);transition:transform .15s}
+.fold > summary::after{content:"";flex:none;margin-left:auto;width:9px;height:9px;border-right:2.5px solid var(--fg);border-bottom:2.5px solid var(--fg);transform:rotate(45deg) translateY(-3px);transition:transform .15s}
+.fold > summary{gap:6px}
+.fold > summary::after{margin-right:3px}
+.role-sum{display:grid;gap:2px;min-width:0}
 .fold[open] > summary::after{transform:rotate(225deg) translateY(-1px)}
 .howto summary::before{content:"+";font:700 1rem var(--mono);margin-right:6px}
 .howto[open] summary::before{content:"\2212"}
@@ -188,7 +191,7 @@ label{font-weight:700;font-size:.92rem}
     <div class="subnav" id="subnav" role="tablist" aria-label="Interview" hidden>
       <button role="tab" id="sub-practice" aria-controls="practice">Practice</button>
       <button role="tab" id="sub-stories" aria-controls="stories">Stories</button>
-      <button role="tab" id="sub-positioning" aria-controls="positioning">Positioning</button>
+      <button role="tab" id="sub-roles" aria-controls="roles">Roles</button>
       <button role="tab" id="sub-progress" aria-controls="progress">Progress</button>
     </div>
     <div class="subnav" id="subnav-coach" role="tablist" aria-label="Coaching" hidden>
@@ -225,6 +228,7 @@ label{font-weight:700;font-size:.92rem}
           <button class="ghost" id="intro-btn" type="button">Practice self-intro</button>
           <button class="ghost" id="own-btn" aria-expanded="false" aria-controls="own-box">Choose my own</button>
         </div>
+        <details class="fold" id="my-intro" hidden><summary>Your saved intro</summary><div id="my-intro-body" style="display:grid;gap:6px;margin-top:8px"></div></details>
         <div id="own-box" class="field" hidden>
           <label for="bank-select">From your question bank</label>
           <select id="bank-select"><option value="">Select a question…</option></select>
@@ -318,9 +322,9 @@ label{font-weight:700;font-size:.92rem}
       </div>
     </section>
 
-    <!-- POSITIONING -->
-    <section role="tabpanel" id="positioning" aria-labelledby="sub-positioning" hidden>
-      <div id="pos-body" style="display:grid;gap:18px"></div>
+    <!-- ROLES -->
+    <section role="tabpanel" id="roles" aria-labelledby="sub-roles" hidden>
+      <div id="roles-body" style="display:grid;gap:18px"></div>
     </section>
 
     <!-- PROGRESS -->
@@ -458,7 +462,7 @@ label{font-weight:700;font-size:.92rem}
           <details class="fold"><summary>My draft disappeared</summary><p class="small" style="margin:8px 0 0">Drafts you haven't gotten feedback on are saved only in this browser on this device, so switching devices or using a private window can leave them behind and clearing your browser data erases them, while anything you got feedback on is saved to your account and shows up everywhere.</p></details>
           <details class="fold"><summary>Something I saved is missing</summary><p class="small" style="margin:8px 0 0">Reload the page first. If it's still missing, use Restore from a full backup above. Restoring only puts items back or replaces them with the backup's version; it never deletes anything.</p></details>
           <details class="fold"><summary>The download didn't happen</summary><p class="small" style="margin:8px 0 0">Downloads ask you to confirm first. Find the prompt and select Save. If nothing appears, another download prompt may still be open.</p></details>
-          <details class="fold"><summary>How do I change company profiles or my positioning?</summary><p class="small" style="margin:8px 0 0">Ask Claude in chat to update them. Your coaching context and stories can be edited right on the page.</p></details>
+          <details class="fold"><summary>How do I change company profiles?</summary><p class="small" style="margin:8px 0 0">Ask Claude in chat to update them. Your coaching context and stories can be edited right on the page.</p></details>
           <details class="fold"><summary>Who can see my information?</summary><p class="small" style="margin:8px 0 0">Only you. Everything in Career Studio is private to your account, even if someone else opens the link.</p></details>
           <details class="fold"><summary>What do the scores mean?</summary><p class="small" style="margin:8px 0 0">Every score is 1 to 3: 3 is strong, 2 is partly there, and 1 is missing or weak. Each practice type has its own rubric, so scores are only compared within the same type.</p></details>
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
@@ -533,11 +537,11 @@ label{font-weight:700;font-size:.92rem}
   let db = null, sample = null;
 
   /* ---------- tabs ---------- */
-  const tabs = ["home","practice","stories","positioning","progress","memo","memoprogress","companies","coachtalk","coachpractice","coachsteps","coachctx"];
+  const tabs = ["home","practice","stories","roles","progress","memo","memoprogress","companies","coachtalk","coachpractice","coachsteps","coachctx"];
   const CSUBS = ["coachtalk","coachpractice","coachsteps","coachctx"];
   tabs.push("settings","welcome");
   const MSUBS = ["memo","memoprogress"];
-  const SUBS = ["practice","stories","positioning","progress"];
+  const SUBS = ["practice","stories","roles","progress"];
   if (!document.documentElement.lang) document.documentElement.lang = "en";
   // When a story opens low on the screen, bring its title up under the top bar so the story text is in view.
   function scrollStoryIntoView(id){
@@ -560,7 +564,7 @@ label{font-weight:700;font-size:.92rem}
     store.set("tab", name); if (group === "interview") store.set("sub", name); if (group === "memo") store.set("msub", name); if (group === "coaching") store.set("csub", name);
     if (name === "progress") renderProgress();
     if (name === "home") renderHome();
-    if (name === "positioning") renderPositioning();
+    if (name === "roles") renderRoles();
     if (name === "companies") renderCompanies();
     if (name === "memoprogress") renderMemoHistory();
     if (name === "coachtalk") renderPastSessions("talk");
@@ -649,7 +653,7 @@ label{font-weight:700;font-size:.92rem}
 
   $("intro-btn").addEventListener("click", () => {
     const c = companyOf();
-    setQuestion({ question:"Tell me about yourself.", type:"intro", storyIds:[], why: c ? `Aim for 60 to 90 seconds: who you are now, two or three proof points, then why ${c.name}.` : "Aim for 60 to 90 seconds: who you are now, two or three proof points, then why this kind of role." });
+    setQuestion({ question:"Tell me about yourself.", type:"intro", storyIds:[], why: c ? `Aim for 60 to 90 seconds: who you are now, two or three proof points, then why ${c.name}.` : roleOf() ? `Aim for 60 to 90 seconds: who you are now, two or three proof points, then why this ${roleOf().title} role.` : "Aim for 60 to 90 seconds: who you are now, two or three proof points, then why this kind of role." });
     answer.value = ""; store.set("draft",""); updateMeter(); $("fb-panel").hidden = true;
   });
   $("own-btn").addEventListener("click", () => { const box = $("own-box"); box.hidden = !box.hidden; $("own-btn").setAttribute("aria-expanded", String(!box.hidden)); });
@@ -743,6 +747,7 @@ label{font-weight:700;font-size:.92rem}
       "Rubric areas (keys): " + RUBRIC.map(r => `${r.key} = ${r.hint}`).join(" | "),
       "Mix in hypothetical \"how would you\" questions (type hypothetical) about one time in four, more often if they have few hypothetical sessions. They're scored on: " + HYPO.map(r => r.label).join(", ") + ". Behavioral questions should also cover themes their stories show weakly, including failure and conflict.",
       companyOf() ? companyContext(companyOf()) + ` Choose a question that tests one of ${companyOf().name}'s values, using one from this list or one in the same style: ${JSON.stringify(companyOf().questions || [])}. Mention the value in "why".` : "",
+      roleOf() ? roleContext(roleOf()) + ' Choose a question that tests one of these requirements, favoring ones where they have no story yet, and mention the requirement in "why".' : "",
       "Reply with only JSON in this shape: {\"question\": string, \"type\": \"behavioral\" or \"hypothetical\", \"why\": string, \"focus\": one rubric key, \"storyIds\": [up to 2 story ids, empty for hypothetical]}. Write \"why\" as one plain sentence to {{NAME}}, using \"you\", that says why this question is next. No praise, no filler."
     ].join("\n\n");
     try {
@@ -801,7 +806,7 @@ label{font-weight:700;font-size:.92rem}
         "You are scoring {{NAME}}'s spoken answer to \"Tell me about yourself,\" the opening interview question. {{NAME}} is {{ABOUT}}, targeting {{TARGETS}}.",
         "Use list_stories and get_story if you need to check their proof points. List in notInBank any number or claim that isn't in their story bank, so they only say it if it's true. Never rewrite their intro or write one for them. List in hedges the exact words that undersell them; leave it empty if none. If {{NAME}} breaks one of their wording rules, say so in nextStep.",
         "Score each criterion 1, 2, or 3 (3 = strong, 2 = partly there, 1 = missing or weak), with one plain sentence of reason addressed to them as \"you\". Criteria: " + INTRO.filter(r => r.key !== "length").map(r => `${r.key} = ${r.hint}`).join(" | "),
-        c ? companyContext(c) + " In companyFit, say in one or two sentences how well the intro sets them up for " + c.name + " and one thing to adjust." : "Set companyFit to an empty string.",
+        c ? companyContext(c) + " In companyFit, say in one or two sentences how well the intro sets them up for " + c.name + " and one thing to adjust." : roleOf() ? roleContext(roleOf()) + " In companyFit, say in one or two sentences how well the intro sets them up for this role and one thing to adjust." : "Set companyFit to an empty string.",
         "Then give one strength (one sentence) and one next step (one sentence, the single change that would help most). Plain language, no praise padding, no em-dashes.",
         `Their answer (${w} words):\n${text.slice(0, 8000)}`,
         "Reply with only JSON: {\"scores\": {\"present\":{\"score\":n,\"reason\":s}, \"proof\":{...}, \"thread\":{...}, \"why\":{...}, \"smaller\":{...}}, \"strength\": string, \"nextStep\": string, \"notInBank\": [strings], \"hedges\": [strings], \"companyFit\": string}"
@@ -825,7 +830,7 @@ label{font-weight:700;font-size:.92rem}
         "Strong answers ask or name clarifying questions, state assumptions, lay out clear steps, weigh trade-offs, say how success would be measured, and tie back to the role. Never rewrite their answer or write a model answer. List in hedges the exact words or short phrases that undersell their confidence; leave it empty if there are none.",
         "Score each criterion 1, 2, or 3 (3 = strong, 2 = partly there, 1 = missing or weak), with one plain sentence of reason addressed to them as \"you\". Criteria: " + HYPO.filter(r => r.key!=="length").map(r => `${r.key} = ${r.hint}`).join(" | "),
         "Then give one strength (one sentence) and one next step (one sentence, the single change that would help most). Plain language, no praise padding, no em-dashes.",
-        companyOf() ? companyContext(companyOf()) + " In companyFit, say in one or two sentences which of its values their answer shows and one way to show a value more clearly. Don't change the scores because of this." : "Set companyFit to an empty string.",
+        companyOf() ? companyContext(companyOf()) + " In companyFit, say in one or two sentences which of its values their answer shows and one way to show a value more clearly. Don't change the scores because of this." : roleOf() ? roleContext(roleOf()) + " In companyFit, say in one or two sentences which of the role's requirements their answer shows and one way to show one more clearly. Don't change the scores because of this." : "Set companyFit to an empty string.",
         `Question: ${S.current.question}`,
         `Their answer (${w} words):\n${text.slice(0, 12000)}`,
         "Reply with only JSON (include \"companyFit\": string): {\"scores\": {\"clarify\":{\"score\":n,\"reason\":s}, \"assumptions\":{...}, \"approach\":{...}, \"tradeoffs\":{...}, \"measure\":{...}, \"relevance\":{...}, \"smaller\":{...}}, \"strength\": string, \"nextStep\": string, \"hedges\": [strings]}"
@@ -852,7 +857,7 @@ label{font-weight:700;font-size:.92rem}
       "Rules: Never rewrite their answer or write a model answer. Never invent facts. List in notInBank any number, result, or claim in their answer that does not appear in the story, so they only say it if it's true. List in hedges the exact words or short phrases they used that undersell their part (for example \"just\", \"kind of\", \"helped with\", \"we\" for their own work). Quote them exactly; leave the list empty if there are none.",
       "Score each criterion 1, 2, or 3 (3 = strong, 2 = partly there, 1 = missing or weak), with one plain sentence of reason addressed to them as \"you\". Criteria: " + RUBRIC.filter(r => r.key!=="length").map(r => `${r.key} = ${r.hint}`).join(" | "),
       "Then give one strength (one sentence) and one next step (one sentence, the single change that would help most). Plain language, no praise padding, no em-dashes.",
-      companyOf() ? companyContext(companyOf()) + " In companyFit, say in one or two sentences which of its values their answer shows and one way to show a value more clearly. Don't change the scores because of this." : "Set companyFit to an empty string.",
+      companyOf() ? companyContext(companyOf()) + " In companyFit, say in one or two sentences which of its values their answer shows and one way to show a value more clearly. Don't change the scores because of this." : roleOf() ? roleContext(roleOf()) + " In companyFit, say in one or two sentences which of the role's requirements their answer shows and one way to show one more clearly. Don't change the scores because of this." : "Set companyFit to an empty string.",
       `Question: ${S.current.question}`,
       `Their answer (${w} words):\n${text.slice(0, 12000)}`,
       "Reply with only JSON (include \"companyFit\": string): {\"storyId\": string or null, \"scores\": {\"structure\":{\"score\":n,\"reason\":s}, \"role\":{...}, \"actions\":{...}, \"result\":{...}, \"reflection\":{...}, \"fit\":{...}, \"smaller\":{...}}, \"strength\": string, \"nextStep\": string, \"notInBank\": [strings], \"hedges\": [strings]}"
@@ -945,7 +950,7 @@ label{font-weight:700;font-size:.92rem}
       st ? el("span", {class:"small muted"}, `Story told: ${st.title}`) : null,
       el("div", {class:"callout good"}, [el("strong",{},"What worked"), el("span",{}, s.strength)]),
       el("div", {class:"callout next"}, [el("strong",{},"Try next"), el("span",{}, s.nextStep)]),
-      s.companyFit ? el("div", {class:"callout next"}, [el("strong",{}, `${(S.companies.find(c => c.id === s.company) || {}).name || "Company"} fit`), el("span",{}, s.companyFit)]) : null,
+      s.companyFit ? el("div", {class:"callout next"}, [el("strong",{}, `${fitName(s.company)} fit`), el("span",{}, s.companyFit)]) : null,
       notInBankBlock(s),
       listCallout("warn","Words that undersell you", s.hedges ? s.hedges.map(h => `"${h}"`) : [], null),
       scoreRows(s.scores, rubricFor(s)),
@@ -985,8 +990,8 @@ label{font-weight:700;font-size:.92rem}
     }
     if (s.type === "intro" && db){
       const msg = el("span", {class:"small muted", role:"status"});
-      const b = el("button", {type:"button", class:"ghost", style:"justify-self:start"}, "Save as my intro in Positioning");
-      b.addEventListener("click", async () => { b.disabled = true; try { await db.doc("positioning/main").update({ myIntro: { text: s.answer, at: s.at, score: overallOf(s) } }); msg.textContent = "Saved, and you'll find it at the top of the Positioning tab."; b.hidden = true; } catch { b.disabled = false; msg.textContent = "Couldn't save that. Select the button again."; } });
+      const b = el("button", {type:"button", class:"ghost", style:"justify-self:start"}, "Save as my intro");
+      b.addEventListener("click", async () => { b.disabled = true; try { await db.doc("intro/main").set({ text: s.answer, at: s.at, score: overallOf(s) }); msg.textContent = "Saved. You'll find it under Your saved intro, below the Practice self-intro button."; b.hidden = true; } catch { b.disabled = false; msg.textContent = "Couldn't save that. Select the button again."; } });
       wrap.append(el("div", {style:"display:grid;gap:6px"}, [b, msg]));
     }
     if (sample) wrap.append(followUpBlock(s));
@@ -1327,7 +1332,7 @@ label{font-weight:700;font-size:.92rem}
   const stamp = () => new Date().toISOString().slice(0,10);
   $("backup-json").addEventListener("click", () => {
     const strip = d => { const o = Object.assign({}, d); return o; };
-    const data = JSON.stringify({ app:"Career Studio", exportedAt:new Date().toISOString(), stories:S.stories.map(strip), questions:S.questions.map(strip), sessions:S.sessions.map(strip), memos:S.memos.map(strip), memoPrompts:S.memoGeneral.map(strip), companies:S.companies.map(strip), positioning:POS, profile:ME, coachingContext:S.coachCtx, coachSessions:S.coachSessions.map(strip), nextSteps:S.steps.map(strip) }, null, 2);
+    const data = JSON.stringify({ app:"Career Studio", exportedAt:new Date().toISOString(), stories:S.stories.map(strip), questions:S.questions.map(strip), sessions:S.sessions.map(strip), memos:S.memos.map(strip), memoPrompts:S.memoGeneral.map(strip), companies:S.companies.map(strip), roles:S.roles.map(strip), myIntro:S.myIntro, positioning:POS, profile:ME, coachingContext:S.coachCtx, coachSessions:S.coachSessions.map(strip), nextSteps:S.steps.map(strip) }, null, 2);
     saveFile(`career-studio-backup-${stamp()}.json`, data, $("backup-msg")).then(() => { if (/^Saved/.test($("backup-msg").textContent)) { store.set("lastBackup", new Date().toISOString()); showLastBackup(); } });
   });
   function showLastBackup(){ const t = store.get("lastBackup"); $("backup-last").textContent = t ? `Last backup from this device: ${new Date(t).toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"})}.` : "No backup downloaded from this device yet."; }
@@ -1336,7 +1341,7 @@ label{font-weight:700;font-size:.92rem}
     const f = e.target.files && e.target.files[0]; const box = $("restore-confirm"); box.hidden = false;
     if (!f) { box.hidden = true; return; }
     let data; try { data = JSON.parse(await f.text()); } catch { box.replaceChildren(el("p",{class:"small", role:"alert"},"That file isn't a Career Studio backup.")); return; }
-    const COLLS = ["stories","questions","sessions","memos","memoPrompts","companies","coachSessions","nextSteps"];
+    const COLLS = ["stories","questions","sessions","memos","memoPrompts","companies","roles","coachSessions","nextSteps"];
     const counts = COLLS.filter(c => Array.isArray(data[c]) && data[c].length).map(c => `${data[c].length} ${c}`);
     if (!counts.length && !data.positioning && !data.coachingContext){ box.replaceChildren(el("p",{class:"small", role:"alert"},"That file doesn't contain anything to restore.")); return; }
     const go = el("button",{type:"button", class:"primary"}, "Restore now"); const cancel = el("button",{type:"button", class:"ghost"}, "Cancel");
@@ -1349,7 +1354,7 @@ label{font-weight:700;font-size:.92rem}
         if (!d || !d.id) continue; const { id, ...rest } = d; msg.textContent = `Restoring… ${++n}`;
         try { await db.doc(`${c}/${id}`).set(rest); } catch { failed++; }
       }
-      try { if (data.profile && data.profile.name) await db.doc("profile/me").set(data.profile); if (data.positioning) await db.doc("positioning/main").set(data.positioning); if (data.coachingContext) await db.doc("coaching/context").set(data.coachingContext); } catch { failed++; }
+      try { if (data.profile && data.profile.name) await db.doc("profile/me").set(data.profile); if (data.positioning) await db.doc("positioning/main").set(data.positioning); if (data.myIntro && data.myIntro.text) await db.doc("intro/main").set(data.myIntro); if (data.coachingContext) await db.doc("coaching/context").set(data.coachingContext); } catch { failed++; }
       msg.textContent = failed ? `Restored ${n - failed} items. ${failed} couldn't be restored; try again.` : `Restored ${n} items.`; $("restore-file").value = "";
     });
     box.replaceChildren(el("span",{class:"small"}, `This backup has ${counts.join(", ")}${data.positioning ? ", your positioning" : ""}${data.coachingContext ? ", your coaching context" : ""}. Restore it?`), el("div",{class:"row"},[go, cancel]), msg);
@@ -1449,7 +1454,7 @@ label{font-weight:700;font-size:.92rem}
   const ICON = {
     practice:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/>',
     stories:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M8 7h7"/>',
-    positioning:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+    roles:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>',
     progress:'<path d="M4 20h16"/><path d="M5 16l4-5 4 3 6-8"/>',
     memo:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/>',
     companies:'<path d="M4 21V6l7-3v18"/><path d="M11 9h8v12"/><path d="M3 21h18"/><path d="M7 9h1M7 13h1M7 17h1M14 13h2M14 17h2"/>',
@@ -1461,7 +1466,7 @@ label{font-weight:700;font-size:.92rem}
     {tab:"memo", title:"Written memo", desc:"Proposals from a brief"},
     {tab:"stories", title:"Story bank", desc:"Your STAR-R stories"},
     {tab:"companies", title:"Companies", desc:"Values and interviews"},
-    {tab:"positioning", title:"Positioning", desc:"How to pitch each role"},
+    {tab:"roles", title:"Roles", desc:"Match stories to a posting"},
     {tab:"coachtalk", icon:"coaching", title:"Coaching", desc:"Talk it through or rehearse"}
   ];
   function renderHome(){
@@ -1482,41 +1487,177 @@ label{font-weight:700;font-size:.92rem}
   let themeMode = store.get("themeMode") || "auto";
   applyTheme(themeMode);
   $("theme-btn").addEventListener("click", () => { themeMode = themeMode === "auto" ? "light" : themeMode === "light" ? "dark" : "auto"; store.set("themeMode", themeMode); applyTheme(themeMode); });
-  /* ---------- positioning ---------- */
-  let POS = null, posLoaded = false;
-  function renderPositioning(){
-    const root = $("pos-body"); root.replaceChildren();
-    if (!posLoaded){ root.append(el("div",{class:"empty"},[el("strong",{},"Loading your positioning…")])); return; }
-    if (!POS){ root.append(el("div",{class:"empty"},[el("strong",{},"Nothing here yet"), el("span",{},"Ask Claude in chat to add your positioning statements and role tables.")])); return; }
-    root.append(el("p",{class:"small muted", style:"margin:0"}, "This shows how to describe your experience for each kind of role, and you can ask Claude in chat whenever you want something here changed."));
-    if (POS.myIntro && POS.myIntro.text){
-      root.append(el("div",{class:"panel"},[ el("h2",{},"My intro"), el("span",{class:"small muted"}, `Saved from your practice on ${new Date(POS.myIntro.at).toLocaleDateString(undefined,{month:"short", day:"numeric"})}${POS.myIntro.score ? `, scored ${Number(POS.myIntro.score).toFixed(1)} of 3` : ""}, and you can practice it again anytime from the Practice tab.`), el("p",{class:"why", style:"margin:0;color:var(--fg);white-space:pre-wrap"}, POS.myIntro.text) ]));
+  /* ---------- roles (job postings matched to your stories) ---------- */
+  // Positioning content stays in the database untouched; only the saved intro is still read from it, as a fallback.
+  let POS = null, INTRO_DOC = null;
+  S.roles = []; S.rolesLoaded = false; S.myIntro = null;
+  const roleOf = () => (S.company || "").startsWith("role:") ? (S.roles.find(r => "role:" + r.id === S.company) || null) : null;
+  const roleLabel = r => r.company ? `${r.title} at ${r.company}` : r.title;
+  // Shorter name for the Practice for list: drop anything in parentheses so long company names don't fill the screen.
+  const roleShort = r => { const co = String(r.company || "").replace(/\s*\([^)]*\)/g, "").trim(); return co ? `${r.title} at ${co}` : r.title; };
+  function roleContext(r){
+    if (!r) return "";
+    return `They are practicing for the ${r.title} role${r.company ? " at " + r.company : ""}. What the posting asks for: ` + (r.asks || []).map(a => a.ask).join(" | ") + "." + (r.mission ? ` The company's mission and values, as they pasted them: ${r.mission}` : "");
+  }
+  function fitName(id){
+    if (String(id || "").startsWith("role:")){ const r = S.roles.find(x => "role:" + x.id === id); return r ? r.title : "Role"; }
+    return (S.companies.find(c => c.id === id) || {}).name || "Company";
+  }
+  const companyFor = r => { const n = String(r.company || "").toLowerCase().trim(); return n ? S.companies.find(c => { const cn = String(c.name || "").toLowerCase(); return cn && (cn === n || n.includes(cn) || cn.includes(n)); }) || null : null; };
+  function renderMyIntro(){
+    S.myIntro = INTRO_DOC && INTRO_DOC.text ? INTRO_DOC : (POS && POS.myIntro && POS.myIntro.text ? POS.myIntro : null);
+    const box = $("my-intro"), body = $("my-intro-body"); if (!box) return;
+    box.hidden = !S.myIntro; body.replaceChildren();
+    if (!S.myIntro) return;
+    body.append(
+      el("span",{class:"small muted"}, `Saved from your practice on ${new Date(S.myIntro.at).toLocaleDateString(undefined,{month:"short", day:"numeric"})}${S.myIntro.score ? `, scored ${Number(S.myIntro.score).toFixed(1)} of 3` : ""}.`),
+      el("p",{class:"why", style:"margin:0;color:var(--fg);white-space:pre-wrap"}, S.myIntro.text)
+    );
+  }
+  function openStoryById(id){ S.openStory = id; showTab("stories"); renderStories(); const n = document.querySelector(`[data-story="${CSS.escape(id)}"]`); n && n.scrollIntoView({block:"start"}); }
+  function cleanAsks(list){
+    return (Array.isArray(list) ? list : []).slice(0, 8).map(a => ({ ask:String(a?.ask || "").trim(), storyId: S.stories.some(st => st.id === a?.storyId) ? String(a.storyId) : null, why:String(a?.why || "").trim(), gap:String(a?.gap || "").trim() })).filter(a => a.ask);
+  }
+  function rolePrompt(posting){
+    return [
+      "{{NAME}} is {{ABOUT}}, targeting {{TARGETS}}. They pasted a job posting and want to know which of their own stories fit what it asks for.",
+      "Use list_stories, then get_story for any story you need to check. Only match a story if it really shows the requirement, and it's fine to leave a requirement without one.",
+      "Pick the 4 to 7 requirements in the posting that matter most, in plain language, and don't add requirements the posting doesn't state. For each one, give the best story id or null, one plain sentence to {{NAME}}, using \"you\", on why the story fits, and if no story fits, one sentence in gap on what kind of story would.",
+      "If the posting itself states the company's mission or values, copy them briefly into mission. Otherwise leave mission empty, and don't look anything up or guess.",
+      "Plain language, no praise, no em-dashes.",
+      `Posting:\n${posting.slice(0, 15000)}`,
+      'Reply with only JSON: {"title": string, "company": the short name people usually use for the company (for example an acronym it goes by), or "", "summary": string (one or two sentences on what the role is), "asks": [{"ask": string, "storyId": string or null, "why": string, "gap": string}], "mission": string}'
+    ].join("\n\n");
+  }
+  let ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }, roleAddOpen = false, roleCtl = null, roleOpen = null, roleConfirm = null, roleEditMission = null;
+  async function analyzePosting(text, statusEl){
+    roleCtl?.abort(); roleCtl = new AbortController();
+    const r = await sample.json(rolePrompt(text), { tools: makeTools(statusEl), signal: roleCtl.signal });
+    if (!r || typeof r.title !== "string" || !Array.isArray(r.asks)) throw {code:"invalid_json"};
+    return { title:r.title.trim() || "Untitled role", company:String(r.company || "").trim(), summary:String(r.summary || "").trim(), asks:cleanAsks(r.asks), mission:String(r.mission || "").trim() };
+  }
+  function askRows(asks){
+    return el("div",{style:"display:grid;gap:10px"}, asks.map(a => {
+      const st = a.storyId ? S.stories.find(x => x.id === a.storyId) : null;
+      return el("div",{style:"display:grid;gap:4px;border-top:1px solid var(--line);padding-top:10px"},[
+        el("b",{}, a.ask),
+        st ? el("span",{class:"small"},[ "Best story: ", el("button",{type:"button", class:"linkbtn", style:"padding:10px 0;color:var(--accent)", onclick:() => openStoryById(st.id)}, st.title) ]) : el("span",{class:"small"}, "No story yet."),
+        st && a.why ? el("span",{class:"small muted"}, a.why) : null,
+        !st && a.gap ? el("span",{class:"small muted"}, a.gap) : null,
+        !st && db ? el("button",{type:"button", class:"ghost", style:"justify-self:start", onclick:() => { showTab("stories"); $("add-story").click(); }}, "Write a story") : null
+      ]);
+    }));
+  }
+  function renderRoles(){
+    const root = $("roles-body"); if (!root) return; root.replaceChildren();
+    root.append(el("p",{class:"small muted", style:"margin:0"}, "Paste a job posting to find out which of your stories fit what it asks for, then practice for that role. The matches come from your own story bank, so they show where you have proof and where you may want a new story."));
+    // Add a role
+    const add = el("div",{class:"panel"},[ el("h2",{}, "Add a role") ]);
+    if (!ROLE_DRAFT.preview){
+      const ta = el("textarea",{id:"role-paste", rows:"6", "aria-describedby":"role-paste-hint"}); ta.value = ROLE_DRAFT.text;
+      ta.addEventListener("input", () => { ROLE_DRAFT.text = ta.value; });
+      const status = el("div",{class:"status small", hidden:""},[ el("span",{class:"dot","aria-hidden":"true"}), el("span",{id:"role-status-text"},"Reading the posting…") ]);
+      const err = el("p",{class:"small", role:"alert", style:"margin:0"}, ROLE_DRAFT.error || "");
+      const go = el("button",{type:"button", class:"primary"}, "Check my fit");
+      const stop = el("button",{type:"button", class:"ghost", hidden:""}, "Stop");
+      stop.addEventListener("click", () => roleCtl?.abort());
+      if (!sample) go.disabled = true;
+      go.addEventListener("click", async () => {
+        const text = ta.value.trim(); ROLE_DRAFT.error = ""; err.textContent = "";
+        if (text.split(/\s+/).length < 40){ err.textContent = "Paste the full posting first, so Claude has enough to work from."; ta.focus(); return; }
+        go.disabled = true; stop.hidden = false; status.hidden = false;
+        try { ROLE_DRAFT.preview = await analyzePosting(text, "role-status-text"); ROLE_DRAFT.text = text; renderRoles(); $("role-title")?.focus(); }
+        catch (e) { if (e?.code !== "cancelled"){ if (fatal(e?.code)) disableAI(errCopy(e.code)); err.textContent = errCopy(e?.code); } }
+        finally { go.disabled = !sample; stop.hidden = true; status.hidden = true; }
+      });
+      add.append(
+        el("div",{class:"field"},[ el("label",{for:"role-paste"}, "Job posting"), el("span",{class:"small muted", id:"role-paste-hint"}, "Paste the full posting, including the company name if it's listed."), ta ]),
+        el("div",{class:"row"},[go, stop, S.roles.length ? el("button",{type:"button", class:"ghost", onclick:() => { roleAddOpen = false; ROLE_DRAFT.error = ""; renderRoles(); $("role-add-btn")?.focus(); }}, "Cancel") : null]), status, err,
+        !sample ? el("p",{class:"small muted", style:"margin:0"}, "Claude isn't available in this view, so roles can't be checked here.") : null
+      );
+    } else {
+      const p = ROLE_DRAFT.preview;
+      const tIn = el("input",{type:"text", id:"role-title"}); tIn.value = p.title;
+      const cIn = el("input",{type:"text", id:"role-company"}); cIn.value = p.company;
+      const msg = el("p",{class:"small", role:"status", style:"margin:0"});
+      const save = el("button",{type:"button", class:"primary"}, "Save role");
+      const back = el("button",{type:"button", class:"ghost"}, "Start over");
+      back.addEventListener("click", () => { ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; renderRoles(); $("role-paste")?.focus(); });
+      save.addEventListener("click", async () => {
+        if (!db){ msg.textContent = "Storage isn't available in this view."; return; }
+        save.disabled = back.disabled = true; msg.textContent = "Saving…";
+        const id = "r-" + Date.now().toString(36), now = new Date().toISOString();
+        try {
+          await db.doc("roles/" + id).set({ title: tIn.value.trim() || p.title, company: cIn.value.trim(), summary:p.summary, asks:p.asks, mission:p.mission, posting:ROLE_DRAFT.text.slice(0, 20000), at:now, updatedAt:now });
+          ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; roleAddOpen = false; roleOpen = id; renderRoles();
+        } catch { save.disabled = back.disabled = false; msg.textContent = "Couldn't save. Check your connection and select Save role again."; }
+      });
+      add.append(
+        el("span",{class:"small muted"}, "Check this summary before you save it, and fix the title or company if Claude got them wrong."),
+        el("div",{class:"field"},[ el("label",{for:"role-title"}, "Role title"), tIn ]),
+        el("div",{class:"field"},[ el("label",{for:"role-company"}, "Company"), cIn ]),
+        p.summary ? el("p",{style:"margin:0"}, p.summary) : null,
+        el("h3",{}, "What it asks for, and your best story"),
+        askRows(p.asks),
+        p.mission ? el("div",{class:"callout next"},[ el("strong",{}, "Mission and values from the posting"), el("span",{class:"small"}, p.mission) ]) : null,
+        el("div",{class:"row"},[save, back]), msg
+      );
     }
-    if (Array.isArray(POS.statements)){
-      const box = el("div",{class:"panel"},[ el("h2",{},"The short version"), POS.intro ? el("p",{class:"small muted", style:"margin:0"}, POS.intro) : null ]);
-      for (const st of POS.statements) box.append(el("div",{style:"display:grid;gap:4px"},[ el("strong",{class:"small"}, st.role), el("p",{class:"why", style:"margin:0;color:var(--fg)"}, st.text) ]));
-      root.append(box);
-    }
-    for (const t of POS.tables || []){
-      const box = el("details",{class:"panel"},[ el("summary",{style:"cursor:pointer"},[ el("h2",{style:"display:inline"}, t.title) ]) ]);
-      const inner = el("div",{style:"display:grid;gap:12px;margin-top:10px"});
-      if (t.intro) inner.append(el("p",{class:"small muted", style:"margin:0"}, t.intro));
-      for (const r of t.rows) inner.append(el("div",{style:"display:grid;gap:4px;border-top:1px solid var(--line);padding-top:10px"},[
-        el("b",{}, r.ask),
-        el("span",{class:"small"}, r.proof),
-        r.say ? el("span",{class:"small", style:"color:var(--accent);font-style:italic"}, r.say) : null
+    // The add box stays at the top. Once roles are saved it folds into one button, so the list stays short.
+    if (!S.rolesLoaded){ root.append(add, el("div",{class:"empty"},[ el("strong",{},"Loading your roles…") ])); return; }
+    if (!S.roles.length || ROLE_DRAFT.preview || roleAddOpen || ROLE_DRAFT.text) root.append(add);
+    else root.append(el("button",{type:"button", id:"role-add-btn", class:"primary", style:"justify-self:start", onclick:() => { roleAddOpen = true; renderRoles(); $("role-paste")?.focus(); }}, "Add a role"));
+    if (!S.roles.length) return;
+    root.append(el("h2",{style:"font-size:1.05rem;margin:0"}, `Your roles (${S.roles.length})`));
+    for (const r of S.roles){
+      const asks = r.asks || [], missing = asks.filter(a => !a.storyId || !S.stories.some(st => st.id === a.storyId)).length;
+      const d = el("details",{class:"fold role-fold"},[ el("summary",{},[ el("span",{class:"role-sum"},[ el("span",{}, roleLabel(r)), el("span",{class:"small muted", style:"font-weight:400"}, `${asks.length} requirements, ${missing ? `${missing} without a story yet` : "a story for each"}`) ]) ]) ]);
+      d.open = roleOpen === r.id;
+      d.addEventListener("toggle", () => { if (d.open) roleOpen = r.id; else if (roleOpen === r.id) roleOpen = null; });
+      const inner = el("div",{style:"display:grid;gap:12px;margin-top:8px"});
+      if (r.summary) inner.append(el("p",{style:"margin:0"}, r.summary));
+      const co = companyFor(r);
+      inner.append(el("div",{class:"row"},[
+        el("button",{type:"button", class:"primary", onclick:() => { S.company = "role:" + r.id; store.set("company", S.company); renderCompanySelect(); renderBank(); showTab("practice"); }}, "Practice for this role"),
+        co ? el("button",{type:"button", class:"linkbtn", onclick:() => { store.set("companyView", co.id); showTab("companies"); }}, `Open the ${co.name} profile`) : null
       ]));
-      if (t.note) inner.append(el("p",{class:"small muted", style:"margin:0"}, t.note));
-      box.append(inner); root.append(box);
+      inner.append(askRows(r.asks || []));
+      // mission and values (optional)
+      if (roleEditMission === r.id){
+        const mid = "mission-" + r.id;
+        const ta = el("textarea",{id:mid, rows:"4", "aria-describedby":mid + "-hint"}); ta.value = r.mission || "";
+        const mmsg = el("p",{class:"small", role:"status", style:"margin:0"});
+        const ms = el("button",{type:"button", class:"primary"}, "Save");
+        const mc = el("button",{type:"button", class:"ghost", onclick:() => { roleEditMission = null; renderRoles(); }}, "Cancel");
+        ms.addEventListener("click", async () => { ms.disabled = true; try { await db.doc("roles/" + r.id).update({ mission: ta.value.trim(), updatedAt:new Date().toISOString() }); roleEditMission = null; renderRoles(); } catch { ms.disabled = false; mmsg.textContent = "Couldn't save. Select Save again."; } });
+        inner.append(el("div",{class:"field"},[ el("label",{for:mid}, "Mission and values"), el("span",{class:"small muted", id:mid + "-hint"}, "If you find the company's mission or values on its website, paste them here, and practice feedback for this role will use them."), ta, el("div",{class:"row"},[ms, mc]), mmsg ]));
+      } else if (r.mission){
+        inner.append(el("div",{class:"callout next"},[ el("strong",{}, "Mission and values"), el("span",{class:"small", style:"white-space:pre-wrap"}, r.mission), el("button",{type:"button", class:"linkbtn", style:"justify-self:start", onclick:() => { roleEditMission = r.id; renderRoles(); $("mission-" + r.id)?.focus(); }}, "Edit mission and values") ]));
+      } else if (db){
+        inner.append(el("button",{type:"button", class:"linkbtn", style:"justify-self:start", onclick:() => { roleEditMission = r.id; renderRoles(); $("mission-" + r.id)?.focus(); }}, "Add mission or values (optional)"));
+      }
+      // refresh and delete
+      const status = el("div",{class:"status small", hidden:""},[ el("span",{class:"dot","aria-hidden":"true"}), el("span",{id:"role-re-" + r.id},"Checking your stories…") ]);
+      const rmsg = el("p",{class:"small", role:"status", style:"margin:0"});
+      const again = el("button",{type:"button", class:"ghost"}, "Check fit again");
+      again.disabled = !sample || !r.posting;
+      again.addEventListener("click", async () => {
+        again.disabled = true; status.hidden = false; rmsg.textContent = "";
+        try { const p = await analyzePosting(r.posting, "role-re-" + r.id); await db.doc("roles/" + r.id).update({ asks:p.asks, updatedAt:new Date().toISOString() }); }
+        catch (e) { if (e?.code !== "cancelled"){ if (fatal(e?.code)) disableAI(errCopy(e.code)); rmsg.textContent = errCopy(e?.code); } }
+        finally { again.disabled = !sample; status.hidden = true; }
+      });
+      const actions = el("div",{class:"row"},[ again ]);
+      if (db){
+        if (roleConfirm === r.id){
+          actions.append(el("span",{class:"small"}, "Delete this role? This can't be undone."),
+            el("button",{type:"button", class:"primary", onclick:async () => { try { await db.doc("roles/" + r.id).delete(); if (S.company === "role:" + r.id){ S.company = ""; store.set("company",""); } roleConfirm = null; } catch { rmsg.textContent = "Couldn't delete. Try again."; } }}, "Delete"),
+            el("button",{type:"button", class:"ghost", onclick:() => { roleConfirm = null; renderRoles(); }}, "Cancel"));
+        } else actions.append(el("button",{type:"button", class:"linkbtn", onclick:() => { roleConfirm = r.id; renderRoles(); }}, "Delete role"));
+      }
+      inner.append(el("span",{class:"small muted"}, `Added ${new Date(r.at).toLocaleDateString(undefined,{month:"short", day:"numeric"})}. Select Check fit again after you add or change stories.`), actions, status, rmsg);
+      d.append(inner); root.append(d);
     }
-    if (Array.isArray(POS.gaps)){
-      const box = el("details",{class:"panel"},[ el("summary",{style:"cursor:pointer"},[ el("h2",{style:"display:inline"}, "Gaps and how to cover them") ]) ]);
-      const inner = el("div",{style:"display:grid;gap:12px;margin-top:10px"});
-      if (POS.gapsIntro) inner.append(el("p",{class:"small muted", style:"margin:0"}, POS.gapsIntro));
-      for (const g of POS.gaps) inner.append(el("div",{style:"display:grid;gap:4px;border-top:1px solid var(--line);padding-top:10px"},[ el("b",{}, g.gap), el("span",{class:"small"}, g.cover) ]));
-      box.append(inner); root.append(box);
-    }
-    if (Array.isArray(POS.notes) && POS.notes.length) root.append(el("div",{class:"callout next"},[ el("strong",{},"Notes"), el("ul",{}, POS.notes.map(n => el("li",{}, n))) ]));
   }
 
   /* ---------- companies ---------- */
@@ -1526,12 +1667,13 @@ label{font-weight:700;font-size:.92rem}
   function renderCompanySelect(){
     const sel = $("company-select"); const keep = S.company;
     sel.replaceChildren(el("option",{value:""},"General practice"));
-    for (const c of S.companies) sel.append(el("option",{value:c.id}, c.name));
-    sel.value = S.companies.some(c => c.id === keep) ? keep : "";
+    if (S.roles.length) sel.append(el("optgroup",{label:"Roles"}, S.roles.map(r => el("option",{value:"role:" + r.id}, roleShort(r)))));
+    if (S.companies.length) sel.append(el("optgroup",{label:"Companies"}, S.companies.map(c => el("option",{value:c.id}, c.name))));
+    sel.value = [...sel.options].some(o => o.value === keep) ? keep : "";
     S.company = sel.value;
-    const c = companyOf();
-    $("company-note").hidden = !c;
-    $("company-note").textContent = c ? `Questions and feedback will follow ${c.name}'s profile. Your scores still use your usual rubric.` : "";
+    const c = companyOf(), r = roleOf();
+    $("company-note").hidden = !c && !r;
+    $("company-note").textContent = c ? `Questions and feedback will follow ${c.name}'s profile. Your scores still use your usual rubric.` : r ? `Questions and feedback will follow what this posting asks for. Your scores still use your usual rubric.` : "";
   }
   $("company-select").addEventListener("change", e => { S.company = e.target.value; store.set("company", S.company); renderCompanySelect(); renderBank(); });
   const storiesFor = themes => S.stories.filter(s => themes.some(k => (s.themes?.[k] || 0) >= 2)).map(s => s.title);
@@ -2034,13 +2176,15 @@ label{font-weight:700;font-size:.92rem}
     if (!db){
       S.loaded.stories = S.loaded.sessions = true;
       $("story-list").replaceChildren(el("div",{class:"empty"},[el("strong",{},"Your stories can't load here"), el("span",{},"Open this page in the Claude app or on claude.ai to open and edit your story bank.")]));
-      $("add-story").disabled = true; renderProgress(); return;
+      $("add-story").disabled = true; S.rolesLoaded = true; if (!$("roles").hidden) renderRoles(); renderProgress(); return;
     }
     db.collection("stories").orderBy("order").onSnapshot(snap => {
       S.stories = snap.docs.map(d => Object.assign({id:d.id}, d.data())); S.loaded.stories = true;
-      renderStories(); renderQuestion(); renderHomeStart(); if (!$("progress").hidden) renderProgress(); if (!$("welcome").hidden) renderWelcome();
+      renderStories(); renderQuestion(); renderHomeStart(); if (!$("progress").hidden) renderProgress(); if (!$("roles").hidden) renderRoles(); if (!$("welcome").hidden) renderWelcome();
     }, () => { S.loaded.stories = true; $("story-list").replaceChildren(el("div",{class:"empty"},[el("strong",{},"Your stories couldn't load"), el("span",{},"Reload the page to try again.")])); });
-    db.doc("positioning/main").onSnapshot(snap => { POS = snap.exists ? snap.data() : null; posLoaded = true; if (!$("positioning").hidden) renderPositioning(); }, () => { posLoaded = true; });
+    db.doc("positioning/main").onSnapshot(snap => { POS = snap.exists ? snap.data() : null; renderMyIntro(); }, () => {});
+    db.doc("intro/main").onSnapshot(snap => { INTRO_DOC = snap.exists ? snap.data() : null; renderMyIntro(); }, () => {});
+    db.collection("roles").orderBy("at","desc").onSnapshot(snap => { S.roles = snap.docs.map(d => Object.assign({id:d.id}, d.data())); S.rolesLoaded = true; renderCompanySelect(); if (!$("roles").hidden) renderRoles(); }, () => { S.rolesLoaded = true; if (!$("roles").hidden) renderRoles(); });
     db.collection("companies").orderBy("order").onSnapshot(snap => { noteSeed("companies", snap.docs.length === 0); S.companies = snap.docs.map(d => Object.assign({id:d.id}, d.data())).sort((a,b) => String(a.name).localeCompare(String(b.name))); S.companiesLoaded = true; renderCompanySelect(); renderBank(); renderMemoSelect(); if (!$("companies").hidden) renderCompanies(); }, () => { S.companiesLoaded = true; });
     db.doc("profile/me").onSnapshot(snap => { noteSeed("profile", !!snap.exists); ME = Object.assign({ name:"", pronouns:"", about:"", targets:"", situation:"", rules:"", coachStyle:"" }, snap.exists ? snap.data() : {}); S.loaded.me = true; renderHomeStart(); if (!meFilled() && !store.get("welcomeSeen") && !$("home").hidden) showTab("welcome"); if (!$("welcome").hidden) renderWelcome(); }, () => {});
     db.doc("coaching/context").onSnapshot(snap => { S.coachCtx = snap.exists ? snap.data() : {intro:"No context saved yet.", sections:[]}; if (!$("coachctx").hidden) renderCoachCtx(); }, () => {});
