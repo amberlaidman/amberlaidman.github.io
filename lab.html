@@ -98,7 +98,7 @@
   padding: 0.5rem 0.75rem;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.85rem;
-  color: rgba(46, 84, 97, 0.6);
+  color: #586D75;
   font-style: italic;
   line-height: 1.5;
 }
@@ -196,7 +196,7 @@
   <div class="lab-layout">
 
     <!-- ============ SIDEBAR ============ -->
-    <aside class="lab-sidebar" aria-label="Projects and journal">
+    <div class="lab-sidebar" role="group" aria-label="Projects and journal">
 
       <!-- LIVE -->
       <div class="lab-category-group">
@@ -208,13 +208,13 @@
       <div class="lab-category-group">
         <div class="lab-category-heading">Building</div>
         <ul class="lab-project-list" role="tablist" aria-label="Building">
-          <li>
+          <li role="presentation">
             <button class="lab-tab active" role="tab" aria-selected="true" data-panel="menstrual-cycle">Understanding Your Cycle</button>
           </li>
-          <li>
+          <li role="presentation">
             <button class="lab-tab" role="tab" aria-selected="false" data-panel="autonomous-vehicle">Riding with No Driver</button>
           </li>
-          <li>
+          <li role="presentation">
             <button class="lab-tab" role="tab" aria-selected="false" data-panel="open-sky">Open Sky</button>
           </li>
         </ul>
@@ -224,7 +224,7 @@
       <div class="lab-category-group">
         <div class="lab-category-heading">Thinking</div>
         <ul class="lab-project-list" role="tablist" aria-label="Thinking">
-          <li>
+          <li role="presentation">
             <button class="lab-tab" role="tab" aria-selected="false" data-panel="feedback">Feedback</button>
           </li>
         </ul>
@@ -234,13 +234,13 @@
       <div class="lab-category-group">
         <div class="lab-category-heading">Journal</div>
         <ul class="lab-project-list" role="tablist" aria-label="Journal">
-          <li>
+          <li role="presentation">
             <button class="lab-tab" role="tab" aria-selected="false" data-panel="journal">Journal</button>
           </li>
         </ul>
       </div>
 
-    </aside>
+    </div>
 
     <!-- ============ CONTENT AREA ============ -->
     <div class="lab-content-area">
