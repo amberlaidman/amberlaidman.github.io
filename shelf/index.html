@@ -41,7 +41,7 @@ button,select,input{font:inherit;color:inherit}
 .welcome button{border:0;background:transparent;color:var(--muted);width:32px;height:32px;border-radius:999px;cursor:pointer;font-size:14px;flex:none}
 .welcome[hidden]{display:none!important}
 .intro{color:var(--ink);font-size:16px;margin-top:6px;max-width:60ch}
-.brand .fine{font-size:12.5px;margin-top:8px;opacity:.8}
+.brand .fine{font-size:12.5px;margin-top:8px}
 .brand .fine a{color:inherit;text-decoration:underline}
 .media{display:flex;gap:6px}
 .media button{min-height:44px;padding:0 16px;border-radius:12px;border:none;background:var(--btn2);color:var(--ink);font-weight:700;cursor:pointer}
@@ -335,7 +335,7 @@ th{color:var(--muted);font-weight:700;border-top:none}
     </div>
   </header>
 
-  <div class="subnav">
+  <div class="subnav" role="region" aria-label="Sections and filters">
     <div class="tabs" role="tablist" id="tabs" aria-label="Sections"></div>
     <div class="bar-row">
       <div class="chips" id="years" role="group" aria-label="Year"></div>

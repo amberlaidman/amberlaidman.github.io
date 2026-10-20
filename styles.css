@@ -579,7 +579,7 @@ h2.credit-band-heading {
 }
 .cs-result-label {
   font-size: 14px;
-  color: var(--mint);
+  color: #E2F1E9;
   line-height: 1.4;
   font-weight: 400;
 }
@@ -1456,4 +1456,17 @@ h2.credit-band-heading {
   .lab-content { padding: 20px 24px 60px; }
   .project-sections { grid-template-columns: 1fr; gap: 24px; }
   .project-preview { padding: 40px 24px; }
+}
+
+/* ============ LARGER TOUCH AREAS (invisible, no layout change) ============ */
+.footer-links a, .hero-cta, .link-underline, .link-underline-light, .cs-back-link a, .lab-tab { position: relative; }
+.site-nav a::before, .footer-links a::before, .hero-cta::before, .link-underline::before,
+.link-underline-light::before, .cs-back-link a::before {
+  content: '';
+  position: absolute;
+  inset: -14px -6px;
+}
+.lab-tab::before { content: ''; position: absolute; inset: -6px 0; }
+@media (max-width: 768px) {
+  .footer-links a::before { inset: -2px -6px; }
 }
