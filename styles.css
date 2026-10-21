@@ -169,7 +169,7 @@ img { max-width: 100%; height: auto; display: block; }
   margin: 0 auto;
 }
 .section-label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--teal);
   margin-bottom: 12px;
@@ -247,7 +247,7 @@ h2.credit-band-heading {
   border-top-width: 8px;
 }
 .featured-tag {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--teal-deep);
   background: var(--mint);
@@ -396,7 +396,7 @@ h2.credit-band-heading {
   max-width: 52ch;
 }
 .work-tag {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--teal-deep);
   background: var(--mint);
@@ -436,7 +436,7 @@ h2.credit-band-heading {
 }
 .about-sidebar dl { margin: 0; }
 .about-sidebar dt {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--mint);
   margin-bottom: 6px;
   font-weight: 500;
@@ -518,7 +518,7 @@ h2.credit-band-heading {
 }
 .credit-card .attribution span {
   color: rgba(199,224,208,0.7);
-  font-size: 13px;
+  font-size: 14px;
 }
 .credit-band blockquote {
   margin: 0;
@@ -616,7 +616,7 @@ h2.credit-band-heading {
   font-family: inherit;
 }
 .snapshot-meta {
-  font-size: 13px;
+  font-size: 14px;
   color: #E2F1E9;
   margin-bottom: 20px;
   font-weight: 400;
@@ -666,7 +666,7 @@ h2.credit-band-heading {
   display: inline-block;
   background: var(--mint);
   color: var(--teal-deep);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   padding: 6px 12px;
   border-radius: 100px;
@@ -701,7 +701,7 @@ h2.credit-band-heading {
   gap: 40px;
 }
 .cs-fact dt {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--teal);
   margin-bottom: 8px;
@@ -786,7 +786,7 @@ h2.credit-band-heading {
   border-radius: 0 4px 4px 0;
 }
 .cs-kp-level {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--teal);
   letter-spacing: 0.02em;
@@ -1205,7 +1205,7 @@ h2.credit-band-heading {
 }
 .status-text {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.15em;
   color: var(--grey-body);
   text-transform: uppercase;
@@ -1235,7 +1235,7 @@ h2.credit-band-heading {
 }
 .preview-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.2em;
   color: var(--teal);
   margin-bottom: 12px;
@@ -1270,7 +1270,7 @@ h2.credit-band-heading {
 }
 .project-cta-link {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--teal-deep);
@@ -1296,7 +1296,7 @@ h2.credit-band-heading {
 }
 .project-section h4 {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.15em;
   color: var(--teal);
   text-transform: uppercase;
@@ -1360,7 +1360,7 @@ h2.credit-band-heading {
 .journal-entry-date {
   display: block;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 14px;
   color: var(--teal);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1416,7 +1416,7 @@ h2.credit-band-heading {
 }
 .journal-filter:hover { background: rgba(61,107,122,0.08); }
 .journal-filter[aria-pressed="true"] { color: #fff; background: var(--teal-deep); border-color: var(--teal-deep); }
-.journal-count { font-size: 13px; color: var(--grey-body); margin: 0; }
+.journal-count { font-size: 14px; color: var(--grey-body); margin: 0; }
 .journal-empty { font-size: 15px; color: var(--grey-body); margin-bottom: 24px; }
 .journal-entry[hidden] { display: none; }
 .journal-entry > summary {
@@ -1449,7 +1449,7 @@ h2.credit-band-heading {
 }
 .journal-entry-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .journal-tag {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1;
   padding: 6px 10px;
   color: var(--teal-deep);
@@ -1457,7 +1457,7 @@ h2.credit-band-heading {
   border-radius: 999px;
 }
 .journal-entry-body { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(0,0,0,0.08); }
-.journal-entry-body p.journal-entry-link { margin-top: 18px; font-size: 13px; }
+.journal-entry-body p.journal-entry-link { margin-top: 18px; font-size: 14px; }
 .journal-entry-body p.journal-entry-link a { color: var(--teal-deep); text-decoration: underline; text-underline-offset: 2px; }
 .journal-entry[open] > summary .journal-entry-summary { display: none; }
 
