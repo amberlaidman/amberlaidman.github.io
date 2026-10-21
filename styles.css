@@ -640,6 +640,8 @@ h2.credit-band-heading {
   border-radius: 0 4px 4px 0;
   margin-bottom: 20px;
   line-height: 1.4;
+  display: flex;
+  align-items: center;
 }
 .snapshot-body {
   font-size: 14px;
