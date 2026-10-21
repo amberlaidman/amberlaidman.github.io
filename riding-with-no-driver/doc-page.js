@@ -167,7 +167,7 @@
         <style id="vars"></style>
         <div class="sheet" data-screen-label="Document">
           <table class="frame" role="presentation">
-            <thead><tr><th><div class="hdr-space"><slot name="header"></slot></div></th></tr></thead>
+            <thead><tr><td><div class="hdr-space"><slot name="header"></slot></div></td></tr></thead>
             <tbody><tr><td class="body"><slot></slot></td></tr></tbody>
             <tfoot><tr><td><div class="ftr-space"><slot name="footer"></slot></div></td></tr></tfoot>
           </table>

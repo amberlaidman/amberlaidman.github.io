@@ -3,7 +3,7 @@
 <style>
 /* Layout: one column dashboard; header with media switcher and stripe-to-shelf rule, sub-tabs, year chips, then cards in a 2-col grid that stacks on phones. */
 :root{
-  --bg:#F1F4F4; --card:#FFFFFF; --ink:#1E2B2E; --muted:#56666A; --title:#1F6B6E; --accent:#B5473A;
+  --bg:#F1F4F4; --card:#FFFFFF; --ink:#1E2B2E; --muted:#56666A; --title:#1F6B6E; --accent:#B5473A; --accent-strong:#A63E32;
   --bar:#1F6B6E; --btn:#1F6B6E; --btn-ink:#FFFFFF; --btn2:#DFE7E7; --line:#D5DFDF; --hatch:#AEBDBD;
   --s1:#1F6B6E; --s2:#6FA8A8; --s3:#E0715F; --s4:#F4A99A; --tv:#1F6B6E; --vinyl:#1E2B2E; --groove:#56666A; --label2:#E0715F; --foilA:#CBD5D5; --foilB:#DAE2E2;
   --cd:conic-gradient(from 20deg,#C9D3DA,#F3F5F6,#CFE0EE,#F1D7E3,#E9EFC9,#C9D3DA); --cd-edge:#9AAAB2;
@@ -11,13 +11,13 @@
   --display:'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', sans-serif; --body:'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0F1C1E; --card:#182A2D; --ink:#E9F0EF; --muted:#9FB2B3; --title:#F4A99A; --accent:#F08C7A;
+  --bg:#0F1C1E; --card:#182A2D; --ink:#E9F0EF; --muted:#9FB2B3; --title:#F4A99A; --accent:#F08C7A; --accent-strong:#F08C7A;
   --bar:#5FC1BD; --btn:#5FC1BD; --btn-ink:#0F1C1E; --btn2:#233A3D; --line:#2A4245; --hatch:#4A6367;
   --s1:#2F8C8C; --s2:#5FC1BD; --s3:#F08C7A; --s4:#F7C3B8; --tv:#5FC1BD; --vinyl:#06100F; --groove:#3C5558; --label2:#F08C7A; --foilA:#26393C; --foilB:#2E4548;
   --cd:conic-gradient(from 20deg,#8FA3AD,#DCE3E6,#9FC2DA,#E2B9CB,#CBD7A2,#8FA3AD); --cd-edge:#6E858C;
   --warn-ink:#F5C04A; --warn-bg:#3A3010; --ok-ink:#8FD3A4; --ok-bg:#16352A; --focus:#F4A99A; color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#0F1C1E; --card:#182A2D; --ink:#E9F0EF; --muted:#9FB2B3; --title:#F4A99A; --accent:#F08C7A;
+  --bg:#0F1C1E; --card:#182A2D; --ink:#E9F0EF; --muted:#9FB2B3; --title:#F4A99A; --accent:#F08C7A; --accent-strong:#F08C7A;
   --bar:#5FC1BD; --btn:#5FC1BD; --btn-ink:#0F1C1E; --btn2:#233A3D; --line:#2A4245; --hatch:#4A6367;
   --s1:#2F8C8C; --s2:#5FC1BD; --s3:#F08C7A; --s4:#F7C3B8; --tv:#5FC1BD; --vinyl:#06100F; --groove:#3C5558; --label2:#F08C7A; --foilA:#26393C; --foilB:#2E4548;
   --cd:conic-gradient(from 20deg,#8FA3AD,#DCE3E6,#9FC2DA,#E2B9CB,#CBD7A2,#8FA3AD); --cd-edge:#6E858C;
@@ -99,6 +99,7 @@ details.dnf[open] summary::before{content:"\25BE"}
 #main .tiles .tile:nth-child(1){background:var(--btn);color:var(--btn-ink)}
 #main .tiles .tile:nth-child(1) .k,#main .tiles .tile:nth-child(1) .n{color:inherit}
 #main .tiles .tile:nth-child(3){background:var(--btn2)}
+#main .tiles .tile:nth-child(3) .k{color:var(--accent-strong)}
 #main[data-media="books"] .tile:nth-child(1){border-radius:4px 22px 22px 4px}
 #main[data-media="books"] .tile:nth-child(2){border-radius:22px 22px 6px 6px}
 #main[data-media="books"] .tile:nth-child(4){border-radius:6px 6px 0 0;padding-bottom:30px;clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 14px),0 100%)}
