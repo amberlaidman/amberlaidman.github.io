@@ -391,7 +391,7 @@ h2.credit-band-heading {
 }
 .work-info p {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
   max-width: 52ch;
 }
@@ -757,7 +757,7 @@ h2.credit-band-heading {
   animation: fadeIn 300ms ease;
 }
 .cs-tab-panel p {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.7;
   margin: 0 0 20px 0;
   max-width: 52ch;
@@ -1219,7 +1219,7 @@ h2.credit-band-heading {
   margin-bottom: 16px;
 }
 .project-description {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.55;
   color: var(--grey-body);
   max-width: 52ch;
