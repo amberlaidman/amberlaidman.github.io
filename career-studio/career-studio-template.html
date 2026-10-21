@@ -1541,7 +1541,7 @@ label{font-weight:700;font-size:.92rem}
       'Reply with only JSON: {"title": string, "company": the short name people usually use for the company (for example an acronym it goes by), or "", "summary": string (one or two sentences on what the role is), "asks": [{"ask": string, "storyId": string or null, "why": string, "gap": string}], "mission": string}'
     ].join("\n\n");
   }
-  let rolesFocus = null, ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }, jdOpen = false, roleCtl = null, roleOpen = null, roleConfirm = null, roleEditMission = null;
+  let roleEditName = null, rolesFocus = null, ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }, jdOpen = false, roleCtl = null, roleOpen = null, roleConfirm = null, roleEditMission = null;
   async function analyzePosting(text, statusEl){
     roleCtl?.abort(); roleCtl = new AbortController();
     const r = await sample.json(rolePrompt(text), { tools: makeTools(statusEl), signal: roleCtl.signal });
@@ -1587,7 +1587,7 @@ label{font-weight:700;font-size:.92rem}
         finally { go.disabled = !sample; stop.hidden = true; status.hidden = true; }
       });
       box.append(
-        el("div",{class:"field"},[ el("label",{for:"role-paste"}, "Job description"), el("span",{class:"small muted", id:"role-paste-hint"}, "Paste the full posting, including the company name if it's listed. Claude checks which of your stories fit what it asks for."), ta ]),
+        el("div",{class:"field"},[ el("label",{for:"role-paste"}, "Job description"), el("span",{class:"small muted", id:"role-paste-hint"}, "Paste the full posting, including the company name if it's listed. Claude checks which of your stories fit what it asks for." + (S.stories.length < 3 ? " This works best once you have three or more stories in your story bank." : "")), ta ]),
         el("div",{class:"row"},[go, stop, cancel]), status, err,
         !sample ? el("p",{class:"small muted", style:"margin:0"}, "Claude isn't available in this view, so job descriptions can't be checked here.") : null
       );
@@ -1632,7 +1632,11 @@ label{font-weight:700;font-size:.92rem}
   function openJD(){ showTab("practice"); jdOpen = true; renderJD(); $("role-paste")?.focus(); }
   /* ----- Roles tab: the saved list ----- */
   function renderRoles(){
-    const root = $("roles-body"); if (!root) return; root.replaceChildren();
+    const root = $("roles-body"); if (!root) return;
+    // Keep the cursor where it was when the list redraws (for example when saved data comes back).
+    const keep = root.contains(document.activeElement) && document.activeElement.id ? document.activeElement.id : null;
+    if (keep && !rolesFocus) rolesFocus = keep;
+    root.replaceChildren();
     root.append(el("p",{class:"small muted", style:"margin:0"}, "These are the job descriptions you've saved, with the stories from your bank that fit what each one asks for, so you can find where you have proof and where you may want a new story."));
     if (!S.rolesLoaded){ root.append(el("div",{class:"empty"},[ el("strong",{},"Loading your roles…") ])); return; }
     const addBtn = el("button",{type:"button", id:"role-add-btn", class:"ghost", style:"justify-self:start", onclick:openJD}, "Add a job description");
@@ -1644,11 +1648,29 @@ label{font-weight:700;font-size:.92rem}
       d.open = roleOpen === r.id;
       // Opening one role closes the one that was open, so the list stays short.
       d.addEventListener("toggle", () => {
+        if (!d.isConnected) return; // a redraw already replaced this row
         if (d.open){ roleOpen = r.id; for (const o of root.querySelectorAll("details.role-fold[open]")) if (o !== d) o.open = false; }
         else if (roleOpen === r.id) roleOpen = null;
       });
       const name = roleShort(r);
       const inner = el("div",{style:"display:grid;gap:12px;margin-top:8px"});
+      if (roleEditName === r.id){
+        const tid = "rt-" + r.id, cid = "rc-" + r.id;
+        const tIn = el("input",{type:"text", id:tid}); tIn.value = r.title || "";
+        const cIn = el("input",{type:"text", id:cid}); cIn.value = r.company || "";
+        const emsg = el("p",{class:"small", role:"status", style:"margin:0"});
+        const es = el("button",{type:"button", class:"primary"}, "Save");
+        const ec = el("button",{type:"button", class:"ghost", onclick:() => { roleEditName = null; rolesFocus = "rn-" + r.id; renderRoles(); }}, "Cancel");
+        es.addEventListener("click", async () => {
+          const t = tIn.value.trim(); if (!t){ emsg.textContent = "Add a role title first."; tIn.focus(); return; }
+          es.disabled = true;
+          try { await db.doc("roles/" + r.id).update({ title:t, company:cIn.value.trim(), updatedAt:new Date().toISOString() }); roleEditName = null; rolesFocus = "rn-" + r.id; $("roles-live").textContent = "Title and company saved."; renderRoles(); }
+          catch { es.disabled = false; emsg.textContent = "Couldn't save. Select Save again."; }
+        });
+        inner.append(el("div",{style:"display:grid;gap:10px"},[ el("div",{class:"field"},[ el("label",{for:tid}, "Role title"), tIn ]), el("div",{class:"field"},[ el("label",{for:cid}, "Company"), cIn ]), el("div",{class:"row"},[es, ec]), emsg ]));
+      } else if (db){
+        inner.append(el("button",{type:"button", class:"linkbtn", id:"rn-" + r.id, style:"justify-self:start;padding-left:0", "aria-label":`Edit title and company for ${name}`, onclick:() => { roleEditName = r.id; renderRoles(); $("rt-" + r.id)?.focus(); }}, "Edit title and company"));
+      }
       if (r.summary) inner.append(el("p",{style:"margin:0"}, r.summary));
       const co = companyFor(r);
       inner.append(el("div",{class:"row"},[
