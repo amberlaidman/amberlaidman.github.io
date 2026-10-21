@@ -393,7 +393,7 @@ h2.credit-band-heading {
   margin: 0;
   font-size: 16px;
   line-height: 1.5;
-  max-width: 620px;
+  max-width: 52ch;
 }
 .work-tag {
   font-size: 12px;
@@ -760,6 +760,7 @@ h2.credit-band-heading {
   font-size: 18px;
   line-height: 1.7;
   margin: 0 0 20px 0;
+  max-width: 52ch;
 }
 .cs-tab-panel p:last-child { margin-bottom: 0; }
 
@@ -818,7 +819,7 @@ h2.credit-band-heading {
   font-size: 18px;
   line-height: 1.55;
   margin: 0 0 40px 0;
-  max-width: 680px;
+  max-width: 54ch;
   color: var(--grey-body);
 }
 
@@ -1221,7 +1222,7 @@ h2.credit-band-heading {
   font-size: 17px;
   line-height: 1.55;
   color: var(--grey-body);
-  max-width: 720px;
+  max-width: 52ch;
 }
 
 /* Featured preview area */
