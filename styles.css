@@ -1470,3 +1470,30 @@ h2.credit-band-heading {
 @media (max-width: 768px) {
   .footer-links a::before { inset: -2px -6px; }
 }
+
+/* ============ HEADING FONT + HERO SPRIG ============ */
+@font-face {
+  font-family: 'Fraunces';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/fraunces-latin-500-normal.woff2') format('woff2');
+}
+.hero h1, .page-header h1, .lab-header h1, .cs-hero h1, .section-title, .section-title-alt {
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.hero { position: relative; }
+.hero-inner { position: relative; }
+.hero-sprig {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: min(60vh, 420px);
+  width: auto;
+  pointer-events: none;
+}
+@media (min-width: 1101px) { .hero h1 { max-width: calc(100% - 260px); } }
+@media (max-width: 1100px) { .hero-inner { padding-top: 96px; } .hero-sprig { height: 96px; top: 0; right: 0; transform: none; } }
