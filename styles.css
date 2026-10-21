@@ -606,6 +606,15 @@ h2.credit-band-heading {
   flex-direction: column;
   justify-content: flex-start;
 }
+/* Line up the title, dates, result box and paragraph across the three cards */
+@supports (grid-template-rows: subgrid) {
+  .snapshot-card {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+  }
+}
 .snapshot-title {
   font-size: 18px;
   font-weight: 500;
