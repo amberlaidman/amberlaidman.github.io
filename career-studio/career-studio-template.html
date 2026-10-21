@@ -221,6 +221,9 @@ label{font-weight:700;font-size:.92rem}
       <div class="panel" id="q-panel">
         <h2 style="font-size:1.05rem">Get a question</h2>
         <div class="field"><label for="company-select">Practice for</label><select id="company-select"><option value="">General practice</option></select><span class="small muted" id="company-note" hidden></span></div>
+        <button type="button" class="linkbtn" id="jd-btn" aria-expanded="false" aria-controls="jd-box" style="justify-self:start;margin-top:-8px;padding-left:0">Add a job description</button>
+        <div id="jd-box" style="display:grid;gap:12px;border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--bg)" hidden></div>
+        <p class="sr-only" id="jd-live" role="status"></p>
         <div class="status small" id="pick-status" hidden><span class="dot" aria-hidden="true"></span><span id="pick-status-text">Thinking…</span></div>
         <div class="row">
           <button class="primary" id="pick-btn">Pick my next question</button>
@@ -278,7 +281,8 @@ label{font-weight:700;font-size:.92rem}
         <p class="small" id="fb-error" role="alert" hidden></p>
       </div>
 
-      <div class="panel" id="fb-panel" hidden aria-live="polite"></div>
+      <div class="panel" id="fb-panel" hidden></div>
+      <p class="sr-only" id="fb-live" role="status"></p>
     </section>
 
     <!-- STORIES -->
@@ -325,6 +329,7 @@ label{font-weight:700;font-size:.92rem}
     <!-- ROLES -->
     <section role="tabpanel" id="roles" aria-labelledby="sub-roles" hidden>
       <div id="roles-body" style="display:grid;gap:18px"></div>
+      <p class="sr-only" id="roles-live" role="status"></p>
     </section>
 
     <!-- PROGRESS -->
@@ -353,7 +358,8 @@ label{font-weight:700;font-size:.92rem}
         <div class="status small" id="memo-status" hidden><span class="dot" aria-hidden="true"></span><span>Reading your memo…</span></div>
         <p class="small" id="memo-error" role="alert" hidden></p>
       </div>
-      <div class="panel" id="memo-fb" hidden aria-live="polite"></div>
+      <div class="panel" id="memo-fb" hidden></div>
+      <p class="sr-only" id="memo-live" role="status"></p>
     </section>
 
     <!-- MEMO PROGRESS -->
@@ -888,9 +894,9 @@ label{font-weight:700;font-size:.92rem}
   });
 
   function scoreRows(scores, rubric = RUBRIC){
-    return el("div", {class:"score-list"}, rubric.map(c => {
+    return el("div", {class:"score-list", role:"list"}, rubric.map(c => {
       const v = scores?.[c.key]; if (!v) return null;
-      return el("div", {class:"score"}, [ el("span", {class:`pill p${v.score}`, "aria-label":`${v.score} out of 3`}, `${v.score}/3`), el("b", {}, c.label), el("span", {class:"small"}, v.reason) ]);
+      return el("div", {class:"score", role:"listitem"}, [ el("span", {class:`pill p${v.score}`, role:"img", "aria-label":`${v.score} out of 3`}, `${v.score}/3`), el("b", {}, c.label), el("span", {class:"small"}, v.reason) ]);
     }));
   }
   function listCallout(cls, title, items, intro){
@@ -939,8 +945,14 @@ label{font-weight:700;font-size:.92rem}
     return f;
   }
   function renderFeedback(s, savedState){
-    const p = $("fb-panel"); p.hidden = false; p.replaceChildren();
+    const p = $("fb-panel"); const hadFocus = p.contains(document.activeElement) || document.activeElement === document.body; p.hidden = false; p.replaceChildren();
     const o = overallOf(s); const st = S.stories.find(x => x.id === s.storyId);
+    const fbHead = el("h2",{class:"sr-only", tabindex:"-1", id:"fb-head"}, "Feedback");
+    p.append(fbHead);
+    if (savedState !== false && hadFocus) requestAnimationFrame(() => $("fb-head")?.focus());
+    // Screen readers hear one short line, and the cursor moves to the top of the feedback, instead of the whole panel being read twice.
+    if (savedState === false){ $("fb-live").textContent = `Feedback ready, average ${o ? o.toFixed(1) : "not scored"} out of 3.`; requestAnimationFrame(() => $("fb-head")?.focus()); }
+    else if (savedState === "failed") $("fb-live").textContent = "Couldn't save this session. Your feedback is still shown.";
     p.append(
       el("div", {class:"row", style:"justify-content:space-between"}, [
         el("div", {class:"overall"}, [ el("span",{class:"big"}, o ? o.toFixed(1) : "–"), el("span",{class:"muted small"},"average out of 3") ]),
@@ -1071,7 +1083,7 @@ label{font-weight:700;font-size:.92rem}
         res.replaceChildren(
           followUp.nextStep ? el("div",{class:"callout next"},[el("strong",{},"Try next"), el("span",{}, followUp.nextStep)]) : null,
           notInBankBlock({ notInBank: followUp.notInBank, storyId: s.storyId }),
-          el("div",{class:"score-list"}, FU.map(([k,label]) => el("div",{class:"score"},[ el("span",{class:`pill p${sc[k].score}`, "aria-label":`${sc[k].score} out of 3`}, `${sc[k].score}/3`), el("b",{}, label), el("span",{class:"small"}, sc[k].reason) ])))
+          el("div",{class:"score-list", role:"list"}, FU.map(([k,label]) => el("div",{class:"score", role:"listitem"},[ el("span",{class:`pill p${sc[k].score}`, role:"img", "aria-label":`${sc[k].score} out of 3`}, `${sc[k].score}/3`), el("b",{}, label), el("span",{class:"small"}, sc[k].reason) ])))
         );
         const all = [...chain, followUp]; latest = all;
         if (db && s.id) { try { await db.doc("sessions/" + s.id).update(all.length === 1 ? { followUp } : { followUp: all[0], followUps: all }); } catch {} }
@@ -1529,7 +1541,7 @@ label{font-weight:700;font-size:.92rem}
       'Reply with only JSON: {"title": string, "company": the short name people usually use for the company (for example an acronym it goes by), or "", "summary": string (one or two sentences on what the role is), "asks": [{"ask": string, "storyId": string or null, "why": string, "gap": string}], "mission": string}'
     ].join("\n\n");
   }
-  let ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }, roleAddOpen = false, roleCtl = null, roleOpen = null, roleConfirm = null, roleEditMission = null;
+  let rolesFocus = null, ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }, jdOpen = false, roleCtl = null, roleOpen = null, roleConfirm = null, roleEditMission = null;
   async function analyzePosting(text, statusEl){
     roleCtl?.abort(); roleCtl = new AbortController();
     const r = await sample.json(rolePrompt(text), { tools: makeTools(statusEl), signal: roleCtl.signal });
@@ -1537,92 +1549,113 @@ label{font-weight:700;font-size:.92rem}
     return { title:r.title.trim() || "Untitled role", company:String(r.company || "").trim(), summary:String(r.summary || "").trim(), asks:cleanAsks(r.asks), mission:String(r.mission || "").trim() };
   }
   function askRows(asks){
-    return el("div",{style:"display:grid;gap:10px"}, asks.map(a => {
+    // A list, so screen readers say how many requirements there are and read one at a time.
+    return el("ul",{style:"display:grid;gap:10px;margin:0;padding:0;list-style:none"}, asks.map(a => {
       const st = a.storyId ? S.stories.find(x => x.id === a.storyId) : null;
-      return el("div",{style:"display:grid;gap:4px;border-top:1px solid var(--line);padding-top:10px"},[
+      return el("li",{style:"display:grid;gap:4px;border-top:1px solid var(--line);padding-top:10px"},[
         el("b",{}, a.ask),
-        st ? el("span",{class:"small"},[ "Best story: ", el("button",{type:"button", class:"linkbtn", style:"padding:10px 0;color:var(--accent)", onclick:() => openStoryById(st.id)}, st.title) ]) : el("span",{class:"small"}, "No story yet."),
+        st ? el("span",{class:"small"},[ "Best story: ", el("button",{type:"button", class:"linkbtn", style:"padding:10px 0;color:var(--accent);text-align:left", "aria-label":`Open story: ${st.title}`, onclick:() => openStoryById(st.id)}, st.title) ]) : el("span",{class:"small"}, "No story yet."),
         st && a.why ? el("span",{class:"small muted"}, a.why) : null,
         !st && a.gap ? el("span",{class:"small muted"}, a.gap) : null,
-        !st && db ? el("button",{type:"button", class:"ghost", style:"justify-self:start", onclick:() => { showTab("stories"); $("add-story").click(); }}, "Write a story") : null
+        !st && db ? el("button",{type:"button", class:"ghost", style:"justify-self:start", "aria-label":`Write a story for: ${a.ask}`, onclick:() => { showTab("stories"); $("add-story").click(); }}, "Write a story") : null
       ]);
     }));
   }
-  function renderRoles(){
-    const root = $("roles-body"); if (!root) return; root.replaceChildren();
-    root.append(el("p",{class:"small muted", style:"margin:0"}, "Paste a job posting to find out which of your stories fit what it asks for, then practice for that role. The matches come from your own story bank, so they show where you have proof and where you may want a new story."));
-    // Add a role
-    const add = el("div",{class:"panel"},[ el("h2",{}, "Add a role") ]);
+  /* ----- Add a job description (lives on the Practice tab) ----- */
+  function renderJD(){
+    const box = $("jd-box"), btn = $("jd-btn"); if (!box) return;
+    const open = jdOpen || !!ROLE_DRAFT.preview;
+    box.hidden = !open; btn.setAttribute("aria-expanded", String(open)); box.replaceChildren();
+    if (!open) return;
+    const closeJD = () => { roleCtl?.abort(); ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; jdOpen = false; renderJD(); btn.focus(); };
     if (!ROLE_DRAFT.preview){
       const ta = el("textarea",{id:"role-paste", rows:"6", "aria-describedby":"role-paste-hint"}); ta.value = ROLE_DRAFT.text;
       ta.addEventListener("input", () => { ROLE_DRAFT.text = ta.value; });
-      const status = el("div",{class:"status small", hidden:""},[ el("span",{class:"dot","aria-hidden":"true"}), el("span",{id:"role-status-text"},"Reading the posting…") ]);
+      const status = el("div",{class:"status small", role:"status", hidden:""},[ el("span",{class:"dot","aria-hidden":"true"}), el("span",{id:"role-status-text"},"Reading the posting…") ]);
       const err = el("p",{class:"small", role:"alert", style:"margin:0"}, ROLE_DRAFT.error || "");
       const go = el("button",{type:"button", class:"primary"}, "Check my fit");
       const stop = el("button",{type:"button", class:"ghost", hidden:""}, "Stop");
+      const cancel = el("button",{type:"button", class:"ghost", onclick:closeJD}, "Cancel");
       stop.addEventListener("click", () => roleCtl?.abort());
       if (!sample) go.disabled = true;
       go.addEventListener("click", async () => {
         const text = ta.value.trim(); ROLE_DRAFT.error = ""; err.textContent = "";
-        if (text.split(/\s+/).length < 40){ err.textContent = "Paste the full posting first, so Claude has enough to work from."; ta.focus(); return; }
+        if (text.split(/\s+/).length < 40){ err.textContent = "Paste the full job description first, so Claude has enough to work from."; ta.focus(); return; }
         go.disabled = true; stop.hidden = false; status.hidden = false;
-        try { ROLE_DRAFT.preview = await analyzePosting(text, "role-status-text"); ROLE_DRAFT.text = text; renderRoles(); $("role-title")?.focus(); }
+        try { ROLE_DRAFT.preview = await analyzePosting(text, "role-status-text"); ROLE_DRAFT.text = text; renderJD(); $("jd-live").textContent = "Summary ready. Check it before you save."; $("role-title")?.focus(); }
         catch (e) { if (e?.code !== "cancelled"){ if (fatal(e?.code)) disableAI(errCopy(e.code)); err.textContent = errCopy(e?.code); } }
         finally { go.disabled = !sample; stop.hidden = true; status.hidden = true; }
       });
-      add.append(
-        el("div",{class:"field"},[ el("label",{for:"role-paste"}, "Job posting"), el("span",{class:"small muted", id:"role-paste-hint"}, "Paste the full posting, including the company name if it's listed."), ta ]),
-        el("div",{class:"row"},[go, stop, S.roles.length ? el("button",{type:"button", class:"ghost", onclick:() => { roleAddOpen = false; ROLE_DRAFT.error = ""; renderRoles(); $("role-add-btn")?.focus(); }}, "Cancel") : null]), status, err,
-        !sample ? el("p",{class:"small muted", style:"margin:0"}, "Claude isn't available in this view, so roles can't be checked here.") : null
+      box.append(
+        el("div",{class:"field"},[ el("label",{for:"role-paste"}, "Job description"), el("span",{class:"small muted", id:"role-paste-hint"}, "Paste the full posting, including the company name if it's listed. Claude checks which of your stories fit what it asks for."), ta ]),
+        el("div",{class:"row"},[go, stop, cancel]), status, err,
+        !sample ? el("p",{class:"small muted", style:"margin:0"}, "Claude isn't available in this view, so job descriptions can't be checked here.") : null
       );
-    } else {
-      const p = ROLE_DRAFT.preview;
-      const tIn = el("input",{type:"text", id:"role-title"}); tIn.value = p.title;
-      const cIn = el("input",{type:"text", id:"role-company"}); cIn.value = p.company;
-      const msg = el("p",{class:"small", role:"status", style:"margin:0"});
-      const save = el("button",{type:"button", class:"primary"}, "Save role");
-      const back = el("button",{type:"button", class:"ghost"}, "Start over");
-      back.addEventListener("click", () => { ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; renderRoles(); $("role-paste")?.focus(); });
-      save.addEventListener("click", async () => {
-        if (!db){ msg.textContent = "Storage isn't available in this view."; return; }
-        save.disabled = back.disabled = true; msg.textContent = "Saving…";
-        const id = "r-" + Date.now().toString(36), now = new Date().toISOString();
-        try {
-          await db.doc("roles/" + id).set({ title: tIn.value.trim() || p.title, company: cIn.value.trim(), summary:p.summary, asks:p.asks, mission:p.mission, posting:ROLE_DRAFT.text.slice(0, 20000), at:now, updatedAt:now });
-          ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; roleAddOpen = false; roleOpen = id; renderRoles();
-        } catch { save.disabled = back.disabled = false; msg.textContent = "Couldn't save. Check your connection and select Save role again."; }
-      });
-      add.append(
-        el("span",{class:"small muted"}, "Check this summary before you save it, and fix the title or company if Claude got them wrong."),
-        el("div",{class:"field"},[ el("label",{for:"role-title"}, "Role title"), tIn ]),
-        el("div",{class:"field"},[ el("label",{for:"role-company"}, "Company"), cIn ]),
-        p.summary ? el("p",{style:"margin:0"}, p.summary) : null,
-        el("h3",{}, "What it asks for, and your best story"),
-        askRows(p.asks),
-        p.mission ? el("div",{class:"callout next"},[ el("strong",{}, "Mission and values from the posting"), el("span",{class:"small"}, p.mission) ]) : null,
-        el("div",{class:"row"},[save, back]), msg
-      );
+      return;
     }
-    // The add box stays at the top. Once roles are saved it folds into one button, so the list stays short.
-    if (!S.rolesLoaded){ root.append(add, el("div",{class:"empty"},[ el("strong",{},"Loading your roles…") ])); return; }
-    if (!S.roles.length || ROLE_DRAFT.preview || roleAddOpen || ROLE_DRAFT.text) root.append(add);
-    else root.append(el("button",{type:"button", id:"role-add-btn", class:"primary", style:"justify-self:start", onclick:() => { roleAddOpen = true; renderRoles(); $("role-paste")?.focus(); }}, "Add a role"));
-    if (!S.roles.length) return;
-    root.append(el("h2",{style:"font-size:1.05rem;margin:0"}, `Your roles (${S.roles.length})`));
+    const p = ROLE_DRAFT.preview;
+    const tIn = el("input",{type:"text", id:"role-title"}); tIn.value = p.title;
+    const cIn = el("input",{type:"text", id:"role-company"}); cIn.value = p.company;
+    const msg = el("p",{class:"small", role:"status", style:"margin:0"});
+    const save = el("button",{type:"button", class:"primary"}, "Save role");
+    const back = el("button",{type:"button", class:"ghost"}, "Start over");
+    const cancel = el("button",{type:"button", class:"ghost", onclick:closeJD}, "Cancel");
+    back.addEventListener("click", () => { ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; jdOpen = true; renderJD(); $("role-paste")?.focus(); });
+    save.addEventListener("click", async () => {
+      if (!db){ msg.textContent = "Storage isn't available in this view."; return; }
+      save.disabled = back.disabled = cancel.disabled = true; msg.textContent = "Saving…";
+      const id = "r-" + Date.now().toString(36), now = new Date().toISOString();
+      const role = { title: tIn.value.trim() || p.title, company: cIn.value.trim(), summary:p.summary, asks:p.asks, mission:p.mission, posting:ROLE_DRAFT.text.slice(0, 20000), at:now, updatedAt:now };
+      S.pendingRole = "role:" + id; S.company = S.pendingRole; store.set("company", S.company);
+      try {
+        await db.doc("roles/" + id).set(role);
+        ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; jdOpen = false; roleOpen = id; renderJD(); renderCompanySelect(); renderBank();
+        $("jd-live").textContent = `Saved. You're now practicing for ${roleShort(role)}.`;
+        $("pick-btn").focus();
+      } catch { S.pendingRole = null; save.disabled = back.disabled = cancel.disabled = false; msg.textContent = "Couldn't save. Check your connection and select Save role again."; }
+    });
+    box.append(
+      el("span",{class:"small muted"}, "Check this summary before you save it, and fix the title or company if Claude got them wrong."),
+      el("div",{class:"field"},[ el("label",{for:"role-title"}, "Role title"), tIn ]),
+      el("div",{class:"field"},[ el("label",{for:"role-company"}, "Company"), cIn ]),
+      p.summary ? el("p",{style:"margin:0"}, p.summary) : null,
+      el("h3",{}, "What it asks for, and your best story"),
+      askRows(p.asks),
+      p.mission ? el("div",{class:"callout next"},[ el("strong",{}, "Mission and values from the posting"), el("span",{class:"small"}, p.mission) ]) : null,
+      el("div",{class:"row"},[save, back, cancel]), msg
+    );
+  }
+  $("jd-btn").addEventListener("click", () => {
+    if (jdOpen || ROLE_DRAFT.preview){ roleCtl?.abort(); ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; jdOpen = false; renderJD(); return; }
+    jdOpen = true; renderJD(); $("role-paste")?.focus();
+  });
+  function openJD(){ showTab("practice"); jdOpen = true; renderJD(); $("role-paste")?.focus(); }
+  /* ----- Roles tab: the saved list ----- */
+  function renderRoles(){
+    const root = $("roles-body"); if (!root) return; root.replaceChildren();
+    root.append(el("p",{class:"small muted", style:"margin:0"}, "These are the job descriptions you've saved, with the stories from your bank that fit what each one asks for, so you can find where you have proof and where you may want a new story."));
+    if (!S.rolesLoaded){ root.append(el("div",{class:"empty"},[ el("strong",{},"Loading your roles…") ])); return; }
+    const addBtn = el("button",{type:"button", id:"role-add-btn", class:"ghost", style:"justify-self:start", onclick:openJD}, "Add a job description");
+    if (!S.roles.length){ root.append(el("div",{class:"empty"},[ el("strong",{},"No roles yet"), el("span",{},"Add a job description on the Practice tab to save your first one.") ]), addBtn); if (rolesFocus){ const id = rolesFocus; requestAnimationFrame(() => { $(id)?.focus(); rolesFocus = null; }); } return; }
+    root.append(addBtn, el("h2",{style:"font-size:1.05rem;margin:0"}, `Your roles (${S.roles.length})`));
     for (const r of S.roles){
       const asks = r.asks || [], missing = asks.filter(a => !a.storyId || !S.stories.some(st => st.id === a.storyId)).length;
-      const d = el("details",{class:"fold role-fold"},[ el("summary",{},[ el("span",{class:"role-sum"},[ el("span",{}, roleLabel(r)), el("span",{class:"small muted", style:"font-weight:400"}, `${asks.length} requirements, ${missing ? `${missing} without a story yet` : "a story for each"}`) ]) ]) ]);
+      const d = el("details",{class:"fold role-fold", "data-role":r.id},[ el("summary",{},[ el("span",{class:"role-sum"},[ el("span",{}, roleLabel(r)), el("span",{class:"small muted", style:"font-weight:400"}, `${asks.length} requirements, ${missing ? `${missing} without a story yet` : "a story for each"}`) ]) ]) ]);
       d.open = roleOpen === r.id;
-      d.addEventListener("toggle", () => { if (d.open) roleOpen = r.id; else if (roleOpen === r.id) roleOpen = null; });
+      // Opening one role closes the one that was open, so the list stays short.
+      d.addEventListener("toggle", () => {
+        if (d.open){ roleOpen = r.id; for (const o of root.querySelectorAll("details.role-fold[open]")) if (o !== d) o.open = false; }
+        else if (roleOpen === r.id) roleOpen = null;
+      });
+      const name = roleShort(r);
       const inner = el("div",{style:"display:grid;gap:12px;margin-top:8px"});
       if (r.summary) inner.append(el("p",{style:"margin:0"}, r.summary));
       const co = companyFor(r);
       inner.append(el("div",{class:"row"},[
-        el("button",{type:"button", class:"primary", onclick:() => { S.company = "role:" + r.id; store.set("company", S.company); renderCompanySelect(); renderBank(); showTab("practice"); }}, "Practice for this role"),
+        el("button",{type:"button", class:"primary", "aria-label":`Practice for ${name}`, onclick:() => { S.company = "role:" + r.id; store.set("company", S.company); renderCompanySelect(); renderBank(); showTab("practice"); $("pick-btn").focus(); }}, "Practice for this role"),
         co ? el("button",{type:"button", class:"linkbtn", onclick:() => { store.set("companyView", co.id); showTab("companies"); }}, `Open the ${co.name} profile`) : null
       ]));
-      inner.append(askRows(r.asks || []));
-      // mission and values (optional)
+      inner.append(askRows(asks));
       if (roleEditMission === r.id){
         const mid = "mission-" + r.id;
         const ta = el("textarea",{id:mid, rows:"4", "aria-describedby":mid + "-hint"}); ta.value = r.mission || "";
@@ -1632,18 +1665,17 @@ label{font-weight:700;font-size:.92rem}
         ms.addEventListener("click", async () => { ms.disabled = true; try { await db.doc("roles/" + r.id).update({ mission: ta.value.trim(), updatedAt:new Date().toISOString() }); roleEditMission = null; renderRoles(); } catch { ms.disabled = false; mmsg.textContent = "Couldn't save. Select Save again."; } });
         inner.append(el("div",{class:"field"},[ el("label",{for:mid}, "Mission and values"), el("span",{class:"small muted", id:mid + "-hint"}, "If you find the company's mission or values on its website, paste them here, and practice feedback for this role will use them."), ta, el("div",{class:"row"},[ms, mc]), mmsg ]));
       } else if (r.mission){
-        inner.append(el("div",{class:"callout next"},[ el("strong",{}, "Mission and values"), el("span",{class:"small", style:"white-space:pre-wrap"}, r.mission), el("button",{type:"button", class:"linkbtn", style:"justify-self:start", onclick:() => { roleEditMission = r.id; renderRoles(); $("mission-" + r.id)?.focus(); }}, "Edit mission and values") ]));
+        inner.append(el("div",{class:"callout next"},[ el("strong",{}, "Mission and values"), el("span",{class:"small", style:"white-space:pre-wrap"}, r.mission), el("button",{type:"button", class:"linkbtn", style:"justify-self:start", "aria-label":`Edit mission and values for ${name}`, onclick:() => { roleEditMission = r.id; renderRoles(); $("mission-" + r.id)?.focus(); }}, "Edit mission and values") ]));
       } else if (db){
-        inner.append(el("button",{type:"button", class:"linkbtn", style:"justify-self:start", onclick:() => { roleEditMission = r.id; renderRoles(); $("mission-" + r.id)?.focus(); }}, "Add mission or values (optional)"));
+        inner.append(el("button",{type:"button", class:"linkbtn", style:"justify-self:start", "aria-label":`Add mission or values for ${name} (optional)`, onclick:() => { roleEditMission = r.id; renderRoles(); $("mission-" + r.id)?.focus(); }}, "Add mission or values (optional)"));
       }
-      // refresh and delete
-      const status = el("div",{class:"status small", hidden:""},[ el("span",{class:"dot","aria-hidden":"true"}), el("span",{id:"role-re-" + r.id},"Checking your stories…") ]);
+      const status = el("div",{class:"status small", role:"status", hidden:""},[ el("span",{class:"dot","aria-hidden":"true"}), el("span",{id:"role-re-" + r.id},"Checking your stories…") ]);
       const rmsg = el("p",{class:"small", role:"status", style:"margin:0"});
-      const again = el("button",{type:"button", class:"ghost"}, "Check fit again");
+      const again = el("button",{type:"button", class:"ghost", "aria-label":`Check fit again: ${name}`}, "Check fit again");
       again.disabled = !sample || !r.posting;
       again.addEventListener("click", async () => {
         again.disabled = true; status.hidden = false; rmsg.textContent = "";
-        try { const p = await analyzePosting(r.posting, "role-re-" + r.id); await db.doc("roles/" + r.id).update({ asks:p.asks, updatedAt:new Date().toISOString() }); }
+        try { const p = await analyzePosting(r.posting, "role-re-" + r.id); await db.doc("roles/" + r.id).update({ asks:p.asks, updatedAt:new Date().toISOString() }); $("roles-live").textContent = `Fit updated for ${name}.`; }
         catch (e) { if (e?.code !== "cancelled"){ if (fatal(e?.code)) disableAI(errCopy(e.code)); rmsg.textContent = errCopy(e?.code); } }
         finally { again.disabled = !sample; status.hidden = true; }
       });
@@ -1651,13 +1683,14 @@ label{font-weight:700;font-size:.92rem}
       if (db){
         if (roleConfirm === r.id){
           actions.append(el("span",{class:"small"}, "Delete this role? This can't be undone."),
-            el("button",{type:"button", class:"primary", onclick:async () => { try { await db.doc("roles/" + r.id).delete(); if (S.company === "role:" + r.id){ S.company = ""; store.set("company",""); } roleConfirm = null; } catch { rmsg.textContent = "Couldn't delete. Try again."; } }}, "Delete"),
-            el("button",{type:"button", class:"ghost", onclick:() => { roleConfirm = null; renderRoles(); }}, "Cancel"));
-        } else actions.append(el("button",{type:"button", class:"linkbtn", onclick:() => { roleConfirm = r.id; renderRoles(); }}, "Delete role"));
+            el("button",{type:"button", class:"primary", id:"role-del-yes", onclick:async () => { try { await db.doc("roles/" + r.id).delete(); if (S.company === "role:" + r.id){ S.company = ""; store.set("company",""); } roleConfirm = null; if (roleOpen === r.id) roleOpen = null; $("roles-live").textContent = `Deleted ${name}.`; rolesFocus = "role-add-btn"; requestAnimationFrame(() => $("role-add-btn")?.focus()); } catch { rmsg.textContent = "Couldn't delete. Try again."; } }}, "Delete"),
+            el("button",{type:"button", class:"ghost", onclick:() => { roleConfirm = null; renderRoles(); document.querySelector(`[data-role="${CSS.escape(r.id)}"] .role-del`)?.focus(); }}, "Cancel"));
+        } else actions.append(el("button",{type:"button", class:"linkbtn role-del", "aria-label":`Delete role: ${name}`, onclick:() => { roleConfirm = r.id; renderRoles(); $("role-del-yes")?.focus(); }}, "Delete role"));
       }
       inner.append(el("span",{class:"small muted"}, `Added ${new Date(r.at).toLocaleDateString(undefined,{month:"short", day:"numeric"})}. Select Check fit again after you add or change stories.`), actions, status, rmsg);
       d.append(inner); root.append(d);
     }
+    if (rolesFocus){ const id = rolesFocus; requestAnimationFrame(() => { $(id)?.focus(); if (document.activeElement?.id === id) rolesFocus = null; }); }
   }
 
   /* ---------- companies ---------- */
@@ -1669,8 +1702,10 @@ label{font-weight:700;font-size:.92rem}
     sel.replaceChildren(el("option",{value:""},"General practice"));
     if (S.roles.length) sel.append(el("optgroup",{label:"Roles"}, S.roles.map(r => el("option",{value:"role:" + r.id}, roleShort(r)))));
     if (S.companies.length) sel.append(el("optgroup",{label:"Companies"}, S.companies.map(c => el("option",{value:c.id}, c.name))));
-    sel.value = [...sel.options].some(o => o.value === keep) ? keep : "";
-    S.company = sel.value;
+    const has = [...sel.options].some(o => o.value === keep);
+    sel.value = has ? keep : "";
+    if (has || keep !== S.pendingRole) S.company = sel.value;
+    if (has && keep === S.pendingRole) S.pendingRole = null;
     const c = companyOf(), r = roleOf();
     $("company-note").hidden = !c && !r;
     $("company-note").textContent = c ? `Questions and feedback will follow ${c.name}'s profile. Your scores still use your usual rubric.` : r ? `Questions and feedback will follow what this posting asks for. Your scores still use your usual rubric.` : "";
@@ -1827,8 +1862,12 @@ label{font-weight:700;font-size:.92rem}
     ];
   }
   function renderMemoFeedback(m, saved){
-    const p = $("memo-fb"); p.hidden = false; const o = memoAvg(m);
-    p.replaceChildren(
+    const p = $("memo-fb"); const hadFocus = p.contains(document.activeElement) || document.activeElement === document.body; p.hidden = false; const o = memoAvg(m);
+    const mHead = el("h2",{class:"sr-only", tabindex:"-1", id:"memo-head"}, "Memo feedback");
+    if (saved !== false && hadFocus) requestAnimationFrame(() => $("memo-head")?.focus());
+    if (saved === false){ $("memo-live").textContent = `Memo feedback ready, average ${o ? o.toFixed(1) : "not scored"} out of 3.`; requestAnimationFrame(() => $("memo-head")?.focus()); }
+    else if (saved === "failed") $("memo-live").textContent = "Couldn't save this memo. Your feedback is still shown.";
+    p.replaceChildren(mHead,
       el("div",{class:"row", style:"justify-content:space-between"},[ el("div",{class:"overall"},[ el("span",{class:"big"}, o ? o.toFixed(1) : "–"), el("span",{class:"muted small"},"average out of 3") ]),
         el("span",{class:"small muted"}, saved === true ? "Saved to your memo history" : saved === "failed" ? "Couldn't save this memo. Your feedback is still shown here." : db ? "Saving…" : "Not saved in this view") ]),
       el("span",{class:"small muted"},"3 is strong, 2 is partly there, and 1 is missing or weak."),
