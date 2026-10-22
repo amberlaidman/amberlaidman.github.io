@@ -486,7 +486,7 @@ label{font-weight:700;font-size:.92rem}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.3.1 · Updated October 22, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.3.2 · Updated October 22, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -2286,7 +2286,7 @@ label{font-weight:700;font-size:.92rem}
     const transcript = chat.turns.map(t => `${t.role === "user" ? "{{NAME}}" : (mode === "talk" ? "Coach" : "Other person")}: ${t.content}`).join("\n\n").slice(-40000);
     const prompt = mode === "talk" ? [
       "Summarize this coaching conversation for {{NAME}}'s records. Plain language, addressed to them as \"you\". Never present a guess as fact; label inferences [Inference].",
-      "Give: a short title (under 8 words), a summary of two or three sentences, any decision they made (or empty), and one to three concrete next steps that they agreed to or that clearly follow. Don't invent commitments they didn't make.",
+      "Give: a short title (under 8 words), a summary of two or three sentences, any decision they made (or empty), and one to three concrete next steps that they agreed to or that clearly follow. Don't invent commitments they didn't make. Don't list replying to the coach or continuing this conversation as a next step. If they haven't landed on anything yet, give one question for them to think about on their own instead.",
       `Conversation:\n${transcript}`,
       'Reply with only JSON: {"title": string, "summary": string, "decision": string, "nextSteps": [strings]}'
     ].join("\n\n") : [
