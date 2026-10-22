@@ -1053,6 +1053,8 @@ h2.credit-band-heading {
   gap: 20px;
 }
 .footer-links { display: flex; gap: 32px; align-items: center; }
+.footer-note-wrap { max-width: var(--grid-max); margin: 20px auto 0; }
+.footer-note { margin: 0; font-size: 14px; line-height: 1.5; color: var(--grey-body); max-width: 70ch; }
 .footer-links a { border-bottom: 1px solid transparent; padding-bottom: 2px; }
 .footer-links a:hover { border-bottom-color: currentColor; }
 
