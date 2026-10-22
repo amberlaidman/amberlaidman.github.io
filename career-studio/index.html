@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<script data-goatcounter="https://opensky.goatcounter.com/count"
+        async crossorigin="anonymous" src="https://gc.zgo.at/count.js"></script>
 <title>Career Studio Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,7 +217,7 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-si
             <div class="row step-actions"><button class="btn" type="button" id="copyBtn">Copy prompt</button><p class="copied" id="copyMsg" aria-live="polite"></p></div>
           </li>
           <li><b>Open a new regular chat</b> in Claude, attach the template file, and paste the prompt in.
-            <div class="row step-actions"><a class="btn ghost" href="https://claude.ai/new" target="_blank" rel="noopener">Open Claude ↗</a></div>
+            <div class="row step-actions"><a class="btn ghost" id="openClaude" href="https://claude.ai/new" target="_blank" rel="noopener">Open Claude ↗</a></div>
           </li>
           <li><b>Open your new page.</b> Claude sends you a link, and it's worth bookmarking since that's where you'll go every time.</li>
           <li><b>Allow Claude to help on the page.</b> The first time you ask for feedback, Claude asks for permission, so select <b>Allow</b>.</li>
@@ -362,6 +364,7 @@ Please help me troubleshoot this one step at a time, in simple words.</pre></div
     <section id="hview-privacy" role="tabpanel" aria-labelledby="htab-privacy" hidden>
       <p>Your privacy choices are in <a href="#step3" data-goto-step="step3">step 3 of the Guide</a>: Model Improvement, memory, and who can see your page. It's best to make them before you paste the prompt.</p>
       <p>The demo on this page keeps whatever you type in your own browser only. Nothing you type there is sent anywhere, and <b>Start over</b> clears it.</p>
+      <p>This guide counts visits and button clicks to see how it's used. It doesn't use cookies or collect personal details, and nothing is tracked inside your own Career Studio page.</p>
     </section>
     <section id="hview-sources" role="tabpanel" aria-labelledby="htab-sources" hidden>
       <ul class="sources">
@@ -513,6 +516,15 @@ Please help me troubleshoot this one step at a time, in simple words.</pre></div
     setTimeout(function(){var nav=document.querySelector("nav.tabs"),off=nav?nav.getBoundingClientRect().bottom:0,r=d.getBoundingClientRect();
       if(r.top<off||r.top>innerHeight*0.6)d.scrollIntoView({block:"start",behavior:"instant"});},60);
   },true);
+})();
+</script>
+<script>
+// Counts clicks on a few buttons, nothing else. No typed text or demo content is ever sent.
+(function(){
+  var names = {dlBtn:"download", dlLink:"open-file", copyBtn:"copy-prompt", openClaude:"open-claude", "tab-demo":"demo-tab", demoSample:"demo-sample", demoBlank:"demo-blank", copyHelp:"copy-help"};
+  function track(n){ try{ if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path:"career-studio-"+n, title:"Career Studio: "+n, event:true}); }catch(e){} }
+  document.addEventListener("click", function(e){ var t = e.target.closest && e.target.closest("[id]"); if (t && names[t.id]) track(names[t.id]); }, true);
+  var b = document.getElementById("behind"); if (b) b.addEventListener("toggle", function(){ if (b.open) track("behind-the-scenes"); });
 })();
 </script>
 </body>
