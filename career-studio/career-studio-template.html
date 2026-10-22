@@ -103,7 +103,8 @@ li > a{display:inline-block;padding-block:10px}
 .step-row{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding-top:8px}
 .step-row input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--accent)}
 .step-row label{display:grid;gap:2px}
-.q-block{display:grid;gap:8px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.q-block{display:grid;gap:8px;padding-top:14px;border-top:1px solid var(--line)}
+.question:focus{outline:none}.question:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:4px}
 .linkbtn{background:none;border:0;padding:10px 4px;min-height:44px;font:600 .88rem var(--body);color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 .howto summary,.fold summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
 .howto summary{color:var(--accent)}
@@ -196,7 +197,7 @@ label{font-weight:700;font-size:.92rem}
     </div>
     <div class="subnav" id="subnav-coach" role="tablist" aria-label="Coaching" hidden>
       <button role="tab" id="sub-coachtalk" aria-controls="coachtalk">Talk</button>
-      <button role="tab" id="sub-coachpractice" aria-controls="coachpractice">Practice</button>
+      <button role="tab" id="sub-coachpractice" aria-controls="coachpractice">Rehearse</button>
       <button role="tab" id="sub-coachsteps" aria-controls="coachsteps">Next steps</button>
       <button role="tab" id="sub-coachctx" aria-controls="coachctx">Context</button>
     </div>
@@ -247,15 +248,16 @@ label{font-weight:700;font-size:.92rem}
           <div class="row"><button id="own-type-use" type="button">Use my question</button></div>
         </div>
         <p class="small muted" id="ai-off" hidden></p>
+        <div class="q-block">
+        <span class="eyebrow" id="q-type">Your question</span>
+        <p class="question" id="q-text" tabindex="-1">Select Get a question, or choose your own.</p>
+        <p class="why small" id="q-why" hidden></p>
+        <p class="small" id="switch-note" role="status" hidden></p>
+        <div class="chips" id="q-stories" aria-label="Stories that could answer this"></div>
+        </div>
       </div>
 
       <div class="panel">
-        <div class="q-block">
-        <span class="eyebrow" id="q-type">Your question</span>
-        <p class="question" id="q-text">Choose a question above to get started.</p>
-        <p class="why small" id="q-why" hidden></p>
-        <div class="chips" id="q-stories" aria-label="Stories that could answer this"></div>
-        </div>
         <div class="field">
           <label for="answer">Your answer</label>
           <details class="howto small muted">
@@ -291,12 +293,13 @@ label{font-weight:700;font-size:.92rem}
 
     <!-- STORIES -->
     <section role="tabpanel" id="stories" aria-labelledby="sub-stories" hidden>
-      <div class="row">
-        <input type="search" id="story-search" placeholder="Search" aria-label="Search stories, companies, or topics" aria-describedby="story-search-hint" style="flex:1;min-width:0">
-        <button id="add-story">Add story</button>
+      <div class="row" style="justify-content:space-between">
+        <div class="row"><button id="add-story" class="primary">Add a story</button><button id="pull-resume" type="button" class="ghost">Pull from resume</button></div>
+        <p class="small muted" id="story-count" style="margin:0"></p>
       </div>
+      <div class="panel" id="pull-box" hidden></div>
+      <input type="search" id="story-search" placeholder="Search" aria-label="Search stories, companies, or topics" aria-describedby="story-search-hint" style="width:100%;min-width:0">
       <span class="small muted" id="story-search-hint" style="margin-top:-6px">Search stories, companies, or topics.</span>
-      <p class="small muted" id="story-count"></p>
       <div class="fold-row">
         <details class="fold">
           <summary>How scores work</summary>
@@ -377,6 +380,7 @@ label{font-weight:700;font-size:.92rem}
       <div class="panel" id="talk-setup">
         <h2 style="font-size:1.05rem">Talk something through</h2>
         <span class="small muted">Bring anything on your mind, like a decision or something going on at work, and your coach will ask questions first and then help you think it through.</span>
+        <span class="small muted">Claude uses your About me and the Context tab here. It doesn't see your stories or practice scores.</span>
         <div class="field"><label for="talk-topic">Topic (optional)</label>
           <select id="talk-topic"><option value="">Pick one, or leave blank</option><option>A career decision</option><option>A job offer</option><option>A situation at work</option><option>The job search</option><option>Something else</option></select></div>
         <div class="field"><label for="talk-first">What's going on?</label><textarea id="talk-first" rows="4" placeholder="Start wherever it makes sense…"></textarea></div>
@@ -397,14 +401,14 @@ label{font-weight:700;font-size:.92rem}
     <!-- COACHING: PRACTICE -->
     <section role="tabpanel" id="coachpractice" aria-labelledby="sub-coachpractice" hidden>
       <div class="panel" id="pr-setup">
-        <h2 style="font-size:1.05rem">Practice a conversation</h2>
+        <h2 style="font-size:1.05rem">Rehearse a conversation</h2>
         <span class="small muted">Claude plays the other person so you can rehearse, and when you're done, select End and get feedback.</span>
-        <div class="field"><label for="pr-scenario">What are you practicing?</label>
+        <div class="field"><label for="pr-scenario">What are you rehearsing?</label>
           <select id="pr-scenario"><option value="">Select one…</option><option>Negotiating a job offer</option><option>Asking a contact for a referral</option><option>A recruiter screening call</option><option>Pushing back on a manager's decision</option><option>Asking for a reference</option><option value="other">Something else</option></select></div>
         <div class="field" id="pr-custom-wrap" hidden><label for="pr-custom">Describe it</label><span class="small muted" id="pr-custom-hint">For example: telling a hiring manager I need more time to decide</span><input type="text" id="pr-custom" aria-describedby="pr-custom-hint"></div>
         <div class="field"><label for="pr-who">Who is the other person?</label><span class="small muted" id="pr-who-hint">For example: a recruiter at a large tech company</span><input type="text" id="pr-who" aria-describedby="pr-who-hint"></div>
         <div class="field"><label for="pr-goal">What do you want out of it? (optional)</label><span class="small muted" id="pr-goal-hint">For example: a higher base salary or a sign-on bonus</span><input type="text" id="pr-goal" aria-describedby="pr-goal-hint"></div>
-        <button class="primary" id="pr-start" type="button" style="justify-self:start">Start practicing</button>
+        <button class="primary" id="pr-start" type="button" style="justify-self:start">Start rehearsing</button>
       </div>
       <div class="panel chat-wrap">
         <div class="chat-log" id="pr-log" hidden aria-live="polite"></div>
@@ -449,11 +453,15 @@ label{font-weight:700;font-size:.92rem}
       </nav>
       <details class="panel sect" id="aboutme">
         <summary><h2 style="font-size:1.05rem">About me</h2></summary>
-        <span class="small muted">Claude reads this before every piece of feedback and every coaching session, so it knows who you are and how you want to be helped, and only you can see it.</span>
+        <span class="small muted">This is the one part to fill in. Claude reads it before every piece of feedback and every coaching session, so it knows who you are and how you want to be helped, and only you can see it.</span>
         <div id="aboutme-body" style="display:grid;gap:12px"></div>
       </details>
+      <div style="display:grid;gap:4px;margin-top:10px">
+        <h2 style="font-size:1.15rem;margin:0">Help</h2>
+        <p class="small muted" style="margin:0">Look here when you need it. Nothing here needs filling out.</p>
+      </div>
       <details class="panel sect" id="backup-sect">
-        <summary><h2 style="font-size:1.05rem">Backup and restore</h2></summary>
+        <summary><h3 style="font-size:1.05rem;margin:0">Backup and restore</h3></summary>
         <span class="small muted" id="backup-last"></span>
 
         <span class="small muted">Save a copy of everything in Career Studio to your device now and then and before big changes, using the full backup if you might need to restore it and the stories file if you just want something easy to read.</span>
@@ -463,7 +471,7 @@ label{font-weight:700;font-size:.92rem}
         <span class="small muted" id="backup-msg" role="status"></span>
       </details>
       <details class="panel sect" id="help-sect">
-        <summary><h2 style="font-size:1.05rem">Help and troubleshooting</h2></summary>
+        <summary><h3 style="font-size:1.05rem;margin:0">Help and troubleshooting</h3></summary>
         <div style="display:grid;gap:8px">
           <details class="fold"><summary>Claude says its features aren't available in this view</summary><p class="small" style="margin:8px 0 0">Open Career Studio in the Claude app or on claude.ai, signed in to your own account. The first time you use feedback or coaching, Claude asks for permission to help on this page, so select Allow, and if you declined by mistake, reload the page and try again.</p></details>
           <details class="fold"><summary>I've reached a usage limit</summary><p class="small" style="margin:8px 0 0">Feedback, follow-ups, memos, and coaching all use your own Claude plan. When you hit a limit, wait a while and try again. Nothing you wrote is lost; your draft stays in the box.</p></details>
@@ -478,7 +486,7 @@ label{font-weight:700;font-size:.92rem}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.1 · Updated October 21, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.2 · Updated October 22, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -642,14 +650,27 @@ label{font-weight:700;font-size:.92rem}
   }
 
   /* ---------- question ---------- */
+  // When what you're practicing for changes, don't leave an old question on screen.
+  function targetName(){ const c = companyOf(), r = roleOf(); return c ? c.name : r ? roleShort(r) : "general practice"; }
+  function onTargetSwitch(autoFetch){
+    const note = $("switch-note");
+    if ($("answer").value.trim()){ note.textContent = `This question is from before you switched. Select Get a question for one tied to ${targetName()}.`; note.hidden = false; return; }
+    note.hidden = true;
+    S.current = { question:"", why:"", focus:"", storyIds:[], type:"behavioral", placeholder:`Select Get a question to get one for ${targetName()}.` };
+    store.set("current", JSON.stringify(S.current)); renderQuestion(); $("fb-panel").hidden = true;
+    if (autoFetch && sample && !$("pick-btn").disabled) $("pick-btn").click(); else requestAnimationFrame(() => $("pick-btn").focus());
+  }
   function setQuestion(q){
+    if ($("switch-note")) $("switch-note").hidden = true;
     S.current = Object.assign({ question:"", why:"", focus:"", storyIds:[], type:"behavioral" }, q);
     store.set("current", JSON.stringify(S.current));
     renderQuestion();
+    // Move the cursor to the new question so it's announced and in view.
+    requestAnimationFrame(() => { const q = $("q-text"); if (q && !$("practice").hidden){ q.focus({ preventScroll:true }); q.scrollIntoView({ block:"nearest" }); } });
   }
   function renderQuestion(){
     const c = S.current;
-    $("q-text").textContent = c.question || "Choose a question above to get started.";
+    $("q-text").textContent = c.question || c.placeholder || "Select Get a question, or choose your own.";
     $("answer").placeholder = c.type === "intro" ? "Who I am now… Two or three proof points… Why this role…" : c.type === "hypothetical" ? "What I'd ask first… My assumptions… My approach… How I'd measure it…" : "Situation… Task… Action… Result… Reflection…";
     $("q-type").textContent = !c.question ? "Your question" : c.type === "hypothetical" ? "How would you: hypothetical" : c.type === "intro" ? "Self-intro: 60 to 90 seconds" : "Behavioral: STAR-R";
     $("q-why").hidden = !c.why; $("q-why").textContent = c.why || "";
@@ -775,6 +796,7 @@ label{font-weight:700;font-size:.92rem}
       "Mix in hypothetical \"how would you\" questions (type hypothetical) about one time in four, more often if they have few hypothetical sessions. They're scored on: " + HYPO.map(r => r.label).join(", ") + ". Behavioral questions should also cover themes their stories show weakly, including failure and conflict.",
       companyOf() ? companyContext(companyOf()) + ` Choose a question that tests one of ${companyOf().name}'s values, using one from this list or one in the same style: ${JSON.stringify(companyOf().questions || [])}. Mention the value in "why".` : "",
       roleOf() ? roleContext(roleOf()) + ' Choose a question that tests one of these requirements, favoring ones where they have no story yet, and mention the requirement in "why".' : "",
+      ME.resume ? "Their resume, for background: " + ME.resume.slice(0, 12000) + "\n\nUse it to understand their experience, but still choose the question from their practice history and stories." : "",
       "Reply with only JSON in this shape: {\"question\": string, \"type\": \"behavioral\" or \"hypothetical\", \"why\": string, \"focus\": one rubric key, \"storyIds\": [up to 2 story ids, empty for hypothetical]}. Write \"why\" as one plain sentence to {{NAME}}, using \"you\", that says why this question is next. No praise, no filler."
     ].join("\n\n");
     try {
@@ -1038,6 +1060,12 @@ label{font-weight:700;font-size:.92rem}
     const status = el("div", {class:"status small", hidden:""}, [el("span",{class:"dot","aria-hidden":"true"}), el("span",{},"Thinking…")]);
     const out = el("div", {style:"display:grid;gap:10px"});
     box.append(el("span",{class:"eyebrow"},"Follow-up question"), el("span",{class:"small muted"},"Interviewers often dig into one part of your story. Claude asks one follow-up aimed at your weakest area."), askBtn, status, out);
+    // Pick up a follow-up reply that was typed before the page reloaded.
+    let draft = null; try { draft = JSON.parse(store.get("fuDraft") || "null"); } catch {}
+    if (draft && s.id && draft.sid === s.id && draft.r && Date.now() - (draft.t || 0) < 86400000){
+      askBtn.hidden = true;
+      requestAnimationFrame(() => renderFollowUpAsk(s, draft.r, out, S.stories.find(x => x.id === s.storyId), draft.chain || [], draft.reply || ""));
+    }
     askBtn.addEventListener("click", async () => {
       askBtn.disabled = true; status.hidden = false;
       const st = S.stories.find(x => x.id === s.storyId);
@@ -1065,9 +1093,12 @@ label{font-weight:700;font-size:.92rem}
       if (!r || typeof r.followUp !== "string") throw {code:"invalid_json"};
       return r;
   }
-  function renderFollowUpAsk(s, r, out, st, chain){
+  function renderFollowUpAsk(s, r, out, st, chain, initial){
     const id = "fu-" + Math.random().toString(36).slice(2,7);
     const ta = el("textarea", {id, rows:"5", placeholder:"Answer the follow-up the way you would out loud…"});
+    ta.value = initial || ""; let fails = 0;
+    const saveDraft = () => { if (s.id) store.set("fuDraft", JSON.stringify({ sid:s.id, r, chain, reply:ta.value, t:Date.now() })); };
+    ta.addEventListener("input", saveDraft); if (initial) saveDraft();
     const btn = el("button", {type:"button", class:"primary", style:"justify-self:start"}, "Get feedback on my reply");
     const status = el("div", {class:"status small", hidden:""}, [el("span",{class:"dot","aria-hidden":"true"}), el("span",{},"Thinking…")]);
     const res = el("div", {style:"display:grid;gap:10px"});
@@ -1107,7 +1138,7 @@ label{font-weight:700;font-size:.92rem}
           notInBankBlock({ notInBank: followUp.notInBank, storyId: s.storyId }, true),
           el("div",{class:"score-list", role:"list"}, FU.map(([k,label]) => el("div",{class:"score", role:"listitem"},[ el("span",{class:`pill p${sc[k].score}`, role:"img", "aria-label":`${sc[k].score} out of 3`}, `${sc[k].score}/3`), el("b",{}, label), el("span",{class:"small"}, sc[k].reason) ])))
         );
-        const all = [...chain, followUp]; latest = all;
+        const all = [...chain, followUp]; latest = all; store.set("fuDraft", "");
         if (db && s.id) { try { await db.doc("sessions/" + s.id).update(all.length === 1 ? { followUp } : { followUp: all[0], followUps: all }); } catch {} }
         if (!foot.hasChildNodes()){
           const more = el("button", {type:"button", class:"ghost ask-another", style:"justify-self:start"}, "Ask another");
@@ -1129,7 +1160,9 @@ label{font-weight:700;font-size:.92rem}
           foot.replaceChildren(keepNote, el("div",{class:"row"},[more, done]), mstatus, saveArea);
           if (!next.isConnected) out.after(next);
         }
-      } catch (e) { if (e?.code !== "cancelled") res.replaceChildren(el("p",{class:"small", role:"alert"}, errCopy(e?.code))); }
+      } catch (e) {
+        if (e?.code !== "cancelled"){ fails++; res.replaceChildren(el("p",{class:"small", role:"alert"}, errCopy(e?.code) + (fails >= 2 && s.id ? " Still not working? Your reply is saved, so you can reload the page and select Get feedback on my reply again." : ""))); }
+      }
       finally { btn.disabled = false; status.hidden = true; }
     });
   }
@@ -1212,6 +1245,55 @@ label{font-weight:700;font-size:.92rem}
     const order = Math.max(0, ...S.stories.map(s => Number(s.order)||0)) + 1;
     S.editing = { id, order, isNew:true, title:"", company:"", useFor:"", note:"", situation:"", task:"", action:"", result:"", reflection:"" };
     S.openStory = id; renderStories();
+  });
+  /* ----- Pull story ideas from the resume (nothing is saved until Save story) ----- */
+  function pullPrompt(){
+    return [
+      "{{NAME}} wants story ideas from their resume. Here are the stories already in their bank: " + JSON.stringify(S.stories.map(x => x.title)) + ". From the resume, pick up to 5 accomplishments that would make good STAR-R interview stories and aren't already in their bank. For each, give a short title and fill in only what the resume actually says, using its wording, in situation, task, action and result. Leave reflection empty, and leave any part empty that the resume doesn't cover. Add one question that would help them fill in the biggest missing part. Don't invent numbers, names or details.",
+      "Resume:\n" + String(ME.resume || "").slice(0, 15000),
+      'Reply with only JSON: {"ideas": [{"title": string, "situation": string, "task": string, "action": string, "result": string, "ask": string}]}'
+    ].join("\n\n");
+  }
+  let pullCtl = null;
+  $("pull-resume").addEventListener("click", async () => {
+    const box = $("pull-box"); box.hidden = false; box.replaceChildren();
+    const close = el("button",{type:"button", class:"ghost", onclick:() => { pullCtl?.abort(); box.hidden = true; $("pull-resume").focus(); }}, "Close");
+    box.append(el("h2",{style:"font-size:1.05rem", tabindex:"-1", id:"pull-head"}, "Story ideas from your resume"));
+    if (!ME.resume){
+      box.append(el("p",{class:"small", style:"margin:0"}, "Add your resume in About me first, then come back here."),
+        el("div",{class:"row"},[ el("button",{type:"button", class:"primary", onclick:() => { showTab("settings"); $("aboutme").open = true; $("me-resume")?.focus(); }}, "Open About me"), close ]));
+      $("pull-head").focus(); return;
+    }
+    if (!sample){ box.append(el("p",{class:"small", style:"margin:0"}, "Claude isn't available in this view."), close); return; }
+    const status = el("div",{class:"status small", role:"status"},[ el("span",{class:"dot","aria-hidden":"true"}), el("span",{},"Reading your resume…") ]);
+    box.append(status, el("div",{class:"row"},[close])); $("pull-head").focus();
+    pullCtl?.abort(); pullCtl = new AbortController();
+    try {
+      const r = await sample.json(pullPrompt(), { modelTier:"quick", cache:false, signal:pullCtl.signal });
+      const ideas = (Array.isArray(r?.ideas) ? r.ideas : []).filter(x => x && x.title).slice(0, 5);
+      status.remove();
+      if (!ideas.length){ box.insertBefore(el("p",{class:"small", style:"margin:0"}, "No new story ideas came up. Your bank may already cover what's on your resume."), box.lastChild); return; }
+      box.insertBefore(el("p",{class:"small muted", style:"margin:0"}, "Pick one to start a draft. It's filled in only with what your resume says, and nothing is saved until you select Save story."), box.lastChild);
+      const list = el("ul",{style:"display:grid;gap:10px;margin:0;padding:0;list-style:none"});
+      for (const it of ideas){
+        const preview = String(it.result || it.action || it.task || it.situation || "").slice(0, 160);
+        list.append(el("li",{style:"display:grid;gap:4px;border-top:1px solid var(--line);padding-top:10px"},[
+          el("b",{}, String(it.title)), preview ? el("span",{class:"small muted"}, preview) : null,
+          el("button",{type:"button", class:"ghost", style:"justify-self:start", "aria-label":`Use this idea: ${it.title}`, onclick:() => {
+            if (!db) return;
+            const id = "s-" + Date.now().toString(36), order = Math.max(0, ...S.stories.map(x => Number(x.order)||0)) + 1;
+            S.editing = { id, order, isNew:true, title:String(it.title||""), company:"", useFor:"", note: it.ask ? "To fill in: " + String(it.ask) : "", situation:String(it.situation||""), task:String(it.task||""), action:String(it.action||""), result:String(it.result||""), reflection:"" };
+            S.openStory = id; box.hidden = true; renderStories(); scrollStoryIntoView(id);
+            requestAnimationFrame(() => document.querySelector("#story-list form input, #story-list form textarea")?.focus());
+          }}, "Use this idea")
+        ]));
+      }
+      box.insertBefore(list, box.lastChild);
+    } catch (e) {
+      if (e?.code === "cancelled") return;
+      if (fatal(e?.code)) disableAI(errCopy(e.code));
+      status.replaceChildren(el("span",{role:"alert"}, errCopy(e?.code)));
+    }
   });
   let rateCtl = null;
   $("rate-stories").addEventListener("click", async () => {
@@ -1298,7 +1380,7 @@ label{font-weight:700;font-size:.92rem}
     if (S.editing?.isNew) items.unshift(S.editing);
     const shown = items.filter(s => s.isNew || storyMatches(s, q));
     $("story-count").textContent = S.stories.length ? `${shown.filter(s=>!s.isNew).length} of ${S.stories.length} stories` : "";
-    if (!items.length){ list.append(el("div",{class:"empty"},[el("strong",{},"No stories yet"), el("span",{},"Select \"Add story\" to write your first one in STAR-R form.")])); return; }
+    if (!items.length){ list.append(el("div",{class:"empty"},[el("strong",{},"No stories yet"), el("span",{},"Select \"Add a story\" to write your first one in STAR-R form.")])); return; }
     if (!shown.length){ list.append(el("div",{class:"empty"},[el("strong",{},"No matches"), el("span",{},"Try a company name or a topic like \"stakeholders\".")])); return; }
     for (const s of shown) list.append(storyCard(s));
     renderThemes();
@@ -1572,6 +1654,7 @@ label{font-weight:700;font-size:.92rem}
       "Pick the 4 to 7 requirements in the posting that matter most, in plain language, and don't add requirements the posting doesn't state. For each one, give the best story id or null, one plain sentence to {{NAME}}, using \"you\", on why the story fits, and if no story fits, one sentence in gap on what kind of story would.",
       "If the posting itself states the company's mission or values, copy them briefly into mission. Otherwise leave mission empty, and don't look anything up or guess.",
       "Plain language, no praise, no em-dashes.",
+      ME.resume ? "Their resume, for background: " + ME.resume.slice(0, 12000) + "\n\nIf their resume shows a requirement but no story does, say so in gap: \"Your resume shows this, so it may be worth writing a story about it.\"" : "",
       `Posting:\n${posting.slice(0, 15000)}`,
       'Reply with only JSON: {"title": string, "company": the short name people usually use for the company (for example an acronym it goes by), or "", "summary": string (one or two sentences on what the role is), "asks": [{"ask": string, "storyId": string or null, "why": string, "gap": string}], "mission": string}'
     ].join("\n\n");
@@ -1608,7 +1691,7 @@ label{font-weight:700;font-size:.92rem}
       ta.addEventListener("input", () => { ROLE_DRAFT.text = ta.value; });
       const status = el("div",{class:"status small", role:"status", hidden:""},[ el("span",{class:"dot","aria-hidden":"true"}), el("span",{id:"role-status-text"},"Reading the posting…") ]);
       const err = el("p",{class:"small", role:"alert", style:"margin:0"}, ROLE_DRAFT.error || "");
-      const go = el("button",{type:"button", class:"primary"}, "Check my fit");
+      const go = el("button",{type:"button", class:"primary"}, "Add job description");
       const stop = el("button",{type:"button", class:"ghost", hidden:""}, "Stop");
       const cancel = el("button",{type:"button", class:"ghost", onclick:closeJD}, "Cancel");
       stop.addEventListener("click", () => roleCtl?.abort());
@@ -1624,7 +1707,8 @@ label{font-weight:700;font-size:.92rem}
       box.append(
         el("div",{class:"field"},[ el("label",{for:"role-paste"}, "Job description"), el("span",{class:"small muted", id:"role-paste-hint"}, "Paste the full posting, including the company name if it's listed. Claude checks which of your stories fit what it asks for." + (S.stories.length < 3 ? " This works best once you have three or more stories in your story bank." : "")), ta ]),
         el("div",{class:"row"},[go, stop, cancel]), status, err,
-        !sample ? el("p",{class:"small muted", style:"margin:0"}, "Claude isn't available in this view, so job descriptions can't be checked here.") : null
+        !sample ? el("p",{class:"small muted", style:"margin:0"}, "Claude isn't available in this view, so job descriptions can't be checked here.") : null,
+        window.CS_DEMO_MODE ? el("p",{class:"small muted", style:"margin:0"}, "This demo isn't connected to Claude, so a simple word match stands in for it. In your own copy, Claude reads the whole posting.") : null
       );
       return;
     }
@@ -1646,7 +1730,7 @@ label{font-weight:700;font-size:.92rem}
         await db.doc("roles/" + id).set(role);
         ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; jdOpen = false; roleOpen = id; renderJD(); renderCompanySelect(); renderBank();
         $("jd-live").textContent = `Saved. You're now practicing for ${roleShort(role)}.`;
-        $("pick-btn").focus();
+        onTargetSwitch(false);
       } catch { S.pendingRole = null; save.disabled = back.disabled = cancel.disabled = false; msg.textContent = "Couldn't save. Check your connection and select Save role again."; }
     });
     box.append(
@@ -1654,10 +1738,10 @@ label{font-weight:700;font-size:.92rem}
       el("div",{class:"field"},[ el("label",{for:"role-title"}, "Role title"), tIn ]),
       el("div",{class:"field"},[ el("label",{for:"role-company"}, "Company"), cIn ]),
       p.summary ? el("p",{style:"margin:0"}, p.summary) : null,
+      el("div",{class:"row"},[save, back, cancel]), msg,
       el("h3",{}, "What it asks for, and your best story"),
       askRows(p.asks),
-      p.mission ? el("div",{class:"callout next"},[ el("strong",{}, "Mission and values from the posting"), el("span",{class:"small"}, p.mission) ]) : null,
-      el("div",{class:"row"},[save, back, cancel]), msg
+      p.mission ? el("div",{class:"callout next"},[ el("strong",{}, "Mission and values from the posting"), el("span",{class:"small"}, p.mission) ]) : null
     );
   }
   function openJD(){ showTab("practice"); if (!jdOpen) jdPrevCompany = S.company; jdOpen = true; renderJD(); renderCompanySelect(); $("role-paste")?.focus(); }
@@ -1705,7 +1789,7 @@ label{font-weight:700;font-size:.92rem}
       if (r.summary) inner.append(el("p",{style:"margin:0"}, r.summary));
       const co = companyFor(r);
       inner.append(el("div",{class:"row"},[
-        el("button",{type:"button", class:"primary", "aria-label":`Practice for ${name}`, onclick:() => { S.targetType = null; S.company = "role:" + r.id; store.set("company", S.company); renderCompanySelect(); renderBank(); showTab("practice"); $("pick-btn").focus(); }}, "Practice for this role"),
+        el("button",{type:"button", class:"primary", "aria-label":`Practice for ${name}`, onclick:() => { S.targetType = null; S.company = "role:" + r.id; store.set("company", S.company); renderCompanySelect(); renderBank(); showTab("practice"); onTargetSwitch(true); }}, "Practice for this role"),
         co ? el("button",{type:"button", class:"linkbtn", onclick:() => { store.set("companyView", co.id); showTab("companies"); }}, `Open the ${co.name} profile`) : null
       ]));
       inner.append(askRows(asks));
@@ -1784,9 +1868,9 @@ label{font-weight:700;font-size:.92rem}
     if (jdOpen || ROLE_DRAFT.preview){ roleCtl?.abort(); ROLE_DRAFT = { text:"", preview:null, busy:false, error:"" }; jdOpen = false; renderJD(); }
     S.targetType = v === "general" ? null : v;
     S.company = v === "role" ? (S.roles[0] ? "role:" + S.roles[0].id : "") : v === "company" ? (S.companies[0]?.id || "") : "";
-    store.set("company", S.company); renderCompanySelect(); renderBank();
+    store.set("company", S.company); renderCompanySelect(); renderBank(); onTargetSwitch(false);
   });
-  $("company-select").addEventListener("change", e => { S.company = e.target.value; store.set("company", S.company); renderCompanySelect(); renderBank(); });
+  $("company-select").addEventListener("change", e => { S.company = e.target.value; store.set("company", S.company); renderCompanySelect(); renderBank(); onTargetSwitch(false); });
   const storiesFor = themes => S.stories.filter(s => themes.some(k => (s.themes?.[k] || 0) >= 2)).map(s => s.title);
   function renderCompanies(){
     const root = $("companies-body"); root.replaceChildren();
@@ -1809,7 +1893,7 @@ label{font-weight:700;font-size:.92rem}
       const inner = el("div",{style:"display:grid;gap:14px;margin-top:8px"});
       if (c.summary) inner.append(el("p",{style:"margin:0"}, c.summary));
       inner.append(el("div",{class:"row"},[
-        el("button",{type:"button", class:"primary", onclick:() => { S.targetType = null; S.company = c.id; store.set("company", c.id); renderCompanySelect(); renderBank(); showTab("practice"); }}, `Practice for ${c.name}`),
+        el("button",{type:"button", class:"primary", onclick:() => { S.targetType = null; S.company = c.id; store.set("company", c.id); renderCompanySelect(); renderBank(); showTab("practice"); onTargetSwitch(true); }}, `Practice for ${c.name}`),
         el("button",{type:"button", onclick:() => { showTab("memo"); $("memo-select").value = (c.memoPrompts?.[0]?.id) || ""; renderMemoPrompt(); }}, "Write a memo")
       ]));
       const vals = el("details",{style:"display:grid;gap:10px"},[ el("summary",{style:"cursor:pointer"},[ el("h3",{style:"display:inline"}, `What they value (${(c.values||[]).length})`), el("span",{class:"small muted"}," and which of your stories fit") ]) ]);
@@ -2074,29 +2158,37 @@ label{font-weight:700;font-size:.92rem}
     ["targets","Roles you're targeting","input","For example: instructional designer, enablement manager, learning program manager."],
     ["situation","Your situation right now","textarea","For example: job searching after a layoff, or employed and looking to move up. Your coach uses this to understand where you are."],
     ["rules","Wording rules for your answers (optional)","textarea","Anything to always say or avoid. For example: always say \"learners,\" not \"trainees.\""],
-    ["coachStyle","How you want to be coached (optional)","textarea","For example: ask questions before giving advice, point out risks I might miss, and write in plain language."]
+    ["coachStyle","How you want to be coached (optional)","textarea","For example: ask questions before giving advice, point out risks I might miss, and write in plain language."],
+    ["resume","Resume (optional)","textarea","Paste the text of your resume. Leave out your phone number and address. Claude uses it as background when it picks questions and reads a job description."]
   ];
   function renderAboutMe(){
     const box = $("aboutme-body"); box.replaceChildren();
     const inputs = {};
     for (const [k,label,kind,hint] of ME_FIELDS){
       const id = "me-" + k;
-      const f = kind === "textarea" ? el("textarea",{id, rows:"3"}) : el("input",{type:"text", id});
+      const f = kind === "textarea" ? el("textarea",{id, rows: k === "resume" ? "8" : "3"}) : el("input",{type:"text", id});
       f.value = ME[k] || ""; inputs[k] = f;
-      box.append(el("div",{class:"field"},[ el("label",{for:id}, label), el("span",{class:"small muted"}, hint), f ]));
+      box.append(el("div",{class:"field"},[ el("label",{for:id}, label), el("span",{class:"small muted"}, hint), f, k === "resume" && ME.resumeAt ? el("span",{class:"small muted"}, `Last updated ${new Date(ME.resumeAt).toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"})}.`) : null ]));
     }
     const msg = el("span",{class:"small muted", role:"status"});
     const save = el("button",{type:"button", class:"primary", style:"justify-self:start"}, "Save About me");
     save.addEventListener("click", async () => {
       const data = {}; for (const [k] of ME_FIELDS) data[k] = inputs[k].value.trim();
+      data.resumeAt = data.resume && data.resume !== (ME.resume || "") ? new Date().toISOString() : (data.resume ? (ME.resumeAt || "") : "");
       if (!data.name){ msg.textContent = "Add your name first."; inputs.name.focus(); return; }
       if (!db){ msg.textContent = "Storage isn't available in this view."; return; }
       save.disabled = true; msg.textContent = "Saving…";
-      try { await db.doc("profile/me").set(Object.assign(data, { updated:new Date().toISOString() })); msg.textContent = "Saved. Claude will use this in feedback and coaching from now on."; }
+      try { await db.doc("profile/me").set(Object.assign(data, { updated:new Date().toISOString() })); msg.textContent = "Saved. Claude will use this in feedback and coaching from now on.";
+        // A clear next step, following the Getting started order.
+        const toPractice = S.stories.length >= 3;
+        nextBtn.textContent = toPractice ? "Next: practice a question" : "Next: add your stories";
+        nextBtn.onclick = () => { if (toPractice){ showTab("practice"); $("pick-btn").focus(); } else { showTab("stories"); if (!S.stories.length){ $("add-story").click(); requestAnimationFrame(() => document.querySelector("#story-list form input, #story-list form textarea")?.focus()); } else $("add-story").focus(); } };
+        nextBtn.hidden = false; }
       catch { msg.textContent = "Couldn't save. Try again."; }
       finally { save.disabled = false; }
     });
-    box.append(el("div",{class:"row"},[save, msg]));
+    const nextBtn = el("button",{type:"button", class:"ghost", hidden:""}, "Next");
+    box.append(el("div",{class:"row"},[save, msg]), nextBtn);
   }
 
   /* ---------- coaching ---------- */
@@ -2241,7 +2333,7 @@ label{font-weight:700;font-size:.92rem}
   function renderPastSessions(mode){
     const box = $(mode === "talk" ? "talk-past" : "pr-past"); box.replaceChildren(el("h2",{}, mode === "talk" ? "Past sessions" : "Past practice"));
     const list = S.coachSessions.filter(s => s.mode === mode).sort((a,b) => String(b.updated||b.at).localeCompare(String(a.updated||a.at)));
-    if (!list.length){ box.append(el("span",{class:"small muted"}, mode === "talk" ? "Your coaching sessions will show up here." : "Your practice conversations will show up here.")); return; }
+    if (!list.length){ box.append(el("span",{class:"small muted"}, mode === "talk" ? "Your coaching sessions will show up here." : "Your rehearsals will show up here.")); return; }
     for (const s of list.slice(0,30)){
       const body = el("div",{style:"display:grid;gap:10px;margin-top:10px"});
       if (s.result) body.append(...resultNodes(mode, s.result, false));
@@ -2309,7 +2401,8 @@ label{font-weight:700;font-size:.92rem}
     db.collection("memos").orderBy("at","desc").limit(100).onSnapshot(snap => { S.memos = snap.docs.map(d => Object.assign({id:d.id}, d.data())); if (!$("memoprogress").hidden) renderMemoHistory(); }, () => {});
     db.collection("questions").orderBy("order").onSnapshot(snap => { noteSeed("questions", snap.docs.length === 0); S.questions = snap.docs.map(d => Object.assign({id:d.id}, d.data())); renderBank(); }, () => {});
     db.collection("sessions").orderBy("at","desc").limit(300).onSnapshot(snap => {
-      S.sessions = snap.docs.map(d => Object.assign({id:d.id}, d.data())); S.loaded.sessions = true; renderHomeStart(); if (!$("home").hidden) renderHome(); if (!$("welcome").hidden) renderWelcome();
+      S.sessions = snap.docs.map(d => Object.assign({id:d.id}, d.data())); S.loaded.sessions = true;
+      if (!S.fuResumed){ S.fuResumed = true; let d = null; try { d = JSON.parse(store.get("fuDraft") || "null"); } catch {} const ss = d && S.sessions.find(x => x.id === d.sid); if (ss && Date.now() - (d.t || 0) < 86400000) renderFeedback(ss, true); else if (d) store.set("fuDraft", ""); } renderHomeStart(); if (!$("home").hidden) renderHome(); if (!$("welcome").hidden) renderWelcome();
       if (!$("progress").hidden) renderProgress();
     }, () => { S.loaded.sessions = true; if (!$("progress").hidden) renderProgress(); });
   })();
