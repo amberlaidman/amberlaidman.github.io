@@ -335,17 +335,6 @@ I'd like my own copy of Career Studio, a private practice page for interviews, w
     </div>
     <section id="hview-trouble" role="tabpanel" aria-labelledby="htab-trouble">
       <h2 class="sr-only">Troubleshooting</h2>
-      <div class="note">
-        <p style="margin:0 0 8px"><b>Need help?</b> Claude can help you troubleshoot. Go back to the chat where you made your page, since that chat already knows your setup. If you can't find it, start a new chat and include your page's link. Copy the message below, fill in the parts in brackets, and send it.</p>
-        <div class="promptbox"><div class="promptbar"><b>Help message</b><span class="row"><p class="copied" id="helpMsg" aria-live="polite"></p><button class="btn sm" type="button" id="copyHelp">Copy message</button></span></div>
-        <pre id="helpText" tabindex="0">My Career Studio page isn't working the way I expected.
-
-My page's link: [paste your page's link here if this is a new chat]
-What I was trying to do: [for example, get feedback on a practice answer]
-What happened instead: [describe it, or paste the exact message you got]
-
-Please help me troubleshoot this one step at a time, in simple words.</pre></div>
-      </div>
       <p class="src">Select a question to open the answer.</p>
       <h3 class="h-group">Setup</h3>
       <details class="qa"><summary>The template didn't download.</summary><div>Downloads ask you to confirm first, so look for a prompt and select Save. If nothing happens, select <b>Open the file instead</b> and save the page from your browser, or ask the person who shared this guide to send you the file.</div></details>
@@ -357,6 +346,17 @@ Please help me troubleshoot this one step at a time, in simple words.</pre></div
       <details class="qa"><summary>My draft disappeared.</summary><div>Drafts you haven't gotten feedback on are saved only in that browser on that device, so switching devices or clearing browser data can erase them. Anything you got feedback on is saved to your account.</div></details>
       <details class="qa"><summary>Something I saved is missing.</summary><div>Reload the page first. If it's still missing, open Settings in your page and use <b>Restore from a full backup</b>. Restoring only puts things back; it never deletes anything.</div></details>
       <details class="qa"><summary>The questions or companies don't fit my field.</summary><div>Ask Claude to swap them. Step 7 of the Guide has example messages you can copy.</div></details>
+      <details class="qa" id="still-stuck" style="margin-top:14px"><summary>Still stuck? Ask Claude for help</summary><div>
+        <p style="margin:0 0 8px">Claude can help you troubleshoot. Go back to the chat where you made your page, since that chat already knows your setup. If you can't find it, start a new chat and include your page's link. Copy the message below, fill in the parts in brackets, and send it.</p>
+        <div class="promptbox"><div class="promptbar"><b>Help message</b><span class="row"><p class="copied" id="helpMsg" aria-live="polite"></p><button class="btn sm" type="button" id="copyHelp">Copy message</button></span></div>
+        <pre id="helpText" tabindex="0">My Career Studio page isn't working the way I expected.
+
+My page's link: [paste your page's link here if this is a new chat]
+What I was trying to do: [for example, get feedback on a practice answer]
+What happened instead: [describe it, or paste the exact message you got]
+
+Please help me troubleshoot this one step at a time, in simple words.</pre></div>
+      </div></details>
       <p style="margin:6px 0 0">There's more help inside your page, too, under Settings → Help and troubleshooting. For account or billing questions, visit <a href="https://support.claude.com" target="_blank" rel="noopener">Claude's Help Center</a>.</p>
     </section>
     <section id="hview-privacy" role="tabpanel" aria-labelledby="htab-privacy" hidden>
