@@ -9,23 +9,25 @@
 <title>Career Studio Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap">
 <style>
-/* Layout: one readable column; header, theme toggle, three tabs (Guide · Demo · Help). Palette: Evergreen, same as the job tracker guide. */
+/* Layout: one readable column; header, theme toggle, three tabs (Guide · Demo · Help). Palette and fonts: from Amber's portfolio. */
 :root{
-  --bg:#F6F7F3; --surface:#FFFFFF; --ink:#1C2620; --muted:#4B5850; --line:#D7DDD6;
-  --accent:#256B4B; --on-accent:#FFFFFF; --accent-soft:#E2EFE7;
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#1B2A30; --muted:#4A5A60; --line:#D3DCDE;
+  --accent:#3D6B7A; --accent-deep:#2E5461; --on-accent:#FFFFFF; --accent-soft:#E3F0E8; --mint:#C7E0D0; --paper:#F5F1E8;
   --warn:#8A4B00; --warn-bg:#FCEFD9;
   --font:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --head:"Space Grotesk","Atkinson Hyperlegible",system-ui,sans-serif;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#131A16; --surface:#1B241F; --ink:#E6EEE9; --muted:#A3B3AA; --line:#2B3830;
-  --accent:#7CC9A2; --on-accent:#131A16; --accent-soft:#1F3A2D;
+  --bg:#13252B; --surface:#183039; --ink:#E8F1EF; --muted:#A8BCBF; --line:#2E4A53;
+  --accent:#C7E0D0; --accent-deep:#E3F0E8; --on-accent:#13252B; --accent-soft:#1E3C3F; --mint:#C7E0D0; --paper:#1B3540;
   --warn:#F2C37E; --warn-bg:#3A2E1A; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#131A16; --surface:#1B241F; --ink:#E6EEE9; --muted:#A3B3AA; --line:#2B3830;
-  --accent:#7CC9A2; --on-accent:#131A16; --accent-soft:#1F3A2D;
+  --bg:#13252B; --surface:#183039; --ink:#E8F1EF; --muted:#A8BCBF; --line:#2E4A53;
+  --accent:#C7E0D0; --accent-deep:#E3F0E8; --on-accent:#13252B; --accent-soft:#1E3C3F; --mint:#C7E0D0; --paper:#1B3540;
   --warn:#F2C37E; --warn-bg:#3A2E1A; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none !important}
@@ -38,7 +40,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17p
 a{color:var(--accent);text-underline-offset:3px}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
 button{font:inherit;color:inherit}
-.topbar{display:flex;justify-content:flex-end}
+.topbar{display:flex;justify-content:flex-end;margin-bottom:14px}
 .theme{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
 .theme button{border:0;background:transparent;padding:6px 12px;font-size:14px;cursor:pointer;min-height:44px}
 .theme button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);font-weight:700}
@@ -129,6 +131,55 @@ footer .tolink{display:inline-block;margin-bottom:8px;font-weight:700}
 footer p{margin:0 0 8px}
 footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+/* ---------- Amber's look (from her portfolio): Fraunces title, Space Grotesk headings, teal and mint, plain structure instead of boxes ---------- */
+.wrap{max-width:760px}
+h1,h2,h3,.stitle,.tab,.h-tab,.btn,.ov-title{font-family:var(--head);letter-spacing:-.01em}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(2.3rem,9vw,3.4rem);line-height:1.02;letter-spacing:-.02em}
+.byline{font-family:var(--head);font-size:15px;color:var(--muted);margin:0 0 10px}
+.byline a{color:var(--muted);font-weight:600}
+.tagline{font-family:var(--head);font-weight:500;color:var(--ink);font-size:1.25rem;margin:10px 0 10px;max-width:30ch}
+.hero{display:grid;gap:22px;align-items:start}
+@media (min-width:820px){.hero{grid-template-columns:1.15fr 1fr;gap:36px}}
+.sample{margin:0;background:var(--paper);border-top:4px solid var(--accent);padding:16px 16px 14px;font-size:15px}
+.sample .q{font-family:var(--head);font-weight:600;font-size:1rem;line-height:1.35;margin:4px 0 12px}
+.sample .lbl{font-size:13px;color:var(--muted);margin:0}
+.sample ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.sample li{display:grid;grid-template-columns:3.2em 1fr;gap:8px;align-items:baseline}
+.sample .sc{font-family:var(--mono);font-weight:500;color:var(--accent-deep)}
+.sample figcaption{font-size:13px;color:var(--muted);margin-top:12px}
+.btn{border-radius:6px}
+/* tabs as text with an underline, not big buttons */
+nav.tabs{display:flex;gap:28px;padding-block:6px 0;margin:28px 0 22px}
+.tab{background:transparent;border:0;border-bottom:3px solid transparent;border-radius:0;padding:10px 2px;font-size:1.05rem;color:var(--muted)}
+.tab[aria-selected="true"]{background:transparent;color:var(--ink);border-bottom-color:var(--accent)}
+.tab:hover{color:var(--ink)}
+/* steps as a numbered line, since they are a real sequence */
+.steps{gap:0;border-left:2px solid var(--line);margin-left:15px}
+details.step{background:transparent;border:0;border-radius:0;position:relative}
+details.step>summary{padding:14px 0 14px 26px}
+.num{position:absolute;left:-17px;top:12px;width:32px;height:32px;background:var(--bg);color:var(--accent-deep);border:2px solid var(--accent);font-family:var(--head)}
+details.step[open] .num{background:var(--accent);color:var(--on-accent)}
+.stitle{font-size:1.2rem;font-weight:600}
+.sbody{padding:0 0 26px 26px}
+#behind{margin-left:0}
+/* help questions as a plain list with dividers */
+.h-tabs{display:flex;gap:22px;border-bottom:1px solid var(--line)}
+.h-tab{background:transparent;border:0;border-bottom:3px solid transparent;border-radius:0;padding:8px 2px;color:var(--muted)}
+.h-tab[aria-selected="true"]{background:transparent;border:0;border-bottom:3px solid var(--accent);color:var(--ink)}
+.h-group{font-family:var(--head);text-transform:none;letter-spacing:0;font-size:1.05rem;color:var(--ink);margin:22px 0 4px}
+details.qa{background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0}
+details.qa>summary{padding:12px 2px;font-weight:700}
+details.qa>div{padding:0 2px 14px}
+.note{border-radius:0;border-left:4px solid var(--accent);background:var(--accent-soft)}
+.caution{border-radius:0;border-left:4px solid var(--warn)}
+.promptbox{border-radius:0}
+.theme{border-radius:6px}
+.totop{border-radius:6px;box-shadow:none}
+footer .credit-line{display:flex;flex-wrap:wrap;gap:4px 18px}
+.trythis{border-radius:0;border:0;border-left:4px solid var(--mint);background:var(--paper)}
+.demo-frame{border-radius:0}
+.demo-strip{border-radius:0}
 </style>
 </head>
 <body>
@@ -143,10 +194,26 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-si
   </div>
 
 
-    <h1>Career Studio</h1>
-    <p class="tagline">Your own private place to practice for interviews with Claude.</p>
-    <p class="intro">Here's how to get your own copy of the practice space I use. It starts out empty, so plan on about 25 minutes to add a little about yourself and a few stories from your work.</p>
-    <div class="row start-btns"><button class="btn sm" type="button" data-goto-view="demo">Try the demo first</button></div>
+    <div class="hero">
+      <div>
+        <p class="byline">A guide by <a href="https://amberlaidman.github.io/index.html" target="_blank" rel="noopener">Amber Laidman</a></p>
+        <h1>Career Studio</h1>
+        <p class="tagline">Your own private place to practice for interviews with Claude.</p>
+        <p class="intro">Here's how to get your own copy of the practice space I use. It starts out empty, so plan on about 25 minutes to add a little about yourself and a few stories from your work.</p>
+        <div class="row start-btns"><button class="btn sm" type="button" data-goto-view="demo">Try the demo first</button></div>
+      </div>
+      <figure class="sample" aria-label="Example of practice feedback">
+        <p class="lbl">Practice question</p>
+        <p class="q">Tell me about a time you had to win over people who didn't want a change.</p>
+        <ul>
+          <li><span class="sc">3/3</span><span>Structure</span></li>
+          <li><span class="sc">2/3</span><span>Result: add the number you tracked</span></li>
+          <li><span class="sc">3/3</span><span>Your role</span></li>
+          <li><span class="sc">1/3</span><span>Reflection: say what you'd do differently</span></li>
+        </ul>
+        <figcaption>An example of the scores you get after each answer.</figcaption>
+      </figure>
+    </div>
   </header>
 
   <main>
@@ -217,13 +284,13 @@ footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-si
             <div class="row step-actions"><button class="btn" type="button" id="copyBtn">Copy prompt</button><p class="copied" id="copyMsg" aria-live="polite"></p></div>
           </li>
           <li><b>Open a new regular chat</b> in Claude, attach the template file, and paste the prompt in.
-            <div class="row step-actions"><a class="btn ghost" id="openClaude" href="https://claude.ai/new" target="_blank" rel="noopener">Open Claude ↗</a></div>
+            <div class="row step-actions"><a class="btn ghost" id="openClaude" href="https://claude.ai/new" target="_blank" rel="noopener">Open Claude</a></div>
           </li>
           <li><b>Open your new page.</b> Claude sends you a link, and it's worth bookmarking since that's where you'll go every time.</li>
           <li><b>Allow Claude to help on the page.</b> The first time you ask for feedback, Claude asks for permission, so select <b>Allow</b>.</li>
         </ol>
         <div class="promptbox">
-          <div class="promptbar"><span><b>Starter prompt</b> <span class="src">· v1.0 · October 2026</span></span></div>
+          <div class="promptbar"><span><b>Starter prompt</b> <span class="src">version 1.0, October 2026</span></span></div>
           <pre id="promptText" tabindex="0">Career Studio · Starter prompt v1.0 · October 2026
 
 &lt;goal&gt;
@@ -303,7 +370,7 @@ I'd like my own copy of Career Studio, a private practice page for interviews, w
 
   <!-- ================= DEMO ================= -->
   <section id="view-demo" role="tabpanel" aria-labelledby="tab-demo" hidden>
-    <p class="demo-strip">Demo · a made-up person · anything you type stays in this browser only</p>
+    <p class="demo-strip">This demo uses a made-up person. Anything you type stays in this browser only.</p>
     <div class="trythis"><p style="margin:0"><b>Try this:</b></p><ol>
       <li>Choose how to start with the buttons just above the demo. <b>Start blank</b> shows what a brand-new person sees, beginning with the Getting started page, and <b>Load a sample person</b> fills it in with Jordan, a made-up support team lead, so you can see stories and scores right away.</li>
       <li>In <b>Interview → Practice</b>, select <b>Get a question</b>, write a short answer and select <b>Get feedback</b>. Then try <b>Ask me a follow-up</b>.</li>
@@ -379,11 +446,12 @@ Please help me troubleshoot this one step at a time, in simple words.</pre></div
 
   </main>
   <footer><a href="#top" class="tolink" data-top="1">↑ Back to top</a>
-    <p>Made by Amber Laidman · <a href="https://amberlaidman.github.io/index.html" target="_blank" rel="noopener">Portfolio</a> · <a href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">LinkedIn</a></p>
+    <p>Made by Amber Laidman</p>
+    <p class="credit-line"><a href="https://amberlaidman.github.io/index.html" target="_blank" rel="noopener">Portfolio</a><a href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">LinkedIn</a></p>
     <p>An independent guide, and the opinions are my own.</p>
     <p>Not affiliated with or endorsed by Anthropic or any other company.</p>
     <p id="footFeedback" hidden><a href="https://tally.so/r/A7XMM0" target="_blank" rel="noopener">Have feedback? Share your thoughts</a></p>
-    <p>Template version 1.3.2 · Updated October 22, 2026</p>
+    <p>Template version 1.3.2, updated October 22, 2026</p>
     <p>Plan and settings details were last checked in October 2026. Claude features change over time, so if something seems different, check Claude's Help Center.</p>
   </footer>
 </div>
