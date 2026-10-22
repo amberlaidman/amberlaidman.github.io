@@ -202,6 +202,11 @@ button,.btn{border-radius:6px}
 .tag{font:500 .85rem var(--body);text-transform:none;letter-spacing:0;border:0;border-radius:0;padding:0;color:var(--muted)}
 .callout{border-radius:0;border-left:4px solid var(--line)}
 .callout.good{border-left-color:var(--s3)} .callout.next{border-left-color:var(--accent)} .callout.warn{border-left-color:var(--s1)}
+/* Phones: the title row scrolls away and only the tabs stay pinned; while typing, nothing stays pinned so the keyboard leaves room to see the answer. */
+@media (max-width:640px){
+  header{top:calc(env(safe-area-inset-top,0px) - var(--hide-h,0px))}
+  body.typing header{position:static}
+}
 </style>
 
 <div class="wrap">
@@ -511,7 +516,7 @@ button,.btn{border-radius:6px}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.4 · Updated October 22, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.4.1 · Updated October 22, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -1649,6 +1654,24 @@ button,.btn{border-radius:6px}
     }
     renderHomeStart();
   }
+
+  /* ---------- phones: smaller pinned header ---------- */
+  (function(){
+    const hd = document.querySelector("header"), row = hd && hd.querySelector(".head-row");
+    if (!hd || !row) return;
+    const narrow = window.matchMedia("(max-width:640px)");
+    function setHide(){
+      const cs = getComputedStyle(hd);
+      const h = row.getBoundingClientRect().height + parseFloat(cs.paddingTop || 0) + parseFloat(cs.rowGap || 0);
+      document.documentElement.style.setProperty("--hide-h", Math.round(h) + "px");
+    }
+    setHide(); window.addEventListener("resize", setHide);
+    if (window.ResizeObserver) new ResizeObserver(setHide).observe(row); // fonts load late and can change the title row height
+    const isTyping = el => el && (el.tagName === "TEXTAREA" || (el.tagName === "INPUT" && !/^(checkbox|radio|button|submit|range|file)$/i.test(el.type)));
+    let t = null;
+    document.addEventListener("focusin", e => { if (narrow.matches && isTyping(e.target)) { clearTimeout(t); document.body.classList.add("typing"); } });
+    document.addEventListener("focusout", () => { clearTimeout(t); t = setTimeout(() => { if (!isTyping(document.activeElement)) document.body.classList.remove("typing"); }, 150); });
+  })();
   /* ---------- theme toggle ---------- */
   const THEME_LABEL = {auto:"Auto", light:"Light", dark:"Dark"};
   function applyTheme(m){
