@@ -486,7 +486,7 @@ label{font-weight:700;font-size:.92rem}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.2 · Updated October 22, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.3 · Updated October 22, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -749,15 +749,21 @@ label{font-weight:700;font-size:.92rem}
     const crit = (list, rub) => { const o = {}; const l5 = list.slice(-5), p5 = list.slice(-10,-5); for (const r of rub) o[r.key] = { allTime: by(list,r.key), last5: by(l5,r.key), previous5: by(p5,r.key) }; return o; };
     const beh = chron.filter(s => s.type !== "hypothetical" && s.type !== "intro"), hyp = chron.filter(s => s.type === "hypothetical"), intro = chron.filter(s => s.type === "intro");
     const criteria = crit(beh, RUBRIC), hypoCriteria = crit(hyp, HYPO), introCriteria = crit(intro, INTRO); void last5; void prev5;
+    // Questions they found hard at least 3 days ago and haven't tried since, so Claude can bring one back (spaced practice).
+    const lastTry = {}; for (const s of chron) if (s.type !== "intro" && s.question) lastTry[String(s.question).trim().toLowerCase()] = s;
+    const now = Date.now();
+    const retryLater = Object.values(lastTry).map(s => ({ question:s.question, type:s.type || "behavioral", average:overallOf(s), daysAgo:Math.floor((now - Date.parse(s.at)) / 86400000) }))
+      .filter(x => typeof x.average === "number" && x.average < 2 && x.daysAgo >= 3).sort((a,b) => a.average - b.average).slice(0,5)
+      .map(x => Object.assign(x, {average: Math.round(x.average*100)/100}));
     const storyUse = {}; for (const st of S.stories) storyUse[st.id] = 0; for (const s of chron) if (s.storyId && s.storyId in storyUse) storyUse[s.storyId]++;
-    return { sessions: chron.length, behavioralSessions: beh.length, hypotheticalSessions: hyp.length, introSessions: intro.length, criteria, hypoCriteria, introCriteria, recentQuestions: chron.slice(-10).map(s => s.question), recentTypes: chron.slice(-5).map(s => s.type || "behavioral"), storyUse };
+    return { sessions: chron.length, behavioralSessions: beh.length, hypotheticalSessions: hyp.length, introSessions: intro.length, criteria, hypoCriteria, introCriteria, recentQuestions: chron.slice(-10).map(s => s.question), recentTypes: chron.slice(-5).map(s => s.type || "behavioral"), storyUse, retryLater };
   }
 
   /* ---------- Claude tools (page functions Claude may call) ---------- */
   const say = (id, t) => { $(id).textContent = t; };
   function makeTools(statusId){
     return [
-      { name:"get_progress", description:"Returns {{NAME}}'s practice history: number of sessions, average score (1 to 3) per rubric criterion for all time, the last 5 sessions and the 5 before that, the questions from their last 10 sessions, and how many times each story id has been used. Call this first.",
+      { name:"get_progress", description:"Returns {{NAME}}'s practice history: number of sessions, average score (1 to 3) per rubric criterion for all time, the last 5 sessions and the 5 before that, the questions from their last 10 sessions, how many times each story id has been used, and retryLater: questions they averaged under 2 on at least 3 days ago and haven't tried since. Call this first.",
         execute(){ say(statusId, "Checking your progress…"); return progressSummary(); } },
       { name:"list_stories", description:"Returns every story in their bank as {id, title, company, useFor}. Use it to see which stories could answer a question.",
         execute(){ say(statusId, "Looking through your stories…"); return S.stories.map(s => ({id:s.id, title:s.title, company:s.company, useFor:s.useFor, themes:s.themes || {}})); } },
@@ -791,7 +797,7 @@ label{font-weight:700;font-size:.92rem}
     const prompt = [
       "You are coaching {{NAME}}, {{ABOUT}}, through behavioral interview practice in STAR-R format (Situation, Task, Action, Result, Reflection).",
       "Choose their next practice question. Use the tools: call get_progress first, then list_stories, and list_questions if useful. Read a story with get_story only if you need to check it fits.",
-      "Prefer a question that targets the rubric area where their recent average is lowest, and that gives practice with stories they have used least, favoring recent work. You may use a question from their bank or write a new behavioral question in the same style. Never repeat a question from their last 3 sessions. If they have no sessions yet, start with a question one of their strongest recent stories answers well.",
+      "Prefer a question that targets the rubric area where their recent average is lowest, and that gives practice with stories they have used least, favoring recent work. You may use a question from their bank or write a new behavioral question in the same style. Never repeat a question from their last 3 sessions. If they have no sessions yet, start with a question one of their strongest recent stories answers well. If one of their low-scoring questions from at least 3 days ago is listed in retryLater, you may bring it back so they can try it again. Say so in \"why\", for example: \"You found this one hard last week, so it's worth another try.\"",
       "Rubric areas (keys): " + RUBRIC.map(r => `${r.key} = ${r.hint}`).join(" | "),
       "Mix in hypothetical \"how would you\" questions (type hypothetical) about one time in four, more often if they have few hypothetical sessions. They're scored on: " + HYPO.map(r => r.label).join(", ") + ". Behavioral questions should also cover themes their stories show weakly, including failure and conflict.",
       companyOf() ? companyContext(companyOf()) + ` Choose a question that tests one of ${companyOf().name}'s values, using one from this list or one in the same style: ${JSON.stringify(companyOf().questions || [])}. Mention the value in "why".` : "",
@@ -2201,6 +2207,7 @@ label{font-weight:700;font-size:.92rem}
     "You are {{NAME}}'s career and work coach inside their private Career Studio. Their saved context is below. Use it, but things may have changed since it was written; if something looks out of date, ask instead of assuming. Their situation right now, in their words: {{SITUATION}}",
     "How {{NAME}} wants to be coached: {{COACHSTYLE}} Never present a guess as fact: start any guess, inference, or unconfirmed claim with [Inference] or [Unverified]. Don't invent facts about companies, pay, or laws; say when something needs checking, since you can't search the web here.",
     "Write in plain language. Keep replies under about 180 words unless they ask for more. You're a coach, not a therapist: if they seem in real distress, be kind and suggest talking with someone they trust or a professional.",
+    "How to run the conversation: In your first reply, ask what they want to get out of this conversation, unless they've already said. Ask one question at a time, and ask more than you tell. Before giving your view, briefly reflect back what you heard so they can correct it. When you notice something that's already working for them, say so. Let them come up with options first, then offer your own ideas as options they can take or leave. When they seem to have landed on something, ask what they'll do next and what might get in the way, and suggest they select Wrap up to save it. Their coaching style above wins if it conflicts with this.",
     "Their saved context:\n" + "{{CTX}}"
   ].join("\n\n");
   const PRACTICE_RULES = (setup) => [
@@ -2211,10 +2218,10 @@ label{font-weight:700;font-size:.92rem}
   ].join("\n\n");
   const CONVO_RUBRIC = [
     {key:"ask", label:"Clear ask", hint:"Says plainly what they want or need."},
-    {key:"confidence", label:"Confidence", hint:"Doesn't make themselves smaller, over-apologize, or take blame they haven't earned."},
-    {key:"listening", label:"Listening", hint:"Responds to what the other person actually said."},
+    {key:"confidence", label:"Confidence", hint:"Doesn't make themselves smaller with hedges, filler hesitations, tag questions like \"right?\", over-apologizing, or taking blame they haven't earned. Honest caution about something truly uncertain is fine."},
+    {key:"listening", label:"Listening", hint:"Responds to what the other person actually said, and asks open questions to learn what they need."},
     {key:"pushback", label:"Handling pushback", hint:"Stays calm and holds their position, or trades for something, when pushed."},
-    {key:"tone", label:"Direct and respectful", hint:"Diplomatic without hedging."}
+    {key:"tone", label:"Direct and respectful", hint:"Firm about what they need without being harsh, neither too soft nor too pushy."}
   ];
   let chat = null; // {mode, id, turns:[{role,content}], setup, title}
   function chatEl(mode){ return mode === "talk" ? {log:$("talk-log"), input:$("talk-input"), send:$("talk-send"), end:$("talk-end"), status:$("talk-status"), out:$("talk-out")} : {log:$("pr-log"), input:$("pr-input"), send:$("pr-send"), end:$("pr-end"), status:$("pr-status"), out:$("pr-out")}; }
@@ -2277,7 +2284,7 @@ label{font-weight:700;font-size:.92rem}
     ].join("\n\n") : [
       `Give {{NAME}} feedback on this practice conversation. They were rehearsing: ${chat.setup.scenario}, with ${chat.setup.who}.${chat.setup.goal ? ` Their goal: ${chat.setup.goal}.` : ""} Never rewrite their lines or write a script for them. You may quote their own words.`,
       "Score each 1 to 3 (3 = strong, 2 = partly there, 1 = missing or weak), with one plain sentence of reason addressed to them as \"you\": " + CONVO_RUBRIC.map(r => `${r.key} = ${r.hint}`).join(" | "),
-      "Then give one strength, one thing to try next time, a list of exact phrases they used that made them smaller or hedged (empty if none), a short title (under 8 words), and one or two next steps.",
+      "Then give one strength, one thing to try next time, a list of the exact phrases where they apologized or sounded unsure when they didn't need to (empty if none; leave out honest statements about something they really don't know), a short title (under 8 words), and one or two next steps.",
       `Conversation:\n${transcript}`,
       'Reply with only JSON: {"title": string, "scores": {"ask":{"score":n,"reason":s}, "confidence":{...}, "listening":{...}, "pushback":{...}, "tone":{...}}, "strength": string, "tryNext": string, "smaller": [strings], "nextSteps": [strings]}'
     ].join("\n\n");
@@ -2307,7 +2314,7 @@ label{font-weight:700;font-size:.92rem}
     return [ el("div",{class:"overall"},[ el("span",{class:"big"}, o ? o.toFixed(1) : "–"), el("span",{class:"muted small"},"average out of 3") ]),
       el("div",{class:"callout good"},[ el("strong",{},"What worked"), el("span",{}, r.strength) ]),
       el("div",{class:"callout next"},[ el("strong",{},"Try next time"), el("span",{}, r.tryNext) ]),
-      listCallout("warn","Words that made you smaller", (r.smaller||[]).map(h => `"${h}"`), null),
+      listCallout("warn","Phrases that made you sound unsure", (r.smaller||[]).map(h => `"${h}"`), null),
       scoreRows(r.scores, CONVO_RUBRIC),
       fresh ? stepsBlock(r.nextSteps) : null ];
   }
