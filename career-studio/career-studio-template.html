@@ -95,7 +95,7 @@ li > a{display:inline-block;padding-block:10px}
 .subnav button[aria-selected="true"]{text-decoration:underline;text-underline-offset:4px}
 .chat-wrap:has(.chat-log[hidden]):has(.chat-box[hidden]):has(#talk-out[hidden]), .chat-wrap:has(.chat-log[hidden]):has(.chat-box[hidden]):has(#pr-out[hidden]){display:none}
 .chat-log{display:grid;gap:10px;max-height:60vh;overflow-y:auto;padding:4px}
-.bubble{padding:10px 14px;border-radius:14px;max-width:88%;white-space:pre-wrap;line-height:1.5}
+.bubble{scroll-margin-top:200px;padding:10px 14px;border-radius:14px;max-width:88%;white-space:pre-wrap;line-height:1.5}
 .bubble.me{justify-self:end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
 .bubble.them{justify-self:start;background:var(--sunk);border-bottom-left-radius:4px}
 .bubble.err{color:var(--s1)}
@@ -486,7 +486,7 @@ label{font-weight:700;font-size:.92rem}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.3 · Updated October 22, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.3.1 · Updated October 22, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -2231,7 +2231,15 @@ label{font-weight:700;font-size:.92rem}
     if (!chat || chat.mode !== mode) { ui.log.hidden = true; ui.input.closest(".chat-box").hidden = true; return; }
     ui.log.hidden = false; ui.input.closest(".chat-box").hidden = false;
     for (const t of chat.turns) ui.log.append(bubble(t.role, t.content));
-    ui.log.scrollTop = ui.log.scrollHeight;
+    showReplyTop(ui.log);
+  }
+  // Scroll so the newest reply starts at the top of the chat box, so people read it from its first line.
+  function showReplyTop(log){
+    const last = [...log.querySelectorAll(".bubble.them")].pop();
+    if (!last) { log.scrollTop = log.scrollHeight; return; }
+    log.scrollTop += last.getBoundingClientRect().top - log.getBoundingClientRect().top - 4;
+    const top = last.getBoundingClientRect().top;
+    if (top < 200 || top > window.innerHeight - 80) last.scrollIntoView({block:"start"});
   }
   async function saveChat(){
     if (!db || !chat) return;
@@ -2244,20 +2252,20 @@ label{font-weight:700;font-size:.92rem}
     if (!sample){ ui.status.hidden = false; ui.status.textContent = "Claude isn't available in this view."; return; }
     if (text) chat.turns.push({role:"user", content:text});
     renderChat(mode);
-    const live = bubble("assistant", "…"); ui.log.append(live); ui.log.scrollTop = ui.log.scrollHeight;
+    const live = bubble("assistant", "Thinking…"); ui.log.append(live); showReplyTop(ui.log);
     ui.send.disabled = true; ui.end.disabled = true; chatCtl = new AbortController();
     const rules = (mode === "talk" ? COACH_RULES : PRACTICE_RULES(chat.setup)).replace("{{CTX}}", ctxText());
     const turns = [{role:"user", content: rules + (chat.turns.length ? "" : "\n\n" + (mode === "talk" ? "Start the session." : "Open the conversation in character."))}, ...chat.turns.slice(-40)];
     if (turns.length > 1 && turns[1].role === "assistant") turns.splice(1, 0, {role:"user", content:"(Session starts.)"});
     if (turns[turns.length-1].role !== "user") turns.push({role:"user", content:"(Continue.)"});
     try {
-      const r = await sample(turns, { signal: chatCtl.signal, cache:false, onText: t => { live.textContent = t; ui.log.scrollTop = ui.log.scrollHeight; } });
+      const r = await sample(turns, { signal: chatCtl.signal, cache:false, onText: t => { const txt = typeof t === "string" ? t : (t && typeof t.text === "string" ? t.text : ""); if (txt) live.textContent = txt; } });
       chat.turns.push({role:"assistant", content:String(r.text || "").trim()});
       await saveChat();
     } catch (e) {
       if (e?.code !== "cancelled") { live.textContent = errCopy(e?.code); live.classList.add("err"); return; }
     } finally { ui.send.disabled = false; ui.end.disabled = false; }
-    renderChat(mode); ui.input.focus();
+    renderChat(mode); ui.input.focus({preventScroll:true});
   }
   function wireChat(mode){
     const ui = chatEl(mode);
