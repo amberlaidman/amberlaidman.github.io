@@ -59,13 +59,18 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 .hero{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:end;padding-top:28px}
 @media (max-width:620px){
   .hero{grid-template-columns:1fr;gap:14px;padding-top:16px}
-  .hero .photo{width:104px;aspect-ratio:1;border-radius:50%;font-size:2.4rem}
+  .hero .photo{width:120px;aspect-ratio:1;border-radius:50%;font-size:2.4rem}
   .hero .photo small{display:none}
+  .hero .photo img{object-position:50% 40%}
   .hero .who{gap:8px}
   .hero .who h1{font-size:2.4rem}
   .hero .who .role{font-size:1rem}
 }
 .photo{aspect-ratio:4/5;max-width:100%;border-radius:6px;background:linear-gradient(165deg,var(--mint),var(--teal) 70%);display:grid;place-items:center;color:var(--on-teal);font:600 3.5rem var(--display);position:relative;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
+.who .badge{margin-top:10px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0;padding:0;list-style:none}
+.tags li{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font:600 .85rem var(--head);color:var(--ink);background:var(--surface)}
 .photo small{position:absolute;left:12px;bottom:10px;font:500 .72rem var(--mono)}
 .who{display:grid;gap:10px}
 .who h1{font:600 clamp(2.6rem,9vw,3.8rem)/1 var(--display);margin:0;letter-spacing:-.02em}
@@ -76,17 +81,23 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 .storytext{margin:4px 0 0;font-size:1rem;line-height:1.6;max-width:60ch}
 
 /* Compatibility */
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:600 .95rem var(--head)}
-.chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:var(--on-teal)}
-.result{background:var(--sunk);border-radius:6px;padding:18px;display:grid;gap:12px}
-.meter{height:14px;border-radius:7px;background:var(--line);overflow:hidden}
-.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--green))}
-.pct{font:500 2.4rem var(--mono);margin:0;line-height:1}
-.why{margin:0;padding:0;list-style:none;display:grid;gap:10px}
-.why li{display:grid;gap:2px;border-left:3px solid var(--teal);padding-left:12px}
-.why b{font:600 .9rem var(--head)}
-.fine{font-size:.82rem;color:var(--muted);margin:0}
+.sw{display:grid;gap:12px;justify-items:center}
+.swprog{margin:0;font:500 .85rem var(--mono);color:var(--muted)}
+.swcard{width:100%;max-width:360px;min-height:190px;border-radius:14px;background:var(--cream);color:var(--ink);border:2px solid var(--teal);display:grid;align-content:center;padding:24px;text-align:center;touch-action:pan-y;cursor:grab;box-shadow:0 8px 0 -4px var(--line),0 16px 0 -8px color-mix(in srgb,var(--line) 60%,var(--bg))}
+.swbtns{margin-top:6px}
+@media (prefers-reduced-motion:no-preference){.swcard{transition:transform .22s ease,opacity .22s ease}}
+.swcard.out-r{transform:translateX(60%) rotate(8deg);opacity:0}.swcard.out-l{transform:translateX(-60%) rotate(-8deg);opacity:0}
+.swq{margin:0;font:600 .9rem var(--head);opacity:.85}.swn{margin:6px 0 0;font:600 1.6rem/1.2 var(--display)}
+.swbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:360px}
+.linkbtn{background:none;border:0;color:var(--teal);font:600 .95rem var(--head);text-decoration:underline;min-height:44px;cursor:pointer;justify-self:start}
+.mcard{background:var(--cream);border-radius:14px;padding:18px;display:grid;gap:10px;border:2px solid var(--teal)}
+.mcard h3{margin:0;font:600 1.3rem/1.25 var(--display)}
+.stamps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.stamps li{display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.stamps li:first-child{border-top:0}
+.stamps .ck{grid-row:1/3;width:24px;height:24px;border-radius:50%;background:var(--teal);color:var(--on-teal);display:grid;place-items:center;font-size:.8rem;margin-top:2px}
+.stamps b{font:600 .95rem var(--head)}.stamps .pf{font-size:.88rem;color:var(--muted)}
+.mcard{gap:6px!important}
 
 /* Flip cards */
 .flips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -103,7 +114,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 .front .tap{grid-column:1;grid-row:2;font:600 .85rem var(--head)}
 .flip,.face{min-height:150px}
 .front small{font:600 .82rem var(--head);opacity:.85}
-.back{background:var(--cream);border:1px solid var(--line)}
+.back{background:var(--cream);border:1px solid var(--line);align-content:start}
 .back small{font:600 .82rem var(--head);color:var(--muted)}
 .back span{font:600 1.05rem/1.4 var(--display)}
 
@@ -132,7 +143,8 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 blockquote{margin:0;font:400 1rem/1.6 var(--body);max-width:62ch}
 .rpanel blockquote{background:var(--sunk);border-radius:6px;padding:16px 18px 16px 18px;position:relative}
 .rpanel blockquote::before{content:"\201C";display:block;font:600 2.4rem/1 var(--display);color:var(--teal);height:.6em;margin-bottom:6px}
-#signs+blockquote{border-left:3px solid var(--teal);padding-left:14px}
+#signs+blockquote{background:var(--sunk);border-radius:6px;padding:14px 18px}
+#signs+blockquote::before{content:"\201C";display:block;font:600 1.9rem/1 var(--display);color:var(--teal);height:.6em;margin-bottom:6px}
 blockquote cite b{display:block;font:600 .95rem var(--head);color:var(--ink)}
 blockquote cite span{display:block;font:400 .85rem var(--body);color:var(--muted)}
 blockquote cite{display:block;font-style:normal;margin-top:8px}
@@ -152,7 +164,8 @@ blockquote cite{display:block;font-style:normal;margin-top:8px}
 .ask{background:var(--cream);border-radius:32px;padding:28px 22px;display:grid;gap:14px;text-align:center;position:relative;overflow:hidden}
 .ask h2{font-size:1.5rem}
 .ask .heart{width:40px;height:40px;color:var(--pink);justify-self:center}
-.ask .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.ask .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:420px;width:100%;justify-self:center}
+.ask .row .btn{padding:0 6px;font-size:.92rem;white-space:nowrap}
 .mutual{display:grid;gap:8px}
 .mutual h3{font:600 2.2rem var(--display);margin:0}
 .email{font:600 1.05rem var(--mono);user-select:all}
@@ -194,19 +207,35 @@ details.more[open] summary{margin-bottom:10px}
   .flip .front .tap{grid-row:3;font-size:.78rem}
   .back span{font-size:.92rem}
 }
-</style>
+.qtrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;scrollbar-width:none;border-radius:6px}
+.qtrack::-webkit-scrollbar{display:none}
+.qtrack blockquote{flex:0 0 100%;scroll-snap-align:start;max-width:none}
+.qtrack:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.qnav{display:flex;align-items:center;justify-content:center;gap:12px}
+.qnav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 1.4rem/1 var(--head);cursor:pointer}
+.qnav button:disabled{opacity:.35;cursor:default}
+.qcount{font:500 .85rem var(--mono);color:var(--muted);min-width:4.5em;text-align:center}
+.wrap{padding-bottom:110px}
 
+/* Flair */
+.fx{position:fixed;pointer-events:none;z-index:50;left:0;top:0}
+.fx.h{color:#E07A8F;font-size:20px;animation:fxUp 900ms ease-out forwards}
+.fx.c{width:8px;height:12px;border-radius:2px;animation:fxFall 1100ms ease-out forwards}
+@keyframes fxUp{from{transform:translate(var(--x0),var(--y0)) scale(.6);opacity:1}to{transform:translate(calc(var(--x0) + var(--dx)),calc(var(--y0) - 120px)) scale(1.1);opacity:0}}
+@keyframes fxFall{0%{transform:translate(var(--x0),var(--y0)) rotate(0);opacity:1}100%{transform:translate(calc(var(--x0) + var(--dx)),calc(var(--y0) + var(--dy))) rotate(var(--r));opacity:0}}
+</style>
 </head>
 <body>
 <main class="wrap">
   <div class="themebar" role="group" aria-label="Color theme"><button type="button" data-t="auto" aria-pressed="true">Auto</button><button type="button" data-t="light" aria-pressed="false">Light</button><button type="button" data-t="dark" aria-pressed="false">Dark</button></div>
   <header class="hero">
-    <div class="photo" role="img" aria-label="Photo of Amber (placeholder)">A<small>Photo placeholder</small></div>
+    <div class="photo"><img src="amber.jpg" alt="Amber smiling in a light blue shirt" width="640" height="800"></div>
     <div class="who">
       <p class="eyebrow">Seeking long-term</p>
       <h1>Amber</h1>
       <p class="role">Learning and enablement lead, Maryland</p>
       <p class="loc">Open to a long-distance relationship: remote works great, and I'm happy to fly in. Will relocate for the right match.</p>
+      <ul class="tags" aria-label="Off the clock"><li>Artist</li><li>Runner</li><li>Loves to travel</li></ul>
       <a class="badge" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">✓ Verified on LinkedIn</a>
     </div>
   </header>
@@ -214,27 +243,25 @@ details.more[open] summary{margin-bottom:10px}
 
   <section aria-labelledby="h-compat">
     <p class="eyebrow">Compatibility check</p>
-    <h2 id="h-compat">What does your team need most?</h2>
-    <p class="sub">Pick one or more, and see how we'd work together.</p>
-    <div class="chips" id="needs"></div>
-    <div><button class="btn yes" id="checkBtn" type="button" disabled>Check our compatibility</button></div>
-    <div class="result" id="result" hidden aria-live="polite">
-      <p class="pct" id="pct">0%</p>
-      <div class="meter" aria-hidden="true"><i id="bar"></i></div>
-      <ul class="why" id="why"></ul>
-      <p class="fine">Scoring is for fun. The examples are real.</p>
+    <h2 id="h-compat">What does your team need?</h2>
+    <p class="sub">Swipe through what your team needs, and I'll be honest about where I fit.</p>
+    <div class="sw" id="sw">
+      <p class="swprog" id="swprog" aria-live="polite"></p>
+      <div class="swcard" id="swcard"></div>
+      <div class="swbtns"><button type="button" class="btn" id="swNo">Not really</button><button type="button" class="btn yes" id="swYes">We need this</button></div>
     </div>
+    <div class="mcard" id="sw-res" hidden aria-live="polite"></div>
   </section>
 
   <section class="story" aria-labelledby="h-story">
     <svg class="bolt" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M34 6 14 34h14l-4 20 22-30H32z"/></svg>
-    <div><p class="eyebrow" id="h-story">How I met my match</p><p class="storytext">When I was single, I gave Match, OkCupid, Plenty of Fish, and Tinder all a try, and Tinder is where I met my partner 10 years ago. We're still going strong, so I'm hoping lightning strikes twice and I find my long-term role here too.</p></div>
+    <div><p class="eyebrow" id="h-story">How I met my match</p><p class="storytext">When I was single, I gave Match, OkCupid, Plenty of Fish, and Tinder all a try (I was thorough), and Tinder is where I met my partner 10 years ago. We're still going strong, so I'm hoping lightning strikes twice and I find my long-term role here too.</p></div>
   </section>
 
   <section class="whycard" aria-labelledby="h-why">
     <p class="eyebrow">Why Match Group</p>
     <h2 id="h-why">We want the same things</h2>
-    <p>Your mission is to spark meaningful connections, and that's what good learning does inside a company too. You're bringing your brands together as one Match Group, rolling out new features like Events and a full Tinder rebrand, and giving every employee AI tools. That's a lot of change for people to learn at once, and helping teams through change like that is the work I love most.</p>
+    <p>Your mission is to spark meaningful connections, and that's what good learning does inside a company too. Over the past year you've brought your brands together as One Match Group, launched new features like Events, refreshed Tinder's look, and started building AI skills across the company. That's a lot of change for people to keep up with, and helping teams learn and adjust through change like that is the work I love most.</p>
   </section>
 
   <section aria-labelledby="h-prompts">
@@ -246,6 +273,7 @@ details.more[open] summary{margin-bottom:10px}
   <section aria-labelledby="h-flags">
     <p class="eyebrow">Flags, sorted</p>
     <h2 id="h-flags">Pick a color to see the flags</h2>
+    <p class="sub">Every good match owns their flags. Select a color again to close it.</p>
     <div class="sorter">
       <div class="piles" id="piles"></div>
       <ul class="dealt" id="dealt" aria-live="polite"></ul>
@@ -273,13 +301,13 @@ details.more[open] summary{margin-bottom:10px}
       <div class="sign"><span class="glyph" aria-hidden="true">☽</span><b>Moon</b><span>Cancer</span></div>
       <div class="sign"><span class="glyph" aria-hidden="true">↑</span><b>Rising</b><span>Cancer</span></div>
     </div>
-    <blockquote>"The biggest Cancer thing about you is that once 'you're in' you're in, but a lot of people are not in and will not be getting an invite."<cite><b>Tara</b><span>Former coworker, now friend</span></cite></blockquote>
+    <blockquote>The biggest Cancer thing about you is that once 'you're in' you're in, but a lot of people are not in and will not be getting an invite.<cite><b>Tara</b><span>Former coworker, now friend</span></cite></blockquote>
       </div>
-      <div class="funcol"><p class="funh" id="h-repeat">Currently on repeat</p>
+      <div class="funcol"><p class="funh" id="h-repeat">Lately I'm enjoying</p>
     <div class="repeat">
       <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10h16a6 6 0 0 1 6 6v34a4 4 0 0 0-4-4H8z"/><path d="M52 10H36a6 6 0 0 0-6 6v34a4 4 0 0 1 4-4h18z"/></svg><b>Book</b><span>The Light Eaters, Zoë Schlanger</span><em role="img" aria-label="Rated 5 out of 5">★★★★★</em></div>
       <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="12" width="48" height="32" rx="4"/><path d="M22 52h16M30 44v8"/></svg><b>Show</b><span>Elsbeth</span><em role="img" aria-label="Rated 5 out of 5">★★★★★</em></div>
-      <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 46V12l26-6v34"/><circle cx="18" cy="46" r="6"/><circle cx="44" cy="40" r="6"/></svg><b>Song</b><span>East Coast Summers, Kaleb Cohen</span><em>Most played this year</em></div>
+      <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 46V12l26-6v34"/><circle cx="18" cy="46" r="6"/><circle cx="44" cy="40" r="6"/></svg><b>Song</b><span>East Coast Summers, Kaleb Cohen</span><em>Most played this year, and I'm not sorry</em></div>
     </div>
     
     <a class="link" href="https://amberlaidman.github.io/shelf/" target="_blank" rel="noopener">See everything I read, watch, and listen to</a>
@@ -290,20 +318,15 @@ details.more[open] summary{margin-bottom:10px}
   <section aria-labelledby="h-receipts">
     <p class="eyebrow">No catfishing here</p>
     <h2 id="h-receipts">My receipts</h2>
-    <p class="sub">What it's really like to know me, from the people who do. All work quotes come from my LinkedIn recommendations.</p>
+    <p class="sub">What it's really like to know me, from the people who do. All work quotes come from my recommendations.</p>
     <div class="tabs2" role="tablist" aria-label="Receipts">
       <button role="tab" id="rt-friends" aria-controls="rp-friends" aria-selected="true" data-r="friends" type="button">Friends</button>
       <button role="tab" id="rt-coworkers" aria-controls="rp-coworkers" aria-selected="false" data-r="coworkers" type="button">Coworkers</button>
       <button role="tab" id="rt-managers" aria-controls="rp-managers" aria-selected="false" data-r="managers" type="button">Leaders</button>
     </div>
-    <div class="rpanel" id="rp-friends" role="tabpanel" aria-labelledby="rt-friends" data-p="friends">
-      <blockquote>You are the kind of friend that makes you feel loved, cared for, and protected no matter what. You have the biggest heart and a hilarious and quirky personality.<cite><b>Chelsea</b><span>Best friend since high school</span></cite></blockquote>
-      <details class="more"><summary>Read another</summary><blockquote>Amber: Perfect Friendship Project Manager, a role no one asked her to take but everyone is grateful she does. She defines the scope of in-person connects (meals with an activity: in; ghosting: out), plans brunch milestones, tracks who still checks in, and manages risks like sketchy new places of employment. All change requests, especially last-minute cancellations, must go through her, as she works to deliver the perfect friendship on time, under budget, and with zero drama (results may vary).<cite><b>Diana</b><span>Worked together over the years, now friends</span></cite></blockquote></details>
-    </div>
-    <div class="rpanel" id="rp-coworkers" role="tabpanel" aria-labelledby="rt-coworkers" data-p="coworkers" hidden><blockquote>Team members have even joked that she must be some kind of fairy because she can seemingly make something amazing happen overnight.<cite><b>Leslie Miller, PHR</b><span>HR Operations, worked with Amber in the same group</span></cite></blockquote>
-      <details class="more"><summary>Read another</summary><blockquote>She fosters an environment where everyone feels heard and respected.<cite><b>Taraneh Bond, CLDP</b><span>Senior L&amp;D Strategist, worked with Amber in the same group</span></cite></blockquote></details></div>
-    <div class="rpanel" id="rp-managers" role="tabpanel" aria-labelledby="rt-managers" data-p="managers" hidden><blockquote>She doesn't only ask questions - she asks the questions no one else has thought of yet.<cite><b>Brénna Durnin</b><span>Learning Development Consultant, managed Amber directly</span></cite></blockquote>
-      <details class="more"><summary>Read another</summary><blockquote>Her trackers and project plans are the cleanest I've ever seen.<cite><b>Chelsea Taylor</b><span>Director, Learning &amp; Enablement, senior to Amber</span></cite></blockquote></details></div>
+    <div class="rpanel" id="rp-friends" role="tabpanel" aria-labelledby="rt-friends" data-p="friends"><div class="qtrack" tabindex="0" aria-label="Quotes, swipe for more"><blockquote>You are the kind of friend that makes you feel loved, cared for, and protected no matter what. You have the biggest heart and a hilarious and quirky personality.<cite><b>Chelsea</b><span>Best friend since high school</span></cite></blockquote><blockquote>Amber: Perfect Friendship Project Manager, a role no one asked her to take but everyone is grateful she does. She defines the scope of in-person connects (meals with an activity: in; ghosting: out), plans brunch milestones, tracks who still checks in, and manages risks like sketchy new places of employment. All change requests, especially last-minute cancellations, must go through her, as she works to deliver the perfect friendship on time, under budget, and with zero drama (results may vary).<cite><b>Diana</b><span>Worked together over the years, now friends</span></cite></blockquote></div><div class="qnav"><button type="button" class="qprev" aria-label="Previous quote">‹</button><span class="qcount" aria-live="polite">1 of 2</span><button type="button" class="qnext" aria-label="Next quote">›</button></div></div>
+    <div class="rpanel" id="rp-coworkers" role="tabpanel" aria-labelledby="rt-coworkers" data-p="coworkers" hidden><div class="qtrack" tabindex="0" aria-label="Quotes, swipe for more"><blockquote>The first thing you need to know about Amber is that she is an idea machine and is always thinking 2 steps ahead.<cite><b>Nik</b><span>Sr. Instructional Designer, worked with Amber at T-Mobile</span></cite></blockquote><blockquote>She fosters an environment where everyone feels heard and respected.<cite><b>Taraneh</b><span>Senior L&amp;D Strategist, worked with Amber in the same group</span></cite></blockquote></div><div class="qnav"><button type="button" class="qprev" aria-label="Previous quote">‹</button><span class="qcount" aria-live="polite">1 of 2</span><button type="button" class="qnext" aria-label="Next quote">›</button></div></div>
+    <div class="rpanel" id="rp-managers" role="tabpanel" aria-labelledby="rt-managers" data-p="managers" hidden><div class="qtrack" tabindex="0" aria-label="Quotes, swipe for more"><blockquote>She doesn't only ask questions - she asks the questions no one else has thought of yet.<cite><b>Brénna</b><span>Learning Development Consultant, managed Amber directly</span></cite></blockquote><blockquote>Her trackers and project plans are the cleanest I've ever seen.<cite><b>Chelsea</b><span>Director, Learning &amp; Enablement, senior to Amber</span></cite></blockquote><blockquote>Throughout her internship, she displayed wit, creativity, and analytical thought to each project assigned.<cite><b>Jeni</b><span>Learning &amp; Development Leader, managed Amber directly</span></cite></blockquote></div><div class="qnav"><button type="button" class="qprev" aria-label="Previous quote">‹</button><span class="qcount" aria-live="polite">1 of 3</span><button type="button" class="qnext" aria-label="Next quote">›</button></div></div>
     <a class="link" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">Read more recommendations on LinkedIn</a>
   </section>
 
@@ -315,46 +338,54 @@ details.more[open] summary{margin-bottom:10px}
       <div class="row"><button class="btn" id="noBtn" type="button">Not this req</button><button class="btn yes" id="yesBtn" type="button">Schedule a screen</button></div>
       <p class="note" id="noNote" aria-live="polite"></p>
       <a class="link" href="https://amberlaidman.github.io/" target="_blank" rel="noopener" style="justify-self:center">Not ready yet? See what else I've built</a>
+      <a class="link" href="Amber_Laidman_Resume.pdf" target="_blank" rel="noopener" style="justify-self:center">Prefer the classic version? Download my résumé (PDF)</a>
     </div>
     <div class="mutual" id="mutual" hidden>
       <h3 tabindex="-1" id="mutualH">Mutual interest!</h3>
-      <p style="margin:0">Looks like we're moving to the screening stage.</p>
+      <p style="margin:0">Looks like we're moving to the screening stage. I'll bring the snacks.</p>
       <p class="email" style="margin:0">laidman.amber@gmail.com</p>
       <div class="row"><button class="btn yes" id="copyBtn" type="button">Copy email</button><a class="btn" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Message on LinkedIn</a></div>
+      <a class="link" href="Amber_Laidman_Resume.pdf" target="_blank" rel="noopener">Download my résumé (PDF)</a>
     </div>
   </section>
 </main>
 
 <script>
+document.documentElement.lang="en";
 (function(){var bs=[].slice.call(document.querySelectorAll(".themebar button"));
 function set(t){if(t==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t);bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===t);});}
 var s="auto";try{s=localStorage.getItem("slt-theme")||"auto";}catch(e){}set(s);
 bs.forEach(function(b){b.addEventListener("click",function(){set(b.dataset.t);try{localStorage.setItem("slt-theme",b.dataset.t);}catch(e){}});});})();
-var NEEDS=[
- ["Onboarding","Onboarding across teams","Onboarded 14 consultants across several countries at Visa, and certified 111 new hires on schedule at T-Mobile."],
- ["AI","Helping teams use AI","Built 40+ courses with AI tools at Tito's, and designed an AI role-play agent for onboarding practice at Visa."],
- ["Managers","Manager and leadership programs","Coached managers to track their teams' training at Tito's, and ran train-the-trainer sessions for 24 regional trainers at T-Mobile."],
- ["Launches","Launching new features","Trained 100+ employees and leaders on device launches, rate plans, and promotions at T-Mobile."],
- ["Measuring","Measuring what works","Raised trainee success from 76% to 86% at Outdoorsy, and built reporting dashboards for leadership at Tito's."]
-];
-var picked={};
-var needs=document.getElementById("needs"),checkBtn=document.getElementById("checkBtn");
-needs.innerHTML=NEEDS.map(function(n,i){return '<button type="button" class="chip" aria-pressed="false" data-i="'+i+'">'+n[1]+'</button>';}).join("");
-needs.addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;var on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);if(on)picked[b.dataset.i]=1;else delete picked[b.dataset.i];checkBtn.disabled=!Object.keys(picked).length;});
+var noFx=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+function fxAt(el,kind,n){if(noFx||!el)return;var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;var cols=["#3D6B7A","#C7E0D0","#E07A8F","#C9A35A","#7BAF8E"];
+for(var i=0;i<n;i++){var s=document.createElement("span");s.className="fx "+kind;s.setAttribute("aria-hidden","true");
+if(kind=="h"){s.textContent="\u2665";s.style.setProperty("--x0",(cx-10+(Math.random()*40-20))+"px");s.style.setProperty("--y0",(cy-10)+"px");s.style.setProperty("--dx",(Math.random()*60-30)+"px");s.style.animationDelay=(i*70)+"ms";}
+else{s.style.background=cols[i%cols.length];s.style.setProperty("--x0",cx+"px");s.style.setProperty("--y0",cy+"px");var a=Math.random()*Math.PI*2,d=80+Math.random()*120;s.style.setProperty("--dx",Math.cos(a)*d+"px");s.style.setProperty("--dy",(Math.sin(a)*d+60)+"px");s.style.setProperty("--r",(Math.random()*540-270)+"deg");}
+document.body.appendChild(s);setTimeout(function(x){return function(){x.remove();};}(s),1500);}}
+document.addEventListener("click",function(e){if(e.target.closest("#swYes"))fxAt(e.target.closest("#swYes"),"h",5);if(e.target.closest("#yesBtn"))setTimeout(function(){fxAt(document.getElementById("mutualH"),"c",28);},60);});
+function gc(n){try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:"seeking-"+n,title:n,event:true});}catch(e){}}
+document.addEventListener("click",function(e){var t=e.target.closest("#yesBtn,#noBtn,#copyBtn,a,#swAgain,.flip,[role=tab],.pile");if(!t)return;
+var n=t.id||(t.tagName=="A"?"link-"+(t.href.indexOf("linkedin")>-1?"linkedin":t.href.indexOf("shelf")>-1?"shelf":t.href.indexOf(".pdf")>-1?"resume":"portfolio"):t.classList.contains("flip")?"flip-"+(t.querySelector(".ttl")||t).textContent.trim().split(" ").slice(0,2).join("-").toLowerCase():t.getAttribute("role")=="tab"?"quotes-"+t.dataset.r:"flags-"+t.dataset.k);gc(n);});
 var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-checkBtn.addEventListener("click",function(){
-  var ks=Object.keys(picked);var target=Math.min(99,90+ks.length*2);
-  document.getElementById("result").hidden=false;
-  document.getElementById("why").innerHTML=ks.map(function(k){return '<li><b>'+NEEDS[k][1]+'</b><span>'+NEEDS[k][2]+'</span></li>';}).join("");
-  var pct=document.getElementById("pct"),bar=document.getElementById("bar");
-  if(reduce){pct.textContent=target+"%";bar.style.width=target+"%";return;}
-  var v=0;bar.style.width="0";var t=setInterval(function(){v+=3;if(v>=target){v=target;clearInterval(t);}pct.textContent=v+"%";bar.style.width=v+"%";},30);
-});
+var S=[["Onboarding across teams", "Onboarded consultants across several countries at Visa"], ["Helping teams use AI", "Built 40+ courses with AI tools in my most recent role"], ["Manager and leadership programs", "Trained 24 regional trainers at T-Mobile"], ["Launching new features", "Trained 100+ people on device launches at T-Mobile"], ["Measuring what works", "Raised trainee success from 76% to 86% at Outdoorsy"]];
+var N=[["Onboarding across teams", "Onboarded 14 consultants across several countries at Visa, and certified 111 new hires on schedule at T-Mobile."], ["Helping teams use AI", "Built 40+ courses with AI tools in my most recent role, and designed an AI role-play agent for onboarding practice at Visa."], ["Manager and leadership programs", "Coached managers to track their teams' training in my most recent role, and ran train-the-trainer sessions for 24 regional trainers at T-Mobile."], ["Launching new features", "Trained 100+ employees and leaders on device launches, rate plans, and promotions at T-Mobile."], ["Measuring what works", "Raised trainee success from 76% to 86% at Outdoorsy, and built reporting dashboards for leadership at Tito's."]];
+function headline(ks){var short=["onboarding","AI","leadership","launches","measurement"];var n=ks.map(function(k){return short[k];});
+ var t=n.length>=4?"Perfect match":n.length>=2?"Strong match":"Promising match";
+ return t+": "+(n.length>2?n.slice(0,-1).join(", ")+" + "+n[n.length-1]:n.join(" + "));}
+function card(ks,again){return '<p class="eyebrow">Your match card</p><h3>'+headline(ks)+'</h3><ul class="stamps">'+ks.map(function(k){return '<li><span class="ck" aria-hidden="true">✓</span><b>'+S[k][0]+'</b><span class="pf">'+S[k][1]+'</span></li>';}).join("")+'</ul>'+(again?'<button type="button" class="linkbtn" id="'+again+'">Start over</button>':'');}
+/* option 1 */
+var i=0,yes=[];var sc=document.getElementById("swcard"),sp=document.getElementById("swprog"),sw=document.getElementById("sw"),sr=document.getElementById("sw-res");
+function showSw(){sp.textContent="Need "+(i+1)+" of "+N.length;sc.innerHTML='<p class="swq">Does your team need help with</p><p class="swn">'+N[i][0]+'?</p>';sc.classList.remove("out-l","out-r");}
+var busy=false;function ans(v){if(busy)return;busy=true;if(v)yes.push(i);sc.classList.add(v?"out-r":"out-l");setTimeout(function(){busy=false;i++;if(i<N.length)showSw();else finish();},matchMedia("(prefers-reduced-motion: reduce)").matches?0:220);}
+function finish(){gc(yes.length?"swipe-done-"+yes.length:"swipe-done-0");sw.hidden=true;sr.hidden=false;sr.innerHTML=yes.length?card(yes,"swAgain"):'<h3>No needs picked</h3><p>That\'s okay. Want to try again?</p><button type="button" class="linkbtn" id="swAgain">Start over</button>';document.getElementById("swAgain").addEventListener("click",function(){i=0;yes=[];sw.hidden=false;sr.hidden=true;showSw();document.getElementById("swYes").focus();});}
+document.getElementById("swYes").addEventListener("click",function(){ans(true);});document.getElementById("swNo").addEventListener("click",function(){ans(false);});
+var x0=null;sc.addEventListener("pointerdown",function(e){x0=e.clientX;});sc.addEventListener("pointerup",function(e){if(x0===null)return;var d=e.clientX-x0;x0=null;if(Math.abs(d)>50)ans(d>0);});
+showSw();
 
 var PROMPTS=[
  ["Ideal first date","A needs analysis over coffee, whiteboarding a plan together with snacks, or a ride-along to see the work up close"],
- ["How I show I care","I build the guide I wish I'd had on my first day"],
- ["My love language at work","Follow-ups, a plan everyone can see, and snacks"],
+ ["How I show I care","I build the guide I wish I'd had on my first day, and I fix the thing that's been slowing everyone down, even when nobody asked me to."],
+ ["My love language at work","Follow-ups, a plan everyone can see, and snacks. Bonus points if you tell me what's working, not just what's broken."],
  ["The way to win me over","Show me the data, then let me dig in. Invite me to the meeting before the decision is made. Clear goals, honest feedback, and room to try new tools or explore."]
 ];
 var flips=document.getElementById("flips");
@@ -368,7 +399,7 @@ var FLAGS={g:["Green flags",["Helps teams use AI in their everyday work","Builds
 var piles=document.getElementById("piles"),dealt=document.getElementById("dealt"),cur=null,shown=0;
 piles.innerHTML=["g","b","p"].map(function(k){return '<button type="button" class="pile '+k+'" aria-pressed="false" data-k="'+k+'">'+FLAGS[k][0]+'<small>'+FLAGS[k][1].length+' flags</small></button>';}).join("");
 function deal(){FLAGS[cur][1].forEach(function(t,i){var li=document.createElement("li");li.textContent=t;li.style.animationDelay=(i*80)+"ms";dealt.appendChild(li);});}
-piles.addEventListener("click",function(e){var b=e.target.closest(".pile");if(!b)return;[].forEach.call(piles.children,function(x){x.setAttribute("aria-pressed",x===b);});cur=b.dataset.k;shown=0;dealt.className="dealt "+cur;dealt.innerHTML="";deal();});
+piles.addEventListener("click",function(e){var b=e.target.closest(".pile");if(!b)return;var was=b.getAttribute("aria-pressed")==="true";[].forEach.call(piles.children,function(x){x.setAttribute("aria-pressed",!was&&x===b);});dealt.innerHTML="";if(was){cur=null;dealt.className="dealt";return;}cur=b.dataset.k;shown=0;dealt.className="dealt "+cur;deal();});
 
 
 /* light the signs when the section is reached (visible at rest if observers are unavailable) */
@@ -376,7 +407,14 @@ var signs=[].slice.call(document.querySelectorAll(".sign"));
 function lightAll(){signs.forEach(function(s,i){setTimeout(function(){s.classList.add("lit");},reduce?0:i*450);});}
 if("IntersectionObserver" in window&&!reduce){var io=new IntersectionObserver(function(es){if(es.some(function(x){return x.isIntersecting;})){lightAll();io.disconnect();}},{threshold:.5});io.observe(document.getElementById("signs"));setTimeout(lightAll,6000);}else lightAll();
 
-var rt=[].slice.call(document.querySelectorAll(".tabs2 button"));rt.forEach(function(b){b.addEventListener("click",function(){rt.forEach(function(o){o.setAttribute("aria-selected",o===b);});[].forEach.call(document.querySelectorAll(".rpanel"),function(p){p.hidden=p.dataset.p!==b.dataset.r;});});});
+[].forEach.call(document.querySelectorAll(".rpanel"),function(p){var t=p.querySelector(".qtrack"),qs=t.children,c=p.querySelector(".qcount"),pv=p.querySelector(".qprev"),nx=p.querySelector(".qnext");
+ function idx(){var w=t.clientWidth;return w?Math.round(t.scrollLeft/w):0;}
+ function upd(){var i=idx();c.textContent=(i+1)+" of "+qs.length;pv.disabled=i===0;nx.disabled=i===qs.length-1;}
+ function go(d){var i=Math.max(0,Math.min(qs.length-1,idx()+d));t.scrollTo({left:i*t.clientWidth,behavior:reduce?"auto":"smooth"});}
+ pv.addEventListener("click",function(){go(-1);});nx.addEventListener("click",function(){go(1);});
+ t.addEventListener("scroll",function(){clearTimeout(t._u);t._u=setTimeout(upd,80);});
+ t.addEventListener("keydown",function(e){if(e.key==="ArrowRight"){e.preventDefault();go(1);}if(e.key==="ArrowLeft"){e.preventDefault();go(-1);}});upd();});
+var rt=[].slice.call(document.querySelectorAll(".tabs2 button"));rt.forEach(function(b){b.addEventListener("click",function(){rt.forEach(function(o){o.setAttribute("aria-selected",o===b);});[].forEach.call(document.querySelectorAll(".rpanel"),function(p){p.hidden=p.dataset.p!==b.dataset.r;if(!p.hidden){var tk=p.querySelector(".qtrack");if(tk)tk.dispatchEvent(new Event("scroll"));}});});});
 /* ask */
 var noTries=0,noLines=["Are you sure? Maybe flip a few more cards first.","Still no? I'll take that as a 'not yet.'","Fair enough. My calendar's open if you change your mind."];
 document.getElementById("noBtn").addEventListener("click",function(){document.getElementById("noNote").textContent=noLines[Math.min(noTries,noLines.length-1)];noTries++;});
@@ -390,6 +428,5 @@ document.getElementById("yesBtn").addEventListener("click",function(){
 });
 document.getElementById("copyBtn").addEventListener("click",function(){var b=this;try{navigator.clipboard.writeText("laidman.amber@gmail.com").then(function(){b.textContent="Copied";},function(){b.textContent="Select the email to copy";});}catch(e){b.textContent="Select the email to copy";}});
 </script>
-
 </body>
 </html>
