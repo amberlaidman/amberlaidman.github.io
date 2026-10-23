@@ -140,7 +140,6 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(2.3rem,9vw,3.4rem)
 .byline a{color:var(--muted);font-weight:600}
 .tagline{font-family:var(--head);font-weight:500;color:var(--ink);font-size:1.25rem;margin:10px 0 10px;max-width:30ch}
 .hero{display:grid;gap:22px;align-items:start}
-@media (min-width:820px){.hero{grid-template-columns:1.15fr 1fr;gap:36px}}
 .sample{margin:0;background:var(--paper);border-top:4px solid var(--accent);padding:16px 16px 14px;font-size:15px}
 .sample .q{font-family:var(--head);font-weight:600;font-size:1rem;line-height:1.35;margin:4px 0 12px}
 .sample .lbl{font-size:13px;color:var(--muted);margin:0}
@@ -182,6 +181,8 @@ footer .credit-line{display:flex;flex-wrap:wrap;gap:4px 18px}
 .demo-strip{border-radius:0}
 /* Phones: the pinned tabs and the footer link already get people back up, so the floating Top button would only cover text. */
 @media (max-width:640px){.totop{display:none !important}}
+/* On the Demo tab the demo has its own tabs, so the guide tabs scroll away instead of covering the top of the demo. */
+body[data-view="demo"] nav.tabs{position:static}
 </style>
 </head>
 <body>
@@ -203,17 +204,6 @@ footer .credit-line{display:flex;flex-wrap:wrap;gap:4px 18px}
         <p class="intro">Here's how to get your own copy of the practice space I use. It starts out empty, so plan on about 25 minutes to add a little about yourself and a few stories from your work.</p>
         <div class="row start-btns"><button class="btn sm" type="button" data-goto-view="demo">Try the demo first</button></div>
       </div>
-      <figure class="sample" aria-label="Example of practice feedback">
-        <p class="lbl">Practice question</p>
-        <p class="q">Tell me about a time you had to win over people who didn't want a change.</p>
-        <ul>
-          <li><span class="sc">3/3</span><span>Structure</span></li>
-          <li><span class="sc">2/3</span><span>Result: add the number you tracked</span></li>
-          <li><span class="sc">3/3</span><span>Your role</span></li>
-          <li><span class="sc">1/3</span><span>Reflection: say what you'd do differently</span></li>
-        </ul>
-        <figcaption>An example of the scores you get after each answer.</figcaption>
-      </figure>
     </div>
   </header>
 
@@ -471,6 +461,7 @@ Please help me troubleshoot this one step at a time, in simple words.</pre></div
 
   function showView(v){
     var hd=document.querySelector("header");if(hd){var y=hd.offsetTop+hd.offsetHeight+4;if(window.scrollY>y)window.scrollTo({top:y,behavior:"instant"});}
+    document.body.setAttribute("data-view",v);
     ["guide","demo","help"].forEach(function(k){$("view-"+k).hidden=k!==v;$("tab-"+k).setAttribute("aria-selected",k===v?"true":"false");});
     $("footFeedback").hidden=v==="guide";
     if(v==="demo"&&!demoStarted)startDemo(showNoSave);
