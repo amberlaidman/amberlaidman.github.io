@@ -165,7 +165,8 @@ blockquote cite{display:block;font-style:normal;margin-top:8px}
 .ask h2{font-size:1.5rem}
 .ask .heart{width:40px;height:40px;color:var(--pink);justify-self:center}
 .ask .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:420px;width:100%;justify-self:center}
-.ask .row .btn{padding:0 6px;font-size:.92rem;white-space:nowrap}
+.ask .row .btn{padding:0 6px;font-size:.92rem;white-space:nowrap;justify-content:center;text-align:center}
+.mutual .link{justify-self:center}
 .mutual{display:grid;gap:8px}
 .mutual h3{font:600 2.2rem var(--display);margin:0}
 .email{font:600 1.05rem var(--mono);user-select:all}
@@ -244,7 +245,7 @@ details.more[open] summary{margin-bottom:10px}
   <section aria-labelledby="h-compat">
     <p class="eyebrow">Compatibility check</p>
     <h2 id="h-compat">What does your team need?</h2>
-    <p class="sub">Swipe through what your team needs, and I'll be honest about where I fit.</p>
+    <p class="sub">Tap through what your team needs, and I'll be honest about where I fit.</p>
     <div class="sw" id="sw">
       <p class="swprog" id="swprog" aria-live="polite"></p>
       <div class="swcard" id="swcard"></div>
@@ -255,13 +256,13 @@ details.more[open] summary{margin-bottom:10px}
 
   <section class="story" aria-labelledby="h-story">
     <svg class="bolt" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M34 6 14 34h14l-4 20 22-30H32z"/></svg>
-    <div><p class="eyebrow" id="h-story">How I met my match</p><p class="storytext">When I was single, I gave Match, OkCupid, Plenty of Fish, and Tinder all a try (I was thorough), and Tinder is where I met my partner 10 years ago. We're still going strong, so I'm hoping lightning strikes twice and I find my long-term role here too.</p></div>
+    <div><p class="eyebrow" id="h-story">How I met my match</p><p class="storytext">When I was single, I gave Match, OkCupid, Plenty of Fish, and Tinder all a try (I was thorough), and Tinder is where I met my partner 10 years ago. We're still going strong, so I'm hoping lightning strikes twice and I find my long-term team too.</p></div>
   </section>
 
   <section class="whycard" aria-labelledby="h-why">
-    <p class="eyebrow">Why Match Group</p>
+    <p class="eyebrow">What I'm looking for</p>
     <h2 id="h-why">We want the same things</h2>
-    <p>Your mission is to spark meaningful connections, and that's what good learning does inside a company too. Over the past year you've brought your brands together as One Match Group, launched new features like Events, refreshed Tinder's look, and started building AI skills across the company. That's a lot of change for people to keep up with, and helping teams learn and adjust through change like that is the work I love most.</p>
+    <p>I'm looking for a team that's going through change, whether that's new tools, AI, or a new way of working, and wants its people to feel confident along the way. That's a lot for people to keep up with, and helping teams learn and adjust through change like that is the work I love most.</p>
   </section>
 
   <section aria-labelledby="h-prompts">
@@ -285,9 +286,9 @@ details.more[open] summary{margin-bottom:10px}
     <p class="eyebrow">If we match</p>
     <h2 id="h-dates">Our first three dates</h2>
     <ol class="dates">
-      <li><b>First date: Listen</b><span>Meet the People team and the brand teams, learn how MentorMatch, leadership programs, and onboarding work today, and find where people get stuck.</span></li>
+      <li><b>First date: Listen</b><span>Meet your team and the people you support, learn how onboarding and learning programs work today, and find where people get stuck.</span></li>
       <li><b>Second date: Build something together</b><span>Co-design a small pilot with one team and test it with real people.</span></li>
-      <li><b>Third date: Talk about the future</b><span>Share a plan for learning that connects across brands, with clear ways to measure what's working.</span></li>
+      <li><b>Third date: Talk about the future</b><span>Share a plan for learning that connects across teams, with clear ways to measure what's working.</span></li>
     </ol>
   </section>
 
@@ -338,14 +339,14 @@ details.more[open] summary{margin-bottom:10px}
       <div class="row"><button class="btn" id="noBtn" type="button">Not this req</button><button class="btn yes" id="yesBtn" type="button">Schedule a screen</button></div>
       <p class="note" id="noNote" aria-live="polite"></p>
       <a class="link" href="https://amberlaidman.github.io/" target="_blank" rel="noopener" style="justify-self:center">Not ready yet? See what else I've built</a>
-      <a class="link" href="Amber_Laidman_Resume.pdf" target="_blank" rel="noopener" style="justify-self:center">Prefer the classic version? Download my résumé (PDF)</a>
+      <a class="link" href="Amber_Laidman_Resume.pdf" type="application/pdf" style="justify-self:center">Prefer the classic version? Download my résumé (PDF)</a>
     </div>
     <div class="mutual" id="mutual" hidden>
       <h3 tabindex="-1" id="mutualH">Mutual interest!</h3>
       <p style="margin:0">Looks like we're moving to the screening stage. I'll bring the snacks.</p>
       <p class="email" style="margin:0">laidman.amber@gmail.com</p>
       <div class="row"><button class="btn yes" id="copyBtn" type="button">Copy email</button><a class="btn" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Message on LinkedIn</a></div>
-      <a class="link" href="Amber_Laidman_Resume.pdf" target="_blank" rel="noopener">Download my résumé (PDF)</a>
+      <a class="link" href="Amber_Laidman_Resume.pdf" type="application/pdf">Download my résumé (PDF)</a>
     </div>
   </section>
 </main>
