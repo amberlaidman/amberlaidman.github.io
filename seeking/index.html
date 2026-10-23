@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<script data-goatcounter="https://opensky.goatcounter.com/count"
+        async crossorigin="anonymous" src="https://gc.zgo.at/count.js"></script>
+<title>Seeking Long-Term</title>
+<meta name="description" content="Amber Laidman, learning and enablement lead, seeking a long-term role.">
+<link rel="icon" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: one editorial column. Photo header, opening line, compatibility check, flip-card prompts, flag sorter, triple Cancer, on repeat, friends, then the ask. */
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --sunk:#F2F6F5; --ink:#1B2A30; --muted:#4A5A60; --line:#D3DCDE;
+  --teal:#3D6B7A; --deep:#2E5461; --mint:#C7E0D0; --cream:#F5F1E8; --on-teal:#FFFFFF;
+  --green:#2B7250; --beige:#755A2C; --pink:#A8456B; --green-bg:#E1F0E7; --beige-bg:#F3ECDD; --pink-bg:#F7E3EB;
+  --display:"Fraunces",Georgia,serif; --head:"Space Grotesk",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13252B; --surface:#183039; --sunk:#1B3540; --ink:#E8F1EF; --muted:#A8BCBF; --line:#2E4A53;
+  --teal:#C7E0D0; --deep:#2E5461; --mint:#2E5461; --cream:#1E3A42; --on-teal:#13252B;
+  --green:#8BD3AB; --beige:#E2C58F; --pink:#F2A6C3; --green-bg:#1E3A2D; --beige-bg:#3A311F; --pink-bg:#3E2431; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13252B; --surface:#183039; --sunk:#1B3540; --ink:#E8F1EF; --muted:#A8BCBF; --line:#2E4A53;
+  --teal:#C7E0D0; --deep:#2E5461; --mint:#2E5461; --cream:#1E3A42; --on-teal:#13252B;
+  --green:#8BD3AB; --beige:#E2C58F; --pink:#F2A6C3; --green-bg:#1E3A2D; --beige-bg:#3A311F; --pink-bg:#3E2431; color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px;display:grid;gap:40px}
+section{display:grid;gap:14px}
+h2{font:600 1.3rem/1.25 var(--display);margin:0;text-wrap:balance}
+.eyebrow{font:600 .9rem var(--head);color:var(--muted);margin:0}
+.sub{color:var(--muted);margin:0;max-width:60ch;font-size:.95rem}
+button{font:inherit;color:inherit}
+button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.btn{min-height:48px;padding:0 18px;border-radius:6px;font:600 1rem var(--head);cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.yes{background:var(--teal);border-color:var(--teal);color:var(--on-teal)}
+.link{color:var(--teal);font-weight:700;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:44px;justify-self:start}
+@media (prefers-reduced-motion:no-preference){.anim{transition:all .45s ease}}
+
+/* Header */
+.themebar{justify-self:end;display:flex;gap:2px;margin:12px 0 -28px;font:600 .82rem var(--head)}
+.themebar button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);min-height:44px;min-width:44px;padding:0 8px;cursor:pointer}
+.themebar button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--teal)}
+.hero{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:end;padding-top:28px}
+@media (max-width:620px){.hero{grid-template-columns:150px minmax(0,1fr);gap:16px}.who h1{font-size:2.4rem}}
+.photo{aspect-ratio:4/5;max-width:100%;border-radius:6px;background:linear-gradient(165deg,var(--mint),var(--teal) 70%);display:grid;place-items:center;color:var(--on-teal);font:600 3.5rem var(--display);position:relative;overflow:hidden}
+.photo small{position:absolute;left:12px;bottom:10px;font:500 .72rem var(--mono)}
+.who{display:grid;gap:10px}
+.who h1{font:600 clamp(2.6rem,9vw,3.8rem)/1 var(--display);margin:0;letter-spacing:-.02em}
+.who .role{font:600 1.05rem var(--head);margin:0}
+.badge{justify-self:start;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--teal);color:var(--teal);border-radius:6px;padding:8px 12px;font:600 .9rem var(--head);text-decoration:none;min-height:44px}
+.story{background:var(--cream);border-radius:6px;padding:16px 18px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
+.story .bolt{width:44px;height:44px;color:var(--teal)}
+.storytext{margin:4px 0 0;font-size:1rem;line-height:1.6;max-width:60ch}
+
+/* Compatibility */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 14px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:600 .95rem var(--head)}
+.chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:var(--on-teal)}
+.result{background:var(--sunk);border-radius:6px;padding:18px;display:grid;gap:12px}
+.meter{height:14px;border-radius:7px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--green))}
+.pct{font:500 2.4rem var(--mono);margin:0;line-height:1}
+.why{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.why li{display:grid;gap:2px;border-left:3px solid var(--teal);padding-left:12px}
+.why b{font:600 .9rem var(--head)}
+.fine{font-size:.82rem;color:var(--muted);margin:0}
+
+/* Flip cards */
+.flips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.flips{grid-template-columns:1fr}}
+.flip{border:0;background:none;padding:0;cursor:pointer;min-height:180px;text-align:left;display:grid}
+.face{grid-area:1/1;border-radius:6px;padding:18px;display:grid;align-content:space-between;gap:10px;min-height:180px}
+@media (prefers-reduced-motion:no-preference){.face{transition:opacity .35s ease,transform .35s ease}}
+.flip .back{opacity:0;transform:scale(.97);pointer-events:none}
+.flip[aria-pressed="true"] .front{opacity:0;transform:scale(.97)}
+.flip[aria-pressed="true"] .back{opacity:1;transform:none}
+.front{background:var(--teal);color:var(--on-teal);grid-template-columns:minmax(0,1fr) 72px;grid-template-rows:1fr auto;column-gap:16px;align-content:stretch}
+.front .ttl{grid-column:1;grid-row:1;align-self:start;font:600 1.35rem/1.25 var(--display)}
+.front svg{grid-column:2;grid-row:1/3;align-self:center;width:72px;height:72px}
+.front .tap{grid-column:1;grid-row:2;font:600 .85rem var(--head)}
+.flip,.face{min-height:150px}
+.front small{font:600 .82rem var(--head);opacity:.85}
+.back{background:var(--cream);border:1px solid var(--line)}
+.back small{font:600 .82rem var(--head);color:var(--muted)}
+.back span{font:600 1.05rem/1.4 var(--display)}
+
+/* Flag sorter */
+.sorter{display:grid;gap:12px}
+.piles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.pile{min-height:84px;border-radius:6px;border:2px solid transparent;cursor:pointer;display:grid;place-items:center;gap:2px;padding:10px;font:600 1rem var(--head);text-align:center}
+.pile small{font:500 .78rem var(--mono)}
+.pile.g{background:var(--green-bg);color:var(--green)}.pile.b{background:var(--beige-bg);color:var(--beige)}.pile.p{background:var(--pink-bg);color:var(--pink)}
+.pile[aria-pressed="true"]{border-color:currentColor}
+.dealt{list-style:none;margin:0;padding:0;display:grid;gap:8px;min-height:60px}
+.dealt li{padding:12px 14px;border-radius:6px;font-size:1rem;border-left:5px solid}
+.dealt.g li{background:var(--green-bg);border-color:var(--green)}.dealt.b li{background:var(--beige-bg);border-color:var(--beige)}.dealt.p li{background:var(--pink-bg);border-color:var(--pink)}
+@media (prefers-reduced-motion:no-preference){.dealt li{animation:deal .4s ease both}@keyframes deal{from{opacity:0;transform:translateY(10px) rotate(-1.5deg)}to{opacity:1;transform:none}}}
+.dealrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* Triple Cancer */
+.signs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sign{border:1px solid var(--line);border-radius:6px;padding:14px 10px;text-align:center;display:grid;gap:4px;background:var(--surface)}
+.sign .glyph{opacity:.3}.sign.lit .glyph{opacity:1}
+.sign.lit{opacity:1;border-color:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 25%,transparent)}
+@media (prefers-reduced-motion:no-preference){.sign,.sign .glyph{transition:opacity .5s ease,box-shadow .5s ease,border-color .5s ease}}
+.sign .glyph{font:600 1.8rem var(--display);color:var(--teal)}
+.sign b{font:600 .85rem var(--head);color:var(--muted)}
+.sign span{font:600 1.05rem var(--display)}
+blockquote{margin:0;font:400 1rem/1.6 var(--body);max-width:62ch}
+.rpanel blockquote{background:var(--sunk);border-radius:6px;padding:16px 18px 16px 18px;position:relative}
+.rpanel blockquote::before{content:"\201C";display:block;font:600 2.4rem/1 var(--display);color:var(--teal);height:.6em;margin-bottom:6px}
+#signs+blockquote{border-left:3px solid var(--teal);padding-left:14px}
+blockquote cite b{display:block;font:600 .95rem var(--head);color:var(--ink)}
+blockquote cite span{display:block;font:400 .85rem var(--body);color:var(--muted)}
+blockquote cite{display:block;font-style:normal;margin-top:8px}
+
+/* On repeat */
+.repeat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+
+.cover{min-height:150px;max-width:100%;border-radius:6px;background:var(--sunk);display:grid;align-content:space-between;justify-items:start;padding:12px;border:1px solid var(--line);color:var(--teal)}
+.cover svg{width:36px;height:36px}
+.cover>b,.cover>span{display:block}
+.cover b{font:600 .8rem var(--head);color:var(--muted);margin-top:auto}
+.cover span{font:600 .9rem/1.3 var(--display);color:var(--ink)}
+.cover em{font:500 .75rem var(--mono);font-style:normal;color:var(--muted)}
+.cover em:not(:last-child){}
+
+/* Ask */
+.ask{background:var(--cream);border-radius:32px;padding:28px 22px;display:grid;gap:14px;text-align:center;position:relative;overflow:hidden}
+.ask h2{font-size:1.5rem}
+.ask .heart{width:40px;height:40px;color:var(--pink);justify-self:center}
+.ask .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.mutual{display:grid;gap:8px}
+.mutual h3{font:600 2.2rem var(--display);margin:0}
+.email{font:600 1.05rem var(--mono);user-select:all}
+canvas.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.note{margin:0;color:var(--muted);font-size:.95rem}.note:empty{display:none}
+.tabs2{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs2 button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;min-height:44px;font:600 .95rem var(--head);color:var(--muted);cursor:pointer}
+.tabs2 button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--teal)}
+.rpanel{display:grid;gap:16px;padding-top:6px}
+.placeholder{margin:0;padding:16px;border:1px dashed var(--line);border-radius:6px;color:var(--muted)}
+.cover em{font:500 .85rem var(--body);font-style:normal;color:var(--teal);letter-spacing:.05em}
+@media (max-width:460px){.repeat{grid-template-columns:1fr}.cover{min-height:0;grid-template-columns:36px minmax(0,1fr);column-gap:14px;row-gap:2px;align-content:center;padding:12px 14px}.cover svg{grid-row:1/4;align-self:center}.cover b{margin-top:0}}
+.built{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-block:14px}
+.built h2{font-size:1.05rem}
+.built .btn{display:inline-flex;align-items:center;text-decoration:none}
+.loc{margin:0;font-size:.9rem;color:var(--muted);max-width:40ch}
+</style>
+
+</head>
+<body>
+<main class="wrap">
+  <div class="themebar" role="group" aria-label="Color theme"><button type="button" data-t="auto" aria-pressed="true">Auto</button><button type="button" data-t="light" aria-pressed="false">Light</button><button type="button" data-t="dark" aria-pressed="false">Dark</button></div>
+  <header class="hero">
+    <div class="photo" role="img" aria-label="Photo of Amber (placeholder)">A<small>Photo placeholder</small></div>
+    <div class="who">
+      <p class="eyebrow">Seeking long-term</p>
+      <h1>Amber</h1>
+      <p class="role">Learning and enablement lead, Maryland</p>
+      <p class="loc">Open to a long-distance relationship: remote works great, and I'm happy to fly in. Will relocate for the right match.</p>
+      <a class="badge" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">✓ Verified on LinkedIn</a>
+    </div>
+  </header>
+
+
+  <section aria-labelledby="h-compat">
+    <p class="eyebrow">Compatibility check</p>
+    <h2 id="h-compat">What does your team need most?</h2>
+    <p class="sub">Pick one or more, and see how we'd work together.</p>
+    <div class="chips" id="needs"></div>
+    <div><button class="btn yes" id="checkBtn" type="button" disabled>Check our compatibility</button></div>
+    <div class="result" id="result" hidden aria-live="polite">
+      <p class="pct" id="pct">0%</p>
+      <div class="meter" aria-hidden="true"><i id="bar"></i></div>
+      <ul class="why" id="why"></ul>
+      <p class="fine">Scoring is for fun. The examples are real.</p>
+    </div>
+  </section>
+
+  <section class="story" aria-labelledby="h-story">
+    <svg class="bolt" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M34 6 14 34h14l-4 20 22-30H32z"/></svg>
+    <div><p class="eyebrow" id="h-story">How I met my match</p><p class="storytext">When I was single, I gave Match, OkCupid, Plenty of Fish, and Tinder all a try, and Tinder is where I met my partner 10 years ago. We're still going strong, so I'm hoping lightning strikes twice and I find my long-term role here too.</p></div>
+  </section>
+
+  <section aria-labelledby="h-prompts">
+    <p class="eyebrow">Get to know me</p>
+    <h2 id="h-prompts">Select a card to flip it</h2>
+    <div class="flips" id="flips"></div>
+  </section>
+
+  <section aria-labelledby="h-flags">
+    <p class="eyebrow">Flags, sorted</p>
+    <h2 id="h-flags">Pick a color to see the flags</h2>
+    <div class="sorter">
+      <div class="piles" id="piles"></div>
+      <ul class="dealt" id="dealt" aria-live="polite"></ul>
+      
+    </div>
+  </section>
+
+  <section aria-labelledby="h-signs">
+    <p class="eyebrow">Astrology</p>
+    <h2 id="h-signs">Triple Cancer: loyal, nurturing, and in it for the long haul</h2>
+    <div class="signs" id="signs">
+      <div class="sign"><span class="glyph" aria-hidden="true">☉</span><b>Sun</b><span>Cancer</span></div>
+      <div class="sign"><span class="glyph" aria-hidden="true">☽</span><b>Moon</b><span>Cancer</span></div>
+      <div class="sign"><span class="glyph" aria-hidden="true">↑</span><b>Rising</b><span>Cancer</span></div>
+    </div>
+    <blockquote>"The biggest Cancer thing about you is that once 'you're in' you're in, but a lot of people are not in and will not be getting an invite."<cite><b>Tara</b><span>Former coworker, now friend</span></cite></blockquote>
+  </section>
+
+  <section aria-labelledby="h-repeat">
+    <p class="eyebrow">Currently on repeat</p>
+    <h2 id="h-repeat">From my shelf</h2>
+    <div class="repeat">
+      <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10h16a6 6 0 0 1 6 6v34a4 4 0 0 0-4-4H8z"/><path d="M52 10H36a6 6 0 0 0-6 6v34a4 4 0 0 1 4-4h18z"/></svg><b>Book</b><span>The Light Eaters, Zoë Schlanger</span><em role="img" aria-label="Rated 5 out of 5">★★★★★</em></div>
+      <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="12" width="48" height="32" rx="4"/><path d="M22 52h16M30 44v8"/></svg><b>Show</b><span>Elsbeth</span><em role="img" aria-label="Rated 5 out of 5">★★★★★</em></div>
+      <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 46V12l26-6v34"/><circle cx="18" cy="46" r="6"/><circle cx="44" cy="40" r="6"/></svg><b>Song</b><span>East Coast Summers, Kaleb Cohen</span><em>Most played this year</em></div>
+    </div>
+    
+    <a class="link" href="https://amberlaidman.github.io/shelf/" target="_blank" rel="noopener">See everything I read, watch, and listen to</a>
+  </section>
+
+  <section aria-labelledby="h-receipts">
+    <p class="eyebrow">No catfishing here</p>
+    <h2 id="h-receipts">My receipts</h2>
+    <p class="sub">What it's really like to know me, from the people who do. All work quotes come from my LinkedIn recommendations.</p>
+    <div class="tabs2" role="tablist" aria-label="Receipts">
+      <button role="tab" id="rt-friends" aria-controls="rp-friends" aria-selected="true" data-r="friends" type="button">Friends</button>
+      <button role="tab" id="rt-coworkers" aria-controls="rp-coworkers" aria-selected="false" data-r="coworkers" type="button">Coworkers</button>
+      <button role="tab" id="rt-managers" aria-controls="rp-managers" aria-selected="false" data-r="managers" type="button">Leaders</button>
+    </div>
+    <div class="rpanel" id="rp-friends" role="tabpanel" aria-labelledby="rt-friends" data-p="friends">
+      <blockquote>You are the kind of friend that makes you feel loved, cared for, and protected no matter what. You have the biggest heart and a hilarious and quirky personality.<cite><b>Chelsea</b><span>Best friend since high school</span></cite></blockquote>
+    </div>
+    <div class="rpanel" id="rp-coworkers" role="tabpanel" aria-labelledby="rt-coworkers" data-p="coworkers" hidden><blockquote>Team members have even joked that she must be some kind of fairy because she can seemingly make something amazing happen overnight.<cite><b>Leslie Miller, PHR</b><span>HR Operations, worked with Amber in the same group</span></cite></blockquote>
+      <blockquote>She fosters an environment where everyone feels heard and respected.<cite><b>Taraneh Bond, CLDP</b><span>Senior L&amp;D Strategist, worked with Amber in the same group</span></cite></blockquote></div>
+    <div class="rpanel" id="rp-managers" role="tabpanel" aria-labelledby="rt-managers" data-p="managers" hidden><blockquote>She doesn't only ask questions - she asks the questions no one else has thought of yet.<cite><b>Brénna Durnin</b><span>Learning Development Consultant, managed Amber directly</span></cite></blockquote>
+      <blockquote>Her trackers and project plans are the cleanest I've ever seen.<cite><b>Chelsea Taylor</b><span>Director, Learning &amp; Enablement, senior to Amber</span></cite></blockquote></div>
+    <a class="link" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">Read more recommendations on LinkedIn</a>
+  </section>
+
+  <section class="built" aria-labelledby="h-built">
+    <h2 id="h-built">See what else I've built</h2>
+    <a class="btn yes" href="https://amberlaidman.github.io/" target="_blank" rel="noopener">Visit my portfolio</a>
+  </section>
+
+
+  <section class="ask" id="ask" aria-labelledby="h-ask">
+    <div id="askMain" style="display:grid;gap:14px"><svg class="heart" viewBox="0 0 60 60" fill="currentColor" aria-hidden="true"><path d="M30 52 8 30a12 12 0 0 1 22-14 12 12 0 0 1 22 14z"/></svg>
+      <h2 id="h-ask">So, is it a match?</h2>
+      <div class="row"><button class="btn" id="noBtn" type="button">Not this req</button><button class="btn yes" id="yesBtn" type="button">Schedule a screen</button></div>
+      <p class="note" id="noNote" aria-live="polite"></p>
+    </div>
+    <div class="mutual" id="mutual" hidden>
+      <h3 tabindex="-1" id="mutualH">Mutual interest!</h3>
+      <p style="margin:0">Looks like we're moving to the screening stage.</p>
+      <p class="email" style="margin:0">laidman.amber@gmail.com</p>
+      <div class="row"><button class="btn yes" id="copyBtn" type="button">Copy email</button><a class="btn" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Message on LinkedIn</a></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){var bs=[].slice.call(document.querySelectorAll(".themebar button"));
+function set(t){if(t==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t);bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===t);});}
+var s="auto";try{s=localStorage.getItem("slt-theme")||"auto";}catch(e){}set(s);
+bs.forEach(function(b){b.addEventListener("click",function(){set(b.dataset.t);try{localStorage.setItem("slt-theme",b.dataset.t);}catch(e){}});});})();
+var NEEDS=[
+ ["Onboarding","Onboarding across teams","Onboarded 14 consultants across several countries at Visa, and certified 111 new hires on schedule at T-Mobile."],
+ ["AI","Helping teams use AI","Built 40+ courses with AI tools at Tito's, and designed an AI role-play agent for onboarding practice at Visa."],
+ ["Managers","Manager and leadership programs","Coached managers to track their teams' training at Tito's, and ran train-the-trainer sessions for 24 regional trainers at T-Mobile."],
+ ["Launches","Launching new features","Trained 100+ employees and leaders on device launches, rate plans, and promotions at T-Mobile."],
+ ["Measuring","Measuring what works","Raised trainee success from 76% to 86% at Outdoorsy, and built reporting dashboards for leadership at Tito's."]
+];
+var picked={};
+var needs=document.getElementById("needs"),checkBtn=document.getElementById("checkBtn");
+needs.innerHTML=NEEDS.map(function(n,i){return '<button type="button" class="chip" aria-pressed="false" data-i="'+i+'">'+n[1]+'</button>';}).join("");
+needs.addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;var on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);if(on)picked[b.dataset.i]=1;else delete picked[b.dataset.i];checkBtn.disabled=!Object.keys(picked).length;});
+var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+checkBtn.addEventListener("click",function(){
+  var ks=Object.keys(picked);var target=Math.min(99,90+ks.length*2);
+  document.getElementById("result").hidden=false;
+  document.getElementById("why").innerHTML=ks.map(function(k){return '<li><b>'+NEEDS[k][1]+'</b><span>'+NEEDS[k][2]+'</span></li>';}).join("");
+  var pct=document.getElementById("pct"),bar=document.getElementById("bar");
+  if(reduce){pct.textContent=target+"%";bar.style.width=target+"%";return;}
+  var v=0;bar.style.width="0";var t=setInterval(function(){v+=3;if(v>=target){v=target;clearInterval(t);}pct.textContent=v+"%";bar.style.width=v+"%";},30);
+});
+
+var PROMPTS=[
+ ["Ideal first date","A needs analysis over coffee, whiteboarding a plan together with snacks, or a ride-along to see the work up close"],
+ ["How I show I care","I build the guide I wish I'd had on my first day"],
+ ["My love language at work","Follow-ups, a plan everyone can see, and snacks"],
+ ["The way to win me over","Show me the data, then let me dig in. Invite me to the meeting before the decision is made. Clear goals, honest feedback, and room to try new tools or explore."]
+];
+var flips=document.getElementById("flips");
+var ICONS=["<svg viewBox=\"0 0 60 60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 22h28v14a10 10 0 0 1-10 10h-8A10 10 0 0 1 8 36z\"/><path d=\"M36 26h4a6 6 0 0 1 0 12h-4\"/><path d=\"M16 8c0 4 4 4 4 8M24 8c0 4 4 4 4 8\"/><path d=\"M6 52h36\"/></svg>", "<svg viewBox=\"0 0 60 60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 10h14a6 6 0 0 1 6 6v32a4 4 0 0 0-4-4H10z\"/><path d=\"M50 10H36a6 6 0 0 0-6 6v32a4 4 0 0 1 4-4h16z\"/><path d=\"M16 20h8M16 28h8M38 20h6\"/></svg>", "<svg viewBox=\"0 0 60 60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"8\" y=\"12\" width=\"44\" height=\"40\" rx=\"4\"/><path d=\"M8 22h44M20 6v10M40 6v10\"/><path d=\"M18 34l6 6 12-12\"/></svg>", "<svg viewBox=\"0 0 60 60\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"28\" r=\"10\"/><path d=\"M30 28h22M44 28v8M50 28v6\"/></svg>"];
+flips.innerHTML=PROMPTS.map(function(p,i){return '<button type="button" class="flip" aria-pressed="false" aria-label="'+p[0]+'. Select to reveal my answer."><span class="face front" aria-hidden="true"><span class="ttl">'+p[0]+'</span>'+ICONS[i]+'<span class="tap">Select to flip</span></span><span class="face back" aria-hidden="true"><small>'+p[0]+'</small><span>'+p[1]+'</span></span></button>';}).join("");
+flips.addEventListener("click",function(e){var f=e.target.closest(".flip");if(!f)return;var on=f.getAttribute("aria-pressed")!=="true";f.setAttribute("aria-pressed",on);f.setAttribute("aria-label",on?f.querySelector(".back small").textContent+": "+f.querySelector(".back span").textContent:f.querySelector(".back small").textContent+". Select to reveal my answer.");});
+
+var FLAGS={g:["Green flags",["Helps teams use AI in their everyday work","Builds cohesive onboarding across teams","Takes a holistic look at how people learn","Turns complex material into learning experiences"]],
+ b:["Beige flags",["Gets way too excited about a tidy LMS catalog","Color-codes everything","Tracks everything","Will plan a whole trip around a concert or a race","Has a drone and isn't afraid to use it"]],
+ p:["Pink flags",["Asks a lot of questions, starting with \"what problem are we solving?\"","Will want to measure it, even when you didn't ask"]]};
+var piles=document.getElementById("piles"),dealt=document.getElementById("dealt"),cur=null,shown=0;
+piles.innerHTML=["g","b","p"].map(function(k){return '<button type="button" class="pile '+k+'" aria-pressed="false" data-k="'+k+'">'+FLAGS[k][0]+'<small>'+FLAGS[k][1].length+' flags</small></button>';}).join("");
+function deal(){FLAGS[cur][1].forEach(function(t,i){var li=document.createElement("li");li.textContent=t;li.style.animationDelay=(i*80)+"ms";dealt.appendChild(li);});}
+piles.addEventListener("click",function(e){var b=e.target.closest(".pile");if(!b)return;[].forEach.call(piles.children,function(x){x.setAttribute("aria-pressed",x===b);});cur=b.dataset.k;shown=0;dealt.className="dealt "+cur;dealt.innerHTML="";deal();});
+
+
+/* light the signs when the section is reached (visible at rest if observers are unavailable) */
+var signs=[].slice.call(document.querySelectorAll(".sign"));
+function lightAll(){signs.forEach(function(s,i){setTimeout(function(){s.classList.add("lit");},reduce?0:i*450);});}
+if("IntersectionObserver" in window&&!reduce){var io=new IntersectionObserver(function(es){if(es.some(function(x){return x.isIntersecting;})){lightAll();io.disconnect();}},{threshold:.5});io.observe(document.getElementById("signs"));setTimeout(lightAll,6000);}else lightAll();
+
+var rt=[].slice.call(document.querySelectorAll(".tabs2 button"));rt.forEach(function(b){b.addEventListener("click",function(){rt.forEach(function(o){o.setAttribute("aria-selected",o===b);});[].forEach.call(document.querySelectorAll(".rpanel"),function(p){p.hidden=p.dataset.p!==b.dataset.r;});});});
+/* ask */
+var noTries=0,noLines=["Are you sure? Maybe flip a few more cards first.","Still no? I'll take that as a 'not yet.'","Fair enough. My calendar's open if you change your mind."];
+document.getElementById("noBtn").addEventListener("click",function(){document.getElementById("noNote").textContent=noLines[Math.min(noTries,noLines.length-1)];noTries++;});
+document.getElementById("yesBtn").addEventListener("click",function(){
+  document.getElementById("askMain").hidden=true;document.getElementById("mutual").hidden=false;document.getElementById("mutualH").focus();
+  if(reduce)return;var ask=document.getElementById("ask"),c=document.createElement("canvas");c.className="burst";ask.appendChild(c);
+  var r=ask.getBoundingClientRect();c.width=r.width;c.height=r.height;var x=c.getContext("2d");
+  var cs=getComputedStyle(document.documentElement),cols=["--teal","--green","--pink","--beige"].map(function(v){return cs.getPropertyValue(v).trim();});
+  var ps=[];for(var i=0;i<90;i++){ps.push({x:r.width/2,y:r.height/3,vx:(Math.random()-.5)*9,vy:Math.random()*-8-2,s:4+Math.random()*5,c:cols[i%4],h:Math.random()<.5});}
+  var f=0;(function tick(){x.clearRect(0,0,c.width,c.height);ps.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.25;x.fillStyle=p.c;if(p.h){x.beginPath();x.arc(p.x,p.y,p.s/2,0,7);x.fill();}else x.fillRect(p.x,p.y,p.s,p.s*.6);});if(++f<110)requestAnimationFrame(tick);else c.remove();})();
+});
+document.getElementById("copyBtn").addEventListener("click",function(){var b=this;try{navigator.clipboard.writeText("laidman.amber@gmail.com").then(function(){b.textContent="Copied";},function(){b.textContent="Select the email to copy";});}catch(e){b.textContent="Select the email to copy";}});
+</script>
+
+</body>
+</html>
