@@ -8,6 +8,15 @@
         async crossorigin="anonymous" src="https://gc.zgo.at/count.js"></script>
 <title>Seeking Long-Term</title>
 <meta name="description" content="Amber Laidman, learning and enablement lead, seeking a long-term role.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://amberlaidman.github.io/seeking/">
+<meta property="og:title" content="Amber, seeking long-term">
+<meta property="og:description" content="Learning and enablement lead. Take the compatibility check and see if it's a match.">
+<meta property="og:image" content="https://amberlaidman.github.io/seeking/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Seeking long-term: Amber, learning and enablement lead. Is it a match?">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,7 +90,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 
 /* Flip cards */
 .flips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-@media (max-width:520px){.flips{grid-template-columns:1fr}}
+
 .flip{border:0;background:none;padding:0;cursor:pointer;min-height:180px;text-align:left;display:grid}
 .face{grid-area:1/1;border-radius:6px;padding:18px;display:grid;align-content:space-between;gap:10px;min-height:180px}
 @media (prefers-reduced-motion:no-preference){.face{transition:opacity .35s ease,transform .35s ease}}
@@ -114,7 +123,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 /* Triple Cancer */
 .signs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .sign{border:1px solid var(--line);border-radius:6px;padding:14px 10px;text-align:center;display:grid;gap:4px;background:var(--surface)}
-.sign .glyph{opacity:.3}.sign.lit .glyph{opacity:1}
+.sign .glyph{color:var(--muted)!important}.sign.lit .glyph{color:var(--teal)!important}
 .sign.lit{opacity:1;border-color:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 25%,transparent)}
 @media (prefers-reduced-motion:no-preference){.sign,.sign .glyph{transition:opacity .5s ease,box-shadow .5s ease,border-color .5s ease}}
 .sign .glyph{font:600 1.8rem var(--display);color:var(--teal)}
@@ -160,6 +169,31 @@ canvas.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:non
 .built h2{font-size:1.05rem}
 .built .btn{display:inline-flex;align-items:center;text-decoration:none}
 .loc{margin:0;font-size:.9rem;color:var(--muted);max-width:40ch}
+.whycard{background:var(--cream);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:16px 18px;gap:8px}
+.whycard p:not(.eyebrow){margin:0;max-width:62ch}
+.dates{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:d}
+.dates li{display:grid;gap:2px;padding:12px 14px 12px 52px;position:relative;background:var(--sunk);border-radius:6px}
+.dates li::before{counter-increment:d;content:counter(d);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:50%;background:var(--teal);color:var(--on-teal);display:grid;place-items:center;font:600 .85rem var(--mono)}
+.dates b{font:600 1rem var(--head)}.dates span{font-size:.95rem;color:var(--muted)}
+.fun{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:620px){.fun{grid-template-columns:1fr}}
+.funcol{display:grid;gap:10px;align-content:start;min-width:0}
+.funh{margin:0;font:600 1rem var(--head)}
+.fun .repeat{grid-template-columns:1fr}
+.fun .cover{min-height:0;grid-template-columns:36px minmax(0,1fr);column-gap:14px;row-gap:2px;align-content:center;padding:10px 14px}
+.fun .cover svg{grid-row:1/4;align-self:center}.fun .cover b{margin-top:0}
+details.more summary{cursor:pointer;color:var(--teal);font:600 .95rem var(--head);min-height:44px;display:inline-flex;align-items:center}
+details.more[open] summary{margin-bottom:10px}
+@media (max-width:520px){
+  .flips{grid-template-columns:1fr 1fr;gap:10px}
+  .flip,.face{min-height:150px}
+  .face{padding:14px}
+  .flip .front{grid-template-columns:1fr;grid-template-rows:auto 1fr auto}
+  .flip .front svg{grid-column:1;grid-row:1;width:36px;height:36px;align-self:start}
+  .flip .front .ttl{grid-row:2;font-size:1.05rem;align-self:start}
+  .flip .front .tap{grid-row:3;font-size:.78rem}
+  .back span{font-size:.92rem}
+}
 </style>
 
 </head>
@@ -197,6 +231,12 @@ canvas.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:non
     <div><p class="eyebrow" id="h-story">How I met my match</p><p class="storytext">When I was single, I gave Match, OkCupid, Plenty of Fish, and Tinder all a try, and Tinder is where I met my partner 10 years ago. We're still going strong, so I'm hoping lightning strikes twice and I find my long-term role here too.</p></div>
   </section>
 
+  <section class="whycard" aria-labelledby="h-why">
+    <p class="eyebrow">Why Match Group</p>
+    <h2 id="h-why">We want the same things</h2>
+    <p>Your mission is to spark meaningful connections, and that's what good learning does inside a company too. You're bringing your brands together as one Match Group, rolling out new features like Events and a full Tinder rebrand, and giving every employee AI tools. That's a lot of change for people to learn at once, and helping teams through change like that is the work I love most.</p>
+  </section>
+
   <section aria-labelledby="h-prompts">
     <p class="eyebrow">Get to know me</p>
     <h2 id="h-prompts">Select a card to flip it</h2>
@@ -213,20 +253,29 @@ canvas.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:non
     </div>
   </section>
 
-  <section aria-labelledby="h-signs">
-    <p class="eyebrow">Astrology</p>
-    <h2 id="h-signs">Triple Cancer: loyal, nurturing, and in it for the long haul</h2>
+  <section aria-labelledby="h-dates">
+    <p class="eyebrow">If we match</p>
+    <h2 id="h-dates">Our first three dates</h2>
+    <ol class="dates">
+      <li><b>First date: Listen</b><span>Meet the People team and the brand teams, learn how MentorMatch, leadership programs, and onboarding work today, and find where people get stuck.</span></li>
+      <li><b>Second date: Build something together</b><span>Co-design a small pilot with one team and test it with real people.</span></li>
+      <li><b>Third date: Talk about the future</b><span>Share a plan for learning that connects across brands, with clear ways to measure what's working.</span></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-fun">
+    <p class="eyebrow">Just for fun</p>
+    <h2 id="h-fun">A little more about me</h2>
+    <div class="fun">
+      <div class="funcol"><p class="funh" id="h-signs">Triple Cancer: loyal, nurturing, and in it for the long haul</p>
     <div class="signs" id="signs">
       <div class="sign"><span class="glyph" aria-hidden="true">☉</span><b>Sun</b><span>Cancer</span></div>
       <div class="sign"><span class="glyph" aria-hidden="true">☽</span><b>Moon</b><span>Cancer</span></div>
       <div class="sign"><span class="glyph" aria-hidden="true">↑</span><b>Rising</b><span>Cancer</span></div>
     </div>
     <blockquote>"The biggest Cancer thing about you is that once 'you're in' you're in, but a lot of people are not in and will not be getting an invite."<cite><b>Tara</b><span>Former coworker, now friend</span></cite></blockquote>
-  </section>
-
-  <section aria-labelledby="h-repeat">
-    <p class="eyebrow">Currently on repeat</p>
-    <h2 id="h-repeat">From my shelf</h2>
+      </div>
+      <div class="funcol"><p class="funh" id="h-repeat">Currently on repeat</p>
     <div class="repeat">
       <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10h16a6 6 0 0 1 6 6v34a4 4 0 0 0-4-4H8z"/><path d="M52 10H36a6 6 0 0 0-6 6v34a4 4 0 0 1 4-4h18z"/></svg><b>Book</b><span>The Light Eaters, Zoë Schlanger</span><em role="img" aria-label="Rated 5 out of 5">★★★★★</em></div>
       <div class="cover"><svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="12" width="48" height="32" rx="4"/><path d="M22 52h16M30 44v8"/></svg><b>Show</b><span>Elsbeth</span><em role="img" aria-label="Rated 5 out of 5">★★★★★</em></div>
@@ -234,6 +283,8 @@ canvas.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:non
     </div>
     
     <a class="link" href="https://amberlaidman.github.io/shelf/" target="_blank" rel="noopener">See everything I read, watch, and listen to</a>
+      </div>
+    </div>
   </section>
 
   <section aria-labelledby="h-receipts">
@@ -247,19 +298,15 @@ canvas.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:non
     </div>
     <div class="rpanel" id="rp-friends" role="tabpanel" aria-labelledby="rt-friends" data-p="friends">
       <blockquote>You are the kind of friend that makes you feel loved, cared for, and protected no matter what. You have the biggest heart and a hilarious and quirky personality.<cite><b>Chelsea</b><span>Best friend since high school</span></cite></blockquote>
-      <blockquote>Amber: Perfect Friendship Project Manager, a role no one asked her to take but everyone is grateful she does. She defines the scope of in-person connects (meals with an activity: in; ghosting: out), plans brunch milestones, tracks who still checks in, and manages risks like sketchy new places of employment. All change requests, especially last-minute cancellations, must go through her, as she works to deliver the perfect friendship on time, under budget, and with zero drama (results may vary).<cite><b>Diana</b><span>Worked together over the years, now friends</span></cite></blockquote>
+      <details class="more"><summary>Read another</summary><blockquote>Amber: Perfect Friendship Project Manager, a role no one asked her to take but everyone is grateful she does. She defines the scope of in-person connects (meals with an activity: in; ghosting: out), plans brunch milestones, tracks who still checks in, and manages risks like sketchy new places of employment. All change requests, especially last-minute cancellations, must go through her, as she works to deliver the perfect friendship on time, under budget, and with zero drama (results may vary).<cite><b>Diana</b><span>Worked together over the years, now friends</span></cite></blockquote></details>
     </div>
     <div class="rpanel" id="rp-coworkers" role="tabpanel" aria-labelledby="rt-coworkers" data-p="coworkers" hidden><blockquote>Team members have even joked that she must be some kind of fairy because she can seemingly make something amazing happen overnight.<cite><b>Leslie Miller, PHR</b><span>HR Operations, worked with Amber in the same group</span></cite></blockquote>
-      <blockquote>She fosters an environment where everyone feels heard and respected.<cite><b>Taraneh Bond, CLDP</b><span>Senior L&amp;D Strategist, worked with Amber in the same group</span></cite></blockquote></div>
+      <details class="more"><summary>Read another</summary><blockquote>She fosters an environment where everyone feels heard and respected.<cite><b>Taraneh Bond, CLDP</b><span>Senior L&amp;D Strategist, worked with Amber in the same group</span></cite></blockquote></details></div>
     <div class="rpanel" id="rp-managers" role="tabpanel" aria-labelledby="rt-managers" data-p="managers" hidden><blockquote>She doesn't only ask questions - she asks the questions no one else has thought of yet.<cite><b>Brénna Durnin</b><span>Learning Development Consultant, managed Amber directly</span></cite></blockquote>
-      <blockquote>Her trackers and project plans are the cleanest I've ever seen.<cite><b>Chelsea Taylor</b><span>Director, Learning &amp; Enablement, senior to Amber</span></cite></blockquote></div>
+      <details class="more"><summary>Read another</summary><blockquote>Her trackers and project plans are the cleanest I've ever seen.<cite><b>Chelsea Taylor</b><span>Director, Learning &amp; Enablement, senior to Amber</span></cite></blockquote></details></div>
     <a class="link" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">Read more recommendations on LinkedIn</a>
   </section>
 
-  <section class="built" aria-labelledby="h-built">
-    <h2 id="h-built">See what else I've built</h2>
-    <a class="btn yes" href="https://amberlaidman.github.io/" target="_blank" rel="noopener">Visit my portfolio</a>
-  </section>
 
 
   <section class="ask" id="ask" aria-labelledby="h-ask">
@@ -267,6 +314,7 @@ canvas.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:non
       <h2 id="h-ask">So, is it a match?</h2>
       <div class="row"><button class="btn" id="noBtn" type="button">Not this req</button><button class="btn yes" id="yesBtn" type="button">Schedule a screen</button></div>
       <p class="note" id="noNote" aria-live="polite"></p>
+      <a class="link" href="https://amberlaidman.github.io/" target="_blank" rel="noopener" style="justify-self:center">Not ready yet? See what else I've built</a>
     </div>
     <div class="mutual" id="mutual" hidden>
       <h3 tabindex="-1" id="mutualH">Mutual interest!</h3>
