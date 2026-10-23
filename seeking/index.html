@@ -48,7 +48,14 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 .themebar button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);min-height:44px;min-width:44px;padding:0 8px;cursor:pointer}
 .themebar button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--teal)}
 .hero{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:end;padding-top:28px}
-@media (max-width:620px){.hero{grid-template-columns:150px minmax(0,1fr);gap:16px}.who h1{font-size:2.4rem}}
+@media (max-width:620px){
+  .hero{grid-template-columns:1fr;gap:14px;padding-top:16px}
+  .hero .photo{width:104px;aspect-ratio:1;border-radius:50%;font-size:2.4rem}
+  .hero .photo small{display:none}
+  .hero .who{gap:8px}
+  .hero .who h1{font-size:2.4rem}
+  .hero .who .role{font-size:1rem}
+}
 .photo{aspect-ratio:4/5;max-width:100%;border-radius:6px;background:linear-gradient(165deg,var(--mint),var(--teal) 70%);display:grid;place-items:center;color:var(--on-teal);font:600 3.5rem var(--display);position:relative;overflow:hidden}
 .photo small{position:absolute;left:12px;bottom:10px;font:500 .72rem var(--mono)}
 .who{display:grid;gap:10px}
