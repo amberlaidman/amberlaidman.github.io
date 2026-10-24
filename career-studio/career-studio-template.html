@@ -207,6 +207,8 @@ button,.btn{border-radius:6px}
   header{top:calc(env(safe-area-inset-top,0px) - var(--hide-h,0px))}
   body.typing header{position:static}
 }
+/* Phones: main buttons span the width so either thumb reaches them easily; secondary buttons stay their normal size. */
+@media (max-width:640px){main button.primary{width:100%;justify-self:stretch !important}}
 </style>
 
 <div class="wrap">
@@ -516,7 +518,7 @@ button,.btn{border-radius:6px}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.4.1 · Updated October 22, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.4.2 · Updated October 24, 2026</p>
     </section>
 
     <!-- COMPANIES -->
