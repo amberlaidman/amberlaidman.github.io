@@ -230,7 +230,14 @@ details.more[open] summary{margin-bottom:10px}
 @keyframes fxUp{from{transform:translate(var(--x0),var(--y0)) scale(.6);opacity:1}to{transform:translate(calc(var(--x0) + var(--dx)),calc(var(--y0) - 120px)) scale(1.1);opacity:0}}
 @keyframes fxFall{0%{transform:translate(var(--x0),var(--y0)) rotate(0);opacity:1}100%{transform:translate(calc(var(--x0) + var(--dx)),calc(var(--y0) + var(--dy))) rotate(var(--r));opacity:0}}
 </style>
-</head>
+<style id="tone">
+:root{--t1:#E6F1EA;--t2:#E8F0F6;--t3:#F3EDDF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--t1:#183532;--t2:#172F3D;--t3:#25271F}}
+:root[data-theme="dark"]{--t1:#183532;--t2:#172F3D;--t3:#25271F}
+body{background:var(--tone,var(--bg));transition:background-color 900ms ease}
+body[data-tone="1"]{--tone:var(--t1)}body[data-tone="2"]{--tone:var(--t2)}body[data-tone="3"]{--tone:var(--t3)}
+@media (prefers-reduced-motion: reduce){body,body[data-tone]{background:var(--bg)!important;transition:none!important}}
+</style></head>
 <body>
 <main class="wrap">
   <div class="themebar" role="group" aria-label="Color theme"><button type="button" data-t="auto" aria-pressed="true">Auto</button><button type="button" data-t="light" aria-pressed="false">Light</button><button type="button" data-t="dark" aria-pressed="false">Dark</button></div>
@@ -442,5 +449,9 @@ document.getElementById("yesBtn").addEventListener("click",function(){
 });
 document.getElementById("copyBtn").addEventListener("click",function(){var b=this,m=document.getElementById("copyMsg");function done(ok){b.textContent=ok?"Copied":"Copy didn't work";m.textContent=ok?"Email address copied":"Copy didn't work. The email is laidman.amber@gmail.com";if(!ok)m.className="copymsg show";setTimeout(function(){b.textContent="Copy email";m.textContent="";m.className="copymsg";},ok?3000:8000);}try{navigator.clipboard.writeText("laidman.amber@gmail.com").then(function(){done(true);},function(){done(false);});}catch(e){done(false);}});
 </script>
-</body>
+<script>(function(){try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver" in window))return;
+var map={"h-compat":0,"h-story":1,"h-loc":1,"h-why":1,"h-prompts":2,"h-flags":2,"h-dates":2,"h-fun":3,"h-receipts":3,"h-ask":0};
+var secs=[].slice.call(document.querySelectorAll("section[aria-labelledby]"));
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var t=map[e.target.getAttribute("aria-labelledby")];document.body.setAttribute("data-tone",t==null?0:t);}});},{rootMargin:"-45% 0px -45% 0px"});
+secs.forEach(function(x){io.observe(x);});}catch(e){}})();</script></body>
 </html>
