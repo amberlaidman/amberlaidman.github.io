@@ -74,6 +74,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
 .who .badge{margin-top:10px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0;padding:0;list-style:none}
+.tagrows{display:grid;gap:6px;margin-top:4px}.tagrows .tags{margin:0}
 .tags li{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font:600 .875rem var(--head);color:var(--ink);background:var(--surface)}
 .photo small{position:absolute;left:12px;bottom:10px;font:500 .72rem var(--mono)}
 .who{display:grid;gap:10px}
@@ -248,7 +249,7 @@ body[data-tone="1"]{--tone:var(--t1)}body[data-tone="2"]{--tone:var(--t2)}body[d
       <p class="eyebrow">Seeking long-term</p>
       <h1>Amber</h1>
       <p class="role">Senior learning program manager, Maryland</p>
-      <ul class="tags" aria-label="At a glance"><li>14+ years</li><li>M.S.</li><li>Artist</li><li>Runner</li><li>Explorer</li></ul>
+      <div class="tagrows" role="group" aria-label="At a glance"><ul class="tags"><li>14+ years</li><li>M.S.</li><li>Explorer</li></ul><ul class="tags"><li>Artist</li><li>Runner</li></ul></div>
       <a class="badge" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">✓ Verified on LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
     </div>
   </header>
