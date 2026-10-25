@@ -79,7 +79,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 .who h1{font:600 clamp(2.6rem,9vw,3.8rem)/1 var(--display);margin:0;letter-spacing:-.02em}
 .who .role{font:600 1.05rem var(--head);margin:0}
 .badge{justify-self:start;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--teal);color:var(--teal);border-radius:6px;padding:8px 12px;font:600 .9rem var(--head);text-decoration:none;min-height:44px}
-.story{background:var(--cream);border-radius:6px;padding:16px 18px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
+.loc{padding:4px 2px;display:grid;gap:8px}.loc .eyebrow{margin:0}.story{background:var(--cream);border-radius:6px;padding:16px 18px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
 .story .bolt{width:44px;height:44px;color:var(--teal)}
 .storytext{margin:4px 0 0;font-size:1rem;line-height:1.6;max-width:60ch}
 
@@ -270,9 +270,9 @@ body[data-tone="1"]{--tone:var(--t1)}body[data-tone="2"]{--tone:var(--t2)}body[d
     <div><p class="eyebrow" id="h-story">How I met my match</p><p class="storytext">When I was single, I gave Match, OkCupid, Plenty of Fish, and Tinder all a try (I was thorough), and Tinder is where I met my partner 10 years ago. We're still going strong, so I'm hoping lightning strikes twice and I find my long-term team too.</p></div>
   </section>
 
-  <section class="story" aria-labelledby="h-loc">
-    <svg class="bolt" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 54C18 40 12 32 12 24a18 18 0 0 1 36 0c0 8-6 16-18 30z"/><circle cx="30" cy="24" r="6"/></svg>
-    <div><p class="eyebrow" id="h-loc">Where I can work</p><p class="storytext">I'm open to long distance and will fly in when needed, I'm glad to meet in Maryland, DC, and Northern Virginia, and I'll consider relocating once we've talked through the details.</p></div>
+  <section class="loc" aria-labelledby="h-loc">
+    <p class="eyebrow" id="h-loc">Where I can work</p>
+    <ul class="tags"><li>Long distance</li><li>Will fly in when needed</li><li>Maryland</li><li>DC</li><li>Northern Virginia</li><li>Will consider relocating</li></ul>
   </section>
 
 
