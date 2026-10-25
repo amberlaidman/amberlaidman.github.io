@@ -193,7 +193,7 @@ canvas.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:non
 .dates{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:d}
 .dates li{display:grid;gap:2px;padding:12px 14px 12px 52px;position:relative;background:var(--sunk);border-radius:6px}
 .dates li::before{counter-increment:d;content:counter(d);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:50%;background:var(--teal);color:var(--on-teal);display:grid;place-items:center;font:600 .85rem var(--mono)}
-.dates b{font:600 1rem var(--head)}.dates span{font-size:.95rem;color:var(--muted)}
+.dates small{font:500 .875rem var(--body);color:var(--muted)}.dates b{font:600 1rem var(--head)}.dates span{font-size:.95rem;color:var(--muted)}
 .fun{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media (max-width:620px){.fun{grid-template-columns:1fr}}
 .funcol{display:grid;gap:10px;align-content:start;min-width:0}
@@ -303,9 +303,9 @@ body[data-tone="1"]{--tone:var(--t1)}body[data-tone="2"]{--tone:var(--t2)}body[d
     <p class="eyebrow">If we match</p>
     <h2 id="h-dates">Our first three dates</h2>
     <ol class="dates">
-      <li><b>First date: Be curious (days 1 to 30)</b><span>I'll start by meeting your team and the people you support and asking plenty of questions about how your teams learn new things and get support today, so I can find where people get stuck and understand how you measure success.</span></li>
-      <li><b>Second date: Build something together (days 31 to 60)</b><span>We'll choose one team and co-design a small pilot, such as a new learning program or an AI tool, then test it with real people so we can see early what works and adjust before anything larger.</span></li>
-      <li><b>Third date: Talk about the future (days 61 to 90)</b><span>I'll share what the pilot showed, with clear measures of what's working, and propose a plan for learning that connects across teams.</span></li>
+      <li><small>Days 1 to 30</small><b>Be curious</b><span>I'll meet your team and the people you support and ask how they learn and get support today, so I can see where people get stuck and how you measure success.</span></li>
+      <li><small>Days 31 to 60</small><b>Build something together</b><span>We'll co-design a small pilot with one team, such as a learning program or an AI tool, and test it with real people so we can adjust early.</span></li>
+      <li><small>Days 61 to 90</small><b>Talk about the future</b><span>I'll share what the pilot showed, with clear measures of what's working, and propose a plan for learning that connects across teams.</span></li>
     </ol>
   </section>
 
