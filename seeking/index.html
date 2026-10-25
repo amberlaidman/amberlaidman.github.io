@@ -240,7 +240,7 @@ body[data-tone="1"]{--tone:var(--t1)}body[data-tone="2"]{--tone:var(--t2)}body[d
 </style></head>
 <body>
 <main class="wrap">
-  <div class="themebar" role="group" aria-label="Color theme"><button type="button" data-t="auto" aria-pressed="true">Auto</button><button type="button" data-t="light" aria-pressed="false">Light</button><button type="button" data-t="dark" aria-pressed="false">Dark</button></div>
+  <div class="themebar" role="group" aria-label="Color theme"><button type="button" id="themebtn" aria-label="Color theme: Auto. Select to change." style="background:none;border:0;color:var(--ink);min-width:44px;min-height:44px;cursor:pointer"><svg id="themeico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button><span id="themestat" class="sr" role="status" style="position:absolute;left:-9999px"></span></div>
   <header class="hero">
     <div class="photo"><img src="amber.jpg" alt="Amber smiling in a light blue shirt" width="640" height="800"></div>
     <div class="who">
@@ -370,10 +370,10 @@ body[data-tone="1"]{--tone:var(--t1)}body[data-tone="2"]{--tone:var(--t2)}body[d
 
 <script>
 document.documentElement.lang="en";
-(function(){var bs=[].slice.call(document.querySelectorAll(".themebar button"));
-function set(t){if(t==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t);bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===t);});}
-var s="auto";try{s=localStorage.getItem("slt-theme")||"auto";}catch(e){}set(s);
-bs.forEach(function(b){b.addEventListener("click",function(){set(b.dataset.t);try{localStorage.setItem("slt-theme",b.dataset.t);}catch(e){}});});})();
+(function(){var I={"auto": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 3v18\" /><path d=\"M12 3a9 9 0 0 1 0 18z\" fill=\"currentColor\"/>", "light": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1\"/>", "dark": "<path d=\"M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z\"/>"},order=["auto","light","dark"],names={auto:"Auto",light:"Light",dark:"Dark"},b=document.getElementById("themebtn"),ic=document.getElementById("themeico"),st=document.getElementById("themestat");
+function set(t,say){if(t==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t);ic.innerHTML=I[t];var n=order[(order.indexOf(t)+1)%3];b.setAttribute("aria-label","Color theme: "+names[t]+". Select to switch to "+names[n]+".");b.dataset.t=t;if(say)st.textContent="Color theme: "+names[t];}
+var s="auto";try{s=localStorage.getItem("slt-theme")||"auto";}catch(e){}set(s,false);
+b.addEventListener("click",function(){var t=order[(order.indexOf(b.dataset.t)+1)%3];set(t,true);try{localStorage.setItem("slt-theme",t);}catch(e){}});})();
 var noFx=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
 function fxAt(el,kind,n){if(noFx||!el)return;var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;var cols=["#3D6B7A","#C7E0D0","#E07A8F","#C9A35A","#7BAF8E"];
 for(var i=0;i<n;i++){var s=document.createElement("span");s.className="fx "+kind;s.setAttribute("aria-hidden","true");
