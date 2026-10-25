@@ -124,11 +124,11 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offse
 /* Flag sorter */
 .sorter{display:grid;gap:12px}
 .piles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.pile{min-height:84px;border-radius:6px;border:2px solid transparent;cursor:pointer;display:grid;place-items:center;gap:2px;padding:10px;font:600 1rem var(--head);text-align:center}
-.pile small{font:500 .875rem var(--mono)}
+.pile{min-height:96px;border-radius:6px;border:2px solid transparent;cursor:pointer;display:grid;place-items:center;gap:2px;padding:10px;font:600 1rem var(--head);text-align:center}
+.pile small{font:400 1rem var(--body)}
 .pile.g{background:var(--green-bg);color:var(--green)}.pile.b{background:var(--beige-bg);color:var(--beige)}.pile.p{background:var(--pink-bg);color:var(--pink)}
 .pile[aria-pressed="true"]{border-color:currentColor}
-.dealt{list-style:none;margin:0;padding:0;display:grid;gap:8px;min-height:60px}
+.dealt{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .dealt li{padding:12px 14px;border-radius:6px;font-size:1rem;border-left:5px solid}
 .dealt.g li{background:var(--green-bg);border-color:var(--green)}.dealt.b li{background:var(--beige-bg);border-color:var(--beige)}.dealt.p li{background:var(--pink-bg);border-color:var(--pink)}
 @media (prefers-reduced-motion:no-preference){.dealt li{animation:deal .4s ease both}@keyframes deal{from{opacity:0;transform:translateY(10px) rotate(-1.5deg)}to{opacity:1;transform:none}}}
@@ -291,7 +291,7 @@ body[data-tone="1"]{--tone:var(--t1)}body[data-tone="2"]{--tone:var(--t2)}body[d
   <section aria-labelledby="h-flags">
     <p class="eyebrow">Flags, sorted</p>
     <h2 id="h-flags">Pick a group to see the flags</h2>
-    <p class="sub">Every good match owns their flags. Select any group to start, and you'll find my strengths in green, my harmless quirks in beige, and the things that may surprise you at first in pink. Select a group again to close it.</p>
+    <p class="sub">Every good match owns their flags. Select a group to see them, and select it again to close it.</p>
     <div class="sorter">
       <div class="piles" id="piles"></div>
       <ul class="dealt" id="dealt" aria-live="polite"></ul>
@@ -409,11 +409,12 @@ var ICONS=["<svg viewBox=\"0 0 60 60\" fill=\"none\" stroke=\"currentColor\" str
 flips.innerHTML=PROMPTS.map(function(p,i){return '<button type="button" class="flip" aria-pressed="false"><span class="face front"><span class="ttl">'+p[0]+'</span>'+ICONS[i]+'<span class="tap">Select to flip</span></span><span class="face back"><small>'+p[0]+'</small><span>'+p[1]+'</span></span></button>';}).join("");
 flips.addEventListener("click",function(e){var f=e.target.closest(".flip");if(!f)return;var on=f.getAttribute("aria-pressed")!=="true";f.setAttribute("aria-pressed",on);});
 
+var TILE={g:["Green","strengths"],b:["Beige","quirks"],p:["Pink","surprises"]};
 var FLAGS={g:["Green flags",["Helps teams use AI in their everyday work","Builds cohesive onboarding across teams","Takes a holistic look at how people learn","Turns complex material into learning experiences"]],
  b:["Beige flags",["Gets way too excited about a tidy LMS catalog","Color-codes everything","Tracks everything","Will plan a whole trip around a concert or a race","Has a drone and isn't afraid to use it"]],
  p:["Pink flags",["Asks a lot of questions, starting with \"what problem are we solving?\"","Will want to measure it, even when you didn't ask"]]};
 var piles=document.getElementById("piles"),dealt=document.getElementById("dealt"),cur=null,shown=0;
-piles.innerHTML=["g","b","p"].map(function(k){return '<button type="button" class="pile '+k+'" aria-pressed="false" data-k="'+k+'">'+FLAGS[k][0]+'<small>'+FLAGS[k][1].length+' flags</small></button>';}).join("");
+piles.innerHTML=["g","b","p"].map(function(k){return '<button type="button" class="pile '+k+'" aria-pressed="false" data-k="'+k+'" aria-label="'+FLAGS[k][0]+', '+TILE[k][1]+'">'+TILE[k][0]+'<small>'+TILE[k][1]+'</small></button>';}).join("");
 function deal(){FLAGS[cur][1].forEach(function(t,i){var li=document.createElement("li");li.textContent=t;li.style.animationDelay=(i*80)+"ms";dealt.appendChild(li);});}
 piles.addEventListener("click",function(e){var b=e.target.closest(".pile");if(!b)return;var was=b.getAttribute("aria-pressed")==="true";[].forEach.call(piles.children,function(x){x.setAttribute("aria-pressed",!was&&x===b);});dealt.innerHTML="";if(was){cur=null;dealt.className="dealt";return;}cur=b.dataset.k;shown=0;dealt.className="dealt "+cur;deal();});
 
