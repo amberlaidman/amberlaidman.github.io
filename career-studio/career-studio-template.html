@@ -231,7 +231,7 @@ button,.btn{border-radius:6px}
 
 <div class="wrap">
   <header>
-    <div class="head-row"><h1>Career Studio</h1><div class="row" style="gap:6px;flex-wrap:nowrap"><button id="theme-btn" type="button" class="ghost">Theme: Auto</button><button id="settings-btn" type="button" class="ghost icon-btn" aria-label="Settings and help" title="Settings and help"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div></div>
+    <div class="head-row"><h1>Career Studio</h1><div class="row" style="gap:6px;flex-wrap:nowrap"><button id="theme-btn" type="button" class="ghost icon-btn" aria-label="Color theme: Auto"><svg id="theme-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg></button><span class="sr-only" id="theme-live" role="status"></span><button id="settings-btn" type="button" class="ghost icon-btn" aria-label="Settings and help" title="Settings and help"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div></div>
     <div class="tabs" role="tablist" aria-label="Sections">
       <button role="tab" id="tab-home" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>Home</span></button>
       <button role="tab" id="tab-interview" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg><span>Interview</span></button>
@@ -536,7 +536,7 @@ button,.btn{border-radius:6px}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.4.3 · Updated October 24, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.4.4 · Updated October 25, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -1684,14 +1684,18 @@ button,.btn{border-radius:6px}
   })();
   /* ---------- theme toggle ---------- */
   const THEME_LABEL = {auto:"Auto", light:"Light", dark:"Dark"};
+  const THEME_ICON = {auto:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>', light:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>', dark:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'};
   function applyTheme(m){
     if (m === "light" || m === "dark") document.documentElement.setAttribute("data-theme", m); else document.documentElement.removeAttribute("data-theme");
-    $("theme-btn").textContent = `Theme: ${THEME_LABEL[m] || "Auto"}`;
-    $("theme-btn").setAttribute("aria-label", `Color theme is ${THEME_LABEL[m] || "Auto"}. Select to change.`);
+    // One icon that cycles Auto, Light, Dark (same as Amber's Seeking page): half-filled circle, sun, moon.
+    const t = THEME_LABEL[m] ? m : "auto", next = t === "auto" ? "light" : t === "light" ? "dark" : "auto";
+    $("theme-ico").innerHTML = THEME_ICON[t];
+    $("theme-btn").setAttribute("aria-label", `Color theme: ${THEME_LABEL[t]}. Select to switch to ${THEME_LABEL[next]}.`);
+    $("theme-btn").title = `Color theme: ${THEME_LABEL[t]}`;
   }
   let themeMode = store.get("themeMode") || "auto";
   applyTheme(themeMode);
-  $("theme-btn").addEventListener("click", () => { themeMode = themeMode === "auto" ? "light" : themeMode === "light" ? "dark" : "auto"; store.set("themeMode", themeMode); applyTheme(themeMode); });
+  $("theme-btn").addEventListener("click", () => { themeMode = themeMode === "auto" ? "light" : themeMode === "light" ? "dark" : "auto"; store.set("themeMode", themeMode); applyTheme(themeMode); $("theme-live").textContent = `Color theme: ${THEME_LABEL[themeMode]}`; });
   /* ---------- roles (job postings matched to your stories) ---------- */
   // Positioning content stays in the database untouched; only the saved intro is still read from it, as a fallback.
   let POS = null, INTRO_DOC = null;
