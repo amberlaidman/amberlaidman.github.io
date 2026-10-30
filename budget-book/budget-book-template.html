@@ -1,6 +1,5 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
-<title>Budget Book Demo</title>
+<title>Budget Book</title>
+<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,650&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
 <style>
@@ -159,7 +158,6 @@ button.cal-d{cursor:pointer}
 @media (max-width:380px){.seg button{padding:4px 6px;font-size:11.5px}.fgrid{grid-template-columns:1fr}.hero .big{font-size:30px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-</head><body>
 
 <div class="wrap">
   <header class="top">
@@ -187,7 +185,7 @@ button.cal-d{cursor:pointer}
 <script>
 (function(){
 "use strict";
-const DEMO=true;let demoKind="sample",helpFrom="overview";
+const DEMO=false;let demoKind="sample",helpFrom="overview",demoDirty=false,demoHosted=false;
 const CADS=[["weekly","Every week",52],["5wk","Every 5 weeks",10.4],["monthly","Every month",12],["2mo","Every 2 months",6],["3mo","Every 3 months",4],["6mo","Every 6 months",2],["yearly","Every year",1]];
 const INCADS=[["weekly","Every week",52],["2wk","Every 2 weeks",26],["monthly","Every month",12],["once","One-time",0]];
 const CATS=[["shared","Shared bills","--c1"],["phones","Phones","--c2"],["house","House services","--c3"],["personal","Personal","--c4"],["business","Business tools","--c5"],["education","Education","--c6"]];
@@ -264,7 +262,7 @@ const isSub=k=>k.startsWith("m:")||k.startsWith("h:");
 const bodyOf=k=>k.startsWith("m:")?S.months[k.slice(2)]:k.startsWith("h:")?HM()[k.slice(2)]:S[k];
 const pathOf=k=>k.startsWith("m:")?"months/"+k.slice(2):k.startsWith("h:")?"hm/"+k.slice(2):DOCS[k];
 async function delHm(id){clearTimeout(timers["h:"+id]);dirty["h:"+id]=false;if(db)try{await db.doc("hm/"+id).delete()}catch(e){}}
-function save(key){if(DEMO){setSaved("Demo · not saved");return}ensure(isSub(key)?"":key);dirty[key]=true;setSaved("Saving…");clearTimeout(timers[key]);timers[key]=setTimeout(()=>flush(key),450)}
+function save(key){if(DEMO){demoDirty=true;setSaved("Demo · not saved");return}ensure(isSub(key)?"":key);dirty[key]=true;setSaved("Saving…");clearTimeout(timers[key]);timers[key]=setTimeout(()=>flush(key),450)}
 async function flush(key){
   if(!db){setSaved("Not saved in this view");return}
   if(writing[key])return;writing[key]=true;
@@ -1205,9 +1203,11 @@ function demoData(kind){
   d.months[cm]={id:cm,started:false,planned:{},carry:{},actual:{},notes:"",paid:paidNow,statement:null,suggestion:null};
   return d}
 function loadDemo(kind){const d=demoData(kind);S={history:d.history,business:d.business,expenses:d.expenses,debt:d.debt,salary:d.salary,settings:d.settings,months:d.months,hm:d.hm};
-  demoKind=kind;booting=false;adjust=null;upl=null;calMonth=curMonth;calDay=null;comingAll=false;["history","business","expenses","debt","salary","settings"].forEach(k=>loaded[k]=true);setSaved("Demo · not saved");demoBanner();render()}
+  demoKind=kind;demoDirty=false;booting=false;adjust=null;upl=null;calMonth=curMonth;calDay=null;comingAll=false;["history","business","expenses","debt","salary","settings"].forEach(k=>loaded[k]=true);setSaved("Demo · not saved");demoBanner();render()}
 function demoBanner(){$("#banner").innerHTML=`<div class="banner" style="display:flex;flex-direction:column;gap:8px"><span><b>Demo with ${demoKind==="blank"?"a blank budget":"made-up numbers"}.</b> Try anything. Nothing is saved, and reloading starts over.</span>
-  ${sample?"":`<span class="tiny">Reading PDFs and screenshots, and Get suggestions, work in the Claude version. CSV upload and Excel download work here.</span>`}<span class="btns"><button type="button" class="btn sm" data-demo="sample" aria-pressed="${demoKind==="sample"}">Load sample data</button><button type="button" class="btn sm" data-demo="blank" aria-pressed="${demoKind==="blank"}">Start blank</button><button type="button" class="btn ghost sm" data-demo="help">Help and how to build your own</button></span></div>`}
+  ${sample?"":`<span class="tiny">Reading PDFs and screenshots, and Get suggestions, work in the Claude version. CSV upload and Excel download work here.</span>`}${demoHosted?"":`<span class="btns"><button type="button" class="btn sm" data-demo="sample" aria-pressed="${demoKind==="sample"}">Load sample data</button><button type="button" class="btn sm" data-demo="blank" aria-pressed="${demoKind==="blank"}">Start blank</button><button type="button" class="btn ghost sm" data-demo="help">Help and how to build your own</button></span>`}</div>`}
+/* Hook for a guide page that shows this demo in a frame and has its own Start blank / Load sample buttons. */
+if(DEMO)window.BBDemo={load:k=>loadDemo(k==="blank"?"blank":"sample"),hasChanges:()=>demoDirty,hosted:()=>{demoHosted=true;demoBanner()}};
 
 /* ---------- boot ---------- */
 render();
@@ -1228,5 +1228,3 @@ render();
 })();
 })();
 </script>
-
-</body></html>
