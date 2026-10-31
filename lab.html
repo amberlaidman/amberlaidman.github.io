@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="design-record.css">
 <style>
 /* ============================================================
    LAB PAGE — Option C: grouped sidebar layout
@@ -378,11 +379,11 @@
         <div class="project-header">
           <div class="project-status">
             <span class="status-dot thinking"></span>
-            <span class="status-text">BRAINSTORMING · SEPT 2026</span>
+            <span class="status-text">IN PROGRESS · OCT 2026</span>
           </div>
           <h3 class="project-title">Feedback</h3>
-          <p class="project-description">A course I keep coming back to but haven't started yet. Years of workplace experience plus ongoing conversations with friends and colleagues have me thinking less about the frameworks for giving feedback and more about the psychology underneath — the questions we skip on the way to delivering it.</p>
-          <p class="project-description">Currently in the "discovery interview with myself" stage: figuring out what this actually is before I start building.</p>
+          <p class="project-description">A course I keep coming back to. Years of workplace experience plus ongoing conversations with friends and colleagues have me thinking less about the frameworks for giving feedback and more about the psychology underneath — the questions we skip on the way to delivering it.</p>
+          <p class="project-description">The design document is drafted, most of the first module's copy is written, and the opening screen exists as a working prototype. The record below shows how I decided what to build.</p>
         </div>
 
         <div class="project-section project-section-single">
@@ -393,6 +394,116 @@
             <li><strong>The "feedback is a gift" framing.</strong> The metaphor assumes everyone wants gifts, that gifts are inherently good, and that the receiver should be grateful. None of those hold up on inspection — so why do we still use it?</li>
           </ul>
         </div>
+
+        <section class="design-record" aria-labelledby="design-record-heading">
+          <h4 id="design-record-heading" class="design-record-heading">Design record</h4>
+          <p class="design-record-intro">This course is self-initiated, so there is no client and there are no learner data. Each finding below is labeled with how I know it.</p>
+          <p class="design-record-meta">Last updated October 31, 2026</p>
+
+          <details class="record-section">
+            <summary>
+              <span class="record-title">Needs analysis</span>
+              <span class="record-sub">What I found, and how I know it</span>
+            </summary>
+            <div class="record-body">
+              <table class="record-table" role="table">
+                <caption>Needs analysis for the feedback course</caption>
+                <thead role="rowgroup"><tr role="row">
+                  <th scope="col" role="columnheader">Question</th>
+                  <th scope="col" role="columnheader">What I found</th>
+                  <th scope="col" role="columnheader">Basis</th>
+                </tr></thead>
+                <tbody role="rowgroup">
+                  <tr role="row">
+                    <th scope="row" role="rowheader">What are the gaps?</th>
+                    <td role="cell" data-label="What I found">People often deliver feedback without checking whether the other person wants it or can use it, and there is no single standard for how it gets given.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">My observation</span><span class="basis-note">Across several jobs and conversations with colleagues and friends, not collected systematically.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Is the first gap real?</th>
+                    <td role="cell" data-label="What I found">A meta-analysis found that feedback improved performance on average, and that over a third of the interventions lowered it (Kluger &amp; DeNisi, 1996). Gallup reports that 26% of employees strongly agree the feedback they receive helps them do better work.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Published research</span><span class="basis-note">Gallup gives no sample or year.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Is the second gap real?</th>
+                    <td role="cell" data-label="What I found">A 2021 review of education research identified 67 feedback models and noted hundreds of definitions of feedback. I did not find comparable evidence for workplaces.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Published research</span><span class="basis-note">Education only. For workplaces: not found.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">What causes the gaps?</th>
+                    <td role="cell" data-label="What I found">Mostly habit and skill, since people rarely pause to check before speaking, along with workplaces that reward giving more feedback.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Inference</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Is training the answer?</th>
+                    <td role="cell" data-label="What I found">Partly. Training can teach a check before speaking and a way to open the conversation, but it cannot change a workplace that rewards unsolicited feedback, so manager support would matter.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Inference</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">What I couldn't find</th>
+                    <td role="cell" data-label="What I found">Credible evidence that feedback training produces measured business results. I found vendor claims and case studies.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Not found</span><span class="basis-note">Limited searching, so I cannot rule it out.</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="record-section">
+            <summary>
+              <span class="record-title">Discovery</span>
+              <span class="record-sub">The decisions one conversation forced</span>
+            </summary>
+            <div class="record-body">
+              <p>Discovery was a stakeholder interview in which I answered as the sponsor of the course and Claude, acting as the instructional designer, asked the questions. There were no learners or managers to interview, so what follows are the decisions that one conversation forced and the options I set aside.</p>
+              <table class="record-table" role="table">
+                <caption>Discovery decision log</caption>
+                <thead role="rowgroup"><tr role="row">
+                  <th scope="col" role="columnheader">Decision</th>
+                  <th scope="col" role="columnheader">Started with</th>
+                  <th scope="col" role="columnheader">Chose</th>
+                  <th scope="col" role="columnheader">Option I didn't take, and why</th>
+                </tr></thead>
+                <tbody role="rowgroup">
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Audience</th>
+                    <td role="cell" data-label="Started with">Everyone, in every industry</td>
+                    <td role="cell" data-label="Chose">Business professionals giving feedback to peers</td>
+                    <td role="cell" data-label="Option I didn't take, and why">A course for everyone, because it gives me nothing specific to design for.</td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Scope</th>
+                    <td role="cell" data-label="Started with">A full course</td>
+                    <td role="cell" data-label="Chose">A design document for the whole course and one built module on giving feedback</td>
+                    <td role="cell" data-label="Option I didn't take, and why">Building both modules, which would take weeks and show less of the thinking.</td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Opening</th>
+                    <td role="cell" data-label="Started with">A gift box with nothing inside</td>
+                    <td role="cell" data-label="Chose">A box holding a candle nobody asked for</td>
+                    <td role="cell" data-label="Option I didn't take, and why">The empty box, because it suggests feedback is worthless when it is often well meant and still not what the person asked for.</td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Readiness</th>
+                    <td role="cell" data-label="Started with">Teach learners to judge whether someone is ready</td>
+                    <td role="cell" data-label="Chose">Teach them to ask, and to handle "not right now"</td>
+                    <td role="cell" data-label="Option I didn't take, and why">Judging readiness from the outside, because it cannot be done reliably, which is the reason to ask.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="record-section">
+            <summary>
+              <span class="record-title">Who did what</span>
+              <span class="record-sub">What Claude drafted and what I decided</span>
+            </summary>
+            <div class="record-body">
+              <p>Claude asked the discovery questions, ran the searches behind the research, and drafted the objectives, scenarios and learner-facing copy. I supplied the premise and the gift opening, made each decision in the log, caught problems in the drafts, and set the voice, which meant sending most of the copy back for rewriting.</p>
+            </div>
+          </details>
+        </section>
       </div>
 
       <!-- Journal panel -->
