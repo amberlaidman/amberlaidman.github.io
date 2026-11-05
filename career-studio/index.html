@@ -190,6 +190,14 @@ body[data-view="demo"] nav.tabs{position:static}
 @media (max-width:640px){.step-actions .btn:not(.ghost),.start-btns .btn{width:100%;justify-content:center}}
 .themebtn{background:none;border:0;color:var(--ink);min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:6px}
 .themebtn:hover{color:var(--accent)}
+/* Welcome: on a first visit the opening gets more room, so it reads as a landing area before the guide. */
+body.first-visit #welcome{min-height:min(62svh,560px);display:flex;align-items:center}
+body.first-visit #welcome h1{font-size:clamp(2.6rem,11vw,4rem)}
+#welcome .start-btns{gap:10px;flex-wrap:wrap}
+.linkbtn{background:none;border:0;padding:6px 0;min-height:44px;color:var(--accent-deep);text-decoration:underline;cursor:pointer;font:inherit}
+/* First visit only: the welcome stands alone until someone picks Get started, the demo or Help. */
+body.welcome-only nav.tabs,body.welcome-only #view-guide,body.welcome-only #view-demo,body.welcome-only #view-help,body.welcome-only footer,body.welcome-only #toTop{display:none !important}
+body.welcome-only #welcome{min-height:min(78svh,720px)}
 </style>
 </head>
 <body>
@@ -200,12 +208,20 @@ body[data-view="demo"] nav.tabs{position:static}
   </div>
 
 
-    <div class="hero">
+    <div class="hero" id="welcome">
       <div>
         <h1>Career Studio</h1>
-        <p class="tagline">Your own private place to practice for interviews with Claude.</p>
-        <p class="intro">Here's how to get your own copy of the practice space I use. It starts out empty, so plan on about 25 minutes to add a little about yourself and a few stories from your work.</p>
-        <div class="row start-btns"><button class="btn sm" type="button" data-goto-view="demo">Try the demo first</button></div>
+        <div id="firstVisit">
+          <p class="tagline">Your own private place to practice for interviews with Claude.</p>
+          <p class="intro">Here's how to get your own copy of the practice space I use. It starts out empty, so plan on about 25 minutes to add a little about yourself and a few stories from your work.</p>
+          <div class="row start-btns"><button class="btn" type="button" data-start="1">Get started</button><button class="btn ghost" type="button" data-goto-view="demo">Try the demo first</button></div>
+          <p class="small welcome-help" id="welcomeHelpLine" style="margin:8px 0 0"><button type="button" class="linkbtn" data-goto-view="help">Need help? Go to Help</button></p>
+        </div>
+        <div id="returning" hidden>
+          <p class="tagline">Welcome back.</p>
+          <div class="row start-btns"><button class="btn" type="button" data-start="1">Go to the guide</button><button class="btn ghost" type="button" data-goto-view="demo">Open the demo</button></div>
+          <p class="small" style="margin:6px 0 0"><button type="button" class="linkbtn" id="showWelcome">Show the welcome again</button></p>
+        </div>
       </div>
     </div>
   </header>
@@ -464,6 +480,16 @@ Please help me troubleshoot this one step at a time, in simple words.</pre></div
   var saved="auto";try{saved=localStorage.getItem("csg-theme")||"auto";}catch(e){}
   applyTheme(saved);
 
+  /* Welcome: first-time visitors see the full welcome; people who've been here before get a short "Welcome back" with the same two choices. */
+  // First visit: the welcome is its own screen, and the guide appears once someone picks where to go.
+  // A link straight to a section (like #help) skips the welcome screen.
+  var seen=false;try{seen=localStorage.getItem("csg-visited")==="1";}catch(e){}
+  function welcomeMode(back){$("firstVisit").hidden=back;$("returning").hidden=!back;document.body.classList.toggle("first-visit",!back);$("welcomeHelpLine").hidden=back;}
+  function leaveWelcome(){if(!document.body.classList.contains("welcome-only"))return;document.body.classList.remove("welcome-only");try{localStorage.setItem("csg-visited","1");}catch(e){}}
+  welcomeMode(seen);
+  if(!seen&&!location.hash)document.body.classList.add("welcome-only");else{try{localStorage.setItem("csg-visited","1");}catch(e){}}
+  $("showWelcome").addEventListener("click",function(){welcomeMode(false);var b=$("firstVisit").querySelector("[data-start]");if(b)b.focus();});
+
   function showView(v){
     var hd=document.querySelector("header");if(hd){var y=hd.offsetTop+hd.offsetHeight+4;if(window.scrollY>y)window.scrollTo({top:y,behavior:"instant"});}
     document.body.setAttribute("data-view",v);
@@ -564,7 +590,9 @@ Please help me troubleshoot this one step at a time, in simple words.</pre></div
     var t=e.target.closest("button");if(!t)return;var d=t.dataset;
     if(t.id==="themeBtn"){var nx=THEME_ORDER[(THEME_ORDER.indexOf(themeNow)+1)%3];applyTheme(nx);$("themeLive").textContent="Color theme: "+THEME_NAME[nx];try{localStorage.setItem("csg-theme",nx);}catch(err){}return;}
     if(d.view)return showView(d.view);
-    if(d.gotoView){showView(d.gotoView);$("tab-"+d.gotoView).focus();return;}
+    if(d.start||d.gotoView)leaveWelcome();
+    if(d.start){openStep("step1");return;}
+    if(d.gotoView){showView(d.gotoView);var nv=document.querySelector("nav.tabs");if(nv&&nv.getBoundingClientRect().top>60)nv.scrollIntoView({block:"start"});$("tab-"+d.gotoView).focus({preventScroll:true});return;}
     if(d.gotoStepBtn)return openStep(d.gotoStepBtn);
     if(d.hview){["trouble","privacy","sources"].forEach(function(k){$("hview-"+k).hidden=k!==d.hview;$("htab-"+k).setAttribute("aria-selected",k===d.hview?"true":"false");});syncTabStops();return;}
   });
