@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A practice front-desk CRM for a made-up medical spa. All names, numbers and prices are fictional.">
+<title>EMBR Practice CRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a plain front-desk CRM. Coal side menu, light work area, flat panels with hairline borders, one ember-orange accent on a coal side menu. Single light theme on purpose. */
+:root{
+  --bg:#f4f1ee;
+  --surface:#ffffff;
+  --ink:#231f1d;
+  --muted:#5b514a;
+  --line:#ddd5cd;
+  --accent:#b8470f;
+  --accent-strong:#8f3608;
+  --nav:#2b2522;
+  --nav-ink:#e8dfd8;
+  --notice:#fbf1cf;
+  --notice-line:#e2cf8a;
+  --new-bg:#f8e4d6;
+  --new-ink:#6b2c08;
+  --booked-bg:#dcefe3;
+  --booked-ink:#1f5c38;
+  --off-bg:#e6e7ea;
+  --off-ink:#474c54;
+  --danger:#a12f2f;
+  --field-border:#6f7b88;
+  --font:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--font);font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid #2b2522;outline-offset:2px}
+h1:focus{outline:none}
+.skip{position:absolute;left:8px;top:-60px;background:#fff;color:var(--ink);border:2px solid #2b2522;padding:8px 12px;z-index:50;font-weight:600}
+.skip:focus{top:8px}
+input[type=checkbox],input[type=radio]{width:24px;height:24px;margin:0;accent-color:var(--accent);flex:none}
+
+.app{display:grid;grid-template-columns:200px minmax(0,1fr);min-height:100%}
+.nav{background:var(--nav);color:var(--nav-ink);display:flex;flex-direction:column;padding:18px 0}
+.brand{padding:0 20px 20px;font-weight:500;letter-spacing:.3em;color:#fff;font-size:24px}
+.brand .rule{display:block;width:64px;height:3px;background:#e8763a;margin:8px 0 6px}
+.brand small{display:block;font-weight:400;letter-spacing:0;font-size:12px;color:#c4b8af;margin-top:2px}
+.nav-btn{display:block;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;color:inherit;font:inherit;padding:10px 20px;cursor:pointer}
+.nav-btn:hover{background:#3a312d}
+.nav-btn[aria-current="page"]{background:#42372f;border-left-color:#e8763a;color:#fff;font-weight:600}
+.nav-btn:focus-visible{outline-color:#fff;outline-offset:-3px}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.banner{background:var(--notice);border-bottom:1px solid var(--notice-line);padding:8px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:13px}
+.banner .btn{margin-left:auto;padding:4px 10px;font-size:13px}
+.topbar{display:flex;align-items:center;gap:10px;padding:18px 24px 10px;flex-wrap:wrap}
+.topbar h1{margin:0 auto 0 0;font-size:22px;font-weight:600;text-wrap:balance}
+#view{padding:6px 24px 48px;outline:none;flex:1}
+
+.btn{font:inherit;font-weight:500;background:var(--surface);color:var(--ink);border:1px solid var(--field-border);border-radius:3px;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn:hover{background:#f6f0ea}
+.btn.primary{background:var(--accent);border-color:var(--accent-strong);color:#fff}
+.btn.primary:hover{background:var(--accent-strong)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.link{background:none;border:0;padding:2px 0;min-height:24px;font:inherit;color:var(--accent-strong);text-decoration:underline;cursor:pointer}
+
+/* Leads board */
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+.col{background:#ebe5df;border-top:3px solid #8a9099;padding:10px 10px 12px;min-height:170px}
+.col.c0{border-top-color:#b8470f}
+.col.c1{border-top-color:#3f8f61}
+.col h2{font-size:14px;font-weight:600;margin:0 0 10px;display:flex;justify-content:space-between;gap:8px}
+.col .count{color:var(--muted);font-weight:500}
+.lead{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:10px 12px;margin-bottom:8px;cursor:pointer;font:inherit;color:inherit}
+.lead:hover{border-color:var(--accent)}
+.lead-name{display:block;font-weight:600}
+.lead-svc{display:block;color:var(--muted);font-size:13px}
+.empty{color:var(--muted);font-size:13px;margin:4px 2px}
+
+/* Tables */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:13px;color:var(--muted);font-weight:600;background:#f7f3ef}
+tr.done td.task-name{text-decoration:line-through;color:var(--muted)}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:2px;white-space:nowrap}
+.b0{background:var(--new-bg);color:var(--new-ink)}
+.b1{background:var(--booked-bg);color:var(--booked-ink)}
+.b2{background:var(--off-bg);color:var(--off-ink)}
+
+/* Contact record */
+.back{margin:0 0 12px}
+.record{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+.main-col,.side-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);padding:16px 18px}
+.panel h2{margin:0 0 12px;font-size:15px;font-weight:600}
+.panel h3{margin:0 0 8px;font-size:14px;font-weight:600}
+.rec-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.rec-head h2{font-size:21px;margin:0}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;margin-bottom:18px}
+.field label,.field .lbl{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.field input,.field select,.field textarea,textarea.notes{width:100%;font:inherit;padding:7px 9px;border:1px solid var(--field-border);border-radius:3px;background:#fff;color:var(--ink)}
+.field input[aria-invalid="true"],.field select[aria-invalid="true"],.composer textarea[aria-invalid="true"]{border:2px solid var(--danger)}
+textarea.notes{min-height:220px;line-height:1.65;resize:vertical}
+.hint{color:var(--muted);font-size:13px;margin:0 0 8px}
+.task-list{list-style:none;margin:0 0 14px;padding:0}
+.task-list li{padding:8px 0;border-bottom:1px solid var(--line)}
+.task-list .due{display:block;color:var(--muted);font-size:13px}
+.stack{display:flex;flex-direction:column;gap:10px}
+.err{color:var(--danger);font-size:13px;margin:0}
+
+/* Inbox */
+.inbox{display:grid;grid-template-columns:250px minmax(0,1fr) 250px;gap:16px;align-items:start}
+.convos{background:var(--surface);border:1px solid var(--line)}
+.convo{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;padding:10px 12px;cursor:pointer;color:inherit}
+.convo[aria-current="true"]{background:#f8e8dc;box-shadow:inset 3px 0 0 var(--accent)}
+.convo .snip{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thread{min-height:220px;max-height:340px;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#faf7f4;border:1px solid var(--line);border-bottom:0}
+.thread .none{color:var(--muted);margin:auto;text-align:center}
+.msg{align-self:flex-end;max-width:82%;background:#f6dfd0;border:1px solid #e3bfa8;padding:8px 10px;border-radius:3px;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg .meta{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
+.composer{background:var(--surface);border:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.radios{display:flex;gap:8px 20px;align-items:center;flex-wrap:wrap}
+.radios .lbl{font-size:13px;font-weight:600}
+.radios label{display:inline-flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}
+.composer .lbl{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.composer textarea,.composer input[type=text]{width:100%;font:inherit;padding:7px 9px;border:1px solid var(--field-border);border-radius:3px}
+.composer textarea{min-height:84px;resize:vertical}
+.side-details dl{margin:0 0 12px}
+.side-details dt{font-size:13px;color:var(--muted)}
+.side-details dd{margin:0 0 8px;overflow-wrap:anywhere}
+
+/* Services side panel */
+body.drawer-open .main{margin-right:380px}
+body.drawer-open .record,body.drawer-open .inbox{grid-template-columns:1fr}
+body.drawer-open .board{grid-template-columns:1fr}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(380px,100%);background:#fff;border-left:1px solid var(--field-border);box-shadow:-6px 0 18px rgba(20,35,50,.16);padding:18px 20px 28px;overflow:auto;z-index:20}
+.drawer[hidden]{display:none}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.drawer h2{margin:0;font-size:18px}
+.price-list{list-style:none;margin:8px 0 0;padding:0}
+.price-list li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line)}
+.price-list .p{font-weight:600;text-align:right}
+.price-list small{display:block;color:var(--muted);font-weight:400;font-size:14px;line-height:1.4;margin-top:2px}
+.team{margin:16px 0 0;padding:12px 14px;background:#f6f0ea;border-left:3px solid var(--accent)}
+.team h3{margin:0 0 4px;font-size:14px}
+.team p{margin:0}
+
+dialog{border:1px solid var(--field-border);border-radius:4px;padding:20px 22px;width:min(420px,calc(100% - 32px));color:var(--ink);background:#fff}
+dialog::backdrop{background:rgba(20,35,50,.42)}
+dialog h2{margin:0 0 14px;font-size:18px}
+.dlg-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--nav);color:#fff;padding:8px 14px;border-radius:3px;font-size:14px;z-index:30;max-width:calc(100% - 32px);pointer-events:none}
+.toast:empty{display:none}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .nav{flex-direction:row;flex-wrap:wrap;padding:8px 8px 0}
+  .brand{padding:6px 12px;width:100%}
+  .nav-btn{width:auto;border-left:0;border-bottom:3px solid transparent;padding:8px 14px}
+  .nav-btn[aria-current="page"]{border-bottom-color:#e8763a}
+  .board,.record,.inbox{grid-template-columns:1fr}
+  .fields{grid-template-columns:1fr}
+  .topbar,.banner,#view{padding-left:16px;padding-right:16px}
+  .btn,.nav-btn,.field select,.field input[type=text],.composer input[type=text]{min-height:44px}
+  .link{min-height:44px;display:inline-flex;align-items:center}
+  .radios label{min-height:44px}
+  body.drawer-open .main{margin-right:0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#view">Skip to main content</a>
+<div class="app" id="app">
+  <nav class="nav" aria-label="Main menu">
+    <div class="brand">EMBR<span class="rule" aria-hidden="true"></span><small>Front desk</small></div>
+    <button type="button" class="nav-btn" data-view="leads">Leads</button>
+    <button type="button" class="nav-btn" data-view="contacts">Contacts</button>
+    <button type="button" class="nav-btn" data-view="tasks">Tasks</button>
+    <button type="button" class="nav-btn" data-view="inbox">Inbox</button>
+  </nav>
+  <div class="main">
+    <div class="banner" role="region" aria-label="Practice environment notice">
+      <span>Practice environment. All names, numbers and prices are made up, and nothing you enter is saved or sent.</span>
+      <button type="button" class="btn" id="resetBtn">Reset practice data</button>
+    </div>
+    <header class="topbar">
+      <h1 id="viewTitle" tabindex="-1">Leads</h1>
+      <button type="button" class="btn primary" id="addContactBtn">Add contact</button>
+      <button type="button" class="btn" id="servicesBtn" aria-expanded="false" aria-controls="servicesPanel">Services</button>
+    </header>
+    <main id="view" tabindex="-1"></main>
+  </div>
+</div>
+
+<aside class="drawer" id="servicesPanel" aria-labelledby="servicesTitle" hidden>
+  <div class="drawer-head">
+    <h2 id="servicesTitle">Services</h2>
+    <button type="button" class="btn" id="closeServices">Close</button>
+  </div>
+  <ul class="price-list" id="priceList"></ul>
+  <div class="team">
+    <h3>Our team</h3>
+    <p>Our treatments are done by Priya Nair, a nurse practitioner, under the supervision of our physician medical director, Dr. Daniel Reyes.</p>
+  </div>
+</aside>
+
+<dialog id="addDialog" aria-labelledby="addTitle">
+  <form id="addForm" novalidate>
+    <h2 id="addTitle">Add contact</h2>
+    <div class="stack">
+      <div class="field">
+        <label for="newName">Name</label>
+        <input type="text" id="newName" autocomplete="off" aria-describedby="nameErr">
+        <p class="err" id="nameErr" role="alert"></p>
+      </div>
+      <div class="field">
+        <label for="newPhone">Phone</label>
+        <input type="text" id="newPhone" autocomplete="off" inputmode="tel">
+      </div>
+      <div class="field">
+        <label for="newEmail">Email</label>
+        <input type="text" id="newEmail" autocomplete="off" inputmode="email">
+      </div>
+    </div>
+    <div class="dlg-actions">
+      <button type="button" class="btn" id="cancelAdd">Cancel</button>
+      <button type="submit" class="btn primary">Add contact</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="status" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+
+var STAGES = ['New Inquiry','Consultation Booked','Not a Fit'];
+var SERVICES = [
+  {n:'Hydrating facial', p:'$175', d:'A facial that cleanses and moisturizes the skin.'},
+  {n:'Dermaplaning', p:'$110', d:'Gentle exfoliation with a small blade that removes dead skin cells and fine facial hair.'},
+  {n:'Red light therapy', p:'$75', d:'Low-level red light is held over the skin for a set time.'},
+  {n:'Chemical peel', p:'from $230', d:'An acid solution is applied to exfoliate the outer layers of the skin.'},
+  {n:'Microneedling', p:'$350', d:'A pen-like device with very fine needles makes tiny pricks in the skin.'},
+  {n:'Laser hair removal, underarms', p:'$150', d:'A laser targets the pigment in hair to reduce unwanted hair. Usually done as a series of visits.'},
+  {n:'Laser hair removal, full legs', p:'from $450', d:'The same laser treatment, done over the whole leg. Usually done as a series of visits.'},
+  {n:'Non-surgical body contouring', p:'from $750 per session', d:'Treatments without surgery that aim at small areas of stubborn fat. This is not a weight loss treatment.'},
+  {n:'Dermal fillers', p:'$750 per syringe', d:'A gel-like substance is injected under the skin to add volume or soften lines.', note:'The provider decides how many syringes.'},
+  {n:'Wrinkle relaxers', p:'$14 per unit', d:'Injections that temporarily relax the muscles behind certain lines, such as frown lines.'},
+  {n:'Medical weight loss program', p:'No price listed', d:'A program supervised by a provider that starts with a health evaluation.'}
+];
+var HEARD = ['Friend or family','Social media','Online search','Walk-in','Other'];
+var URGENCY = ['This month','Within three months','Just exploring'];
+var READY = ['Yes','No','Not sure'];
+var NOTE_TEMPLATE = 'Prompted by: \nMain concern: \nPast experience: \nWorries: \nBudget comfort: \nFor the provider: ';
+
+var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+var DAY_OPTIONS = DAYS.concat(DAYS.map(function(d){return 'Next ' + d;}));
+var TIME_OPTIONS = (function(){
+  var out = [];
+  for (var h = 9; h <= 20; h++) {
+    [0,30].forEach(function(m){
+      if (h === 20 && m === 30) return;
+      var h12 = ((h + 11) % 12) + 1;
+      out.push(h12 + ':' + (m === 0 ? '00' : '30') + ' ' + (h < 12 ? 'a.m.' : 'p.m.'));
+    });
+  }
+  return out;
+})();
+
+function seed(){
+  return {
+    view:'leads', openId:null, inboxId:null, channel:'text', nextId:10,
+    contacts:[
+      {id:1,name:'Avery Collins',phone:'(212) 555-0113',email:'avery.collins@example.com',stage:'New Inquiry',howHeard:'Online search',service:'Hydrating facial',urgency:'',ready:'',notes:NOTE_TEMPLATE,messages:[]},
+      {id:2,name:'Sam Okafor',phone:'(212) 555-0136',email:'sam.okafor@example.com',stage:'Consultation Booked',howHeard:'Friend or family',service:'Laser hair removal, underarms',urgency:'',ready:'Yes',notes:NOTE_TEMPLATE,messages:[]},
+      {id:3,name:'Riley Chen',phone:'(212) 555-0191',email:'riley.chen@example.com',stage:'Not a Fit',howHeard:'Social media',service:'Medical weight loss program',urgency:'',ready:'No',notes:NOTE_TEMPLATE,messages:[]}
+    ],
+    tasks:[
+      {id:4,contactId:2,name:'Consultation',day:'Tuesday',time:'2:00 p.m.',done:false}
+    ]
+  };
+}
+var state = seed();
+
+var viewEl = document.getElementById('view');
+var titleEl = document.getElementById('viewTitle');
+var statusEl = document.getElementById('status');
+var panelEl = document.getElementById('servicesPanel');
+var servicesBtn = document.getElementById('servicesBtn');
+var addDialog = document.getElementById('addDialog');
+var toastTimer = null;
+
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function byId(id){
+  id = Number(id);
+  for (var i = 0; i < state.contacts.length; i++) if (state.contacts[i].id === id) return state.contacts[i];
+  return null;
+}
+function stageIndex(s){ return STAGES.indexOf(s); }
+function options(list, value, blank){
+  var html = blank ? '<option value="">' + esc(blank) + '</option>' : '';
+  list.forEach(function(o){
+    html += '<option value="' + esc(o) + '"' + (o === value ? ' selected' : '') + '>' + esc(o) + '</option>';
+  });
+  return html;
+}
+function toast(msg){
+  statusEl.textContent = msg;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ statusEl.textContent = ''; }, 7000);
+}
+function clock(){
+  return new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}).replace('AM','a.m.').replace('PM','p.m.');
+}
+
+/* ---------- Services panel ---------- */
+(function buildPrices(){
+  var html = '';
+  SERVICES.forEach(function(s){
+    html += '<li><span>' + esc(s.n) + (s.d ? '<small>' + esc(s.d) + '</small>' : '') + (s.note ? '<small>' + esc(s.note) + '</small>' : '') + '</span><span class="p">' + esc(s.p) + '</span></li>';
+  });
+  document.getElementById('priceList').innerHTML = html;
+})();
+var narrowMQ = window.matchMedia ? window.matchMedia('(max-width: 900px)') : {matches:false};
+function syncDrawerLayout(){
+  var open = !panelEl.hidden;
+  var app = document.getElementById('app');
+  document.body.classList.toggle('drawer-open', open);
+  /* On a narrow screen the panel covers the page, so the page behind it is made unreachable. */
+  if (open && narrowMQ.matches) app.setAttribute('inert',''); else app.removeAttribute('inert');
+}
+function openServices(){
+  panelEl.hidden = false;
+  servicesBtn.setAttribute('aria-expanded','true');
+  syncDrawerLayout();
+  document.getElementById('closeServices').focus();
+}
+function closeServices(){
+  panelEl.hidden = true;
+  servicesBtn.setAttribute('aria-expanded','false');
+  syncDrawerLayout();
+  servicesBtn.focus();
+}
+if (narrowMQ.addEventListener) narrowMQ.addEventListener('change', syncDrawerLayout);
+servicesBtn.addEventListener('click', function(){ panelEl.hidden ? openServices() : closeServices(); });
+document.getElementById('closeServices').addEventListener('click', closeServices);
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape' && !panelEl.hidden && !addDialog.open) closeServices();
+});
+
+/* ---------- Rendering ---------- */
+function renderNav(){
+  var current = state.view === 'contact' ? 'leads' : state.view;
+  Array.prototype.forEach.call(document.querySelectorAll('.nav-btn'), function(b){
+    if (b.getAttribute('data-view') === current) b.setAttribute('aria-current','page');
+    else b.removeAttribute('aria-current');
+  });
+}
+
+function renderLeads(){
+  var cols = STAGES.map(function(stage, i){
+    var items = state.contacts.filter(function(c){ return c.stage === stage; });
+    var cards = items.map(function(c){
+      return '<button type="button" class="lead" data-open="' + c.id + '"><span class="lead-name">' + esc(c.name) + '</span><span class="lead-svc">' + esc(c.service || 'No service selected') + '</span></button>';
+    }).join('') || '<p class="empty">No contacts in this stage.</p>';
+    return '<section class="col c' + i + '" aria-labelledby="col' + i + '"><h2 id="col' + i + '"><span>' + esc(stage) + '</span><span class="count">' + items.length + '</span></h2>' + cards + '</section>';
+  }).join('');
+  return '<div class="board">' + cols + '</div>';
+}
+
+function renderContacts(){
+  var rows = state.contacts.map(function(c){
+    return '<tr><td><button type="button" class="link" data-open="' + c.id + '">' + esc(c.name) + '</button></td><td>' + esc(c.phone) + '</td><td>' + esc(c.email) + '</td><td><span class="badge b' + stageIndex(c.stage) + '">' + esc(c.stage) + '</span></td><td>' + esc(c.howHeard || '') + '</td></tr>';
+  }).join('');
+  return '<div class="table-wrap"><table><thead><tr><th scope="col">Name</th><th scope="col">Phone</th><th scope="col">Email</th><th scope="col">Stage</th><th scope="col">How they heard</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+
+function dueText(t){ return t.day + ', ' + t.time; }
+
+function renderTasks(){
+  if (!state.tasks.length) return '<p class="empty">No tasks yet. Add a follow-up task from a contact record.</p>';
+  var rows = state.tasks.map(function(t){
+    var c = byId(t.contactId);
+    return '<tr class="' + (t.done ? 'done' : '') + '"><td><input type="checkbox" data-done="' + t.id + '"' + (t.done ? ' checked' : '') + ' aria-label="Mark ' + esc(t.name) + (c ? ' for ' + esc(c.name) : '') + ' done"></td><td class="task-name">' + esc(t.name) + '</td><td>' + (c ? '<button type="button" class="link" data-open="' + c.id + '">' + esc(c.name) + '</button>' : '') + '</td><td>' + esc(dueText(t)) + '</td></tr>';
+  }).join('');
+  return '<div class="table-wrap"><table><thead><tr><th scope="col">Done</th><th scope="col">Task</th><th scope="col">Contact</th><th scope="col">Due</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+
+function renderContact(){
+  var c = byId(state.openId);
+  if (!c) return '<p class="empty">That contact is not available.</p>';
+  var tasks = state.tasks.filter(function(t){ return t.contactId === c.id; });
+  var taskHtml = tasks.length
+    ? '<ul class="task-list">' + tasks.map(function(t){ return '<li>' + esc(t.name) + '<span class="due">' + esc(dueText(t)) + (t.done ? ' (done)' : '') + '</span></li>'; }).join('') + '</ul>'
+    : '<p class="hint">No follow-up tasks yet.</p>';
+  return '' +
+  '<p class="back"><button type="button" class="link" data-view="leads">Back to Leads</button></p>' +
+  '<div class="record">' +
+    '<div class="main-col">' +
+      '<section class="panel" aria-label="Contact and call notes">' +
+        '<div class="rec-head"><h2>' + esc(c.name) + '</h2><span class="badge b' + stageIndex(c.stage) + '" id="stageBadge">' + esc(c.stage) + '</span></div>' +
+        '<h3>Contact details</h3>' +
+        '<div class="fields">' +
+          '<div class="field"><label for="f-phone">Phone</label><input type="text" id="f-phone" data-field="phone" value="' + esc(c.phone) + '" autocomplete="off"></div>' +
+          '<div class="field"><label for="f-email">Email</label><input type="text" id="f-email" data-field="email" value="' + esc(c.email) + '" autocomplete="off"></div>' +
+        '</div>' +
+        '<h3>Intake</h3>' +
+        '<div class="fields">' +
+          '<div class="field"><label for="f-heard">How they heard about EMBR</label><select id="f-heard" data-field="howHeard">' + options(HEARD, c.howHeard, 'Select') + '</select></div>' +
+          '<div class="field"><label for="f-service">Service of interest</label><select id="f-service" data-field="service">' + options(SERVICES.map(function(s){return s.n;}), c.service, 'Select') + '</select></div>' +
+          '<div class="field"><label for="f-urgency">Urgency</label><select id="f-urgency" data-field="urgency">' + options(URGENCY, c.urgency, 'Select') + '</select></div>' +
+          '<div class="field"><label for="f-ready">Ready to book</label><select id="f-ready" data-field="ready">' + options(READY, c.ready, 'Select') + '</select></div>' +
+        '</div>' +
+        '<h3><label for="f-notes">Call notes</label></h3>' +
+        '<textarea class="notes" id="f-notes" data-field="notes" spellcheck="true">' + esc(c.notes) + '</textarea>' +
+      '</section>' +
+    '</div>' +
+    '<div class="side-col">' +
+      '<section class="panel"><h2>Stage</h2><div class="field"><label for="f-stage">Move this contact to</label><select id="f-stage" data-field="stage">' + options(STAGES, c.stage) + '</select></div></section>' +
+      '<section class="panel"><h2>Follow-up tasks</h2>' + taskHtml +
+        '<form class="task-form stack" data-contact="' + c.id + '" novalidate>' +
+          '<div class="field"><label for="t-name">Task name</label><input type="text" id="t-name" autocomplete="off"></div>' +
+          '<div class="field"><label for="t-day">Due day</label><select id="t-day">' + options(DAY_OPTIONS, '', 'Select day') + '</select></div>' +
+          '<div class="field"><label for="t-time">Due time</label><select id="t-time">' + options(TIME_OPTIONS, '', 'Select time') + '</select></div>' +
+          '<p class="err" id="t-err" role="alert"></p>' +
+          '<button type="submit" class="btn primary">Add task</button>' +
+        '</form>' +
+      '</section>' +
+      '<section class="panel"><h2>Messages</h2><p class="hint">' + c.messages.length + (c.messages.length === 1 ? ' message' : ' messages') + ' in this conversation.</p><button type="button" class="btn" data-open-inbox="' + c.id + '">Open conversation in Inbox</button></section>' +
+    '</div>' +
+  '</div>';
+}
+
+function threadHtml(c){
+  if (!c.messages.length) return '<p class="none">No messages yet. Send a text or an email below.</p>';
+  return c.messages.map(function(m){
+    return '<div class="msg"><span class="meta">' + (m.channel === 'email' ? 'Email' : 'Text') + ' to ' + esc(m.channel === 'email' ? (c.email || 'no email on file') : (c.phone || 'no phone on file')) + ' at ' + esc(m.time) + '</span>' + (m.subject ? '<strong>' + esc(m.subject) + '</strong><br>' : '') + esc(m.text) + '</div>';
+  }).join('');
+}
+
+function renderInbox(){
+  if (!state.contacts.length) return '<p class="empty">No conversations yet.</p>';
+  if (!byId(state.inboxId)) state.inboxId = state.contacts[0].id;
+  var c = byId(state.inboxId);
+  var list = state.contacts.map(function(x){
+    var last = x.messages.length ? x.messages[x.messages.length - 1].text : 'No messages yet';
+    return '<button type="button" class="convo" data-convo="' + x.id + '"' + (x.id === c.id ? ' aria-current="true"' : '') + '><strong>' + esc(x.name) + '</strong><span class="snip">' + esc(last) + '</span></button>';
+  }).join('');
+  var isEmail = state.channel === 'email';
+  return '' +
+  '<div class="inbox">' +
+    '<div class="convos" role="group" aria-label="Conversations">' + list + '</div>' +
+    '<div>' +
+      '<div class="thread" id="thread" role="log" aria-label="Conversation with ' + esc(c.name) + '">' + threadHtml(c) + '</div>' +
+      '<form class="composer" id="composer" novalidate>' +
+        '<div class="radios" role="radiogroup" aria-labelledby="sendAsLbl"><span class="lbl" id="sendAsLbl">Send as</span>' +
+          '<label><input type="radio" name="channel" value="text"' + (isEmail ? '' : ' checked') + '> Text message</label>' +
+          '<label><input type="radio" name="channel" value="email"' + (isEmail ? ' checked' : '') + '> Email</label>' +
+        '</div>' +
+        '<div id="subjectWrap"' + (isEmail ? '' : ' hidden') + '><label for="c-subject" class="lbl">Subject</label><input type="text" id="c-subject" autocomplete="off"></div>' +
+        '<div><label for="c-body" class="lbl">Message to ' + esc(c.name) + '</label><textarea id="c-body" aria-describedby="c-err"></textarea></div>' +
+        '<p class="err" id="c-err" role="alert"></p>' +
+        '<div><button type="submit" class="btn primary" id="sendBtn">' + (isEmail ? 'Send email' : 'Send text') + '</button></div>' +
+        '<p class="hint">Practice only. Nothing is actually sent.</p>' +
+      '</form>' +
+    '</div>' +
+    '<aside class="panel side-details" aria-label="Contact details">' +
+      '<h2>' + esc(c.name) + '</h2>' +
+      '<dl><dt>Phone</dt><dd>' + esc(c.phone || 'Not entered') + '</dd><dt>Email</dt><dd>' + esc(c.email || 'Not entered') + '</dd><dt>Stage</dt><dd><span class="badge b' + stageIndex(c.stage) + '">' + esc(c.stage) + '</span></dd></dl>' +
+      '<button type="button" class="btn" data-open="' + c.id + '">Open contact</button>' +
+    '</aside>' +
+  '</div>';
+}
+
+function render(opts){
+  var v = state.view;
+  var titles = {leads:'Leads',contacts:'Contacts',tasks:'Tasks',inbox:'Inbox',contact:'Contact record'};
+  titleEl.textContent = titles[v] || 'Leads';
+  var html = v === 'contacts' ? renderContacts()
+    : v === 'tasks' ? renderTasks()
+    : v === 'inbox' ? renderInbox()
+    : v === 'contact' ? renderContact()
+    : renderLeads();
+  viewEl.innerHTML = html;
+  renderNav();
+  if (opts && opts.focus) titleEl.focus({preventScroll:true});
+}
+
+function go(view, id){
+  state.view = view;
+  if (view === 'contact') state.openId = Number(id);
+  render({focus:true});
+  window.scrollTo(0, 0);
+}
+
+/* ---------- Add contact ---------- */
+function openAdd(){
+  document.getElementById('addForm').reset();
+  document.getElementById('nameErr').textContent = '';
+  document.getElementById('newName').removeAttribute('aria-invalid');
+  if (typeof addDialog.showModal === 'function') addDialog.showModal(); else addDialog.setAttribute('open','');
+  document.getElementById('newName').focus();
+}
+function closeAdd(){
+  if (typeof addDialog.close === 'function') addDialog.close(); else addDialog.removeAttribute('open');
+  document.getElementById('addContactBtn').focus();
+}
+document.getElementById('addContactBtn').addEventListener('click', openAdd);
+document.getElementById('cancelAdd').addEventListener('click', closeAdd);
+document.getElementById('addForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = document.getElementById('newName').value.trim();
+  if (!name) {
+    document.getElementById('nameErr').textContent = 'Error: Enter a name to add this contact.';
+    document.getElementById('newName').setAttribute('aria-invalid','true');
+    document.getElementById('newName').focus();
+    return;
+  }
+  var c = {
+    id: state.nextId++, name: name,
+    phone: document.getElementById('newPhone').value.trim(),
+    email: document.getElementById('newEmail').value.trim(),
+    stage: 'New Inquiry', howHeard:'', service:'', urgency:'', ready:'',
+    notes: NOTE_TEMPLATE, messages: []
+  };
+  state.contacts.push(c);
+  if (typeof addDialog.close === 'function') addDialog.close(); else addDialog.removeAttribute('open');
+  go('contact', c.id);
+  toast(c.name + ' added to New Inquiry.');
+});
+
+document.getElementById('resetBtn').addEventListener('click', function(){
+  state = seed();
+  render({focus:true});
+  toast('Practice data reset.');
+});
+
+/* ---------- Delegated events ---------- */
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-view],[data-open],[data-open-inbox],[data-convo]');
+  if (!t) return;
+  if (t.hasAttribute('data-view')) { go(t.getAttribute('data-view')); return; }
+  if (t.hasAttribute('data-open')) { go('contact', t.getAttribute('data-open')); return; }
+  if (t.hasAttribute('data-open-inbox')) { state.inboxId = Number(t.getAttribute('data-open-inbox')); go('inbox'); return; }
+  if (t.hasAttribute('data-convo')) { state.inboxId = Number(t.getAttribute('data-convo')); render(); return; }
+});
+
+function onFieldChange(e){
+  var el = e.target;
+  if (el.hasAttribute && el.hasAttribute('data-field')) {
+    var c = byId(state.openId);
+    if (!c) return;
+    var f = el.getAttribute('data-field');
+    c[f] = el.value;
+    if (f === 'stage') {
+      var badge = document.getElementById('stageBadge');
+      if (badge) { badge.textContent = c.stage; badge.className = 'badge b' + stageIndex(c.stage); }
+      toast('Moved to ' + c.stage + '.');
+    }
+    return;
+  }
+  if (el.hasAttribute && el.hasAttribute('data-done') && e.type === 'change') {
+    var id = Number(el.getAttribute('data-done'));
+    state.tasks.forEach(function(t){ if (t.id === id) t.done = el.checked; });
+    render();
+    return;
+  }
+  if (el.name === 'channel' && e.type === 'change') {
+    state.channel = el.value;
+    var wrap = document.getElementById('subjectWrap');
+    if (wrap) wrap.hidden = el.value !== 'email';
+    var btn = document.getElementById('sendBtn');
+    if (btn) btn.textContent = el.value === 'email' ? 'Send email' : 'Send text';
+  }
+}
+document.addEventListener('input', function(e){
+  var el = e.target;
+  if (el.hasAttribute && el.hasAttribute('data-field') && (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT')) onFieldChange(e);
+});
+document.addEventListener('change', onFieldChange);
+
+document.addEventListener('submit', function(e){
+  var form = e.target;
+  if (form.classList.contains('task-form')) {
+    e.preventDefault();
+    var name = document.getElementById('t-name').value.trim();
+    var day = document.getElementById('t-day').value;
+    var time = document.getElementById('t-time').value;
+    var err = document.getElementById('t-err');
+    var nameEl = document.getElementById('t-name'), dayEl = document.getElementById('t-day'), timeEl = document.getElementById('t-time');
+    [nameEl, dayEl, timeEl].forEach(function(el){ el.removeAttribute('aria-invalid'); el.setAttribute('aria-describedby','t-err'); });
+    var missing = [];
+    if (!name) { missing.push('a task name'); nameEl.setAttribute('aria-invalid','true'); }
+    if (!day) { missing.push('a due day'); dayEl.setAttribute('aria-invalid','true'); }
+    if (!time) { missing.push('a due time'); timeEl.setAttribute('aria-invalid','true'); }
+    if (missing.length) {
+      err.textContent = 'Error: Add ' + missing.join(' and ') + ' to save this task.';
+      form.querySelector('[aria-invalid="true"]').focus();
+      return;
+    }
+    err.textContent = '';
+    var cid = Number(form.getAttribute('data-contact'));
+    state.tasks.push({id: state.nextId++, contactId: cid, name: name, day: day, time: time, done: false});
+    render();
+    toast('Task added: ' + name + ', ' + day + ', ' + time + '.');
+    return;
+  }
+  if (form.id === 'composer') {
+    e.preventDefault();
+    var c = byId(state.inboxId);
+    var body = document.getElementById('c-body').value.trim();
+    var errEl = document.getElementById('c-err');
+    if (!c) return;
+    var bodyEl = document.getElementById('c-body');
+    if (!body) {
+      errEl.textContent = 'Error: Type a message before sending.';
+      bodyEl.setAttribute('aria-invalid','true');
+      bodyEl.focus();
+      return;
+    }
+    var isEmail = state.channel === 'email';
+    var subject = isEmail ? document.getElementById('c-subject').value.trim() : '';
+    c.messages.push({channel: isEmail ? 'email' : 'text', subject: subject, text: body, time: clock()});
+    render();
+    var th = document.getElementById('thread');
+    if (th) th.scrollTop = th.scrollHeight;
+    toast((isEmail ? 'Practice email' : 'Practice text') + ' added to the conversation with ' + c.name + '.');
+  }
+});
+
+render();
+})();
+</script>
+</body>
+</html>
