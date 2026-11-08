@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A guide, demo and help page for building your own AI job-search tracker with Claude.">
+<script data-goatcounter="https://opensky.goatcounter.com/count"
+        async crossorigin="anonymous" src="https://gc.zgo.at/count.js"></script>
+<link rel="icon" href="../favicon.png">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>Job Search Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: single readable column; header, theme toggle, three tabs (Guide · Demo · Help). Guide steps are open/close panels. Palette: Evergreen. */
+:root{
+  --bg:#F6F7F3; --surface:#FFFFFF; --ink:#1C2620; --muted:#4B5850; --line:#D7DDD6;
+  --accent:#256B4B; --on-accent:#FFFFFF; --accent-soft:#E2EFE7;
+  --warn:#8A4B00; --warn-bg:#FCEFD9; --bad:#9B2C2C; --bad-bg:#FBE3E3; --good:#256B4B; --field:#707D75;
+  --font:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131A16; --surface:#1B241F; --ink:#E6EEE9; --muted:#A3B3AA; --line:#2B3830;
+  --accent:#7CC9A2; --on-accent:#131A16; --accent-soft:#1F3A2D;
+  --warn:#F2C37E; --warn-bg:#3A2E1A; --bad:#F2A7A7; --bad-bg:#3B2222; --good:#7CC9A2; --field:#78897F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131A16; --surface:#1B241F; --ink:#E6EEE9; --muted:#A3B3AA; --line:#2B3830;
+  --accent:#7CC9A2; --on-accent:#131A16; --accent-soft:#1F3A2D;
+  --warn:#F2C37E; --warn-bg:#3A2E1A; --bad:#F2A7A7; --bad-bg:#3B2222; --good:#7CC9A2; --field:#78897F; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:20px 64px}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+button,select,input,textarea{font:inherit;color:inherit}
+.topbar{display:flex;justify-content:flex-end}
+.theme{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.theme button{border:0;background:transparent;padding:6px 12px;font-size:14px;cursor:pointer;min-height:44px}
+.theme button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);font-weight:700}
+header{padding-block:12px 8px}
+h1{font-size:clamp(1.55rem,6vw,2rem);line-height:1.15;margin:0;text-wrap:balance}
+.credit{font-size:15px;color:var(--muted);margin:0}
+.tagline{font-size:1.15rem;font-weight:700;color:var(--accent);margin:6px 0 10px}
+.intro{margin:0 0 6px;max-width:62ch}
+@media (max-width:520px){.tagline{font-size:1.02rem;margin:4px 0 6px}.intro{font-size:16px}header{padding-block:6px 4px}nav.tabs{margin:14px 0 14px}}
+.disclaimer{font-size:14px;margin-top:4px}
+nav.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:22px 0 18px;padding-block:10px 12px;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:var(--bg)}
+[id^="step"],#top{scroll-margin-top:84px}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 8px;font-weight:700;cursor:pointer;min-height:48px}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.overview{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.ov-title{margin:0 0 8px;font-weight:700}
+.ov-list{list-style:none;margin:0;padding:0;columns:2 240px;column-gap:24px}
+.ov-list li{break-inside:avoid}
+.ov-list a{display:flex;align-items:center;gap:10px;padding:6px 4px;min-height:40px;text-decoration:none;color:var(--ink);border-radius:8px}
+.ov-list a:hover{background:var(--accent-soft)}
+.ov-n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:14px}
+.ov-text{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.ov-tag{font-size:12px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:0 8px;white-space:nowrap}
+.ov-groups{margin:10px 0 0;font-size:15px;color:var(--muted)}
+.h-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px}
+@media (max-width:620px){.h-tabs{grid-template-columns:1fr 1fr}}
+.h-tab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer;min-height:44px}
+.h-tab[aria-selected="true"]{background:var(--accent-soft);color:var(--ink);border:2px solid var(--accent)}
+.h-group{margin:18px 0 6px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+details.qa{padding:0}
+details.qa>summary{cursor:pointer;padding:12px 14px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:10px;min-height:48px;align-items:center}
+details.qa>summary::-webkit-details-marker{display:none}
+details.qa>summary::after{content:"＋";color:var(--accent)}
+details.qa[open]>summary::after{content:"－"}
+details.qa>div{padding:0 14px 12px}
+.steps{display:grid;gap:10px}
+details.step{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+details.step>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:12px;align-items:center;min-height:56px}
+details.step>summary::-webkit-details-marker{display:none}
+.num{flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700}
+.stitle{font-weight:700;font-size:1.08rem;flex:1}
+.chev{color:var(--muted);font-size:14px}
+details[open]>summary .chev::after{content:"Close"}
+details:not([open])>summary .chev::after{content:"Open"}
+.sbody{padding:0 16px 18px;display:grid;gap:12px;min-width:0}
+.sbody p{margin:0;max-width:65ch}
+.sbody ul,.sbody ol{margin:0;padding-left:1.3em;display:grid;gap:6px}
+h3{font-size:1rem;margin:4px 0 0}
+.note{background:var(--accent-soft);border-radius:10px;padding:12px 14px}
+.caution{background:var(--warn-bg);color:var(--ink);border-radius:10px;padding:12px 14px}
+.caution b{color:var(--warn)}
+.check{list-style:none;padding-left:0!important}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;color:var(--accent);font-weight:700}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+thead th{background:var(--accent-soft)}
+tbody th{font-weight:700;color:var(--muted);white-space:nowrap}
+tr:last-child th,tr:last-child td{border-bottom:0}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:16px}
+.legend dt{font-weight:700}.legend dd{margin:0}
+.promptbox{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.promptbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--accent-soft)}
+.promptbox pre{margin:0;padding:12px;max-height:260px;overflow:auto;white-space:pre-wrap;font-family:var(--mono);font-size:13px;line-height:1.5;background:var(--surface)}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;min-height:44px}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.sm{padding:6px 12px;min-height:44px;font-size:15px}
+.copied{font-size:15px;font-weight:700;color:var(--accent);margin:0}
+.help h2{font-size:1.35rem;margin:28px 0 10px}
+.help h2:first-child{margin-top:0}
+.help section{display:grid;gap:12px}
+.qa{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:4px}
+.qa b{font-size:1rem}
+.src{font-size:14px;color:var(--muted)}
+.sources{font-size:15px}
+.sources li{margin-bottom:4px}
+/* demo */
+.demo-window{display:flex;flex-direction:column;height:min(860px,85vh);border:1px solid var(--line);border-radius:14px;background:var(--bg);overflow:hidden;margin-top:10px}
+.demo-bar{flex:0 0 auto;padding:8px 16px;background:var(--accent-soft);color:var(--ink);font-size:14px;line-height:1.4;border-bottom:1px solid var(--line);margin:0}
+.demo-bar strong{font-weight:700}
+.demo-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:14px;-webkit-overflow-scrolling:touch}
+.demo-open{margin:10px 0 0}
+.trythis{font-size:16px;margin:12px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.tracker-label{margin:22px 0 10px;padding-top:16px;border-top:2px solid var(--line);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}.trythis ol{margin:4px 0 0;padding-left:1.3em;display:grid;gap:2px}
+.d-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
+.d-tab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 2px;font-weight:700;font-size:14px;cursor:pointer;min-height:44px}
+.d-tab[aria-selected="true"]{background:var(--accent-soft);color:var(--ink);border:2px solid var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;font-size:13px;font-variant-numeric:tabular-nums}
+.hbp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;margin:8px 0}
+.hbr{display:grid;gap:3px}.inrow{display:grid;gap:4px}.inbar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--accent-soft)}.inbar span{display:block;height:100%}.inkeys{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:13px;color:var(--muted)}.inkeys i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}.inkeys b{color:var(--ink)}.hbl{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:15px}
+.hbt{position:relative;height:14px;border-radius:999px;background:var(--accent-soft);overflow:hidden}.hbh,.hbs{position:absolute;left:0;top:0;bottom:0;border-radius:999px}
+.hbh{background:color-mix(in srgb,var(--accent) 40%,var(--surface))}.hbs{background:var(--accent)}
+.stat{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);color:var(--muted)}.stat b{font-size:22px;line-height:1.1;color:var(--ink)}
+.demo-window.fs{position:fixed;inset:0;z-index:50;height:auto;margin:0;border:0;border-radius:0}
+.demo-bar{display:flex;justify-content:space-between;align-items:center;gap:8px}.fs-exit{display:none;white-space:nowrap;flex:0 0 auto}.demo-window.fs .fs-exit{display:inline-flex}body.fs-open{overflow:hidden}
+.filterrow{margin:12px 0}
+#stageFilter{font-weight:700}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:15px;min-height:44px}
+.chip .n{font-size:13px;color:var(--muted);margin-left:4px}
+.chip.on{border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+.list{display:grid;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.co{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.title{font-weight:700;font-size:1.05rem;line-height:1.3;margin:2px 0 0}
+.sample{font-size:12px;border:1px dashed var(--accent);color:var(--accent);border-radius:6px;padding:2px 6px;white-space:nowrap;font-weight:700}
+.meta{display:flex;flex-wrap:wrap;gap:4px 14px;color:var(--muted);font-size:15px}
+.flags{display:flex;flex-wrap:wrap;gap:6px}
+.flag{font-size:14px;border-radius:6px;padding:2px 8px;background:var(--accent-soft)}
+.flag.w{background:var(--warn-bg);color:var(--warn)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+label.inline{font-size:15px;color:var(--muted);display:flex;gap:8px;align-items:center}
+select,input[type=text],input[type=search],textarea{background:var(--bg);border:1px solid var(--field);border-radius:8px;padding:8px 10px;min-width:0;min-height:40px}
+textarea{width:100%;resize:vertical}
+.card details summary{cursor:pointer;color:var(--accent);font-weight:700;font-size:15px}
+.jd{white-space:pre-wrap;font-size:15px;background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:6px}
+.notes{display:grid;gap:4px;font-size:15px}
+.sec{display:grid;gap:6px;background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:6px;font-size:15px}
+.sec .k{font-size:13px;color:var(--muted)}.sec .t{white-space:pre-wrap;overflow-wrap:anywhere}
+.ivi{display:grid;gap:4px;padding-bottom:8px;border-bottom:1px dashed var(--line)}.ivi:last-of-type{border-bottom:0}
+.dform{display:grid;gap:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.dform label{display:grid;gap:4px;font-size:15px;font-weight:700}.dform label.chk{display:flex;align-items:center;gap:8px}
+.dform input[type=text],.dform select,.dform textarea{width:100%;font-weight:400}
+.note-date{font-size:13px;color:var(--muted);margin-right:6px;font-variant-numeric:tabular-nums}
+.rej{border:1px solid var(--bad);background:var(--bad-bg);border-radius:10px;padding:10px 12px;display:grid;gap:8px}
+.rej p{margin:0;font-weight:700;color:var(--bad)}
+.rejline{font-size:15px;color:var(--bad)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:12px}
+.panel h4{font-size:1.1rem;margin:0}
+.hint{font-size:15px;color:var(--muted);margin:0}
+.fit{border-left:4px solid var(--warn);background:var(--bg);border-radius:0 10px 10px 0;padding:12px 14px;display:grid;gap:6px;font-size:15px}
+.fit .v{font-weight:700;font-size:16px}
+.ok{color:var(--good);font-weight:700}.wn{color:var(--warn);font-weight:700}
+.setsec{display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
+.setsec:first-of-type{border-top:0;padding-top:0}
+.setsec h5{margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:15px;min-height:44px}
+.opt.on{border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+.opt.on::before{content:"✓ "}
+.addown{display:flex;gap:6px}.addown input{flex:1}
+.toast{font-size:15px;color:var(--accent);min-height:1.2em;margin:0;font-weight:700}
+.empty{text-align:center;color:var(--muted);padding:28px 8px}
+.totop{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:10;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);border-radius:999px;padding:10px 16px;font-weight:700;min-height:48px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+footer p{margin:8px 0 0}footer .flink{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;margin:-8px 0}footer .tolink{display:inline-flex;align-items:center;min-height:44px;margin-bottom:4px;font-weight:700}
+details.step>summary:focus-visible,details.qa>summary:focus-visible{outline-offset:-3px}
+footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+
+
+/* Today tab, Stats bar and More menu (demo) */
+.moremenu{position:relative;display:inline-block}
+.moremenu>summary{list-style:none;cursor:pointer}.moremenu>summary::-webkit-details-marker{display:none}
+.moreinner{margin-top:6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:10px 12px}
+.demo-top{margin-bottom:8px}.demo-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px 12px;flex-wrap:wrap}.demo-title{font-size:1.1rem}.demo-btns{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;justify-content:flex-end}.demo-btns .moremenu{order:2}.demo-btns #addJobBtn{order:1}.demo-btns .btn.sm{min-height:44px}.moremenu{position:static}.moreinner{position:absolute;right:max(16px,env(safe-area-inset-right,0px));left:max(16px,env(safe-area-inset-left,0px));z-index:5}.demo-top{position:relative}
+.tdsec{border-bottom:1px solid var(--line)}
+.tdsec>summary{min-height:44px;display:flex;align-items:center;cursor:pointer}
+.tdrow{display:flex;gap:6px;align-items:baseline;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:6px 2px;min-height:44px;color:var(--ink);font:inherit;cursor:pointer;overflow:hidden;white-space:nowrap}
+.tdrow b{flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}.tdrow span{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}.tdrow em{flex:0 0 auto;font-style:normal;font-size:13px;color:var(--muted)}
+.tdmore{background:none;border:0;color:var(--accent);text-decoration:underline;font:inherit;min-height:44px;cursor:pointer;padding:0 2px}
+.statsbox{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:10px}
+.statsbox>summary{cursor:pointer;display:flex;gap:10px;align-items:center;min-height:56px;padding:6px 2px;list-style:none}
+.statsbox>summary::-webkit-details-marker{display:none}
+.statsbox>summary .sm{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stbar{display:flex;height:22px;border-radius:4px;overflow:hidden;gap:2px;margin:8px 0}
+.stleg{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;font-size:14px;margin-bottom:8px}.stleg span{display:flex;gap:6px;align-items:center}.stleg i{width:12px;height:12px;border-radius:3px;display:inline-block;flex:0 0 auto}.stleg b{margin-left:auto}
+.stbtns{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chips .chipb{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 10px;min-height:44px;cursor:pointer;font-size:15px}
+.chips .chipb[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.wkpie{display:flex;flex-direction:column;align-items:center;gap:8px;margin:8px 0}
+.wkleg{list-style:none;margin:0;padding:0;width:100%;display:grid;gap:6px}
+.wkleg li{display:grid;grid-template-columns:14px 1fr auto;column-gap:8px;align-items:baseline;font-size:15px}
+.wkleg i{width:12px;height:12px;border-radius:3px;display:inline-block;align-self:center}
+.wkleg .ps{grid-column:2/4;font-size:13px;color:var(--muted)}
+.bgsec{margin-top:12px}.bgsec h5{margin:0 0 4px;font-size:15px}.bggrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.bgt{background:none;border:0;border-radius:8px;padding:6px 2px;text-align:center;cursor:pointer;color:var(--ink);font:inherit;min-height:44px}.bgt svg{display:block;margin:0 auto}.bgt b{display:block;font-size:13px;margin-top:2px}.bgt span{display:block;font-size:12px;color:var(--muted)}
+.bgdlg{border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:min(360px,90vw);padding:16px}.bgdlg::backdrop{background:rgba(0,0,0,.45)}.bgdlg ul{padding-left:18px;margin:8px 0}
+
+/* Spacing pass (phone) */
+.demo-body{padding:18px 16px}
+.demo-top{margin-bottom:16px}.demo-head{gap:12px 16px}.d-tabs{margin:0 0 20px}
+.panel{padding:20px;gap:18px}.panel h4{margin:0}.setsec{gap:14px;padding-top:18px;margin-top:6px}
+.statsbox{margin-top:4px}.statsbox>summary{padding:14px 2px;gap:14px;line-height:1.5}
+.statsbox>summary .sm{line-height:1.6}
+#statsBody>div{padding:6px 0 14px!important}
+.stbar{margin:14px 0 16px;height:24px}.stleg{gap:10px 18px;margin-bottom:16px}
+.stbtns{display:grid;grid-template-columns:1fr;gap:12px;margin:16px 0 6px}.stbtns .btn{width:100%}
+.hbp{padding:12px 2px 6px;display:grid;gap:14px}
+.chips{gap:10px;margin:14px 0}
+.tdsec>summary{min-height:52px}.tdrow{padding:10px 2px;min-height:52px}
+#seeAll{margin-top:8px}#dview-today>p{margin:20px 0 28px!important}
+.bgsec{margin-top:24px}.bgsec h5{margin-bottom:10px}.bggrid{gap:14px 10px}.bgt{padding:10px 4px;min-height:96px}.bgt b{margin-top:6px;line-height:1.25}.bgt span{margin-top:2px}
+.bgdlg{padding:22px}
+.bgt{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.moreinner{padding:16px}
+
+.panel>*,.setbody>*{min-width:0}.dset{padding-top:0;min-width:0;max-width:100%}.dset>summary{cursor:pointer;font-weight:700;font-size:16px;min-height:52px;display:flex;align-items:center;list-style:none}.dset>summary::-webkit-details-marker{display:none}.dset>summary::after{content:"\25BE";margin-left:auto;color:var(--muted)}.dset[open]>summary::after{content:"\25B4"}.setbody{display:grid;gap:16px;padding:4px 0 18px}
+#dview-network>.hint{margin:0 0 18px}.nfgrp{margin:0 0 16px}.nflab{margin:0 0 8px;font-size:14px;font-weight:700;color:var(--muted);display:block}#nGroup,#nStatus{width:100%;min-height:48px}.nfrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.nfrow .nfgrp{margin:0;min-width:0}#nSearch{margin-bottom:18px}
+.hgrp{border-top:1px solid var(--line)}.hgrp>summary{cursor:pointer;font-weight:700;min-height:52px;display:flex;align-items:center;gap:8px;list-style:none}.hgrp>summary::-webkit-details-marker{display:none}.hgrp>summary::after{content:"\25BE";margin-left:auto;color:var(--muted)}.hgrp[open]>summary::after{content:"\25B4"}.hgrp>.hgbody{display:grid;gap:8px;padding:0 0 14px}
+details.trythis>summary{cursor:pointer;font-weight:700;min-height:48px;display:flex;align-items:center}
+/* Portfolio look (redesign) */
+:root{--bg:#FFFFFF;--surface:#FFFFFF;--ink:#1B2A30;--muted:#4A5A60;--line:#D3DCDE;--accent:#3D6B7A;--accent-deep:#2E5461;--on-accent:#FFFFFF;--accent-soft:#E6EFF0;--mint:#C7E0D0;--cream:#F5F1E8;--good:#2E5461;--field:#6B7B80;
+--head:"Space Grotesk",system-ui,sans-serif;--display:"Fraunces",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13252B;--surface:#183039;--ink:#E8F1EF;--muted:#A8BCBF;--line:#2E4A53;--accent:#C7E0D0;--accent-deep:#C7E0D0;--on-accent:#13252B;--accent-soft:#1F3B44;--cream:#1E3A42;--good:#C7E0D0;--field:#7E9599}}
+:root[data-theme="dark"]{--bg:#13252B;--surface:#183039;--ink:#E8F1EF;--muted:#A8BCBF;--line:#2E4A53;--accent:#C7E0D0;--accent-deep:#C7E0D0;--on-accent:#13252B;--accent-soft:#1F3B44;--cream:#1E3A42;--good:#C7E0D0;--field:#7E9599}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1{font-family:var(--display);font-weight:600;letter-spacing:-.01em}
+h2,h3,h4,h5,.tagline,.stitle,.ov-title,.tab,.h-tab,.d-tab,.btn,.theme button,.totop,.title,.v{font-family:var(--head)}
+.tagline{color:var(--accent-deep)}
+:focus-visible{outline-color:var(--accent-deep)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :focus-visible{outline-color:var(--accent)}}
+/* corners 4-6px */
+.theme,.tab,.h-tab,.d-tab,.overview,details.step,.note,.caution,.tablewrap,.promptbox,.btn,.qa,.demo-window,.trythis,.hbp,.stat,.chip,.card,.jd,.sec,.dform,.rej,.panel,.opt,.totop,select,input[type=text],input[type=search],textarea,.flag,.sample,.ov-tag{border-radius:6px}
+.inbar,.hbt,.hbh,.hbs{border-radius:3px}
+.num,.ov-n{border-radius:4px;font-family:var(--mono);font-weight:500}
+/* text tabs with underline */
+nav.tabs{display:flex;gap:4px;padding-block:6px 0;margin:18px 0 16px}
+.tab,.h-tab,.d-tab{background:none;border:0;border-bottom:3px solid transparent;border-radius:0;color:var(--muted);font-weight:600;padding:10px 12px;flex:1}
+.tab[aria-selected="true"],.h-tab[aria-selected="true"],.d-tab[aria-selected="true"]{background:none;color:var(--ink);border:0;border-bottom:3px solid var(--accent)}
+.h-tabs,.d-tabs{display:flex;flex-wrap:wrap;gap:0 4px;border-bottom:1px solid var(--line)}
+.h-tab,.d-tab{flex:1 1 auto}
+.d-tabs{flex-wrap:nowrap}.d-tab{padding:10px 4px;font-size:13px;min-width:0}.demo-btns{margin-left:auto}
+.theme{border-radius:6px}
+/* fewer boxes: steps and Q&A as divided lists */
+.steps{gap:0;border-top:1px solid var(--line)}
+details.step{background:none;border:0;border-bottom:1px solid var(--line);border-radius:0}
+details.step>summary{padding:14px 4px}
+.sbody{padding:0 4px 20px}
+.help section{gap:0}
+.qa{background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:12px 2px}
+.overview{background:var(--cream);border:0;border-left:4px solid var(--accent)}
+.ov-list a{border-radius:4px}
+.ov-tag{border-radius:4px}
+/* callouts: left accent edge */
+.note{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 6px 6px 0}
+.caution{border-left:4px solid var(--warn);border-radius:0 6px 6px 0}
+.trythis{background:none;border:0;border-left:4px solid var(--accent);border-radius:0;padding:4px 14px}
+.fit{border-radius:0 6px 6px 0}
+/* sentence-case labels */
+.h-group,.tracker-label,.co,.setsec h5{text-transform:none;letter-spacing:0;font-family:var(--head);font-weight:600}
+.h-group,.setsec h5{font-size:15px}
+.co{font-size:14px}
+/* numbers in mono */
+.stat b,.note-date,.chip .n,.promptbar .src{font-family:var(--mono);font-weight:500}
+.hintsrc{font-weight:400}
+.fsep{display:inline-block;width:18px}
+.totop{box-shadow:0 2px 8px rgba(0,0,0,.15)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.themebtn{-webkit-appearance:none;appearance:none;background:none;border:0;color:var(--ink);min-width:44px;min-height:44px;padding:0;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:6px}.themebtn:hover{color:var(--accent)}.themebtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tdchips{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}.tdchip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;min-height:44px;cursor:pointer;font:inherit}.tdchip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);font-weight:700}.tdchip:disabled{opacity:.55;cursor:default}.tdlist{margin:0 0 10px}
+.stdn{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:flex-start;margin:10px 0 14px}.stdnmain{flex:1 1 210px;min-width:0;display:flex;flex-direction:column;gap:12px;align-items:stretch}.stdnsvg{width:180px;max-width:100%;height:auto;align-self:center}.stdnleg{display:flex;flex-direction:column;gap:12px;font-size:14px}.stleg1{display:flex;flex-direction:column;gap:6px}.stna{border-top:1px solid var(--line);padding-top:10px}.stlr{display:flex;align-items:center;gap:8px}.stlr i{width:12px;height:12px;border-radius:3px;flex:0 0 auto}.stlr span{flex:1;min-width:0}.stlr b{font-variant-numeric:tabular-nums;text-align:right}.stdnb{flex:0 0 auto;display:flex;flex-direction:row;flex-wrap:wrap;gap:12px;align-self:center}.stbdg{width:96px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}.stbsvg{width:80px;height:80px}.stbn{font-weight:700;font-size:14px}.stbs{color:var(--muted);font-size:13px;line-height:1.3}
+.hm{display:grid;grid-template-columns:minmax(0,1.7fr) repeat(3,minmax(0,1fr));gap:6px;align-items:center;margin:10px 0}.hm .hd{font-weight:700;font-size:13px;text-align:center;color:var(--muted)}.hm .gh{grid-column:1/-1;font-weight:700;margin-top:12px;font-size:14px}.hm .lab{display:flex;flex-direction:column;gap:0;font-size:14px;min-width:0}.hm .lab small{color:var(--muted);font-size:13px}.hm .cell{position:relative;min-height:44px;border:1px solid var(--line);border-radius:8px;display:grid;place-items:center;overflow:hidden;background:var(--surface)}.hm .cell em{position:absolute;inset:0}.hm .cell b{position:relative;font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums;background:var(--surface);border-radius:6px;padding:1px 7px;min-width:1.2em;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap" id="top">
+  <div class="topbar" role="region" aria-label="Color theme controls">
+    <button type="button" class="themebtn" id="themeBtn" aria-label="Color theme: Auto"><span id="themeIco"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></span></button><span class="sr-only" id="themeLive" class="sr-only" role="status"></span>
+  </div>
+
+  <header>
+    <h1>Job Search Command Center</h1>
+    <p class="tagline">Build your AI co-pilot and search smarter, not harder.</p>
+    <p class="intro">My take on setting up your own role tracker and daily job search with Claude. It takes about 15 minutes, and each step explains what to do, so you don't need a technical background.</p>
+  </header>
+
+  <div role="main">
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-guide" aria-selected="true" aria-controls="view-guide" data-view="guide">Guide</button>
+    <button class="tab" role="tab" id="tab-demo" aria-selected="false" aria-controls="view-demo" data-view="demo">Demo</button>
+    <button class="tab" role="tab" id="tab-help" aria-selected="false" aria-controls="view-help" data-view="help">Help</button>
+  </nav>
+
+  <!-- ================= GUIDE ================= -->
+  <section id="view-guide" role="tabpanel" aria-labelledby="tab-guide">
+    <nav class="overview" aria-label="Guide steps">
+      <p class="ov-title">The steps in brief <span class="src hintsrc">(select a step to open it)</span></p>
+      <ol class="ov-list">
+        <li><a href="#step1" data-step="step1"><span class="ov-n">1</span>What you'll get</a></li>
+        <li><a href="#step2" data-step="step2"><span class="ov-n">2</span>Before you start</a></li>
+        <li><a href="#step3" data-step="step3"><span class="ov-n">3</span>Your privacy choices</a></li>
+        <li><a href="#step4" data-step="step4"><span class="ov-n">4</span>Pick your search pace</a></li>
+        <li><a href="#step5" data-step="step5"><span class="ov-n">5</span>Get your answers ready</a></li>
+        <li><a href="#step6" data-step="step6"><span class="ov-n">6</span><span class="ov-text">Build your tracker<span class="ov-tag">starter prompt</span></span></a></li>
+        <li><a href="#step7" data-step="step7"><span class="ov-n">7</span>Your daily routine</a></li>
+        <li><a href="#step8" data-step="step8"><span class="ov-n">8</span><span class="ov-text">Add a timeline strip<span class="ov-tag">optional</span></span></a></li>
+        <li><a href="#step9" data-step="step9"><span class="ov-n">9</span>Changing things later</a></li>
+        <li><a href="#step10" data-step="step10"><span class="ov-n">10</span>How I set mine up</a></li>
+      </ol>
+      <p class="ov-groups"><b>Steps 1–5:</b> get ready<span class="fsep"></span><b>Step 6:</b> build<span class="fsep"></span><b>Steps 7–10:</b> use it day to day</p>
+    </nav>
+    <div class="steps">
+
+      <details class="step" open id="step1"><summary><span class="num">1</span><span class="stitle">What you'll get</span><span class="chev"></span></summary><div class="sbody">
+        <p>Job searching takes a lot of energy. This setup handles the repetitive parts so you can put that energy into applying and preparing.</p>
+        <p>When you're done, you'll have:</p>
+        <ul>
+          <li><b>Your own role tracker.</b> A page that saves every role you're watching and where it stands, from "New" to "Offer." Each role keeps its full description, how you applied and your notes from each interview.</li>
+          <li><b>A fit check for any posting.</b> Paste a job description, and Claude compares it with the kind of role you want: pay, location, role type and deal-breakers.</li>
+          <li><b>An automatic job search.</b> Claude checks for new roles on a schedule you choose, adds good matches to your tracker, and sends you a short summary.</li>
+        </ul>
+        <p class="note"><b>A note on what to expect:</b> this saves you time, but it can't promise interviews or offers, and it will sometimes miss a role or flag one that isn't a fit. You make every decision, and Claude never applies or sends messages for you.</p>
+      </div></details>
+
+      <details class="step" id="step2"><summary><span class="num">2</span><span class="stitle">Before you start</span><span class="chev"></span></summary><div class="sbody">
+        <p>A few checks to make before you start, so setup goes smoothly:</p>
+        <ul class="check">
+          <li><b>A paid Claude plan (Pro or higher).</b> Saving your tracker and running the automatic search both need a paid plan, and plans and prices vary by country. <span class="src">Plan details last checked October 31, 2026.</span></li>
+          <li><b>A regular chat, not incognito.</b> Incognito chats can't build your tracker because they can't create files or run code, and they can't be reopened once closed.</li>
+          <li><b>"Artifacts" and "Code execution and file creation" turned on.</b> Claude needs both to build your tracker, and they're usually on already. Some versions of Claude call the second one “Create and edit files.” To check, go to <b>Settings → Capabilities</b>.</li>
+          <li><b>About 15 minutes.</b> You'll answer about 10 short questions.</li>
+        </ul>
+        <p class="note"><b>On the free plan?</b> You can still use a lighter version by running a search prompt yourself and keeping track of roles in a Google Sheet or a simple list, though you won't get the saved tracker or the automatic daily search. <i>The free-plan prompt is coming soon.</i></p>
+      </div></details>
+
+      <details class="step" id="step3"><summary><span class="num">3</span><span class="stitle">Your privacy choices</span><span class="chev"></span></summary><div class="sbody">
+        <p>Make these choices before you paste the prompt, since some only apply from the start of a chat.</p>
+        <h3>Before you start</h3>
+        <ol>
+          <li><b>How your chats may be used.</b> You choose whether your chats help improve Claude. If you'd rather they don't, turn off the <b>Model Improvement</b> setting in your Privacy Settings (claude.ai/settings/data-privacy-controls) before you paste the prompt.</li>
+          <li><b>Memory.</b> Memory is on by default. To keep this setup out of memory, turn it off for this chat before you send your first message, or turn off "Generate memory from chats" in the Memory section of your settings (on the mobile app, go to <b>Settings → Capabilities</b>).</li>
+        </ol>
+        <h3>After setup</h3>
+        <ul>
+          <li><b>Your tracker starts private.</b> "Artifacts start private to you. Nothing is shared until you share it."</li>
+          <li><b>Shared links show what's saved.</b> Your tracker saves your roles, notes and Settings, so think before sharing its link.</li>
+          <li><b>Your data is yours.</b> Select <b>Back up all</b> anytime to download every role and its details as a spreadsheet, and review or delete memories later in the Memory section of your Claude settings.</li>
+        </ul>
+        <p class="src">From Claude's Help Center and Privacy Center. Links are in the Help tab.</p>
+      </div></details>
+
+      <details class="step" id="step4"><summary><span class="num">4</span><span class="stitle">Pick your search pace</span><span class="chev"></span></summary><div class="sbody">
+        <p>Your daily search can be as light or as thorough as you need. More searching gives you fresher results but uses more of your Claude usage, and you can change your pace anytime.</p>
+        <div class="tablewrap"><table>
+          <thead><tr><th scope="col"></th><th scope="col">Light</th><th scope="col">Active</th><th scope="col">Full-time search</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Good for</th><td>Employed and open to the right role, or taking a breather</td><td>Looking steadily</td><td>Searching is your main focus</td></tr>
+            <tr><th scope="row">How often</th><td>Once a week</td><td>Weekday mornings</td><td>Every morning, including weekends</td></tr>
+            <tr><th scope="row">Looks at</th><td>Posts from the last 14 days</td><td>Posts from the last 7 days</td><td>Posts from the last 1–2 days</td></tr>
+            <tr><th scope="row">Extras</th><td>None</td><td>Separate check of your dream companies</td><td>Dream-company check, plus a twice-weekly cleanup that marks closed postings</td></tr>
+            <tr><th scope="row">Usage</th><td>Light</td><td>Moderate</td><td>Heavier</td></tr>
+          </tbody>
+        </table></div>
+        <p class="note"><b>Not sure? Most people start with Active.</b> It catches new roles while they're fresh without using a lot of your plan. If you hit your usage limits, switch to Light. If good roles keep slipping past you, try Full-time search.</p>
+      </div></details>
+
+      <details class="step" id="step5"><summary><span class="num">5</span><span class="stitle">Get your answers ready</span><span class="chev"></span></summary><div class="sbody">
+        <p>Claude will ask about these during setup, so thinking them over first makes it faster. Nothing has to be perfect, and you can change everything later in Settings.</p>
+        <h3>Needed to start</h3>
+        <ul class="check">
+          <li><b>Your field and job titles.</b> Even one title works. A few similar titles (like "Project Coordinator" and "Program Coordinator") find more roles.</li>
+          <li><b>Where you'd work:</b> remote, hybrid or on-site; your home city; and any places you'd rule out.</li>
+        </ul>
+        <h3>Helpful, but you can skip</h3>
+        <ul class="check">
+          <li><b>Level:</b> entry, mid, senior or lead, or director and up.</li>
+          <li><b>Managing people:</b> whether you're open to it, and how many.</li>
+          <li><b>Travel:</b> how much is okay.</li>
+          <li><b>Pay floor:</b> your lowest acceptable base pay. You can set different amounts for remote and in-office roles.</li>
+          <li><b>Dream companies:</b> up to 10 to check every time.</li>
+          <li><b>Deal-breakers:</b> role types, requirements or industries to skip.</li>
+          <li><b>Time zone,</b> and what time you'd like results.</li>
+          <li><b>Network tab (optional):</b> a place to track people who could help, like referrals, references and job leads. Say no if you'd rather keep it simple.</li>
+        </ul>
+        <p>If you skip any of these, Claude won't filter on it, and it flags anything you might want to know.</p>
+      </div></details>
+
+      <details class="step" id="step6"><summary><span class="num">6</span><span class="stitle">Build your tracker</span><span class="chev"></span></summary><div class="sbody">
+        <ol>
+          <li><b>Copy the starter prompt</b> below.</li>
+          <li><b>Open a new regular chat</b> in Claude (the "Open Claude" button does this) and paste it in.</li>
+          <li><b>Answer Claude's questions.</b> It asks one or two at a time, about 10 in all.</li>
+          <li><b>Check the summary.</b> Claude lists your answers and anything you skipped. Change anything that's off.</li>
+          <li><b>Open your new tracker.</b> Claude builds it and sends you a link. Open the Stats, Roles, Badges, Network and Settings tabs and the Add a role button and check that each one matches what you asked for, then bookmark it.</li>
+          <li><b>Approve your search schedule.</b> Claude tells you exactly what it plans to schedule and waits for your OK before anything runs.</li>
+        </ol>
+        <div class="promptbox">
+          <div class="promptbar"><span><b>Starter prompt</b> <span class="src">v1.5, October 31, 2026</span></span><span class="row"><p class="copied" id="copyMsg" aria-live="polite"></p><button class="btn sm" type="button" id="copyBtn">Copy prompt</button><a class="btn ghost sm" href="https://claude.ai/new" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center">Open Claude<span class="sr"> (opens in a new tab)</span></a></span></div>
+          <pre id="promptText" tabindex="0" aria-label="Starter prompt text">Job Search Command Center · Starter prompt v1.5 · October 31, 2026
+
+&lt;goal&gt;
+I&#x27;m job searching and I&#x27;d like your help setting up a Job Search Command Center: a role tracker page I can keep, plus an automatic job search that adds good matches to it. The point is to save me time, keep me organized, and help me apply to strong roles soon after they&#x27;re posted, when my odds are best. Please guide me through the steps below in order, one step at a time.
+&lt;/goal&gt;
+
+&lt;how_to_work_with_me&gt;
+- Start with a one-line overview of what we&#x27;ll do (about 10 questions, then you&#x27;ll build my tracker and set up my search), so I know what to expect.
+- Learn about me from my answers rather than guessing from anything else you know about me, so the setup fits what I want now.
+- Ask me 1-2 questions per message, so setup doesn&#x27;t feel overwhelming. When it helps, give me options to pick from and say which one you recommend and why.
+- If I say &quot;skip&quot;, follow the skip rules in Step 1 and tell me what that means for my search, so I can change it later in Settings. A skip should never quietly narrow my search.
+- Stick to facts you can confirm. When you&#x27;re not sure about something, start that sentence with &quot;Not confirmed:&quot; so I can tell a guess from a fact. This applies everywhere: our chat, the fit check, role notes, and search summaries. I&#x27;ll be making real decisions from this information.
+- If a feature below isn&#x27;t available to me (for example, because of my Claude plan or settings), tell me plainly and offer the closest simpler version. Then keep going.
+- The examples below show the format and length I&#x27;d like. Fill them with my own field, roles, and numbers, not the example&#x27;s.
+- Leave anything involving my accounts, passwords, applications, or messages to me. Your role is to find, organize, and explain; I&#x27;ll take the actions.
+&lt;/how_to_work_with_me&gt;
+
+&lt;step_1_learn_my_search&gt;
+Ask me about these, a little at a time:
+1. What field I work in, then the job titles or types of roles I want there, and my level (entry, mid, senior/lead, director+). Suggest titles only after I&#x27;ve told you my field.
+2. Whether I&#x27;m open to managing people, and how many.
+3. Work style (remote, hybrid, on-site), my home city, the cities or states where I&#x27;d work, and any I&#x27;d rule out.
+4. How much travel I&#x27;m OK with.
+5. My lowest acceptable base pay (my &quot;floor&quot;). Offer separate floors for remote and in-office roles, since commuting has real costs. Ask whether I&#x27;d like roles slightly under my floor to be included and flagged.
+6. Up to 10 dream companies to check every time.
+7. Deal-breakers: role types, requirements, or industries to skip.
+8. How actively I&#x27;m searching. Offer these three, and recommend Active for most people:
+   - Light: 1 search, once a week, posts from the last 14 days.
+   - Active: 2 searches on weekdays, posts from the last 7 days.
+   - Full-time search: 2 searches every day, posts from the last 24-48 hours, plus a twice-weekly cleanup of closed postings.
+   In the 2-search modes, the searches split the work: the first checks only my dream companies; the second, about 25 minutes later, searches more widely and skips those companies. If I have no dream companies, use 1 wider search instead.
+   Mention that more searching uses more of my Claude usage.
+9. My time zone and what time I&#x27;d like results.
+10. Whether I&#x27;d like a Network tab for tracking people who could help (referrals, references, job leads, introductions). It&#x27;s optional; if I say no, skip it.
+
+&lt;skip_rules&gt;
+If I skip a question, use these rules so my search widens rather than narrows:
+- Field and job titles: the search needs at least one title, so explain that and ask once more (&quot;even one title works&quot;).
+- Where I&#x27;d work: ask for at least my home city or &quot;remote only&quot;, since the search can&#x27;t run without a location.
+- Level: no filter.
+- Managing people: no filter; flag roles with direct reports.
+- Travel: no limit; flag any travel requirement.
+- Pay floor: no floor; show pay on every card so I can judge.
+- Dream companies: none; use 1 wider search.
+- Deal-breakers: none.
+- Search pace: Active.
+- Results time: 8 AM in my time zone.
+&lt;/skip_rules&gt;
+
+Then show me a short summary, including anything I skipped and what that means, and ask me to confirm or change anything before you build. Keep to 1-2 questions here too; save smaller suggestions for Settings later.
+&lt;/step_1_learn_my_search&gt;
+
+&lt;step_2_build_my_tracker&gt;
+Build my tracker as a page I can keep, reopen, and bookmark (a published artifact), with data that saves between visits. It should:
+- Show each role as a card: company, title, location and work style, pay, stage, posted date, flags, link, and notes.
+- Use these stages: New, Interested, Applied, Screen, Interview, Offer, Rejected, Closed, Passed. Open to an &quot;Active&quot; view (everything except Rejected, Closed, and Passed) so I can find what needs attention, with filters for each stage.
+- When I move a role to Rejected, ask how I heard (automated email, recruiter email, recruiter call, after interview, no response) and an optional reason, and show it on the card. Over time this shows me where my search is getting stuck.
+- Let me add a role by pasting its description. If you can use Claude inside the page, add a &quot;Check fit&quot; button that sends the full pasted description (every line, including the title and location at the top) along with my Settings, and fills in the role&#x27;s details for me. Keep the verdict short enough to read on a phone: exactly 4 checks (pay, location, role type, deal-breakers), like the example below; put anything else, such as travel or people to manage, in Flags. Also keep a &quot;fill in by hand&quot; option.
+- Let me save the full job description on the card (expandable) and add dated notes, since postings often disappear after I apply.
+- When I move a role to Applied, show a short optional box: date applied, how I applied (company site, LinkedIn, referral, recruiter, job board, other), referral or recruiter name, resume version, whether I sent a cover letter, and any answers I submitted. Show these in an expandable &quot;Application&quot; section on the card that I can edit later, and include a &quot;Skip for now&quot; option. Show this box however I change the stage (the card or an edit form), and keep the role visible until I save or skip, even if it moves out of the filter I&#x27;m viewing. Scroll the page straight to the box so I see it right away, especially on a phone.
+- Add an expandable &quot;Interviews&quot; section to each card where I can log more than one interview: date, round, who I met, questions they asked, what went well, what I&#x27;d do differently, questions I asked, next step and date, and whether I sent a thank-you note. When I move a role to Screen or Interview, offer to add one, with the same rule about keeping the role visible. This helps me prepare for the next round.
+- If I said yes to the Network tab: add a &quot;Network&quot; tab where I can list people with name, company, title, a group (like an old job, school, friends, or recruiters), connection (direct, weak tie, or through someone, with who introduced us), relationship strength, how I know them and since when, whether they&#x27;re a reference, how they could help (referral, reference, job leads, intro to someone, inside info on a company, resume feedback, mock interview), my specific ask, what I can offer them, status (Not contacted, Reached out, Talked, Helped), last contact date, next follow-up date, and notes. Add filter buttons with counts (All, Follow-ups due, References, Not contacted, Reached out, Talked / helped), group buttons, and a search box. Show people due for a follow-up at the top, and on each contact show any active roles I have at their company. On a role card, let me pick a contact as the referral so I can tell who&#x27;s helping with which role. Keep names and notes in my tracker only; never send them anywhere else.
+- Open on a &quot;Stats&quot; tab, the first tab, ahead of Roles. At the top, show two small buttons, &quot;follow-ups due&quot; and &quot;new to review&quot; (roles still marked New), each with its count; a button with a count of zero is dimmed. Selecting one opens a short list of those roles, and selecting a role opens the Roles tab already filtered to that, and clears any search or other filter left over from before, so the list never opens empty by mistake.
+- Below that, show one &quot;Stats&quot; box that is open when the tab opens. It has a donut chart of the roles I&#x27;ve applied to, with the number applied in the center, split into Applied and waiting, Rejected, No response or closed, Screen or interview, and Offers (shown only once I have one), with a color key that lists each count. Under the key, show how many roles I haven&#x27;t applied to (Passed, Interested or new, and anything else), the share of all my roles that I chose to apply to, and my quick-apply rate (the share of my applications sent within a day of the posting date). Beside the donut, show three round rings: Heard back (replies out of roles applied, with the percentage, where rejections count as replies), Interviews held, and Offers (&quot;none yet&quot; until the first one). Under the box, add one button, &quot;Insights&quot;.
+- &quot;Insights&quot; opens one heat map that never takes more than about one phone screen, counting only roles I applied to. It has three columns, Screen, Rejected and Waiting (Waiting includes roles with no reply yet), and rows in six groups: Job type (full-time, part-time and contract, counting hourly pay as contract), Work style (remote, hybrid and on-site), Pay (the pay tiers from Settings), Location (the states or areas I named in Step 1, plus Remote and Other), Industry, and How you applied (Company site, LinkedIn, LinkedIn Easy Apply, Job board, Referral, Recruiter and Other). Each row shows its name and how many roles it holds, and each cell shows a count with a color that gets darker as it becomes a bigger share of that row. Mark any row with fewer than 10 roles with an asterisk and a note that it&#x27;s too early to tell. For Industry, show the top five and combine the rest as &quot;Everything else,&quot; tag each company with one industry from a short list (for example tech, finance, healthcare, government, education or nonprofit, consumer and retail, consulting, staffing with the client unknown), save the tags by company, and show &quot;Not tagged yet&quot; for any company without one. Older roles without a &quot;how I applied&quot; answer get a guess based on where the posting came from, and a note says how many were guessed. Never rely on color alone, because every cell also shows its number.
+- Add a &quot;Badges&quot; tab between Roles and Network. The first time I open it, ask whether counting starts from today or includes everything already in the tracker, and explain that choosing everything fills many rings right away. After that, show my milestones in groups: Effort (Applications, Quality Picks for Priority or Target roles, Eyes Open for every role I save, Followed Up), Progress (Responses with four levels from first reply to offer, and Dream Interview for an interview at a company I marked as a top choice in Settings), Resilience (Logged It for a rejection saved with a reason, Bounce Back for applying within a day of a rejection), Network (Referral Asked, Coffee Chats, Thank-You) and Rest (Off the Clock, Weekend Off, Recharge Week). Each badge is a round icon with a ring split into its levels, a name and a short status such as &quot;Level 2 of 4&quot; or &quot;Not yet&quot;. Selecting a badge opens a pop-up with its levels, the date I earned each one and how it counts, with a Close button. Add a small card to log follow-ups and rest days, because the tracker cannot see those anywhere else. Keep rest badges gentle and never count them against me.
+- Add a search box above my role list that narrows the list as I type (company, title, notes, contact name), searching within the stage I&#x27;m viewing and offering to show matches in other stages. Add a sort option: &quot;Newest first&quot; (by applied date, or found date if not applied) as the default, and &quot;Company A to Z&quot;.
+- Put the tracker&#x27;s title on the left of the header and two small buttons on the right, &quot;Add a role&quot; and then &quot;More&quot;. Size them to their text so they never stretch across the screen, and open the &quot;More&quot; menu under the right edge. &quot;Add a role&quot; opens the add form (it is a button, not a tab). &quot;More&quot; opens a small menu that holds the Auto / Light / Dark switch, &quot;Export view&quot; (the roles on screen, main details) and &quot;Back up all&quot; (every role, including descriptions, application details and interviews), each with a one-line explanation. Both downloads are spreadsheet files (CSV), so my data is always mine.
+- On the Roles tab, put three dropdowns side by side: stage (add &quot;Follow-ups due&quot; as an option), job type (All types, Full-time, Part-time, Contract), and sort.
+- Include a Settings tab holding my answers from Step 1, with a collapsed &quot;Badges&quot; section under them where I can change where counting starts, set the count for each level of Applications, Quality Picks, Eyes Open, Followed Up, Referral Asked and Coffee Chats, and choose which groups show. Use dropdowns and pick-from-a-list options, each with an &quot;Add your own&quot; box, so editing works well on a phone. The fit check and my daily searches both read from Settings, so one change updates everything.
+- Be clean and easy to read, and work well on a phone. Keep it compact so I'm not scrolling much: on a phone, put summary numbers several across instead of one tall column, set dropdowns side by side, and fold long notes behind a &quot;Show more&quot; button. Include an Auto / Light / Dark switch that starts on Auto (matching my device) and remembers my choice.
+- Describe my search schedule on the page only after it&#x27;s actually scheduled; until then, say searches aren&#x27;t set up yet.
+Save my Step 1 answers into Settings. Then send me the link and ask me to open it and check that each tab matches what I asked for.
+
+&lt;example_fit_check&gt;
+Maybe: strong role match, but pay is just under your floor.
+⚠ Pay: $118K top, remote floor $120K (flagged)
+✓ Location: Remote, US
+✓ Role type: Senior project coordinator
+✓ Deal-breakers: none found
+Catch: Asks for 2 years with Salesforce; you&#x27;ve listed 1.
+Flags: Below floor · Posted 2 days ago
+&lt;/example_fit_check&gt;
+&lt;/step_2_build_my_tracker&gt;
+
+&lt;step_3_set_up_my_daily_search&gt;
+Before you create anything, tell me exactly what you&#x27;ll schedule (how many searches, which days, what time) and wait for my OK, since these will run on their own.
+Then create the scheduled search(es) for the mode I chose. Write each one as complete, standalone instructions, because each run starts fresh without this conversation. Each search should:
+- Read my Settings from the tracker first and follow them. If Settings can&#x27;t be read, use the rules written into the search and say so at the top of the results.
+- Follow its role from Step 1: the dream-company search checks those companies&#x27; own career pages; the wider search checks the other job sites. Rely most on employer career pages and their job boards (like Greenhouse, Lever, or Workday), since job sites often show stale or duplicate listings. Use job sites only to discover roles, then confirm each on the employer&#x27;s own page. Move past sites that need a login.
+- Include only postings it opened and confirmed are still open, with the posted date, because applying to closed roles wastes my time.
+- Leave out anything already in my tracker (same link, or same company and title) in any stage, so the same role never shows up twice.
+- Add its picks to my tracker as &quot;New&quot;, with flags for anything I should double-check (for example: pay under my floor, travel required, older posting, people to manage).
+- Send me a short, phone-friendly message like the example below.
+- For the Full-time search mode only: on Mondays and Thursdays, check roles in my tracker marked New or Interested. Mark one Closed only when its posting is clearly gone (a 404 error, &quot;no longer accepting applications&quot;, or a redirect to the main careers page), and note what it saw. Leave roles I&#x27;ve applied to, or moved further, exactly as they are.
+
+&lt;example_results_message&gt;
+Apply today: Brightpath Health, Customer Support Lead (posted yesterday)
+
+Picks:
+1. Brightpath Health, Customer Support Lead. $72-80K, hybrid 2 days. Fits: leads a small team, which you said you&#x27;re ready for. Concern: weekend shifts once a month.
+2. Sunfield Credit Union, Project Coordinator. $64-70K, remote. Fits: remote and organization-heavy. Concern: just under your floor (flagged).
+
+Couldn&#x27;t check: one dream company&#x27;s career site didn&#x27;t load today.
+Open your tracker to review.
+&lt;/example_results_message&gt;
+&lt;/step_3_set_up_my_daily_search&gt;
+
+&lt;step_4_wrap_up&gt;
+Finish by giving me:
+- My tracker link.
+- What&#x27;s scheduled, and when my first results will arrive.
+- 3 tips for using my tracker each day.
+- A reminder to select &quot;Back up all&quot; about once a week.
+- How to change my search later: edit Settings in my tracker, or ask Claude to update my scheduled search.
+&lt;/step_4_wrap_up&gt;
+</pre>
+        </div>
+        <h3>Tips</h3>
+        <ul>
+          <li><b>Not sure about a question?</b> Type "skip" and set it later in Settings. Claude won't filter on it in the meantime.</li>
+          <li><b>"Not confirmed:" means it's a guess.</b> Claude starts a sentence with "Not confirmed:" when it isn't sure, so check those details yourself before you rely on them.</li>
+          <li>Try the <a href="#" data-goto="demo">Demo tab</a> first if you want to know what you're building.</li>
+          <li>Want a timeline strip for the dates that matter to your search? It's optional, and you can add one later in <a href="#step8" data-step="step8">step 8</a>.</li>
+        </ul>
+      </div></details>
+
+      <details class="step" id="step7"><summary><span class="num">7</span><span class="stitle">Your daily routine</span><span class="chev"></span></summary><div class="sbody">
+        <p>About 10–15 minutes a day keeps things moving:</p>
+        <ol>
+          <li><b>Read your search summary.</b> It arrives at the time you chose. Start with the "Apply today" line, which lists the newest strong matches.</li>
+          <li><b>Open your tracker.</b> It opens on <b>Stats</b>, which shows how many roles are new to review and how many follow-ups are due. Select <b>new to review</b>, then move each match to <b>Interested</b> or <b>Passed</b>.</li>
+          <li><b>Apply to your top picks.</b> Roles posted in the last day or two are worth applying to first. Then move them to <b>Applied</b>, where an optional short box asks how you applied, which resume you used and any answers you submitted.</li>
+          <li><b>Update anything that changed.</b> Got a screen or interview? Move the role forward, then select <b>Add interview</b> to note who you met, what they asked and the next step. Got a rejection? Mark it <b>Rejected</b> and note how you heard.</li>
+          <li><b>Reach out to one person (if you set up Network).</b> Check who's due for a follow-up, and send one short note. A referral often gets more attention than an application on its own.</li>
+          <li><b>Check fit on roles you find yourself.</b> Found something on LinkedIn or through a friend? Paste the description into <b>Add role</b>.</li>
+        </ol>
+        <p class="note"><b>Tip:</b> your notes are your memory. A short line like "spoke with recruiter, next step panel" saves a lot of digging later.</p>
+        <p class="note"><b>Once a week:</b> select <b>Back up all</b> in your tracker. It saves a spreadsheet copy of every role, so your history is safe even if something happens to the page.</p>
+        <h3>What each stage means</h3>
+        <dl class="legend">
+          <dt>New</dt><dd>Found by your search, not reviewed yet</dd>
+          <dt>Interested</dt><dd>You'd like to apply</dd>
+          <dt>Applied</dt><dd>Application sent</dd>
+          <dt>Screen</dt><dd>A recruiter or phone screen</dd>
+          <dt>Interview</dt><dd>Interviewing with the team</dd>
+          <dt>Offer</dt><dd>You got an offer</dd>
+          <dt>Rejected</dt><dd>They said no, or stopped responding</dd>
+          <dt>Closed</dt><dd>The posting was taken down before you applied</dd>
+          <dt>Passed</dt><dd>You decided it's not for you</dd>
+        </dl>
+      </div></details>
+
+      <details class="step" id="step8"><summary><span class="num">8</span><span class="stitle">Optional: add a timeline strip</span><span class="chev"></span></summary><div class="sbody">
+        <p>If it would help to know how much time you have, you can add a thin strip to the bottom of your tracker&#x27;s Stats tab that shows a few dates you choose, such as your last day of work, the day your paid time off runs out, or when you expect severance or another income to end. It stays hidden until you add your first date, and you can remove it whenever you like.</p>
+        <p class="note"><b>What it saves:</b> only dates, short labels and an optional note for each one. It never asks for dollar amounts, so the strip shows nothing about your finances if you share your tracker's link. You choose every date yourself, and the strip never tells you when to change your search.</p>
+        <ol>
+          <li><b>Copy the add-on prompt</b> below.</li>
+          <li><b>Paste it into the chat where you built your tracker,</b> or into a new chat along with your tracker's link.</li>
+          <li><b>Answer Claude's questions about your dates.</b> It asks one or two at a time, and you can skip any you don't know yet.</li>
+          <li><b>Open your tracker</b> and check that the strip shows the right dates on your phone.</li>
+        </ol>
+        <div class="promptbox">
+          <div class="promptbar"><span><b>Add-on prompt</b> <span class="src">v1.1, October 2026</span></span><span class="row"><p class="copied" id="copyMsg2" aria-live="polite"></p><button class="btn sm" type="button" id="copyBtn2">Copy prompt</button></span></div>
+          <pre id="promptText2" tabindex="0" aria-label="Add-on prompt text">Job Search Command Center · Timeline strip add-on v1.1 · October 2026
+
+&lt;goal&gt;
+I&#x27;d like to add an optional timeline strip to my existing Job Search Command Center tracker, showing a few dates that matter to my search. Please change only what&#x27;s described below and leave everything else in my tracker as it is.
+&lt;/goal&gt;
+
+&lt;how_to_work_with_me&gt;
+- Ask me 1-2 questions per message, so it doesn&#x27;t feel overwhelming.
+- Don&#x27;t guess dates. If I don&#x27;t know one yet, let me skip it or mark it as an estimate.
+- Stick to facts you can confirm. When you&#x27;re not sure about something, start that sentence with &quot;Not confirmed:&quot; so I can tell a guess from a fact.
+- Never ask for dollar amounts, account details, or anything else about my finances. The strip only holds dates, short labels and optional notes. If I mention an amount, don&#x27;t save it.
+- Don&#x27;t suggest when I should change my search. The dates and what they mean are mine to choose.
+- Before you publish any change to my tracker, tell me what you&#x27;ll change and wait for my OK.
+&lt;/how_to_work_with_me&gt;
+
+&lt;step_1_learn_my_dates&gt;
+Ask me for:
+1. A start date: the day my search began or my last day of work.
+2. Up to 6 dates that matter to me, each with a short label I write myself (for example, &quot;Paid time off ends&quot;), whether it is confirmed or an estimate, and an optional one-sentence note.
+Use my own words for labels. Don&#x27;t fill in examples from anyone else&#x27;s search. Then show me the list and ask me to confirm or change anything before you build.
+&lt;/step_1_learn_my_dates&gt;
+
+&lt;step_2_build_the_strip&gt;
+Add a thin, quiet strip at the bottom of my tracker&#x27;s Stats tab. Show it as one line (the next date and how many days away it is) that opens the full strip when I select it. It should:
+- Stay hidden until at least one date is saved.
+- Draw a line from my start date to my last date, with one dot for each date. Confirmed dates are solid dots, estimates are hollow, and each dot has its short label and date.
+- Show a &quot;Today&quot; marker along the line.
+- Include a one-line summary of the next upcoming date and how many days away it is. If every date has passed, say so plainly.
+- Show a date&#x27;s note when I select its dot.
+- Save the dates and labels the same way the rest of my tracker&#x27;s data is saved, instead of writing them into the page&#x27;s code, so I can change a date without rebuilding the page.
+- Work on a phone in light and dark mode, with no labels overlapping.
+- Hold only dates, labels and notes, with no amounts.
+&lt;/step_2_build_the_strip&gt;
+
+&lt;step_3_wrap_up&gt;
+Send me my tracker link and ask me to open it and check the strip. Then tell me in a sentence or two how to move, add or remove a date later.
+&lt;/step_3_wrap_up&gt;
+</pre>
+        </div>
+        <p class="src">Not confirmed: I&#x27;ve only tested this on my own tracker, so Claude may need an extra message or two to fit it to yours.</p>
+      </div></details>
+
+      <details class="step" id="step9"><summary><span class="num">9</span><span class="stitle">Changing things later</span><span class="chev"></span></summary><div class="sbody">
+        <p>You can change your search whenever your situation changes.</p>
+        <p><b>To change <i>what</i> your search is based on,</b> open <b>Settings</b> in your tracker: job titles, level, work style, locations, travel, pay floor, dream companies and deal-breakers. Changes take effect on your next search, and the fit check uses them right away.</p>
+        <p><b>To change <i>when</i> or <i>how often</i> it runs,</b> ask Claude in a chat. For example:</p>
+        <ul>
+          <li>"Change my job search to weekday mornings at 7 AM."</li>
+          <li>"Switch my search pace to Light."</li>
+          <li>"Pause my job search."</li>
+        </ul>
+        <p><b>To stop entirely,</b> ask Claude to delete your scheduled search. Your tracker and its history stay, so you can come back to them anytime.</p>
+        <p>If your version of Claude shows a <b>Scheduled</b> item in the left sidebar, you can also select it to see your searches, pause one, edit its instructions or timing, or delete it.</p>
+        <p class="note"><b>Tip:</b> if your results include too many poor fits or too few roles overall, check Settings first, since a missing title or a slightly high pay floor is usually the cause.</p>
+      </div></details>
+
+      <details class="step" id="step10"><summary><span class="num">10</span><span class="stitle">How I set mine up</span><span class="chev"></span></summary><div class="sbody">
+        <p>Here's what works for me. Use it as a starting point, not a rulebook.</p>
+        <ul>
+          <li><b>Pace:</b> Full-time search. Two searches every morning, weekends included, about 25 minutes apart.</li>
+          <li><b>First search:</b> checks my short list of dream companies only, so I don't miss a role at a place I really want to work.</li>
+          <li><b>Second search:</b> checks the wider set of job sites and opens with an "Apply today" line for the freshest roles. My goal is to apply within a day of a posting going live.</li>
+          <li><b>Cleanup:</b> twice a week, closed postings get marked Closed, so my active list only shows real openings.</li>
+          <li><b>Fit check:</b> before I apply to anything I found myself, I paste it in and check the 4 basics: pay, location, role type and deal-breakers.</li>
+          <li><b>When I apply:</b> I move the role to Applied and fill in the short application box: how I applied, which resume, and my answers. The full job description is already saved on its card, which helps because postings often disappear right when you need them for interview prep.</li>
+          <li><b>After each interview:</b> I add it to the role's Interviews section right away, while it's fresh: who I met, what they asked, what went well and the next step.</li>
+          <li><b>When things change:</b> I update the stage to whatever happened next, like Screen, Interview, Offer or Rejected, and add a short note. Over time, that shows me where things move and where they stall.</li>
+          <li><b>Backups:</b> once a week I select Back up all, so I always have my own copy.</li>
+        </ul>
+      </div></details>
+
+    </div>
+  </section>
+
+  <!-- ================= DEMO ================= -->
+  <section id="view-demo" role="tabpanel" aria-labelledby="tab-demo" hidden>
+    <details class="trythis"><summary>Optional: ideas to try in the demo</summary><ol>
+      <li>Change a role&#x27;s stage (try <b>Rejected</b>), open its description and add a note.</li>
+      <li>Open <b>＋ Application</b> on the Bluebird role and <b>＋ Interviews</b> on the Support Lead role, then select <b>Add interview</b>.</li>
+      <li>Select <b>Add a role</b> (top right), then <b>Load sample posting</b> and <b>Check fit</b>.</li>
+      <li>On <b>Stats</b>, select <b>Insights</b> to see the heat map, where a darker cell is a bigger share of its row.</li>
+      <li>Open <b>Badges</b>, start counting, and select a badge to see its levels.</li>
+      <li>Open <b>Network</b> and <b>Settings</b>, and select <b>More</b> for the theme switch and downloads.</li>
+    </ol></details>
+    <p class="tracker-label">Sample tracker</p>
+    <div class="demo-window" id="demoWin" role="region" aria-label="Sample tracker demo">
+    <p class="demo-bar"><span><strong>Demo</strong> <span>with sample roles, and nothing you change is saved</span></span><button class="btn sm fs-exit" type="button" id="demoExitFs">Exit full screen</button></p>
+    <div class="demo-body">
+    <div class="demo-top"><div class="demo-head"><b class="demo-title">Role Tracker 2026</b><div class="demo-btns"><details class="moremenu" id="moreMenu"><summary class="btn ghost sm">More</summary><div class="moreinner"><div class="row" style="align-items:center;margin:0 0 8px"><span class="hint" style="margin:0">Color theme</span><button type="button" class="themebtn" id="themeBtn2" aria-label="Color theme: Auto"><span id="themeIco2"></span></button></div><p class="hint" style="margin:0 0 8px">In your own tracker this holds the theme switch and your downloads.</p><div class="row"><button class="btn ghost sm" type="button" id="exportBtn">Export view</button><button class="btn ghost sm" type="button" id="backupBtn">Back up all</button></div><p class="toast" id="exportMsg" aria-live="polite"></p><p class="hint" style="margin:6px 0 0"><b>Export view</b> downloads only the roles on screen right now, with the main details. <b>Back up all</b> downloads every role, including descriptions, application details and interviews. Use it about once a week.</p></div></details><button class="btn sm" type="button" id="addJobBtn" data-dview="add">Add a role</button></div></div></div>
+    <div class="d-tabs" role="tablist" aria-label="Demo tracker">
+      <button class="d-tab" role="tab" id="dtab-today" aria-selected="true" data-dview="today">Stats</button>
+      <button class="d-tab" role="tab" id="dtab-jobs" aria-selected="false" data-dview="jobs">Roles</button>
+      <button class="d-tab" role="tab" id="dtab-badges" aria-selected="false" data-dview="badges">Badges</button>
+      <button class="d-tab" role="tab" id="dtab-network" aria-selected="false" data-dview="network">Network</button>
+      <button class="d-tab" role="tab" id="dtab-settings" aria-selected="false" data-dview="settings">Settings</button>
+    </div>
+    <div id="dview-today">
+      <div id="todayLists"></div>
+<details class="statsbox" id="statsBox" open><summary id="statsSum"></summary><div id="statsBody"></div><div class="hbp" id="hbPanel" hidden></div><div class="hbp" id="inPanel" hidden></div></details>
+      
+    </div>
+    <div id="dview-jobs" hidden>
+      <div class="row filterrow"><label class="inline" for="stageFilter">Show roles by stage</label><select id="stageFilter"></select></div>
+      <input type="search" id="jobSearch" aria-label="Search roles" placeholder="Search company or title" style="width:100%;margin:6px 0">
+      <div class="list" id="list"></div>
+    </div>
+    <div id="dview-add" hidden>
+      <div class="panel">
+        <h4>Paste a job description</h4>
+        <p class="hint">Paste the full posting, including the title and location at the top. Check fit compares it with your Settings and fills in the details.</p>
+        <textarea id="jdBox" rows="9" aria-label="Job description"></textarea>
+        <div class="row"><button class="btn" type="button" id="fitBtn">Check fit</button><button class="btn ghost" type="button" id="loadSample">Load sample posting</button></div>
+        <div id="fitOut" aria-live="polite"></div>
+      </div>
+    </div>
+    <div id="dview-network" hidden>
+      <p class="hint">Optional. Track people who could help: referrals, references, job leads and introductions. People due for a follow-up show first; search for &quot;reference&quot; to find your references. Sample contacts only; nothing you change is saved.</p>
+      <div class="list" id="netList"></div>
+    </div>
+    <div id="dview-badges" hidden><div class="panel" id="badgePanel"></div></div>
+    <div id="dview-settings" hidden><div class="panel" id="settingsPanel"></div></div>
+    </div>
+    </div>
+    <p class="demo-open"><button class="btn ghost sm" type="button" id="demoFs">Full screen</button></p>
+  </section>
+
+  <!-- ================= HELP ================= -->
+  <section id="view-help" class="help" role="tabpanel" aria-labelledby="tab-help" hidden>
+    <div class="h-tabs" role="tablist" aria-label="Help topics">
+      <button type="button" class="h-tab" role="tab" id="htab-trouble" aria-selected="true" data-hview="trouble">Troubleshooting</button>
+      <button type="button" class="h-tab" role="tab" id="htab-safety" aria-selected="false" data-hview="safety">Safety</button>
+      <button type="button" class="h-tab" role="tab" id="htab-privacy" aria-selected="false" data-hview="privacy">Privacy</button>
+      <button type="button" class="h-tab" role="tab" id="htab-sources" aria-selected="false" data-hview="sources">Sources</button>
+    </div>
+    <section id="hview-trouble" role="tabpanel" aria-labelledby="htab-trouble">
+    <div class="note support" id="supportBox">
+      <p style="margin:0 0 12px"><b>Need help?</b> Go back to the chat where you built your tracker, since it already knows your setup. If you can&#x27;t find it, start a new chat and include your tracker&#x27;s link. Then copy this message, fill in the brackets, and send it.</p>
+      <div class="promptbox"><div class="promptbar"><b>Help message</b><span class="row"><p class="copied" id="helpMsg" aria-live="polite"></p><button class="btn sm" type="button" id="copyHelp">Copy message</button></span></div>
+      <pre id="helpText" tabindex="0" aria-label="Help message text">My Job Search Command Center isn't working the way I expected.
+
+My tracker link: [paste your tracker's link here if this is a new chat]
+What I was trying to do: [for example, check fit on a role]
+What happened instead: [describe it, or paste the exact message you got]
+
+Please help me troubleshoot this, one step at a time, in plain words.</pre></div>
+      <p style="margin:10px 0 0">You can also check the common questions below. For account or billing questions, visit <a href="https://support.claude.com" target="_blank" rel="noopener">Claude's Help Center</a>.</p>
+    </div>
+      <p class="hint" style="margin:18px 0 6px">Common questions. Select a topic, then a question.</p>
+      <details class="hgrp"><summary>Setup <span class="hint" style="margin:0">(2)</span></summary><div class="hgbody">
+      <details class="qa"><summary>Claude says it can't build a page or schedule searches.</summary><div>Check three things: you're on a paid plan; you're in a regular chat, not incognito; and "Artifacts" and "Code execution and file creation" are on (Settings → Capabilities). Then start a new chat and paste the prompt again.</div></details>
+      <details class="qa"><summary>I want to start over.</summary><div>Select <b>Back up all</b> first if you want a copy. Ask Claude to delete your scheduled search, then paste the starter prompt into a new chat.</div></details>
+</div></details>
+<details class="hgrp"><summary>Daily search <span class="hint" style="margin:0">(5)</span></summary><div class="hgbody">
+      <details class="qa"><summary>My search didn't run, or I didn't get a summary.</summary><div>Ask Claude, "Is my job search scheduled, and when does it run next?" If it's missing or paused, ask Claude to set it up again using your tracker's Settings.</div></details>
+      <details class="qa"><summary>I changed Settings, but my search ignored it.</summary><div>Ask Claude to confirm your scheduled search reads your tracker's Settings first.</div></details>
+      <details class="qa"><summary>I'm getting roles that aren't a fit, or very few roles.</summary><div>Open Settings and check your job titles, locations and pay floor. Adding a few more titles that mean the same thing often helps.</div></details>
+      <details class="qa"><summary>The same role keeps showing up in my results.</summary><div>Keep the earlier one in your tracker, even if it's Passed or Closed. The search skips roles that are already there.</div></details>
+      <details class="qa"><summary>A remote role turned me down because of where I live.</summary><div>Some remote roles only hire in certain states. Ask Claude to flag "Check state eligibility" on remote roles.</div></details>
+</div></details>
+<details class="hgrp"><summary>Fit check <span class="hint" style="margin:0">(3)</span></summary><div class="hgbody">
+      <details class="qa"><summary>The fit check missed details that were in the posting.</summary><div>Make sure you pasted the whole posting, including the title and location at the top. Some job sites cut text off when you copy it.</div></details>
+      <details class="qa"><summary>Claude couldn't open a job link.</summary><div>Some job sites block automated reading. Paste the posting text instead of the link.</div></details>
+      <details class="qa"><summary>The fit check is too long to read on my phone.</summary><div>Ask Claude to keep it to 4 checks and a one-line catch.</div></details>
+</div></details>
+<details class="hgrp"><summary>Your tracker <span class="hint" style="margin:0">(2)</span></summary><div class="hgbody">
+      <details class="qa"><summary>Settings are hard to edit on my phone.</summary><div>Ask Claude to use dropdowns and pick-from-a-list options instead of typing.</div></details>
+      <details class="qa"><summary>Editing a role erased some details.</summary><div>Ask Claude to update your tracker so editing keeps every field, including ones not shown on the form.</div></details>
+</div></details>
+</section>
+    <section id="hview-safety" role="tabpanel" aria-labelledby="htab-safety" hidden>
+      <p>Job searching is a common target for scammers, including on real job sites like LinkedIn.</p>
+      <h3>Warning signs</h3>
+      <ul>
+        <li>A recruiter reaches out unexpectedly, especially by text, WhatsApp or Telegram. Real employers don't recruit that way.</li>
+        <li>They email from a personal address (like @gmail.com) instead of a company account.</li>
+        <li>You get an offer or paperwork before a real interview.</li>
+        <li>They ask you to pay for equipment or training, or to deposit a check and send money back.</li>
+        <li>They ask for your ID, a government ID number (like a US Social Security number) or bank details before you're hired.</li>
+        <li>Pay is mentioned, but the actual work is vague.</li>
+      </ul>
+      <h3>Before you share anything</h3>
+      <ul>
+        <li>Ask about the job duties and pay first.</li>
+        <li>Hold off on identity and banking details until you've interviewed and been hired.</li>
+        <li>Contact the company using a website or phone number you know is real, not one the recruiter gave you.</li>
+        <li>Search the recruiter's or company's name with words like "scam" or "complaint."</li>
+        <li>Never pay to get a role.</li>
+      </ul>
+      <h3>If you think it's a scam</h3>
+      <ul>
+        <li>Stop replying, and report it to your country's fraud or consumer protection agency. In the US, that's <a href="https://reportfraud.ftc.gov" target="_blank" rel="noopener">ReportFraud.ftc.gov</a>, and if the site is not taking reports when you try it, check back later and report the scam on the platform where it happened in the meantime.</li>
+        <li>Report the fake profile or message on the platform where it happened. LinkedIn, for example, has a built-in "Report" option.</li>
+      </ul>
+      <p class="note"><b>How this setup helps:</b> the daily search is set up to only add roles it found on employer pages and confirmed are open, and Claude never sends messages or applies for you. It's still worth checking anything that seems off.</p>
+      <p class="src">Based on US Federal Trade Commission consumer alerts and LinkedIn Help (links under Sources). Warning signs are similar in most countries, but where you report a scam depends on where you live.</p>
+    </section>
+    <section id="hview-privacy" role="tabpanel" aria-labelledby="htab-privacy" hidden>
+      <p>Your privacy choices are in <a href="#step3" data-goto-step="step3">step 3 of the Guide</a>: Model Improvement, memory, and sharing your tracker. Make them before you paste the prompt.</p>
+      <p>This page counts visits to see how it's used. It doesn't use cookies or collect personal details, and nothing is tracked inside your own tracker.</p>
+    </section>
+    <section id="hview-sources" role="tabpanel" aria-labelledby="htab-sources" hidden>
+      <ul class="sources">
+        <li><a href="https://support.claude.com/en/articles/9547008-share-artifacts" target="_blank" rel="noopener">Share artifacts</a> (Claude Help Center)</li>
+        <li><a href="https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them" target="_blank" rel="noopener">What are artifacts and how do I use them?</a> (Claude Help Center)</li>
+        <li><a href="https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork" target="_blank" rel="noopener">Schedule recurring tasks</a> (Claude Help Center)</li>
+        <li><a href="https://support.claude.com/en/articles/12260368-use-incognito-chats" target="_blank" rel="noopener">Use incognito chats</a> (Claude Help Center)</li>
+        <li><a href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context" target="_blank" rel="noopener">Chat search and memory</a> (Claude Help Center)</li>
+        <li><a href="https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training" target="_blank" rel="noopener">Is my data used for model training?</a> (Claude Privacy Center)</li>
+        <li><a href="https://support.claude.com/en/articles/13364135-use-claude-cowork-safely" target="_blank" rel="noopener">Use Claude Cowork safely</a> (Claude Help Center)</li>
+        <li><a href="https://consumer.ftc.gov/all-scams/job-scams" target="_blank" rel="noopener">Job scams</a> (FTC)</li>
+        <li><a href="https://consumer.ftc.gov/consumer-alerts/2023/12/how-spot-latest-job-scams" target="_blank" rel="noopener">How to spot the latest job scams</a> (FTC)</li>
+        <li><a href="https://consumer.ftc.gov/consumer-alerts/2025/07/job-scammers-are-looking-hire-you" target="_blank" rel="noopener">Job scammers are looking to hire you</a> (FTC)</li>
+        <li><a href="https://consumer.ftc.gov/consumer-alerts/2026/04/job-offer-text-probably-scam" target="_blank" rel="noopener">That job offer text is probably a scam</a> (FTC)</li>
+        <li><a href="https://www.linkedin.com/help/linkedin/answer/a1338436" target="_blank" rel="noopener">Report fake profiles</a> (LinkedIn Help)</li>
+      </ul>
+    </section>
+  </section>
+
+  </div>
+
+  <footer><a href="#top" class="tolink" data-top="1">↑ Back to top</a>
+    <p>© 2026 Amber Laidman. You're welcome to copy the starter prompt, change it, and use it for your own job search. Feel free to share the link to this guide. Please don't copy this guide to publish as your own.</p>
+    <p><a class="flink" href="https://amberlaidman.github.io/index.html" target="_blank" rel="noopener">Portfolio</a><span class="fsep"></span><a class="flink" href="https://www.linkedin.com/in/amber-laidman" target="_blank" rel="noopener">LinkedIn</a></p>
+    <p>An independent guide with my own opinions, not affiliated with or endorsed by Anthropic or any other company.</p>
+    <p id="footFeedback" hidden><a class="flink" href="https://tally.so/r/A7XMM0" target="_blank" rel="noopener">Have feedback? Share your thoughts</a></p>
+    <p>Stuck? The Help tab has a message you can send to Claude to troubleshoot.</p>
+    <p>Guide version 1.5, updated October 31, 2026. Plan and settings details were last checked in October 2026, so if something seems different, check Claude's Help Center.</p>
+  </footer>
+</div>
+
+<button type="button" class="totop" id="toTop" hidden aria-label="Back to top">↑ Top</button>
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+  /* theme */
+  // One icon that cycles Auto, Light, Dark: half-filled circle, sun, moon.
+  var THEME_ICON={"auto": "<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 3a9 9 0 0 1 0 18z\" fill=\"currentColor\"/></svg>", "light": "<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/></svg>", "dark": "<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z\"/></svg>"},THEME_NAME={auto:"Auto",light:"Light",dark:"Dark"},THEME_ORDER=["auto","light","dark"],themeNow="auto";
+  function applyTheme(t,say){
+    if(!THEME_NAME[t])t="auto";themeNow=t;
+    if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");
+    var nx=THEME_ORDER[(THEME_ORDER.indexOf(t)+1)%3],b=document.getElementById("themeBtn");if(!b)return;
+    [["themeBtn","themeIco"],["themeBtn2","themeIco2"]].forEach(function(ids){var bb=document.getElementById(ids[0]),ii=document.getElementById(ids[1]);if(!bb||!ii)return;ii.innerHTML=THEME_ICON[t];
+    bb.setAttribute("aria-label","Color theme: "+THEME_NAME[t]+". Select to switch to "+THEME_NAME[nx]+".");bb.title="Color theme: "+THEME_NAME[t];});
+    if(say)document.getElementById("themeLive").textContent="Color theme: "+THEME_NAME[t];
+  }
+  (function(){var t="auto";try{t=localStorage.getItem("jscc-theme")||"auto";}catch(e){}applyTheme(t);
+    document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#themeBtn,#themeBtn2");if(!b)return;var n=THEME_ORDER[(THEME_ORDER.indexOf(themeNow)+1)%3];applyTheme(n,true);try{localStorage.setItem("jscc-theme",n);}catch(err){}});})();
+
+  /* main tabs */
+  function showView(v){
+    var hd=document.querySelector("header");if(hd){var y=hd.offsetTop+hd.offsetHeight+4;if(window.scrollY>y)window.scrollTo({top:y,behavior:"instant"});}
+    ["guide","demo","help"].forEach(function(k){$("view-"+k).hidden=k!==v;$("tab-"+k).setAttribute("aria-selected",k===v?"true":"false");});
+    $("footFeedback").hidden=v==="guide";
+    if(v==="demo")renderJobs();
+  }
+  function openStep(id){showView("guide");var d=$(id);if(!d)return;
+    d.parentNode.querySelectorAll(":scope > details.step").forEach(function(o){if(o!==d)o.open=false;});
+    d.open=true;
+    requestAnimationFrame(function(){requestAnimationFrame(function(){d.scrollIntoView({block:"start"});var s=d.querySelector("summary");if(s)s.focus({preventScroll:true});});});}
+
+  /* copy prompt */
+  $("copyBtn").onclick=function(){
+    var t=$("promptText").textContent,m=$("copyMsg");
+    function ok(){m.textContent="Copied!";setTimeout(function(){m.textContent="";},2500);}
+    function fallback(){var r=document.createRange();r.selectNodeContents($("promptText"));var s=window.getSelection();s.removeAllRanges();s.addRange(r);m.textContent="Selected. Use your device's Copy.";}
+    try{navigator.clipboard.writeText(t).then(ok,fallback);}catch(e){fallback();}
+  };
+
+  $("copyBtn2").onclick=function(){
+    var t=$("promptText2").textContent,m=$("copyMsg2");
+    function ok(){m.textContent="Copied!";setTimeout(function(){m.textContent="";},2500);}
+    function fallback(){var r=document.createRange();r.selectNodeContents($("promptText2"));var s=window.getSelection();s.removeAllRanges();s.addRange(r);m.textContent="Selected. Use your device's Copy.";}
+    try{navigator.clipboard.writeText(t).then(ok,fallback);}catch(e){fallback();}
+  };
+
+  $("copyHelp").onclick=function(){
+    var t=$("helpText").textContent,m=$("helpMsg");
+    function ok(){m.textContent="Copied!";setTimeout(function(){m.textContent="";},2500);}
+    function fb(){var r=document.createRange();r.selectNodeContents($("helpText"));var s=window.getSelection();s.removeAllRanges();s.addRange(r);m.textContent="Selected. Use your device's Copy.";}
+    try{navigator.clipboard.writeText(t).then(ok,fb);}catch(e){fb();}
+  };
+  /* ===== demo ===== */
+  var STAGES=["New","Interested","Applied","Screen","Interview","Offer","Rejected","Closed","Passed"];
+  var CLOSED=["Rejected","Closed","Passed"];
+  var VIA=["Automated email","Recruiter email","Recruiter call","After interview","No response"];
+  var jobs=[
+    {id:"j1",company:"Pixel Orchard",title:"Project Coordinator",setting:"Remote (US)",pay:"$68K–$78K",posted:"Posted 1 day ago",stage:"New",
+     flags:[["New today",""],["Travel 10%","w"]],
+     jd:"Pixel Orchard builds scheduling software for small clinics. We're hiring a Project Coordinator to keep customer launches on track: scheduling kickoff calls, tracking tasks, and sending weekly status updates.\n\nYou'll work with our implementation and support teams.\n\n2+ years coordinating projects. Comfortable with Asana or a similar tool. Remote (US). Occasional travel (about 10%).",notes:[]},
+    {id:"j2",company:"Bluebird Coffee Co.",title:"Operations Coordinator",setting:"Hybrid · 2 days in office",pay:"$64K–$71K",posted:"Posted 6 days ago",stage:"Applied",
+     flags:[["Below floor","w"]],due:"Follow up with the recruiter",
+     jd:"Bluebird Coffee Co. runs 140 cafés across the Southeast. The Operations Coordinator manages supply orders, tracks store maintenance requests, and builds the weekly operations report for district managers.\n\nHybrid, 2 days a week at our Raleigh support center.",
+     notes:[["3 days ago","Recruiter viewed my profile."]],
+     app:{when:"6 days ago",via:"Company site",contact:"",resume:"Operations resume (Oct)",cover:true,answers:"Why Bluebird? I've managed supply orders for 3 locations and like that your support center serves the stores directly."}},
+    {id:"j3",company:"Pixel Orchard",title:"Customer Support Lead",setting:"Remote (US)",pay:"$75K–$84K",posted:"Posted 12 days ago",stage:"Interview",
+     flags:[["Manages 3 people","w"],["Interview in 3 days",""]],
+     jd:"The Customer Support Lead runs day-to-day support for clinic customers. You'll lead a team of 3 support specialists, manage the help queue, and spot trends to share with product.\n\nRemote (US). Reports to the Head of Customer Success.",
+     notes:[["2 days ago","Prep: bring two examples of fixing a backlog."]],
+     app:{when:"14 days ago",via:"Referral",contact:"Sam (former coworker)",resume:"Support lead resume",cover:false,answers:""},
+     interviews:[{when:"9 days ago",round:"Recruiter screen",who:"Jordan, recruiter",asked:"Why this role?\nTell me about a time you cleared a backlog.",well:"Clear story about our holiday ticket surge.",next:"Panel interview in 3 days",thanks:true}]}
+  ];
+  jobs[0].flags[1][0]="Travel 10%";
+  var settings={
+    field:{type:"chips",label:"Field",opts:["Operations","Project management","Customer support","Administration"],val:["Operations","Project management","Customer support"]},
+    level:{type:"chips",label:"Level",opts:["Entry","Mid","Senior / Lead","Director+"],val:["Mid"]},
+    titles:{type:"chips",label:"Job titles",opts:["Project Coordinator","Operations Coordinator","Customer Support Lead","Operations Specialist","Program Coordinator"],val:["Project Coordinator","Operations Coordinator","Customer Support Lead"]},
+    manage:{type:"select",label:"Managing people",opts:["No reports","1–3 reports OK","Any team size"],val:"1–3 reports OK"},
+    style:{type:"chips",label:"Work style",opts:["Remote","Hybrid","On-site"],val:["Remote","Hybrid"]},
+    home:{type:"text",label:"Home base",val:"Raleigh, NC"},
+    travel:{type:"select",label:"Travel",opts:["None","Up to 10%","Up to 25%","Any (flag it)"],val:"Up to 25%"},
+    floorRemote:{type:"select",label:"Pay floor: remote",opts:["No floor","$60K","$65K","$70K","$75K","$80K"],val:"$65K"},
+    floorHybrid:{type:"select",label:"Pay floor: hybrid / on-site",opts:["No floor","$60K","$65K","$70K","$75K","$80K"],val:"$70K"},
+    under:{type:"select",label:"Show roles just under floor",opts:["Don't show","5% under (flag it)","10% under (flag it)"],val:"10% under (flag it)"},
+    dream:{type:"chips",label:"Dream companies",opts:["Pixel Orchard","Bluebird Coffee Co."],val:["Pixel Orchard","Bluebird Coffee Co."]},
+    skip:{type:"chips",label:"Deal-breakers",opts:["Commission-based pay","Manages 4+ people","Overnight shifts","Requires a certification I don't have"],val:["Commission-based pay","Manages 4+ people"]},
+    mode:{type:"select",label:"Search pace",opts:["Light · weekly","Active · weekdays","Full-time search · daily"],val:"Active · weekdays"}
+  };
+  var SECTIONS=[["Jobs",["field","level","titles","manage"]],["Where and how",["style","home","travel"]],["Pay",["floorRemote","floorHybrid","under"]],["Companies and deal-breakers",["dream","skip"]],["Search",["mode"]]];
+  var SAMPLE_JD="Operations Specialist\nSunfield Credit Union · Hybrid, 3 days in office (Durham, NC)\n\nSunfield is hiring an Operations Specialist to keep our branch network running smoothly. You'll track branch supply and maintenance requests, update procedures, and report weekly on service times.\n\n2+ years in operations or coordination. Strong Excel skills. Travel to branches up to 15%.\n\nPay: $60,000–$67,000 per year.";
+  var filter="Active",rejecting=null,noting=null,appEditing=null,ivAdding=null,ivPrompt=null;
+  var APPVIA=["Company site","LinkedIn","Referral","Recruiter","Job board","Other"],ROUNDS=["Recruiter screen","Hiring manager","Panel","Final","Other"];
+  var LATE=["Applied","Screen","Interview","Offer","Rejected"];
+  function line(k,t){return t?'<div><div class="k">'+esc(k)+'</div><div class="t">'+esc(t)+'</div></div>':"";}
+  function appBlock(j){
+    if(appEditing===j.id){var a=j.app||{};return '<div class="dform"><b>Application details (optional)</b><div class="opts" role="group" aria-label="How you applied">'+APPVIA.map(function(v){var on=a.via===v;return '<button type="button" class="opt'+(on?' on':'')+'" aria-pressed="'+on+'" data-appvia="'+j.id+'" data-v="'+v+'">'+v+'</button>';}).join("")+'</div>'+
+      '<label>Referral or recruiter name<input type="text" id="ap-c-'+j.id+'" value="'+esc(a.contact||"")+'"></label><label>Resume version<input type="text" id="ap-r-'+j.id+'" value="'+esc(a.resume||"")+'" placeholder="e.g. Main resume (Oct)"></label>'+
+      '<label class="chk"><input type="checkbox" id="ap-l-'+j.id+'"'+(a.cover?' checked':'')+'> Sent a cover letter</label><label>Answers I submitted<textarea id="ap-a-'+j.id+'" rows="3">'+esc(a.answers||"")+'</textarea></label>'+
+      '<div class="row"><button type="button" class="btn sm" data-appsave="'+j.id+'">Save</button><button type="button" class="btn ghost sm" data-appskip="'+j.id+'">Skip for now</button></div></div>';}
+    if(LATE.indexOf(j.stage)<0&&!j.app)return "";
+    var a2=j.app;
+    return '<details><summary>＋ Application</summary><div class="sec">'+(a2?line("Applied",a2.when)+line("How",a2.via)+line("Referral / recruiter",a2.contact)+line("Resume version",a2.resume)+(a2.cover?'<div class="k">Cover letter: sent</div>':'')+line("Answers I submitted",a2.answers):'<p class="hint">No application details yet.</p>')+
+      '<div><button type="button" class="btn ghost sm" data-appedit="'+j.id+'">'+(a2?'Edit':'Add details')+'</button></div></div></details>';
+  }
+  function ivBlock(j){
+    var list=j.interviews||[],h="";
+    if(ivPrompt===j.id&&ivAdding!==j.id)h+='<div class="dform"><span>Want to log this interview?</span><div class="row"><button type="button" class="btn sm" data-ivadd="'+j.id+'" aria-label="Add interview for '+esc(j.title)+' at '+esc(j.company)+'">Add interview</button><button type="button" class="btn ghost sm" data-ivlater="'+j.id+'">Not now</button></div></div>';
+    var form=ivAdding===j.id?'<div class="dform"><b>Add an interview</b><label>Round<select id="iv-r-'+j.id+'">'+ROUNDS.map(function(r){return '<option>'+r+'</option>';}).join("")+'</select></label><label>Who you met<input type="text" id="iv-w-'+j.id+'"></label><label>Questions they asked<textarea id="iv-q-'+j.id+'" rows="2"></textarea></label><label>What went well<textarea id="iv-g-'+j.id+'" rows="2"></textarea></label><label>Next step<input type="text" id="iv-n-'+j.id+'"></label><label class="chk"><input type="checkbox" id="iv-t-'+j.id+'"> Thank-you note sent</label><div class="row"><button type="button" class="btn sm" data-ivsave="'+j.id+'">Save interview</button><button type="button" class="btn ghost sm" data-ivcancel="'+j.id+'">Cancel</button></div></div>':"";
+    if(list.length||form)h+='<details'+(form?' open':'')+'><summary>＋ Interviews ('+list.length+')</summary><div class="sec">'+list.map(function(v){return '<div class="ivi"><b>'+esc(v.when+" · "+v.round)+'</b>'+line("Who",v.who)+line("They asked",v.asked)+line("Went well",v.well)+line("Next step",v.next)+'<div class="k">Thank-you: '+(v.thanks?"sent":"not yet")+'</div></div>';}).join("")+form+'</div></details>';
+    return h;
+  }
+  function today(){return "Today";}
+  function byId(id){return jobs.filter(function(x){return x.id===id;})[0];}
+  function inFilter(j){return filter==="Active"?CLOSED.indexOf(j.stage)<0:filter==="Follow-ups due"?isDue(j):j.stage===filter;}
+
+  var hbOpen=false,inOpen=false,inGrp=0;
+  /* Sample numbers: 42 applications, 120 jobs in the tracker. Your real tracker counts your own cards. */
+  var HB=[["Company site",20,4,1],["LinkedIn",6,2,1],["LinkedIn Easy Apply",9,1,0],["Referral",4,3,2],["Recruiter",3,3,1]];
+  var STG=[["Passed",50],["Applied, waiting",29],["Closed or no response",8],["Rejected",8],["Interested or new",20],["Screen or interview",5]];
+  var PIEC=["var(--accent)","color-mix(in srgb,var(--accent) 60%,var(--surface))","color-mix(in srgb,var(--warn) 60%,var(--surface))","color-mix(in srgb,var(--bad) 55%,var(--surface))","color-mix(in srgb,var(--muted) 55%,var(--surface))","color-mix(in srgb,var(--accent) 30%,var(--surface))"];
+  function pieSvg(items,tot){var cx=70,R=60,a=-Math.PI/2,out="";items.forEach(function(x,i){if(!x[2])return;var f=x[2]/tot;if(f>=.9999){out+='<circle cx="70" cy="70" r="'+R+'" fill="'+PIEC[i%PIEC.length]+'"/>';return;}var b=a+f*2*Math.PI;out+='<path d="M70,70 L'+(cx+R*Math.cos(a)).toFixed(2)+','+(70+R*Math.sin(a)).toFixed(2)+' A'+R+','+R+' 0 '+(f>.5?1:0)+' 1 '+(cx+R*Math.cos(b)).toFixed(2)+','+(70+R*Math.sin(b)).toFixed(2)+' Z" fill="'+PIEC[i%PIEC.length]+'" stroke="var(--surface)" stroke-width="2"/>';a=b;});return out;}
+  function hbHtml(){
+    var tot=HB.reduce(function(t,r){return t+r[2];},0),n=HB.reduce(function(t,r){return t+r[1];},0);
+    return '<p class="hint" style="margin:0">Sample numbers: '+tot+' of '+n+' applications heard back, including rejections. Your real tracker counts your own cards.</p>'+
+    '<div class="wkpie"><svg viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="Share of replies by how you applied: '+HB.map(function(r){return r[0]+" "+r[2];}).join(", ")+'">'+pieSvg(HB,tot)+'</svg><ul class="wkleg">'+HB.map(function(r,i){var pc=Math.round(r[2]/r[1]*100);return '<li><i style="background:'+PIEC[i%PIEC.length]+'"></i><b>'+r[0]+'</b><span>'+r[2]+' of '+tot+' replies</span><span class="ps">'+r[2]+' of '+r[1]+' applied ('+pc+'%)'+(r[1]<10?' · few applications':'')+'</span></li>';}).join("")+'</ul></div>'+
+    '<p class="note" style="margin:0"><b>Takeaway:</b> referrals and recruiters get screens far more often than Easy Apply. Try finding one contact before applying to your top roles.</p>';}
+  var INS=[["What\'s working",null],["Job type",[["Full-time",30],["Contract",9],["Part-time",3]]],["Work style",[["Remote",27],["Hybrid",11],["On-site",4]]],["Pay",[["At or above floor",19],["Below floor (flagged)",10],["Hourly",9],["No range listed",4]]],["Location",[["Remote",27],["Raleigh, NC",9],["Durham, NC",4],["Everything else",2]]],["Industry",[["Tech",15],["Healthcare",9],["Finance",7],["Consumer and retail",6],["Everything else",5]]]];
+  var INC=["var(--accent)","color-mix(in srgb,var(--accent) 65%,var(--surface))","color-mix(in srgb,var(--accent) 40%,var(--surface))","color-mix(in srgb,var(--warn) 55%,var(--surface))","color-mix(in srgb,var(--muted) 45%,var(--surface))"];
+  var HMG=[["Job type",[["Full-time",30,4,6],["Contract",9,1,2],["Part-time",3,0,0]]],["Work style",[["Remote",27,3,5],["Hybrid",11,2,2],["On-site",4,0,1]]],["Pay",[["At or above floor",19,3,3],["Below floor (flagged)",10,1,2],["Hourly",9,1,2],["No range listed",4,0,1]]],["Location",[["Remote",27,3,5],["Raleigh, NC",9,2,2],["Durham, NC",4,0,1],["Everything else",2,0,0]]],["Industry",[["Tech",15,2,3],["Healthcare",9,1,2],["Finance",7,1,1],["Consumer and retail",6,1,1],["Everything else",5,0,1]]],["How you applied",[["Company site",20,1,3],["LinkedIn",6,1,1],["LinkedIn Easy Apply",9,0,1],["Referral",4,2,1],["Recruiter",3,1,2]]]];
+  function renderIN(){var p=$("inPanel");if(!p)return;p.hidden=!inOpen;if(!inOpen){p.innerHTML="";return;}
+    var h='<b>Insights</b><p class="hint" style="margin:0">Sample numbers for 42 applications. A darker cell is a bigger share of that row. Waiting includes roles with no reply yet.</p><div class="hm"><div></div><div class="hd">Screen</div><div class="hd">Rejected</div><div class="hd">Waiting</div>';
+    HMG.forEach(function(g){h+='<div class="gh">'+esc(g[0])+'</div>';
+      g[1].forEach(function(r){var n=r[1],s=r[2],rj=r[3],w=n-s-rj;
+        function c(v,col,nm){var pc=n?v/n:0;return '<div class="cell" title="'+esc(r[0]+", "+nm+": "+v+" of "+n)+'"><em style="background:'+col+';opacity:'+(v?(0.12+pc*0.6).toFixed(2):0)+'"></em><b>'+(v||"")+'</b></div>';}
+        h+='<div class="lab"><span>'+esc(r[0])+'</span><small>'+n+(n<10?'*':'')+'</small></div>'+c(s,"var(--good)","screens")+c(rj,"var(--bad)","rejected")+c(w,"var(--accent)","waiting");});});
+    h+='</div><p class="hint" style="margin:0">* fewer than 10 roles, too early to tell. In your own tracker, older roles without a "how you applied" answer get a guess based on where the posting came from, and a note tells you how many were guessed.</p>';
+    p.innerHTML=h;}
+  var BGD=[["Effort",[["Applications",[25,75,150,300],42,"Counts roles by the date in the Applied field."],["Quality Picks",[10,25,50,100],12,"Counts applications to Priority or Target roles."],["Eyes Open",[25,75,150],120,"Counts every role you saved, whatever you decided."],["Followed Up",[1,5,15],3,"Counts follow-ups you log on this tab."]]],["Progress",[["Responses",["First reply","First interview","Second round","Offer"],2,"First reply is your first interview or rejection."],["Dream Interview",null,0,"Earned when a top-choice company has an interview."]]],["Resilience",[["Logged It",null,1,"Earned when you mark a role Rejected and write a reason."],["Bounce Back",null,0,"Earned when you apply within a day of a rejection."]]],["Network",[["Referral Asked",[1,3,6],4,"Counts applications where a referral was used."],["Coffee Chats",[1,3,6],2,"Counts contacts set to Talked or Helped."],["Thank-You",null,1,"Earned when an interview has a thank-you sent."]]],["Rest",[["Off the Clock",null,1,"Earned when you log a rest day."],["Weekend Off",null,0,"Earned when you log a Saturday and a Sunday."],["Recharge Week",null,0,"Earned when you log two rest days in one week."]]]];
+  var BGI={"Applications":'<path d="M3 12l18-8-6 16-3-7z"/>',"Quality Picks":'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',"Eyes Open":'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',"Followed Up":'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',"Responses":'<path d="M4 4h16v12H8l-4 4z"/>',"Dream Interview":'<path d="M4 21V5l8-2 8 2v16"/><path d="M2 21h20M9 9h2M13 9h2M9 13h2M13 13h2"/>',"Logged It":'<path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6"/>',"Bounce Back":'<path d="M4 14a8 8 0 0 1 14-5"/><path d="M18 4v5h-5"/>',"Referral Asked":'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6"/><path d="M18 8v6M15 11h6"/>',"Coffee Chats":'<path d="M5 8h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/>',"Thank-You":'<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.5-7 10-7 10z"/>',"Off the Clock":'<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>',"Weekend Off":'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/>',"Recharge Week":'<rect x="3" y="8" width="16" height="9" rx="2"/><path d="M21 11v3"/>'};
+  var bgStarted=false;try{bgStarted=localStorage.getItem('jscc-bg')==='1';}catch(e){}
+  function bgInfo(b){var lv=b[1],n=b[2];if(!lv){return {done:n>0?1:0,st:n>0?"Earned":"Not yet",rows:[[b[0],n>0]]};}
+    if(typeof lv[0]==="string"){return {done:n,st:n?"Level "+n+" of "+lv.length:"Not yet",rows:lv.map(function(l,i){return [l,i<n];})};}
+    var d=lv.filter(function(t){return n>=t;}).length;return {done:d,st:d>=lv.length?"All "+lv.length+" levels":d?"Level "+d+" of "+lv.length:"Next: "+lv[0],rows:lv.map(function(t){return [t+" so far "+(n>=t?"reached":"("+n+" now)"),n>=t];})};}
+  function bgRing(info,len){if(len<2)return "";var o="",c=2*Math.PI*28,gap=6,seg=(c-len*gap)/len;for(var i=0;i<len;i++)o+='<circle cx="34" cy="34" r="28" fill="none" stroke-width="4" style="stroke:'+(i<info.done?'var(--accent)':'var(--line)')+'" stroke-dasharray="'+seg.toFixed(2)+' '+c.toFixed(2)+'" transform="rotate('+(-90+(gap/c*180)+i*360/len).toFixed(2)+' 34 34)"/>';return o;}
+  function renderBadges(){var p=$("badgePanel");if(!p)return;
+    if(!bgStarted){p.innerHTML='<h4>Start your badges</h4><p class="hint">Badges mark your progress and your rest. Choose where counting starts.</p><label style="display:flex;gap:8px;min-height:44px;align-items:center"><input type="radio" name="bstart" value="launch" checked> Count from today</label><label style="display:flex;gap:8px;min-height:44px;align-items:center"><input type="radio" name="bstart" value="all"> Count everything already in the tracker</label><p class="hint">Counting everything fills many rings right away. You can change this later in Settings.</p><button class="btn" type="button" data-bstart="1">Start badges</button>';return;}
+    var h='<h4 style="margin:0">Your milestones</h4><p class="hint" style="margin:0">Sample badges for the demo. Your real tracker counts your own roles.</p>';
+    BGD.forEach(function(g){h+='<div class="bgsec"><h5>'+g[0]+'</h5><div class="bggrid">'+g[1].map(function(b,i){var f=bgInfo(b),len=b[1]?b[1].length:1,earned=f.done>0;return '<button type="button" class="bgt" data-bgt="'+BGD.indexOf(g)+'-'+i+'" aria-label="'+esc(b[0]+", "+f.st)+'"><svg width="68" height="68" viewBox="0 0 68 68" aria-hidden="true">'+bgRing(f,len)+'<circle cx="34" cy="34" r="'+(len>1?22:28)+'" style="fill:'+(earned?'var(--accent)':'var(--accent-soft)')+'"/><g transform="translate(22 22)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="stroke:'+(earned?'var(--on-accent)':'var(--accent)')+'">'+(BGI[b[0]]||"")+'</g></svg><b>'+esc(b[0])+'</b><span>'+esc(f.st)+'</span></button>';}).join("")+'</div></div>';});
+    h+='<p class="hint">Select a badge to see its levels and how it counts.</p><div class="setsec"><h5>Log what the tracker can&#39;t see</h5><p class="hint" style="margin:0">Follow-ups and rest days are not saved anywhere else, so add them here.</p><div class="row"><button class="btn ghost sm" type="button" data-bglog="1">Log a follow-up</button><button class="btn ghost sm" type="button" data-bglog="1">Log a rest day</button></div><p class="toast" id="bgMsg" aria-live="polite"></p></div>';
+    p.innerHTML=h;}
+  document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("button");if(!t)return;
+    if(t.dataset.bstart){bgStarted=true;try{localStorage.setItem('jscc-bg','1');}catch(e){}renderBadges();return;}
+    if(t.dataset.bglog){var m=$("bgMsg");if(m)m.textContent="In your own tracker this saves the entry with today’s date. Nothing is saved in the demo.";return;}
+    if(t.dataset.bgt){var ij=t.dataset.bgt.split("-"),b=BGD[+ij[0]][1][+ij[1]],f=bgInfo(b),d=$("bgDlg");if(!d){d=document.createElement("dialog");d.id="bgDlg";d.className="bgdlg";document.body.appendChild(d);d.addEventListener("click",function(ev){if(ev.target===d||ev.target.closest("[data-bgclose]"))d.close();});}
+      d.innerHTML='<h3 style="margin:0">'+esc(b[0])+'</h3><p class="hint" style="margin:0">'+esc(f.st)+'</p><ul>'+f.rows.map(function(r){return '<li>'+(r[1]?'<b>✓ '+esc(r[0])+'</b>':esc(r[0]))+'</li>';}).join("")+'</ul><p class="hint" style="margin:0 0 10px">'+esc(b[3])+'</p><button class="btn" type="button" data-bgclose="1" autofocus>Close</button>';d.setAttribute("aria-label",b[0]+" badge details");if(d.showModal)d.showModal();else d.setAttribute("open","");return;}
+  });
+  function isDue(j){return !!j.due&&CLOSED.indexOf(j.stage)<0;}
+  function isNewToday(j){return j.flags.some(function(f){return f[0]==="New today";});}
+  function trow(j,extra){return '<button type="button" class="tdrow" data-tjob="'+j.id+'"><b>'+esc(j.company)+'</b> <span>'+esc(j.title)+'</span><em>'+esc(extra)+'</em></button>';}
+  function tsec(label,list,fn,go){if(!list.length)return "";return '<details class="tdsec"><summary>'+label+'</summary>'+list.slice(0,8).map(fn).join("")+'<button type="button" class="tdmore" data-tgo="'+go+'">Open all '+list.length+' in Roles</button></details>';}
+  var tdSel="";
+  function renderToday(){
+    var due=jobs.filter(isDue),nw=jobs.filter(function(j){return j.stage==="New";});
+    var sets={due:due,"new":nw};
+    var chips='<div class="tdchips">'+[["due",due.length,"follow-up"+(due.length===1?"":"s")+" due"],["new",nw.length,"new to review"]].map(function(x){return '<button type="button" class="tdchip" data-tdsel="'+x[0]+'" aria-pressed="'+(tdSel===x[0])+'"'+(x[1]?'':' disabled')+'><b>'+x[1]+'</b> '+x[2]+'</button>';}).join("")+'</div>';
+    var panel="";
+    if(tdSel&&sets[tdSel]&&sets[tdSel].length){panel='<div class="tdlist">'+sets[tdSel].map(function(j){return trow(j,tdSel==="due"?j.due:"New");}).join("")+'</div>';}
+    $("todayLists").innerHTML=chips+panel;
+  }
+  var DN_AG=[["Applied, waiting",21,"var(--accent)"],["Rejected",8,"var(--bad)"],["No response or closed",8,"color-mix(in srgb,var(--warn) 55%,var(--surface))"],["Screen or interview",5,"color-mix(in srgb,var(--accent) 45%,var(--surface))"]];
+  function dnArc(rad,an){return (110+rad*Math.cos(an)).toFixed(2)+" "+(110+rad*Math.sin(an)).toFixed(2);}
+  function dnRing(frac,dash,num){var C=2*Math.PI*34;return '<svg class="stbsvg" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="34" fill="none" style="stroke:var(--line);stroke-width:8"'+(dash?' stroke-dasharray="4 5"':'')+'/>'+(frac>0?'<circle cx="42" cy="42" r="34" fill="none" transform="rotate(-90 42 42)" stroke-linecap="round" style="stroke:var(--ink);stroke-width:8" stroke-dasharray="'+(C*frac).toFixed(1)+' '+C.toFixed(1)+'"/>':'')+'<text x="42" y="49" text-anchor="middle" style="fill:var(--ink);font-size:22px;font-weight:700">'+num+'</text></svg>';}
+  function dnBdg(frac,dash,num,lab,sub){return '<div class="stbdg">'+dnRing(frac,dash,num)+'<div class="stbn">'+esc(lab)+'</div><div class="stbs">'+esc(sub)+'</div></div>';}
+  function renderStats(){
+    var AT=42,a0=-Math.PI/2;
+    var arcs=DN_AG.map(function(x){var an=x[1]/AT*Math.PI*2,b2=a0+an,lg=an>Math.PI?1:0;var d="M"+dnArc(100,a0)+" A100 100 0 "+lg+" 1 "+dnArc(100,b2)+" L"+dnArc(62,b2)+" A62 62 0 "+lg+" 0 "+dnArc(62,a0)+" Z";a0=b2;return '<path d="'+d+'" style="fill:'+x[2]+';stroke:var(--surface);stroke-width:1.5"><title>'+esc(x[0])+': '+x[1]+'</title></path>';}).join("");
+    var donut='<svg class="stdnsvg" viewBox="0 0 220 220" role="img" aria-label="'+esc("Donut of 42 applied roles: "+DN_AG.map(function(x){return x[0]+" "+x[1];}).join(", "))+'">'+arcs+'<text x="110" y="112" text-anchor="middle" style="fill:var(--ink);font-size:34px;font-weight:700">42</text><text x="110" y="134" text-anchor="middle" style="fill:var(--muted);font-size:13px">applied</text></svg>';
+    function lr(l,v){return '<div class="stlr"><span>'+l+'</span><b>'+v+'</b></div>';}
+    var leg=DN_AG.map(function(x){return '<div class="stlr"><i style="background:'+x[2]+'"></i><span>'+esc(x[0])+'</span><b>'+x[1]+'</b></div>';}).join("");
+    var na=lr("<b>Not applied</b>",78)+lr("Passed",50)+lr("Interested or new",20)+lr("Other (closed, rejected, no response)",8);
+    var more=lr("Chose to apply","42 of 120 · 35%")+lr("Quick apply (24 hr)","20%");
+    var badges=dnBdg(13/42,false,13,"Heard back","13 of 42, 31%")+dnBdg(0,false,5,"Interviews","held")+dnBdg(0,true,0,"Offers","none yet");
+    $("statsSum").innerHTML='<b>Stats</b>';
+    $("statsBody").innerHTML='<div style="padding:0 0 10px"><p class="hint" style="margin:6px 0">Sample numbers for the demo. Your real tracker counts your own roles.</p><div class="stdn"><div class="stdnmain">'+donut+'<div class="stdnleg"><div class="stleg1">'+leg+'</div><div class="stleg1 stna">'+na+'</div><div class="stleg1 stna">'+more+'</div></div></div><div class="stdnb">'+badges+'</div></div><div class="stbtns"><button type="button" class="btn ghost sm" data-in="1" aria-expanded="'+inOpen+'" aria-controls="inPanel">Insights</button></div></div>';
+    renderIN();renderToday();
+  }
+  document.addEventListener("click",function(e){
+    var t=e.target.closest&&e.target.closest("button");if(!t)return;var d=t.dataset;
+    if(d.tdsel){tdSel=(tdSel===d.tdsel)?"":d.tdsel;renderToday();return;}
+    if(d.in){inOpen=!inOpen;renderStats();var b2=$("statsBody").querySelector("[data-in]");if(b2)b2.focus();return;}
+    if(d.ingrp){inGrp=+d.ingrp;renderIN();var b3=document.querySelector('[data-ingrp="'+inGrp+'"]');if(b3)b3.focus();return;}
+    if(d.tgo){filter=d.tgo;var q=$("jobSearch");if(q)q.value="";showD("jobs");return;}
+    if(d.tjob){filter="Active";var jj=byId(d.tjob),q2=$("jobSearch");if(q2)q2.value=jj?jj.company:"";showD("jobs");return;}
+  });
+  document.addEventListener("input",function(e){if(e.target.id==="jobSearch")renderJobs();});
+  function renderFilters(){
+    $("stageFilter").innerHTML=["Active"].concat(STAGES).concat(["Follow-ups due"]).map(function(k){
+      var n=k==="Active"?jobs.filter(function(j){return CLOSED.indexOf(j.stage)<0;}).length:k==="Follow-ups due"?jobs.filter(isDue).length:jobs.filter(function(j){return j.stage===k;}).length;
+      return '<option value="'+k+'"'+(k===filter?' selected':'')+'>'+(k==="Active"?"Active roles":k)+' ('+n+')</option>';
+    }).join("");
+  }
+  function card(j){
+    var h='<article class="card"><div class="card-top"><div><div class="co">'+esc(j.company)+'</div><p class="title">'+esc(j.title)+'</p></div><span class="sample">SAMPLE</span></div>';
+    h+='<div class="meta"><span>'+esc(j.setting)+'</span><span>'+esc(j.pay)+'</span><span>'+esc(j.posted)+'</span></div>';
+    if(j.flags.length)h+='<div class="flags">'+j.flags.map(function(f){return '<span class="flag '+f[1]+'">'+esc(f[0])+'</span>';}).join("")+'</div>';
+    if(j.stage==="Rejected"&&j.rejVia)h+='<div class="rejline">Rejected after '+esc(j.rejFrom)+' · via '+esc(j.rejVia)+(j.rejReason?' · '+esc(j.rejReason):'')+'</div>';
+    h+='<div class="row"><label class="inline" for="st-'+j.id+'">Stage <select id="st-'+j.id+'" data-stage="'+j.id+'">'+STAGES.map(function(s){return '<option'+(s===j.stage?' selected':'')+'>'+s+'</option>';}).join("")+'</select></label></div>';
+    if(rejecting===j.id){
+      h+='<div class="rej"><p>How did you hear?</p><div class="opts">'+VIA.map(function(v){return '<button type="button" class="opt'+(j._via===v?' on':'')+'" aria-pressed="'+(j._via===v)+'" data-via="'+j.id+'" data-v="'+v+'">'+v+'</button>';}).join("")+'</div>'+
+         '<input type="text" id="rr-'+j.id+'" aria-label="Reason" placeholder="Reason, if they gave one (optional)"><div class="row"><button type="button" class="btn sm" data-rejsave="'+j.id+'">Save</button><button type="button" class="btn ghost sm" data-rejskip="'+j.id+'">Skip</button></div></div>';
+    }
+    h+='<details><summary>＋ Job description</summary><div class="jd">'+esc(j.jd)+'</div></details>';
+    h+=appBlock(j)+ivBlock(j);
+    if(j.notes.length)h+='<div class="notes">'+j.notes.map(function(n){return '<div><span class="note-date">'+esc(n[0])+'</span>'+esc(n[1])+'</div>';}).join("")+'</div>';
+    h+=noting===j.id?'<div class="addown"><input type="text" id="nt-'+j.id+'" aria-label="New note" placeholder="Add a note"><button type="button" class="btn sm" data-notesave="'+j.id+'">Add</button></div>':'<div class="row"><button type="button" class="btn ghost sm" data-note="'+j.id+'" aria-label="Add note for '+esc(j.title)+' at '+esc(j.company)+'">＋ Add note</button><button type="button" class="btn ghost sm" data-ivadd="'+j.id+'" aria-label="Add interview for '+esc(j.title)+' at '+esc(j.company)+'">＋ Add interview</button></div>';
+    return h+'</article>';
+  }
+  function renderJobs(){
+    renderStats();renderFilters();
+    var jq=(($("jobSearch")||{}).value||"").trim().toLowerCase();var list=jobs.filter(function(j){if(jq&&(j.company+" "+j.title).toLowerCase().indexOf(jq)===-1)return false;return inFilter(j)||j.id===appEditing||j.id===ivPrompt||j.id===ivAdding;});
+    $("list").innerHTML=list.length?list.map(card).join(""):'<div class="empty">No roles in '+esc(filter)+'. In your own tracker, your daily search adds new matches here.</div>';
+  }
+
+  var contacts=[
+    {id:"c1",n:"Jordan Price",co:"Pixel Orchard",ti:"Operations Manager",grp:"Old job: Harbor Retail",deg:"Direct",str:"Close",ref:true,how:"Former teammate; we ran store openings together",since:"2019",help:["Referral","Reference","Inside info on a company"],ask:"Would you refer me for the Project Coordinator role?",offer:"Intro to my old district manager",st:"Talked",last:"Oct 6",next:"Oct 16",due:false,note:"Said yes to a referral, so I need to send them my resume and the job link."},
+    {id:"c2",n:"Sam Rivera",co:"Bluebird Coffee Co.",ti:"HR Business Partner",grp:"School",deg:"Direct (weak tie)",str:"Friendly",ref:false,how:"Classmate in my certificate program",since:"2023",help:["Inside info on a company","Intro to someone"],ask:"What's the team like for the Operations Coordinator role?",offer:"",st:"Reached out",last:"Oct 9",next:"Oct 13",due:true,note:"Sent a LinkedIn message. Follow up once if no reply."},
+    {id:"c3",n:"Lee Tran",co:"Harbor Staffing",ti:"Recruiter",grp:"Recruiters",deg:"Direct",str:"Acquaintance",ref:false,how:"Messaged me on LinkedIn",since:"2026",help:["Job leads"],ask:"Ask about contract roles and whether they're W-2.",offer:"",st:"Not contacted",last:"",next:"Oct 14",due:true,note:"Reply with my resume and pay range."},
+    {id:"c4",n:"Morgan Ellis",co:"Sunfield Credit Union",ti:"Branch Director",grp:"Old job: Harbor Retail",deg:"2nd (via someone)",str:"Acquaintance",ref:false,intro:"Jordan Price",how:"Jordan's former manager",since:"",help:["Intro to someone","Mock interview"],ask:"15-minute chat about the Operations Specialist role?",offer:"",st:"Not contacted",last:"",next:"",due:false,note:"Wait until Jordan makes the intro."},
+    {id:"c5",n:"Priya Shah",co:"Freelance",ti:"Career coach",grp:"Friends",deg:"Direct",str:"Close",ref:true,how:"Friend from college",since:"2012",help:["Resume or portfolio feedback","Reference","Mentorship / advice"],ask:"Could you read my resume before Friday?",offer:"Help with website photos",st:"Helped",last:"Oct 3",next:"",due:false,note:"Gave great resume notes. Send a thank-you."}
+  ];
+  var CST=["Not contacted","Reached out","Talked","Helped"];
+  var NSQ=[["all","All"],["due","Follow-ups due"],["Not contacted","Not contacted"],["Reached out","Reached out"],["talked","Talked / helped"]];
+  var nf="all",ng="All",nq="",nDue=false,nRef=false;
+  function nMatch(c,f){if(f==="all")return true;if(f==="due")return c.due;if(f==="ref")return c.ref;if(f==="talked")return c.st==="Talked"||c.st==="Helped";return c.st===f;}
+  function nCard(c){
+    var roles=jobs.filter(function(j){return j.company===c.co&&["Rejected","Closed","Passed"].indexOf(j.stage)===-1;});
+    var pills='<span class="flag">'+esc(c.deg)+'</span><span class="flag">'+esc(c.str)+'</span><span class="flag">'+esc(c.grp)+'</span>'+(c.ref?'<span class="flag">★ Reference</span>':'')+(c.due?'<span class="flag w">Follow-up due</span>':'');
+    var h='<article class="card"'+(c.due?' style="border-left:4px solid var(--accent)"':'')+'><div class="card-top"><div><div class="co">'+esc(c.co)+' · '+esc(c.ti)+'</div><p class="title">'+esc(c.n)+'</p></div><span class="sample">SAMPLE</span></div>';
+    h+='<div class="flags">'+pills+'</div>';
+    h+='<div class="notes"><div><b>How you know them:</b> '+esc(c.how)+(c.since?' (since '+esc(c.since)+')':'')+'</div>'+(c.intro?'<div><b>Introduced by:</b> '+esc(c.intro)+'</div>':'')+'<div><b>Can help with:</b> '+c.help.map(esc).join(", ")+'</div>'+(c.ask?'<div><b>Your ask:</b> '+esc(c.ask)+'</div>':'')+(c.offer?'<div><b>You can offer:</b> '+esc(c.offer)+'</div>':'')+(roles.length?'<div><b>Active roles here:</b> '+roles.map(function(r){return esc(r.title)+' ('+esc(r.stage)+')';}).join("; ")+'</div>':'')+'<div class="hint">'+(c.last?'Last contact '+esc(c.last):'Not contacted yet')+(c.next?' · Follow up '+esc(c.next):'')+'</div><div>'+esc(c.note)+'</div></div>';
+    h+='<div class="row"><label class="inline" for="cs-'+c.id+'">Status <select id="cs-'+c.id+'" data-cst="'+c.id+'">'+CST.map(function(s){return '<option'+(s===c.st?' selected':'')+'>'+s+'</option>';}).join("")+'</select></label></div></article>';
+    return h;
+  }
+  function renderNet(){
+    var groups=["All"];contacts.forEach(function(c){if(groups.indexOf(c.grp)===-1)groups.push(c.grp);});
+    var inG=function(c){return ng==="All"||c.grp===ng;};
+    var h='<div class="nfrow"><div class="nfgrp"><label class="nflab" for="nStatus">Status</label><select id="nStatus">'+NSQ.map(function(q){var n=contacts.filter(function(c){return inG(c)&&nMatch(c,q[0]);}).length;return '<option value="'+esc(q[0])+'"'+(nf===q[0]?' selected':'')+'>'+esc(q[1])+' ('+n+')</option>';}).join("")+'</select></div>';
+    h+='<div class="nfgrp"><label class="nflab" for="nGroup">Group</label><select id="nGroup">'+groups.map(function(gp){return '<option'+(ng===gp?' selected':'')+'>'+esc(gp)+'</option>';}).join("")+'</select></div></div>';
+    h+='<input type="search" id="nSearch" aria-label="Search contacts" placeholder="Search name, company or notes" value="'+esc(nq)+'">';
+    var rows=contacts.filter(function(c){if(!inG(c)||!nMatch(c,nf))return false;if(nq){var hay=[c.n,c.co,c.ti,c.how,c.note,c.ask,c.grp,c.help.join(" "),c.ref?"reference":""].join(" ").toLowerCase();if(hay.indexOf(nq.toLowerCase())===-1)return false;}return true;}).sort(function(a,b){return (a.due?0:1)-(b.due?0:1)||a.n.localeCompare(b.n);});
+    h+=rows.length?rows.map(nCard).join(""):'<p class="empty">No contacts match these filters.</p>';
+    $("netList").innerHTML=h;
+  }
+  document.addEventListener("change",function(e){if(e.target.id==="nGroup"){ng=e.target.value;renderNet();var g=$("nGroup");if(g)g.focus();}if(e.target.id==="nStatus"){nf=e.target.value;renderNet();var t=$("nStatus");if(t)t.focus();}});
+  document.addEventListener("input",function(e){if(e.target.id==="nSearch"){nq=e.target.value;var pos=e.target.selectionStart;renderNet();var s=$("nSearch");s.focus();s.setSelectionRange(pos,pos);}});
+  document.addEventListener("change",function(e){var id=e.target.dataset&&e.target.dataset.cst;if(!id)return;var c=contacts.filter(function(x){return x.id===id;})[0];c.st=e.target.value;if(c.st!=="Not contacted"&&!c.last)c.last="today";renderNet();});
+  function renderSettings(){
+    var h='<h4>Settings</h4><p class="hint">Your search rules. Check fit and your daily searches both read these. To change when searches run, ask Claude.</p>';
+    SECTIONS.forEach(function(sec){
+      h+='<details class="setsec dset"><summary>'+esc(sec[0])+'</summary><div class="setbody">';
+      sec[1].forEach(function(k){
+        var f=settings[k];h+='<div><div style="font-weight:700;font-size:15px;margin-bottom:6px" id="lbl-'+k+'">'+esc(f.label)+'</div>';
+        if(f.type==="chips")h+='<div class="opts" role="group" aria-labelledby="lbl-'+k+'">'+f.opts.map(function(o){var on=f.val.indexOf(o)>-1;return '<button type="button" class="opt'+(on?' on':'')+'" aria-pressed="'+on+'" data-set="'+k+'" data-v="'+esc(o)+'">'+esc(o)+'</button>';}).join("")+'</div><div class="addown" style="margin-top:6px"><input type="text" id="own-'+k+'" aria-label="Add your own: '+esc(f.label)+'" placeholder="Add your own"><button type="button" class="btn ghost sm" data-own="'+k+'">Add</button></div>';
+        else if(f.type==="select")h+='<select id="sel-'+k+'" aria-labelledby="lbl-'+k+'" data-sel="'+k+'">'+f.opts.map(function(o){return '<option'+(o===f.val?' selected':'')+'>'+esc(o)+'</option>';}).join("")+'</select>';
+        else h+='<input type="text" id="txt-'+k+'" aria-labelledby="lbl-'+k+'" data-txt="'+k+'" value="'+esc(f.val)+'">';
+        h+='</div>';
+      });
+      h+='</div></details>';
+    });
+    h+='<details class="setsec dset"><summary>Badges</summary><div class="setbody"><p class="hint">Change the counts for each level, choose which groups show, or change where counting starts. Switching the counting start recalculates your rings.</p><label style="display:flex;gap:8px;min-height:44px;align-items:center"><input type="radio" name="bcm" checked> Count from the day badges launch</label><label style="display:flex;gap:8px;min-height:44px;align-items:center"><input type="radio" name="bcm"> Count everything in the tracker</label><label for="bl-apps">Applications levels</label><input id="bl-apps" value="25, 75, 150, 300"><label for="bl-qual">Quality Picks levels</label><input id="bl-qual" value="10, 25, 50, 100"><p class="hint">In the demo these fields are for show. In your tracker they save.</p></div></details>';
+    $("settingsPanel").innerHTML=h+'<p class="hint">In the demo, changes reset when you reload.</p>';
+  }
+  function renderFit(){
+    var txt=$("jdBox").value.trim();
+    if(!txt){$("fitOut").innerHTML='<p class="hint">Paste a posting first, or select "Load sample posting."</p>';return;}
+    if(txt!==SAMPLE_JD.trim()){$("fitOut").innerHTML='<p class="hint">In the demo, Check fit only reads the sample posting. In your own tracker, Claude reads any posting you paste.</p>';return;}
+    $("fitOut").innerHTML='<div class="fit"><div class="v">Maybe: good role match, with two things to check.</div>'+
+      '<div><span class="wn">⚠ Pay:</span> $67K top, hybrid floor $70K (about 4% under, flagged)</div>'+
+      '<div><span class="ok">✓ Location:</span> Hybrid in Durham, NC, near Raleigh</div>'+
+      '<div><span class="ok">✓ Role type:</span> Operations Specialist, one of your titles</div>'+
+      '<div><span class="ok">✓ Deal-breakers:</span> none found</div>'+
+      '<div><b>Catch:</b> 3 office days a week and branch travel up to 15%.</div>'+
+      '<div><b>Not confirmed:</b> whether travel costs are covered. The posting doesn\'t say.</div>'+
+      '<div><b>Flags:</b> Below floor · Travel 15% · 3 office days</div></div>'+
+      '<div class="row"><button type="button" class="btn sm" data-quick="Interested">Save as Interested</button><button type="button" class="btn ghost sm" data-quick="Passed">Save as Passed</button></div>';
+  }
+  function showD(v){["today","jobs","add","badges","network","settings"].forEach(function(k){$("dview-"+k).hidden=k!==v;var tb=$("dtab-"+k);if(tb)tb.setAttribute("aria-selected",k===v?"true":"false");});if(v==="jobs")renderJobs();if(v==="today")renderStats();if(v==="badges")renderBadges();if(v==="settings")renderSettings();if(v==="network")renderNet();}
+
+  document.addEventListener("click",function(e){
+    var a=e.target.closest("a");
+    if(a&&a.dataset.top){e.preventDefault();goTop();return;}
+    if(a&&a.dataset.goto){e.preventDefault();showView(a.dataset.goto);$("tab-"+a.dataset.goto).focus();return;}
+    if(a&&(a.dataset.step||a.dataset.gotoStep)){e.preventDefault();openStep(a.dataset.step||a.dataset.gotoStep);return;}
+    var t=e.target.closest("button");if(!t)return;var d=t.dataset;
+    if(d.view)return showView(d.view);
+    if(d.dview)return showD(d.dview);
+    if(d.hview){["trouble","safety","privacy","sources"].forEach(function(k){$("hview-"+k).hidden=k!==d.hview;$("htab-"+k).setAttribute("aria-selected",k===d.hview?"true":"false");});return;}
+    if(d.filter){filter=d.filter;return renderJobs();}
+    if(d.via){byId(d.via)._via=d.v;return renderJobs();}
+    if(d.rejsave||d.rejskip){var id=d.rejsave||d.rejskip,j=byId(id);if(d.rejsave){j.rejVia=j._via||"Not noted";var r=$("rr-"+id);j.rejReason=r?r.value.trim():"";}rejecting=null;return renderJobs();}
+    if(d.appvia){var ja=byId(d.appvia);ja.app=ja.app||{when:today()};ja.app.via=ja.app.via===d.v?"":d.v;var keep={c:($("ap-c-"+ja.id)||{}).value,r:($("ap-r-"+ja.id)||{}).value,a:($("ap-a-"+ja.id)||{}).value};renderJobs();if($("ap-c-"+ja.id)){$("ap-c-"+ja.id).value=keep.c;$("ap-r-"+ja.id).value=keep.r;$("ap-a-"+ja.id).value=keep.a;}return;}
+    if(d.appedit){appEditing=d.appedit;return renderJobs();}
+    if(d.appskip){appEditing=null;return renderJobs();}
+    if(d.appsave){var jb=byId(d.appsave);jb.app=jb.app||{when:today()};jb.app.contact=$("ap-c-"+jb.id).value.trim();jb.app.resume=$("ap-r-"+jb.id).value.trim();jb.app.cover=$("ap-l-"+jb.id).checked;jb.app.answers=$("ap-a-"+jb.id).value.trim();appEditing=null;return renderJobs();}
+    if(d.ivlater){ivPrompt=null;return renderJobs();}
+    if(d.ivadd){ivAdding=d.ivadd;ivPrompt=null;renderJobs();var w=$("iv-w-"+d.ivadd);if(w)w.focus();return;}
+    if(d.ivcancel){ivAdding=null;return renderJobs();}
+    if(d.ivsave){var jc=byId(d.ivsave),g=function(k){return $("iv-"+k+"-"+jc.id).value.trim();};jc.interviews=jc.interviews||[];jc.interviews.push({when:today(),round:g("r"),who:g("w"),asked:g("q"),well:g("g"),next:g("n"),thanks:$("iv-t-"+jc.id).checked});ivAdding=null;return renderJobs();}
+    if(d.note){noting=d.note;renderJobs();var i=$("nt-"+d.note);if(i)i.focus();return;}
+    if(d.notesave){var j2=byId(d.notesave),v=$("nt-"+d.notesave).value.trim();if(v)j2.notes.push([today(),v]);noting=null;return renderJobs();}
+    if(d.set){var f=settings[d.set],p=f.val.indexOf(d.v);if(p>-1)f.val.splice(p,1);else f.val.push(d.v);return renderSettings();}
+    if(d.own){var f2=settings[d.own],val=$("own-"+d.own).value.trim();if(val){if(f2.opts.indexOf(val)<0)f2.opts.push(val);if(f2.val.indexOf(val)<0)f2.val.push(val);}return renderSettings();}
+    if(d.quick){jobs.unshift({id:"j"+Date.now(),company:"Sunfield Credit Union",title:"Operations Specialist",setting:"Hybrid · 3 days in office",pay:"$60K–$67K",posted:"Added "+today(),stage:d.quick,flags:[["Below floor","w"],["Travel 15%","w"]],jd:SAMPLE_JD,notes:[]});
+      $("fitOut").innerHTML='<p class="toast">Saved as '+esc(d.quick)+'. Find it on the Roles tab'+(d.quick==="Passed"?' under the Passed filter':'')+'.</p>';return;}
+  });
+  document.addEventListener("change",function(e){
+    var t=e.target;
+    if(t.dataset.stage){var j=byId(t.dataset.stage),from=j.stage;j.stage=t.value;if(t.value==="Rejected"){j.rejFrom=from;j._via=null;rejecting=j.id;}else rejecting=null;if(t.value==="Applied"&&!j.app)appEditing=j.id;if(t.value==="Screen"||t.value==="Interview")ivPrompt=j.id;renderJobs();if(appEditing===j.id||ivPrompt===j.id){var tg=document.querySelector('[data-appskip],[data-ivadd="'+j.id+'"]');if(tg){var bx=tg.closest(".dform")||tg;bx.scrollIntoView({block:"center"});}}}
+    if(t.id==="stageFilter"){filter=t.value;renderJobs();$("stageFilter").focus();return;}
+    if(t.dataset.sel)settings[t.dataset.sel].val=t.value;
+    if(t.dataset.txt)settings[t.dataset.txt].val=t.value;
+  });
+  $("loadSample").onclick=function(){$("jdBox").value=SAMPLE_JD;$("fitOut").innerHTML="";};
+  $("fitBtn").onclick=renderFit;
+  $("exportBtn").onclick=function(){$("exportMsg").textContent="In your own tracker, this downloads the roles on screen now as a spreadsheet file.";};
+  $("backupBtn").onclick=function(){$("exportMsg").textContent="In your own tracker, this downloads every role, with all its details, as a spreadsheet file.";};
+
+  /* back to top */
+  var tt=$("toTop");
+  function goTop(){var rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;window.scrollTo({top:0,behavior:rm?"auto":"smooth"});var h=document.querySelector("h1");if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true});}}
+  window.addEventListener("scroll",function(){tt.hidden=window.scrollY<500;},{passive:true});
+  tt.onclick=goTop;
+  /* one panel open at a time within a group */
+  document.addEventListener("toggle",function(e){
+    var d=e.target;if(!d.open||!d.matches||!(d.matches("details.step")||d.matches("details.qa")))return;
+    var sel=d.matches("details.step")?"details.step":"details.qa";
+    d.parentNode.querySelectorAll(":scope > "+sel).forEach(function(o){if(o!==d)o.open=false;});
+    if(userToggled){userToggled=false;var fix=function(){var r=d.getBoundingClientRect();if(r.top<0||r.top>100)d.scrollIntoView({block:"start"});};requestAnimationFrame(function(){fix();setTimeout(fix,120);});}
+  },true);
+  /* remember that a person (not page load) opened the panel, so the opened step can be brought to the top */
+  var userToggled=false;
+  document.addEventListener("click",function(e){var s=e.target.closest&&e.target.closest("details.step>summary");if(s&&!s.parentNode.open)userToggled=true;},true);
+  document.addEventListener("keydown",function(e){if((e.key==="Enter"||e.key===" ")&&e.target.matches&&e.target.matches("details.step>summary")&&!e.target.parentNode.open)userToggled=true;},true);
+  renderJobs();
+  document.addEventListener("keydown",function(e){
+    var t=e.target;if(!t||t.getAttribute("role")!=="tab")return;
+    var k=e.key;if(k!=="ArrowLeft"&&k!=="ArrowRight"&&k!=="Home"&&k!=="End")return;
+    var tabs=[].slice.call(t.parentNode.querySelectorAll('[role="tab"]')),i=tabs.indexOf(t);
+    i=k==="Home"?0:k==="End"?tabs.length-1:(i+(k==="ArrowRight"?1:-1)+tabs.length)%tabs.length;
+    e.preventDefault();tabs[i].focus();tabs[i].click();
+  });
+  try{document.documentElement.setAttribute("lang","en");}catch(e){}
+  try{var dw=$("demoWin");function setFs(on){dw.classList.toggle("fs",on);document.body.classList.toggle("fs-open",on);(on?$("demoExitFs"):$("demoFs")).focus();}$("demoFs").onclick=function(){setFs(true);};$("demoExitFs").onclick=function(){setFs(false);};document.addEventListener("keydown",function(e){if(e.key==="Escape"&&dw.classList.contains("fs"))setFs(false);});document.addEventListener("focusin",function(e){if(dw.classList.contains("fs")&&!dw.contains(e.target))$("demoExitFs").focus();});if(location.hash==="#demo")showView("demo");}catch(e){}
+})();
+</script>
+
+</body>
+</html>
