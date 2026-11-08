@@ -162,7 +162,7 @@ button.cal-d{cursor:pointer}
 <div class="wrap">
   <header class="top">
     <div class="bar">
-      <div class="brand" style="min-width:0"><h1 style="white-space:nowrap">Budget Book</h1><small><span title="Page version" id="build">v34 · Oct 30, 2026</span> · <span id="savedState">Private to you</span></small></div>
+      <div class="brand" style="min-width:0"><h1 style="white-space:nowrap">Budget Book</h1><small><span title="Page version" id="build">v35 · Nov 7, 2026</span> · <span id="savedState">Private to you</span></small></div>
       <div class="row">
         <button type="button" class="iconbtn" id="helpBtn" aria-label="Help"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg></button>
         <button type="button" class="iconbtn" id="themeBtn" aria-label="Theme: Auto. Tap to change"></button>
@@ -185,7 +185,7 @@ button.cal-d{cursor:pointer}
 <script>
 (function(){
 "use strict";
-const DEMO=false;let demoKind="sample",helpFrom="overview",demoDirty=false,demoHosted=false;
+const DEMO=false;let demoKind="sample",helpFrom="overview",demoDirty=false,demoHosted=false,demoStore=true;const DEMO_KEY="bbdemo-v1";
 const CADS=[["weekly","Every week",52],["5wk","Every 5 weeks",10.4],["monthly","Every month",12],["2mo","Every 2 months",6],["3mo","Every 3 months",4],["6mo","Every 6 months",2],["yearly","Every year",1]];
 const INCADS=[["weekly","Every week",52],["2wk","Every 2 weeks",26],["monthly","Every month",12],["once","One-time",0]];
 const CATS=[["shared","Shared bills","--c1"],["phones","Phones","--c2"],["house","House services","--c3"],["personal","Personal","--c4"],["business","Business tools","--c5"],["education","Education","--c6"]];
@@ -262,7 +262,9 @@ const isSub=k=>k.startsWith("m:")||k.startsWith("h:");
 const bodyOf=k=>k.startsWith("m:")?S.months[k.slice(2)]:k.startsWith("h:")?HM()[k.slice(2)]:S[k];
 const pathOf=k=>k.startsWith("m:")?"months/"+k.slice(2):k.startsWith("h:")?"hm/"+k.slice(2):DOCS[k];
 async function delHm(id){clearTimeout(timers["h:"+id]);dirty["h:"+id]=false;if(db)try{await db.doc("hm/"+id).delete()}catch(e){}}
-function save(key){if(DEMO){demoDirty=true;setSaved("Demo · not saved");return}ensure(isSub(key)?"":key);dirty[key]=true;setSaved("Saving…");clearTimeout(timers[key]);timers[key]=setTimeout(()=>flush(key),450)}
+function persistDemo(){try{localStorage.setItem(DEMO_KEY,JSON.stringify({v:1,kind:demoKind,dirty:demoDirty,S}));demoStore=true}catch(e){demoStore=false}}
+function clearDemoStore(){try{localStorage.removeItem(DEMO_KEY)}catch(e){}}
+function save(key){if(DEMO){demoDirty=true;persistDemo();setSaved(demoStore?"Saved in this browser":"Demo · not saved");return}ensure(isSub(key)?"":key);dirty[key]=true;setSaved("Saving…");clearTimeout(timers[key]);timers[key]=setTimeout(()=>flush(key),450)}
 async function flush(key){
   if(!db){setSaved("Not saved in this view");return}
   if(writing[key])return;writing[key]=true;
@@ -1202,18 +1204,22 @@ function demoData(kind){
   const paidNow={};d.expenses.items.forEach(i=>{if(i.dueDay&&i.dueDay<today.getDate())paidNow[i.id]=true});paidNow["card:daily"]=today.getDate()>20;
   d.months[cm]={id:cm,started:false,planned:{},carry:{},actual:{},notes:"",paid:paidNow,statement:null,suggestion:null};
   return d}
+function demoReady(){booting=false;adjust=null;upl=null;calMonth=curMonth;calDay=null;comingAll=false;["history","business","expenses","debt","salary","settings"].forEach(k=>loaded[k]=true);setSaved(demoDirty&&demoStore?"Saved in this browser":"Demo · not saved");demoBanner();render()}
 function loadDemo(kind){const d=demoData(kind);S={history:d.history,business:d.business,expenses:d.expenses,debt:d.debt,salary:d.salary,settings:d.settings,months:d.months,hm:d.hm};
-  demoKind=kind;demoDirty=false;booting=false;adjust=null;upl=null;calMonth=curMonth;calDay=null;comingAll=false;["history","business","expenses","debt","salary","settings"].forEach(k=>loaded[k]=true);setSaved("Demo · not saved");demoBanner();render()}
-function demoBanner(){$("#banner").innerHTML=`<div class="banner" style="display:flex;flex-direction:column;gap:8px"><span><b>Demo with ${demoKind==="blank"?"a blank budget":"made-up numbers"}.</b> Try anything. Nothing is saved, and reloading starts over.</span>
+  demoKind=kind;demoDirty=false;clearDemoStore();demoReady()}
+/* Bring back what this visitor added earlier in this browser, or start from def ("blank" or "sample"). */
+function demoStart(def){let o=null;try{const r=localStorage.getItem(DEMO_KEY);o=r?JSON.parse(r):null}catch(e){demoStore=false}
+  if(o&&o.v===1&&o.S&&o.S.settings&&o.S.expenses){S=o.S;demoKind=o.kind==="blank"?"blank":"sample";demoDirty=!!o.dirty;demoReady()}else loadDemo(def)}
+function demoBanner(){$("#banner").innerHTML=`<div class="banner" style="display:flex;flex-direction:column;gap:8px"><span><b>Demo with ${demoKind==="blank"?"a blank budget":"made-up numbers"}.</b> Try anything. ${demoStore?"What you add is kept in this browser only, and Start blank or Load sample clears it.":"Nothing is saved, and reloading starts over."}</span>
   ${sample?"":`<span class="tiny">Reading PDFs and screenshots, and Get suggestions, work in the Claude version. CSV upload and Excel download work here.</span>`}${demoHosted?"":`<span class="btns"><button type="button" class="btn sm" data-demo="sample" aria-pressed="${demoKind==="sample"}">Load sample data</button><button type="button" class="btn sm" data-demo="blank" aria-pressed="${demoKind==="blank"}">Start blank</button><button type="button" class="btn ghost sm" data-demo="help">Help and how to build your own</button></span>`}</div>`}
 /* Hook for a guide page that shows this demo in a frame and has its own Start blank / Load sample buttons. */
-if(DEMO)window.BBDemo={load:k=>loadDemo(k==="blank"?"blank":"sample"),hasChanges:()=>demoDirty,hosted:()=>{demoHosted=true;demoBanner()}};
+if(DEMO)window.BBDemo={load:k=>loadDemo(k==="blank"?"blank":"sample"),start:d=>demoStart(d==="sample"?"sample":"blank"),hasChanges:()=>demoDirty,hosted:()=>{demoHosted=true;demoBanner()}};
 
 /* ---------- boot ---------- */
 render();
 (async()=>{
   const c=window.claude;
-  if(DEMO){loadDemo("sample");if(c&&c.use){const [s,dl]=await Promise.all([c.use("sample"),c.use("downloads")]);sample=s;downloads=dl;if(sample&&sample.limits)sample.limits().then(l=>{imgCaps=l&&l.images||null;render()}).catch(()=>{})}return}
+  if(DEMO){demoStart("sample");if(c&&c.use){const [s,dl]=await Promise.all([c.use("sample"),c.use("downloads")]);sample=s;downloads=dl;if(sample&&sample.limits)sample.limits().then(l=>{imgCaps=l&&l.images||null;render()}).catch(()=>{})}return}
   if(!c||!c.use){booting=false;$("#banner").innerHTML=`<div class="banner">Saving isn't available here. Open this page in Claude to see your data.</div>`;render();return}
   const [d,u,s,dl]=await Promise.all([c.use("db"),c.use("user"),c.use("sample"),c.use("downloads")]);
   db=d;sample=s;downloads=dl;
