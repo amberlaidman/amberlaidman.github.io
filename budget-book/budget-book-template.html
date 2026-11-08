@@ -83,7 +83,9 @@ details.group>summary{cursor:pointer}
 .list{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-top:1px solid var(--line)}
 .item:first-child{border-top:0}
-.item .main{flex:1;min-width:0;text-align:left;border:0;background:none;padding:0}
+.item .main{display:block;width:100%;min-width:0;text-align:left;border:0;background:none;padding:0}
+.item .mainw{flex:1;min-width:0}
+.stsel{font:inherit;font-size:12px;font-weight:500;margin-top:4px;padding:2px 6px;border:1px solid var(--line);border-radius:8px;min-height:28px;max-width:100%}
 .item .nm{font-weight:500;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .item .meta{font-size:12.5px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .item .amt{text-align:right;font-weight:500;white-space:nowrap}
@@ -162,7 +164,7 @@ button.cal-d{cursor:pointer}
 <div class="wrap">
   <header class="top">
     <div class="bar">
-      <div class="brand" style="min-width:0"><h1 style="white-space:nowrap">Budget Book</h1><small><span title="Page version" id="build">v35 · Nov 7, 2026</span> · <span id="savedState">Private to you</span></small></div>
+      <div class="brand" style="min-width:0"><h1 style="white-space:nowrap">Budget Book</h1><small><span title="Page version" id="build">v36 · Nov 7, 2026</span> · <span id="savedState">Private to you</span></small></div>
       <div class="row">
         <button type="button" class="iconbtn" id="helpBtn" aria-label="Help"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg></button>
         <button type="button" class="iconbtn" id="themeBtn" aria-label="Theme: Auto. Tap to change"></button>
@@ -391,7 +393,8 @@ function rExpenses(){
 function rItem(i,pm){
   const on=counts(i)||i.status==="active"||i.status==="deciding";const canSwitch=["active","deciding","paused"].includes(i.status);
   const meta=[cadLabel(i.cad), shareLabel(i), i.dueDay&&!isNonMonthly(i)?"due the "+ord(i.dueDay):"", isNonMonthly(i)?(i.cat==="shared"&&SPL().on?"included in what you send "+PN():i.due?(dueNow(i)?"due this month":"next due "+nextDue(i)):""):"", isNonMonthly(i)&&i.amount&&shr(i)>0&&counts(i)&&!(i.cat==="shared"&&SPL().on)?"set aside "+money(mineM(i))+"/mo":"", i.ends||""].filter(Boolean).join(" · ");
-  const st=i.status!=="active"?`<span class="chip st-${i.status}">${STATUS[i.status][0]}</span>`:"";
+  const st=i.status!=="active"&&adjust?`<span class="chip st-${i.status}">${STATUS[i.status][0]}</span>`:"";
+  const stSel=i.status!=="active"&&!adjust?`<select class="stsel st-${i.status}" data-act="exp-status" data-id="${esc(i.id)}" aria-label="Status of ${esc(i.name)}">${Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${k===i.status?"selected":""}>${v[0]}</option>`).join("")}</select>`:"";
   const amt=i.amount==null?`<span class="faint">TBD</span>`:(shr(i)===0?`<span class="faint">${money(0)}</span><small>${esc(PN())}: ${money(monthly(i))}</small>`:`${money(mineM(i))}${mult(i.cad)!==12?`<small>${money(i.amount*shr(i)/100)} per bill</small>`:""}`);
   const paid=!adjust&&counts(i)&&shr(i)>0&&i.amount>0&&dueNow(i)?`<input type="checkbox" class="paid" data-act="exp-paid" data-id="${esc(i.id)}" ${pm&&pm.paid&&pm.paid[i.id]?"checked":""} aria-label="Paid this month: ${esc(i.name)}">`:`<span style="width:24px;flex:none"></span>`;
   const sw=canSwitch?`<label class="sw"><input type="checkbox" data-act="${adjust?"adj-toggle":"exp-toggle"}" data-id="${esc(i.id)}" ${i.status!=="paused"?"checked":""} aria-label="Count ${esc(i.name)} in totals"><span></span></label>`:`<span style="width:38px;flex:none"></span>`;
@@ -400,7 +403,7 @@ function rItem(i,pm){
     ex=`<div class="adjx"><div class="field" style="grid-column:1/-1"><label for="adjA_${esc(i.id)}">Amount per bill: <b class="num" id="adjAv_${esc(i.id)}">${money(i.amount)}</b></label><input type="range" id="adjA_${esc(i.id)}" min="0" max="${max}" step="${max>500?5:1}" value="${i.amount||0}" data-act="adj-amt" data-id="${esc(i.id)}"></div>
     <div class="field"><label for="adjC_${esc(i.id)}">How often</label><select id="adjC_${esc(i.id)}" data-act="adj-cad" data-id="${esc(i.id)}">${CADS.map(c=>`<option value="${c[0]}" ${c[0]===i.cad?"selected":""}>${c[1]}</option>`).join("")}</select></div>
     <div class="field"><label>Your monthly</label><b class="num" id="adjM_${esc(i.id)}">${money(mineM(i))}</b></div></div>`}
-  return `<div><div class="item ${on&&i.status!=="paused"?"":"off"}">${paid}<button type="button" class="main" data-act="${adjust?"adj-open":"exp-edit"}" data-id="${esc(i.id)}"><div class="nm">${esc(i.name)} ${st}</div><div class="meta">${esc(meta)}</div></button><div class="amt">${amt}</div>${sw}</div>${ex}</div>`;
+  return `<div><div class="item ${on&&i.status!=="paused"?"":"off"}">${paid}<div class="mainw"><button type="button" class="main" data-act="${adjust?"adj-open":"exp-edit"}" data-id="${esc(i.id)}"><div class="nm">${esc(i.name)} ${st}</div><div class="meta">${esc(meta)}</div></button>${stSel}</div><div class="amt">${amt}</div>${sw}</div>${ex}</div>`;
 }
 const ord=n=>n+(n%100>=11&&n%100<=13?"th":["th","st","nd","rd"][n%10]||"th");
 const dueIn=(it,mn)=>{if(!isNonMonthly(it))return true;if(!it.due)return false;const per=12/mult(it.cad);return per>=1&&(((mn-it.due)%per)+per)%per===0};
@@ -1038,6 +1041,7 @@ V.addEventListener("click",e=>{
 V.addEventListener("change",async e=>{
   const el=e.target.closest("[data-act]");if(!el)return;const a=el.dataset.act,id=el.dataset.id;
   switch(a){
+    case"exp-status":{const it=E().find(x=>x.id===id);if(!it||!STATUS[el.value])break;it.status=el.value;delete it._was;save("expenses");render();toast(it.name+": "+STATUS[it.status][0]);break}
     case"exp-toggle":{const it=E().find(x=>x.id===id);if(!it)break;if(!el.checked){it._was=it.status;it.status="paused"}else{it.status=it._was&&it._was!=="paused"?it._was:"active";delete it._was}save("expenses");render();toast(el.checked?it.name+" counted again":it.name+" paused");break}
     case"adj-toggle":{const it=adjust.items.find(x=>x.id===id);it.status=el.checked?"active":"paused";render();break}
     case"adj-cad":{const it=adjust.items.find(x=>x.id===id);it.cad=el.value;render();break}
