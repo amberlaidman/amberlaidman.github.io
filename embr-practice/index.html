@@ -142,8 +142,10 @@ body.drawer-open .board{grid-template-columns:1fr}
 .drawer-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
 .drawer h2{margin:0;font-size:18px}
 .price-list{list-style:none;margin:8px 0 0;padding:0}
-.price-list li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line)}
-.price-list .p{font-weight:600;text-align:right}
+.price-list li{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:9px 0;border-bottom:1px solid var(--line)}
+.price-list .nm{flex:1 1 auto;min-width:0}
+.price-list .p{flex:0 0 6.5rem;font-weight:600;font-size:15px;line-height:1.35;text-align:right}
+.price-list .p .unit{font-weight:400;margin-top:0}
 .price-list small{display:block;color:var(--muted);font-weight:400;font-size:14px;line-height:1.4;margin-top:2px}
 .team{margin:16px 0 0;padding:12px 14px;background:#f6f0ea;border-left:3px solid var(--accent)}
 .team h3{margin:0 0 4px;font-size:14px}
@@ -326,7 +328,9 @@ function clock(){
 (function buildPrices(){
   var html = '';
   SERVICES.forEach(function(s){
-    html += '<li><span>' + esc(s.n) + (s.d ? '<small>' + esc(s.d) + '</small>' : '') + (s.note ? '<small>' + esc(s.note) + '</small>' : '') + '</span><span class="p">' + esc(s.p) + '</span></li>';
+    var cut = s.p.indexOf(' per ');
+    var price = cut > -1 ? esc(s.p.slice(0, cut)) + '<small class="unit">' + esc(s.p.slice(cut + 1)) + '</small>' : esc(s.p);
+    html += '<li><span class="nm">' + esc(s.n) + (s.d ? '<small>' + esc(s.d) + '</small>' : '') + (s.note ? '<small>' + esc(s.note) + '</small>' : '') + '</span><span class="p">' + price + '</span></li>';
   });
   document.getElementById('priceList').innerHTML = html;
 })();
