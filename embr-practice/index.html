@@ -54,8 +54,8 @@ input[type=checkbox],input[type=radio]{width:24px;height:24px;margin:0;accent-co
 .nav-btn:focus-visible{outline-color:#fff;outline-offset:-3px}
 
 .main{min-width:0;display:flex;flex-direction:column}
-.banner{background:var(--notice);border-bottom:1px solid var(--notice-line);padding:8px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:13px}
-.banner .btn{margin-left:auto;padding:4px 10px;font-size:13px}
+.banner{background:var(--notice);border-bottom:1px solid var(--notice-line);padding:8px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:14px}
+.banner .btn{margin-left:auto;padding:4px 10px;font-size:14px}
 .topbar{display:flex;align-items:center;gap:10px;padding:18px 24px 10px;flex-wrap:wrap}
 .topbar h1{margin:0 auto 0 0;font-size:22px;font-weight:600;text-wrap:balance}
 #view{padding:6px 24px 48px;outline:none;flex:1}
@@ -77,14 +77,14 @@ input[type=checkbox],input[type=radio]{width:24px;height:24px;margin:0;accent-co
 .lead{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:10px 12px;margin-bottom:8px;cursor:pointer;font:inherit;color:inherit}
 .lead:hover{border-color:var(--accent)}
 .lead-name{display:block;font-weight:600}
-.lead-svc{display:block;color:var(--muted);font-size:13px}
-.empty{color:var(--muted);font-size:13px;margin:4px 2px}
+.lead-svc{display:block;color:var(--muted);font-size:14px}
+.empty{color:var(--muted);font-size:14px;margin:4px 2px}
 
 /* Tables */
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
-th{font-size:13px;color:var(--muted);font-weight:600;background:#f7f3ef}
+th{font-size:14px;color:var(--muted);font-weight:600;background:#f7f3ef}
 tr.done td.task-name{text-decoration:line-through;color:var(--muted)}
 .badge{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:2px;white-space:nowrap}
 .b0{background:var(--new-bg);color:var(--new-ink)}
@@ -101,36 +101,36 @@ tr.done td.task-name{text-decoration:line-through;color:var(--muted)}
 .rec-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
 .rec-head h2{font-size:21px;margin:0}
 .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;margin-bottom:18px}
-.field label,.field .lbl{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.field label,.field .lbl{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
 .field input,.field select,.field textarea,textarea.notes{width:100%;font:inherit;padding:7px 9px;border:1px solid var(--field-border);border-radius:3px;background:#fff;color:var(--ink)}
 .field input[aria-invalid="true"],.field select[aria-invalid="true"],.composer textarea[aria-invalid="true"]{border:2px solid var(--danger)}
 textarea.notes{min-height:220px;line-height:1.65;resize:vertical}
-.hint{color:var(--muted);font-size:13px;margin:0 0 8px}
+.hint{color:var(--muted);font-size:14px;margin:0 0 8px}
 .task-list{list-style:none;margin:0 0 14px;padding:0}
 .task-list li{padding:8px 0;border-bottom:1px solid var(--line)}
-.task-list .due{display:block;color:var(--muted);font-size:13px}
+.task-list .due{display:block;color:var(--muted);font-size:14px}
 .stack{display:flex;flex-direction:column;gap:10px}
-.err{color:var(--danger);font-size:13px;margin:0}
+.err{color:var(--danger);font-size:14px;margin:0}
 
 /* Inbox */
 .inbox{display:grid;grid-template-columns:250px minmax(0,1fr) 250px;gap:16px;align-items:start}
 .convos{background:var(--surface);border:1px solid var(--line)}
 .convo{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;padding:10px 12px;cursor:pointer;color:inherit}
 .convo[aria-current="true"]{background:#f8e8dc;box-shadow:inset 3px 0 0 var(--accent)}
-.convo .snip{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.convo .snip{display:block;color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .thread{min-height:220px;max-height:340px;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:#faf7f4;border:1px solid var(--line);border-bottom:0}
 .thread .none{color:var(--muted);margin:auto;text-align:center}
 .msg{align-self:flex-end;max-width:82%;background:#f6dfd0;border:1px solid #e3bfa8;padding:8px 10px;border-radius:3px;white-space:pre-wrap;overflow-wrap:anywhere}
 .msg .meta{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}
 .composer{background:var(--surface);border:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:10px}
 .radios{display:flex;gap:8px 20px;align-items:center;flex-wrap:wrap}
-.radios .lbl{font-size:13px;font-weight:600}
+.radios .lbl{font-size:14px;font-weight:600}
 .radios label{display:inline-flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}
-.composer .lbl{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.composer .lbl{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
 .composer textarea,.composer input[type=text]{width:100%;font:inherit;padding:7px 9px;border:1px solid var(--field-border);border-radius:3px}
 .composer textarea{min-height:84px;resize:vertical}
 .side-details dl{margin:0 0 12px}
-.side-details dt{font-size:13px;color:var(--muted)}
+.side-details dt{font-size:14px;color:var(--muted)}
 .side-details dd{margin:0 0 8px;overflow-wrap:anywhere}
 
 /* Services side panel */
