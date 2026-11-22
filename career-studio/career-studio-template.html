@@ -536,7 +536,7 @@ button,.btn{border-radius:6px}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.4.4 · Updated October 25, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.4.5 · Updated November 22, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -805,15 +805,18 @@ button,.btn{border-radius:6px}
     const retryLater = Object.values(lastTry).map(s => ({ question:s.question, type:s.type || "behavioral", average:overallOf(s), daysAgo:Math.floor((now - Date.parse(s.at)) / 86400000) }))
       .filter(x => typeof x.average === "number" && x.average < 2 && x.daysAgo >= 3).sort((a,b) => a.average - b.average).slice(0,5)
       .map(x => Object.assign(x, {average: Math.round(x.average*100)/100}));
+    // True if either of the last 2 sessions repeated an earlier question, so a retry comes up at most once every three sessions.
+    const seenQ = new Set(); let retriedRecently = false;
+    chron.forEach((s, i) => { if (s.type === "intro" || !s.question) return; const q = String(s.question).trim().toLowerCase(); if (i >= chron.length - 2 && seenQ.has(q)) retriedRecently = true; seenQ.add(q); });
     const storyUse = {}; for (const st of S.stories) storyUse[st.id] = 0; for (const s of chron) if (s.storyId && s.storyId in storyUse) storyUse[s.storyId]++;
-    return { sessions: chron.length, behavioralSessions: beh.length, hypotheticalSessions: hyp.length, introSessions: intro.length, criteria, hypoCriteria, introCriteria, recentQuestions: chron.slice(-10).map(s => s.question), recentTypes: chron.slice(-5).map(s => s.type || "behavioral"), storyUse, retryLater };
+    return { sessions: chron.length, behavioralSessions: beh.length, hypotheticalSessions: hyp.length, introSessions: intro.length, criteria, hypoCriteria, introCriteria, recentQuestions: chron.slice(-10).map(s => s.question), recentTypes: chron.slice(-5).map(s => s.type || "behavioral"), storyUse, retryLater, retriedRecently };
   }
 
   /* ---------- Claude tools (page functions Claude may call) ---------- */
   const say = (id, t) => { $(id).textContent = t; };
   function makeTools(statusId){
     return [
-      { name:"get_progress", description:"Returns {{NAME}}'s practice history: number of sessions, average score (1 to 3) per rubric criterion for all time, the last 5 sessions and the 5 before that, the questions from their last 10 sessions, how many times each story id has been used, and retryLater: questions they averaged under 2 on at least 3 days ago and haven't tried since. Call this first.",
+      { name:"get_progress", description:"Returns {{NAME}}'s practice history: number of sessions, average score (1 to 3) per rubric criterion for all time, the last 5 sessions and the 5 before that, the questions from their last 10 sessions, how many times each story id has been used, and retryLater: questions they averaged under 2 on at least 3 days ago and haven't tried since, and retriedRecently: true if either of their last 2 sessions repeated an earlier question. Call this first.",
         execute(){ say(statusId, "Checking your progress…"); return progressSummary(); } },
       { name:"list_stories", description:"Returns every story in their bank as {id, title, company, useFor}. Use it to see which stories could answer a question.",
         execute(){ say(statusId, "Looking through your stories…"); return S.stories.map(s => ({id:s.id, title:s.title, company:s.company, useFor:s.useFor, themes:s.themes || {}})); } },
@@ -847,7 +850,7 @@ button,.btn{border-radius:6px}
     const prompt = [
       "You are coaching {{NAME}}, {{ABOUT}}, through behavioral interview practice in STAR-R format (Situation, Task, Action, Result, Reflection).",
       "Choose their next practice question. Use the tools: call get_progress first, then list_stories, and list_questions if useful. Read a story with get_story only if you need to check it fits.",
-      "Prefer a question that targets the rubric area where their recent average is lowest, and that gives practice with stories they have used least, favoring recent work. You may use a question from their bank or write a new behavioral question in the same style. Never repeat a question from their last 3 sessions. If they have no sessions yet, start with a question one of their strongest recent stories answers well. If one of their low-scoring questions from at least 3 days ago is listed in retryLater, you may bring it back so they can try it again. Say so in \"why\", for example: \"You found this one hard last week, so it's worth another try.\"",
+      "Prefer a question that targets the rubric area where their recent average is lowest, and that gives practice with stories they have used least, favoring recent work. You may use a question from their bank or write a new behavioral question in the same style. Never repeat a question from their last 3 sessions. If they have no sessions yet, start with a question one of their strongest recent stories answers well. If retryLater lists any questions and retriedRecently is false, bring back the first one in retryLater (their lowest score) so they can try it again, and say so in \"why\", for example: \"You found this one hard last week, so it's worth another try.\" If retriedRecently is true, choose as usual.",
       "Rubric areas (keys): " + RUBRIC.map(r => `${r.key} = ${r.hint}`).join(" | "),
       "Mix in hypothetical \"how would you\" questions (type hypothetical) about one time in four, more often if they have few hypothetical sessions. They're scored on: " + HYPO.map(r => r.label).join(", ") + ". Behavioral questions should also cover themes their stories show weakly, including failure and conflict.",
       companyOf() ? companyContext(companyOf()) + ` Choose a question that tests one of ${companyOf().name}'s values, using one from this list or one in the same style: ${JSON.stringify(companyOf().questions || [])}. Mention the value in "why".` : "",
