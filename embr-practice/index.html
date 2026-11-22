@@ -86,6 +86,8 @@ table{width:100%;border-collapse:collapse;background:var(--surface);border:1px s
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
 th{font-size:14px;color:var(--muted);font-weight:600;background:#f7f3ef}
 tr.done td.task-name{text-decoration:line-through;color:var(--muted)}
+td.chk{padding:0 0 0 2px;width:48px}
+.chk-lbl{display:flex;align-items:center;justify-content:center;width:44px;height:44px;cursor:pointer}
 .badge{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:2px;white-space:nowrap}
 .b0{background:var(--new-bg);color:var(--new-ink)}
 .b1{background:var(--booked-bg);color:var(--booked-ink)}
@@ -136,7 +138,7 @@ textarea.notes{min-height:220px;line-height:1.65;resize:vertical}
 /* Services side panel */
 body.drawer-open .main{margin-right:380px}
 body.drawer-open .record,body.drawer-open .inbox{grid-template-columns:1fr}
-body.drawer-open .board{grid-template-columns:1fr}
+@media (max-width:1199px){body.drawer-open .board{grid-template-columns:1fr}}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(380px,100%);background:#fff;border-left:1px solid var(--field-border);box-shadow:-6px 0 18px rgba(20,35,50,.16);padding:18px 20px 28px;overflow:auto;z-index:20}
 .drawer[hidden]{display:none}
 .drawer-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
@@ -394,7 +396,7 @@ function renderTasks(){
   if (!state.tasks.length) return '<p class="empty">No tasks yet. Add a follow-up task from a contact record.</p>';
   var rows = state.tasks.map(function(t){
     var c = byId(t.contactId);
-    return '<tr class="' + (t.done ? 'done' : '') + '"><td><input type="checkbox" data-done="' + t.id + '"' + (t.done ? ' checked' : '') + ' aria-label="Mark ' + esc(t.name) + (c ? ' for ' + esc(c.name) : '') + ' done"></td><td class="task-name">' + esc(t.name) + '</td><td>' + (c ? '<button type="button" class="link" data-open="' + c.id + '">' + esc(c.name) + '</button>' : '') + '</td><td>' + esc(dueText(t)) + '</td></tr>';
+    return '<tr class="' + (t.done ? 'done' : '') + '"><td class="chk"><label class="chk-lbl"><input type="checkbox" data-done="' + t.id + '"' + (t.done ? ' checked' : '') + ' aria-label="Mark ' + esc(t.name) + (c ? ' for ' + esc(c.name) : '') + ' done"></label></td><td class="task-name">' + esc(t.name) + '</td><td>' + (c ? '<button type="button" class="link" data-open="' + c.id + '">' + esc(c.name) + '</button>' : '') + '</td><td>' + esc(dueText(t)) + '</td></tr>';
   }).join('');
   return '<div class="table-wrap"><table><thead><tr><th scope="col">Done</th><th scope="col">Task</th><th scope="col">Contact</th><th scope="col">Due</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
 }
