@@ -1,0 +1,94 @@
+/* ============ DESIGN RECORD (Lab project panels) ============ */
+.design-record {
+  max-width: 860px;
+  margin: 56px 0 0;
+  padding-top: 32px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.design-record-heading {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: var(--teal);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+.design-record-intro { font-size: 16px; line-height: 1.6; color: var(--grey-body); max-width: 62ch; margin: 0 0 8px; }
+.design-record-meta { font-size: 14px; line-height: 1.5; color: var(--grey-body); margin: 0 0 24px; }
+
+.record-section { border-top: 1px solid rgba(0,0,0,0.12); }
+.record-section:last-of-type { border-bottom: 1px solid rgba(0,0,0,0.12); }
+.record-section > summary {
+  display: block;
+  position: relative;
+  min-height: 48px;
+  padding: 16px 40px 16px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.record-section > summary::-webkit-details-marker { display: none; }
+.record-section > summary::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  right: 8px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid var(--teal);
+  border-bottom: 2px solid var(--teal);
+  transform: rotate(45deg);
+}
+.record-section[open] > summary::after { top: 28px; transform: rotate(-135deg); }
+.record-section > summary:hover .record-title { color: var(--teal-deep); }
+.record-section > summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+.record-title { display: block; font-size: 20px; font-weight: 500; letter-spacing: -0.01em; color: var(--black); }
+.record-sub { display: block; font-size: 15px; line-height: 1.5; color: var(--grey-body); margin-top: 2px; }
+.record-body { padding: 4px 0 28px; }
+.record-body > p { font-size: 15px; line-height: 1.6; color: var(--grey-body); max-width: 62ch; margin: 0 0 16px; }
+
+.record-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.55; color: var(--grey-body); }
+.record-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.record-table th, .record-table td { text-align: left; vertical-align: top; padding: 12px 16px 12px 0; border-bottom: 1px dashed rgba(0,0,0,0.18); }
+.record-table thead th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal-deep);
+  font-weight: 500;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+.record-table tbody th { font-weight: 500; color: var(--black); width: 17%; }
+.record-table td:last-child { padding-right: 0; }
+.basis {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1.3;
+  padding: 5px 10px;
+  color: var(--teal-deep);
+  background: rgba(61,107,122,0.12);
+  border-radius: 999px;
+}
+.basis-note { display: block; margin-top: 6px; font-size: 14px; line-height: 1.5; }
+
+/* Phone and small tablet: each row becomes a labeled block */
+@media (max-width: 768px) {
+  .design-record { margin-top: 40px; }
+  .record-table, .record-table tbody, .record-table tr, .record-table th, .record-table td { display: block; width: auto; }
+  .record-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .record-table tbody tr { padding: 14px 0; border-bottom: 1px dashed rgba(0,0,0,0.18); }
+  .record-table th, .record-table td { padding: 0 0 8px; border-bottom: none; }
+  .record-table tbody th { width: auto; font-size: 17px; padding-bottom: 6px; }
+  .record-table td:last-child { padding-bottom: 0; }
+  .record-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 2px;
+  }
+}

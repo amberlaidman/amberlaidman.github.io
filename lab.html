@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="design-record.css">
 <style>
 /* ============================================================
    LAB PAGE — Option C: grouped sidebar layout
@@ -231,6 +232,9 @@
           <li role="presentation">
             <button class="lab-tab" role="tab" aria-selected="false" data-panel="open-sky">Open Sky</button>
           </li>
+          <li role="presentation">
+            <button class="lab-tab" role="tab" aria-selected="false" data-panel="embr">EMBR Medical Spa</button>
+          </li>
         </ul>
       </div>
 
@@ -267,6 +271,7 @@
             <option value="menstrual-cycle" selected>Understanding Your Cycle</option>
             <option value="autonomous-vehicle">Riding with No Driver</option>
             <option value="open-sky">Open Sky</option>
+            <option value="embr">EMBR Medical Spa</option>
           </optgroup>
           <optgroup label="Thinking">
             <option value="feedback">Feedback</option>
@@ -371,6 +376,207 @@
         <div class="project-cta">
           <a href="https://amberlaidman.github.io/opensky/" target="_blank" rel="noopener" class="project-cta-link">Take the quiz <span aria-hidden="true">→</span><span class="sr-only">(opens in new window)</span></a>
         </div>
+      </div>
+
+      <!-- EMBR Medical Spa: Inquiry Intake panel -->
+      <div class="project-panel" data-panel="embr" role="tabpanel" hidden>
+        <div class="project-header">
+          <div class="project-status">
+            <span class="status-dot"></span>
+            <span class="status-text">IN TESTING · NOV 2026</span>
+          </div>
+          <h3 class="project-title">EMBR Medical Spa: Inquiry Intake</h3>
+          <p class="project-description">My entry in the November 2026 eLearning Design Challenge from The eLearning Designer's Academy, sponsored by Mindsmith, is EMBR Medical Spa: Inquiry Intake, which is for client care coordinators at a made-up medical spa. In the lesson, New-Client Calls, the employee first follows a guided walkthrough with a caller named Taylor Brooks in a CRM that I built, and then takes a role play call from a second caller, Morgan Ellis, while an AI coach checks both what is said and what is entered in the CRM.</p>
+          <p class="project-description">The role play focuses on four habits that a new coordinator is likely to skip under pressure. These are answering the price question with context and then asking what made the caller start thinking about the treatment, handing clinical questions to the provider, writing call notes that another coordinator could use, and agreeing on a consultation day and time before confirming it in writing.</p>
+          <p class="project-description">I chose this task because I worked in sales before, and I know how much it matters for people to understand the tools they use with clients. At a medical spa the first call also brings in health related information, so I wanted learners to work through recommending a service to a caller who is hesitant or does not know much about it.</p>
+        </div>
+
+        <div class="project-preview">
+          <div class="preview-label">Course banner</div>
+          <img src="images/embr-preview.png" alt="Banner for New-Client Calls, a training lesson from EMBR Medical Spa. It shows the EMBR wordmark, the label Medical Spa Training, the title New-Client Calls, and the subtitle A CRM software walkthrough and role play with an AI coach, built in Mindsmith. On the right is a tilted screenshot of the practice CRM contact record for Taylor Brooks, showing phone, email, four intake fields and a call notes box." class="preview-image">
+        </div>
+
+        <div class="project-section project-section-single">
+          <h4>What's on my mind</h4>
+          <ul>
+            <li><strong>Whether the hard moments feel real.</strong> The difficult moments in Morgan's call come from published advice for medical spa front desks and from my own judgment, and no working coordinator has told me which of them feel real to someone who does the job.</li>
+            <li><strong>Where the coordinator stops.</strong> The course has the coordinator hand clinical questions to the provider, but what non-clinical staff may say about treatments differs from state to state and I did not find a source that lays it out, so this is practice in handing the question over and not legal guidance.</li>
+            <li><strong>The word intake.</strong> In EMBR, intake means the fields a coordinator fills in on an inquiry, while at many medical spas the same word means the patient's medical forms, and I have not asked a working coordinator which meaning they would expect.</li>
+          </ul>
+        </div>
+
+        <div class="project-cta">
+          <p class="project-description">Everything about EMBR is fictional, every name, number and price in the practice CRM is made up, and nothing you enter is saved or sent. The course needs a desktop or laptop computer and shares your screen with the coach. The role play records the session, so when your browser asks what to share, choose only the practice tab.</p>
+          <a href="https://app.mindsmith.ai/course/cmw5t5ohn00mp09l58etf3jxe/preview" target="_blank" rel="noopener" class="project-cta-link">Try the course (review link) <span aria-hidden="true">→</span><span class="sr-only">(opens in new window)</span></a>
+        </div>
+
+        <section class="design-record" aria-labelledby="embr-design-record-heading">
+          <h4 id="embr-design-record-heading" class="design-record-heading">Design record</h4>
+          <p class="design-record-intro">This course is for a made-up company, so there is no client and there are no learner data. Each finding below is labeled with how I know it.</p>
+          <p class="design-record-meta">Last updated November 24, 2026</p>
+
+          <details class="record-section">
+            <summary>
+              <span class="record-title">Needs analysis</span>
+              <span class="record-sub">What I found, and how I know it</span>
+            </summary>
+            <div class="record-body">
+              <table class="record-table" role="table">
+                <caption>Needs analysis for the EMBR course</caption>
+                <thead role="rowgroup"><tr role="row">
+                  <th scope="col" role="columnheader">Question</th>
+                  <th scope="col" role="columnheader">What I found</th>
+                  <th scope="col" role="columnheader">Basis</th>
+                </tr></thead>
+                <tbody role="rowgroup">
+                  <tr role="row">
+                    <th scope="row" role="rowheader">What is the gap?</th>
+                    <td role="cell" data-label="What I found">The information gathered on a first call is what carries the next step forward, some of it is health related, and the hard part is recommending a service to a caller who is hesitant or does not know much about it. I also think it matters a great deal that people understand the tools they use with clients.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">My observation</span><span class="basis-note">From my own sales work.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Who is it for?</th>
+                    <td role="cell" data-label="What I found">New client care coordinators at a made-up medical spa, some brand new to the work and some who have used a CRM before and are new to this one.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Inference</span><span class="basis-note">I assumed this audience. No coordinators were interviewed.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Are the habits real?</th>
+                    <td role="cell" data-label="What I found">The habits come from published advice for medical spa front desks, such as not quoting a price with no questions and leaving medical advice to the provider. I chose the checks from a longer list of likely mistakes.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Published advice</span><span class="basis-note">Vendor, trade, training and law firm pages. No independent studies, and none from working coordinators.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Is training the answer?</th>
+                    <td role="cell" data-label="What I found">Practice with feedback seems to fit a call that has to go well under pressure, since the role play lets a learner do the work and see where it slips. I did not test that, because there is no performance data or baseline for a made-up company.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Inference</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">What I couldn't find</th>
+                    <td role="cell" data-label="What I found">A working coordinator who confirmed that these habits and words match real calls, a source on what non-clinical staff may say about treatments in each state, an independent study of when to give a price on a first call, and a benchmark for what good call notes look like.</td>
+                    <td role="cell" data-label="Basis"><span class="basis">Not found</span><span class="basis-note">Limited searching, so I cannot rule them out.</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="record-section">
+            <summary>
+              <span class="record-title">Discovery</span>
+              <span class="record-sub">The decisions I made, and what I set aside</span>
+            </summary>
+            <div class="record-body">
+              <p>These are decisions I made while building, with the option I set aside each time.</p>
+              <table class="record-table" role="table">
+                <caption>Design decision log for the EMBR course</caption>
+                <thead role="rowgroup"><tr role="row">
+                  <th scope="col" role="columnheader">Decision</th>
+                  <th scope="col" role="columnheader">Started with</th>
+                  <th scope="col" role="columnheader">Chose</th>
+                  <th scope="col" role="columnheader">Option I didn't take, and why</th>
+                </tr></thead>
+                <tbody role="rowgroup">
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Lesson format</th>
+                    <td role="cell" data-label="Started with">A standalone Conversation lesson</td>
+                    <td role="cell" data-label="Chose">A regular lesson with a Walkthrough tile and a Role Play tile</td>
+                    <td role="cell" data-label="Option I didn't take, and why">The standalone Conversation lesson, because it holds only one tile.</td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">The CRM</th>
+                    <td role="cell" data-label="Started with">A well-known CRM tool that I have used in past roles</td>
+                    <td role="cell" data-label="Chose">A practice CRM that I built</td>
+                    <td role="cell" data-label="Option I didn't take, and why">A known CRM, because I wanted to customize the intake for a medical spa and work out what a place like that needs in the process.</td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Price timing</th>
+                    <td role="cell" data-label="Started with">Asking questions before giving the price</td>
+                    <td role="cell" data-label="Chose">Answering the price question with context, then asking what made the caller start thinking about the treatment</td>
+                    <td role="cell" data-label="Option I didn't take, and why">Asking first. The published advice splits three ways and none of it is independent research, so I kept the order that matches the lesson's first goal and still has the coordinator ask questions right after the price.</td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Evidence of learning</th>
+                    <td role="cell" data-label="Started with">The role play scorecard and an ungraded reflection page</td>
+                    <td role="cell" data-label="Chose">The same, with no separate quiz</td>
+                    <td role="cell" data-label="Option I didn't take, and why">A quiz after the role play, because the challenge asks for practice of a real task in a small scope, and a new graded item late in the build would have needed a retest.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="record-section">
+            <summary>
+              <span class="record-title">Who did what</span>
+              <span class="record-sub">What Claude drafted and what I decided</span>
+            </summary>
+            <div class="record-body">
+              <p>I used this project to test what AI can do in a build like this as well. I primarily used the AI credits supplied through the challenge to build and edit the course with the Mindsmith agent, and I used Claude to push its abilities further, for the storyboard, brainstorming and research, the code for the practice CRM, some edits in the Mindsmith editor that I approved one at a time, and drafts of many of the coordinator&rsquo;s and Morgan&rsquo;s lines, which I approved or changed. I was involved in every part of the process. I chose the scenario and the company, decided how the CRM and the course pages look, made each decision in the log above, and caught problems in the drafts, such as the word &ldquo;see&rdquo; leaving some learners out, a line that assumed Morgan speaks quickly, and background rings that the page transitions cut off.</p>
+            </div>
+          </details>
+
+          <details class="record-section">
+            <summary>
+              <span class="record-title">Checks and open items</span>
+              <span class="record-sub">What I tested, and what I haven't</span>
+            </summary>
+            <div class="record-body">
+              <p>This is the status as of November 23, 2026. Claude ran the browser checks on my computer in a window set to the width named, so none of them was on a real phone.</p>
+              <table class="record-table" role="table">
+                <caption>Accessibility and release checks for the EMBR course</caption>
+                <thead role="rowgroup"><tr role="row">
+                  <th scope="col" role="columnheader">Check</th>
+                  <th scope="col" role="columnheader">What I found</th>
+                  <th scope="col" role="columnheader">Result</th>
+                </tr></thead>
+                <tbody role="rowgroup">
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Practice CRM at phone width, with extra text spacing</th>
+                    <td role="cell" data-label="What I found">On Leads, Contacts, Tasks, Inbox and a contact record, the page did not scroll sideways and no text was cut off.</td>
+                    <td role="cell" data-label="Result"><span class="basis">Passed</span><span class="basis-note">Window set to 320 px wide, November 21 and 22.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Practice CRM by keyboard</th>
+                    <td role="cell" data-label="What I found">Tab reached every control in reading order on those same screens, each one showed a visible outline, and the Add contact box kept focus inside and closed with Escape.</td>
+                    <td role="cell" data-label="Result"><span class="basis">Passed</span><span class="basis-note">November 22.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Practice CRM text contrast</th>
+                    <td role="cell" data-label="What I found">The lowest text contrast was 5.32 to 1 against a 4.5 to 1 minimum, and field borders measured 4.32 to 1 against a 3 to 1 minimum.</td>
+                    <td role="cell" data-label="Result"><span class="basis">Passed</span><span class="basis-note">November 22.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Mindsmith course by keyboard, pages 1 to 3</th>
+                    <td role="cell" data-label="What I found">Tab reached the controls, Enter flipped the flash cards, no keyboard trap was found, and headings and button names showed in the accessibility tree. Pages 4 to 7 are locked in the preview, so they were not tested by keyboard.</td>
+                    <td role="cell" data-label="Result"><span class="basis">Partly checked</span><span class="basis-note">November 23. Reading the accessibility tree is not a screen reader test.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Mindsmith course at 200% zoom</th>
+                    <td role="cell" data-label="What I found">At a window width equal to 200% zoom, the course page, page 1 and page 2 did not scroll sideways. The Walkthrough and pages 3 to 7 were not checked at that width.</td>
+                    <td role="cell" data-label="Result"><span class="basis">Partly checked</span><span class="basis-note">November 23.</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Screen readers (Narrator and VoiceOver)</th>
+                    <td role="cell" data-label="What I found">Not run on the practice CRM or on the course.</td>
+                    <td role="cell" data-label="Result"><span class="basis">Not checked</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Course link opened signed out</th>
+                    <td role="cell" data-label="What I found">I have not yet opened either course link in a private window to see what a visitor gets.</td>
+                    <td role="cell" data-label="Result"><span class="basis">Not checked</span></td>
+                  </tr>
+                  <tr role="row">
+                    <th scope="row" role="rowheader">Outside learners</th>
+                    <td role="cell" data-label="What I found">No one outside has tried it and given me feedback, and the about 10 minutes for the second practice is my own estimate and has not been timed.</td>
+                    <td role="cell" data-label="Result"><span class="basis">Not checked</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Pages 4 to 7 stay locked until the Walkthrough is done, on purpose, because the order matters. The cost is that someone who cannot share their screen, or whose conversation will not start, cannot reach the role play, the reflection page or the closing page.</p>
+              <p>Nothing here is measured. EMBR is made up, so there is no business measure, no baseline and no learner data, and the answers to the reflection questions on page 6 are not collected on my current Mindsmith plan.</p>
+            </div>
+          </details>
+        </section>
+
       </div>
 
       <!-- Feedback panel -->
