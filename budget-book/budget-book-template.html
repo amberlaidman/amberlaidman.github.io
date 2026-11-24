@@ -165,7 +165,7 @@ button.cal-d{cursor:pointer}
 <div class="wrap">
   <header class="top">
     <div class="bar">
-      <div class="brand" style="min-width:0"><h1 style="white-space:nowrap">Budget Book</h1><small><span title="Page version" id="build">v37 · Nov 7, 2026</span> · <span id="savedState">Private to you</span></small></div>
+      <div class="brand" style="min-width:0"><h1 style="white-space:nowrap">Budget Book</h1><small><span title="Page version" id="build">v38 · Nov 23, 2026</span> · <span id="savedState">Private to you</span></small></div>
       <div class="row">
         <button type="button" class="iconbtn" id="helpBtn" aria-label="Help"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg></button>
         <button type="button" class="iconbtn" id="themeBtn" aria-label="Theme: Auto. Tap to change"></button>
@@ -1178,8 +1178,8 @@ function demoData(kind){
    it("tv2","Second streaming service","personal",9.99,"monthly",25,{status:"deciding",note:"Rarely watched — keep or cancel?"}),
    it("box","Meal kit","personal",60,"monthly",null,{status:"paused",note:"Paused to save money"}),
    it("cloud","Cloud storage","business",2.99,"monthly",15),it("loan","Student loan","education",210,"monthly",28)];
-  d.debt.cards=[{id:"visa",name:"Visa (sample)",balance:2400,apr:24.99,min:60,pay:150,asof:"Sample balance",note:""},
-   {id:"store",name:"Store card (sample)",balance:380,apr:29.99,min:35,pay:80,asof:"Sample balance",note:""},
+  d.debt.cards=[{id:"visa",name:"Card A (sample)",balance:2400,apr:24.99,min:60,pay:150,asof:"Sample balance",note:""},
+   {id:"store",name:"Store card (sample)",balance:380,apr:29.99,min:30,pay:80,asof:"Sample balance",note:""},
    {id:"daily",name:"Everyday card (sample)",balance:640,statement:610,payInFull:true,asof:"Sample balance",note:""}];
   d.salary.years=[[y-6,52000,"Riverside Co","Coordinator"],[y-5,54500,"Riverside Co","Coordinator"],[y-4,61000,"Maple & Finch","Specialist"],[y-3,63500,"Maple & Finch","Specialist"],[y-2,70000,"Northwind Group","Senior Specialist"],[y-1,72800,"Northwind Group","Senior Specialist"]]
    .map(r=>({year:r[0],pay:r[1],employer:r[2],title:r[3],ptype:"salary",jobs:1,taxable:Math.round(r[1]*.93)}));
@@ -1188,15 +1188,15 @@ function demoData(kind){
   s.income=[{id:"pay",name:"Paycheck",amount:1850,cad:"2wk",note:"After taxes"}];
   const dt=n=>{const x=new Date(today.getFullYear(),today.getMonth(),n);return x.toISOString().slice(0,10)};
   s.incomeLog=[{id:"p1",date:dt(1),amount:1850,source:"Paycheck",note:""},...(today.getDate()>=15?[{id:"p2",date:dt(15),amount:1850,source:"Paycheck",note:""}]:[])];
-  s.flexPlan={food:250,groceries:400,shopping:150,gas:140,travel:50,health:60,fun:60,other:40};
+  s.flexPlan={food:250,groceries:380,shopping:150,gas:140,travel:50,health:60,fun:60,other:40};
   s.goals={situation:"Sample: steady job, paid every two weeks.",goals:"Pay off the store card; build a 3-month emergency fund.",keep:"Gym, music streaming",target:300,debt:"avalanche",tone:"direct"};
-  s.savings=[{id:"s1",name:"Emergency fund",target:6000,saved:2150,by:mid(new Date(y+1,5,1))},{id:"s2",name:"Trip",target:1200,saved:300,by:""}];
+  s.savings=[{id:"s1",name:"Emergency fund",target:5000,saved:2150,by:mid(new Date(y+1,5,1))},{id:"s2",name:"Trip",target:1200,saved:300,by:""}];
   const fut=n=>{const x=new Date(today.getFullYear(),today.getMonth(),today.getDate()+n);return{sort:x.toISOString().slice(0,10),when:x.toLocaleDateString("en-US",{month:"short",day:"numeric"})}};
   s.dates=[{id:"d1",label:"Car registration renewal",note:"Sample reminder",...fut(9),done:false},{id:"d2",label:"Review the second streaming service",note:"Keep or cancel",...fut(16),done:false},{id:"d3",label:"Open enrollment for benefits",note:"",...fut(40),done:false},{id:"d4",label:"Dentist cleaning",note:"",...fut(70),done:false}];
   s.rules=[{id:"r1",match:"coffee",bucket:"food"}];
   /* card history: 10 months of made-up spending */
-  const PL={food:[["Corner Cafe",60],["Pizza Place",45],["Taco Spot",38]],groceries:[["Grocery Market",290],["Bulk Club",95]],shopping:[["Online Store",110],["Home Goods",40]],gas:[["Fuel Stop",120],["Car Wash",20]],travel:[["Airline",0],["Hotel",0]],health:[["Pharmacy",35],["Salon",40]],fun:[["Movie Theater",28],["Concert Tickets",0]],other:[["Post Office",12]]};
-  const H={sources:[{id:"demo",name:"Visa (sample)",byMonth:{}}],note:"Made-up sample data.",updated:"Sample"};
+  const PL={food:[["Corner Cafe",60],["Pizza Place",45],["Taco Spot",38]],groceries:[["Grocery Market",290],["Bulk Club",95]],shopping:[["Online Store",105],["Home Goods",40]],gas:[["Fuel Stop",120],["Car Wash",20]],travel:[["Airline",0],["Hotel",0]],health:[["Pharmacy",35],["Salon",40]],fun:[["Movie Theater",28],["Concert Tickets",0]],other:[["Post Office",12]]};
+  const H={sources:[{id:"demo",name:"Card A (sample)",byMonth:{}}],note:"Made-up sample data.",updated:"Sample"};
   let mm=curMonth;const ids=[];for(let k=0;k<10;k++){ids.unshift(mm);mm=prevMonth(mm)}
   ids.forEach((m,ix)=>{let seed=ix*7+3;const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};const bb={},rows=[];
     for(const [b,list] of Object.entries(PL))for(const [n,base] of list){let v=base?base*(0.75+rnd()*0.6):0;if(n==="Airline"&&ix===4)v=340;if(n==="Hotel"&&ix===4)v=410;if(n==="Concert Tickets"&&ix===7)v=120;if(m===cm)v*=Math.min(1,today.getDate()/30);v=Math.round(v*100)/100;if(v>0){bb[b]=Math.round(((bb[b]||0)+v)*100)/100;rows.push([n,b,v])}}
