@@ -216,7 +216,11 @@
       <!-- LIVE -->
       <div class="lab-category-group">
         <div class="lab-category-heading">Live</div>
-        <p class="lab-empty-state">Nothing here yet. Projects move up to Live once they're stable enough to stand on their own without me hovering.</p>
+        <ul class="lab-project-list" role="tablist" aria-label="Live">
+          <li role="presentation">
+            <button class="lab-tab" role="tab" aria-selected="false" data-panel="embr">EMBR Medical Spa</button>
+          </li>
+        </ul>
       </div>
 
       <!-- BUILDING -->
@@ -231,9 +235,6 @@
           </li>
           <li role="presentation">
             <button class="lab-tab" role="tab" aria-selected="false" data-panel="open-sky">Open Sky</button>
-          </li>
-          <li role="presentation">
-            <button class="lab-tab" role="tab" aria-selected="false" data-panel="embr">EMBR Medical Spa</button>
           </li>
         </ul>
       </div>
@@ -267,11 +268,13 @@
       <div class="lab-mobile-selector">
         <label for="lab-project-select">Select a project or journal</label>
         <select id="lab-project-select" aria-label="Select a project or journal">
+          <optgroup label="Live">
+            <option value="embr">EMBR Medical Spa</option>
+          </optgroup>
           <optgroup label="Building">
             <option value="menstrual-cycle" selected>Understanding Your Cycle</option>
             <option value="autonomous-vehicle">Riding with No Driver</option>
             <option value="open-sky">Open Sky</option>
-            <option value="embr">EMBR Medical Spa</option>
           </optgroup>
           <optgroup label="Thinking">
             <option value="feedback">Feedback</option>
@@ -383,7 +386,7 @@
         <div class="project-header">
           <div class="project-status">
             <span class="status-dot"></span>
-            <span class="status-text">IN TESTING · NOV 2026</span>
+            <span class="status-text">SUBMITTED · NOV 2026</span>
           </div>
           <h3 class="project-title">EMBR Medical Spa: Inquiry Intake</h3>
           <p class="project-description">My entry in the November 2026 eLearning Design Challenge from The eLearning Designer's Academy, sponsored by Mindsmith, is EMBR Medical Spa: Inquiry Intake, which is for client care coordinators at a made-up medical spa. In the lesson, New-Client Calls, the employee first follows a guided walkthrough with a caller named Taylor Brooks in a CRM that I built, and then takes a role play call from a second caller, Morgan Ellis, while an AI coach checks both what is said and what is entered in the CRM.</p>
