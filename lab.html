@@ -218,7 +218,7 @@
         <div class="lab-category-heading">Live</div>
         <ul class="lab-project-list" role="tablist" aria-label="Live">
           <li role="presentation">
-            <button class="lab-tab" role="tab" aria-selected="false" data-panel="embr">EMBR Medical Spa</button>
+            <button class="lab-tab active" role="tab" aria-selected="true" data-panel="embr">EMBR Medical Spa</button>
           </li>
         </ul>
       </div>
@@ -228,7 +228,7 @@
         <div class="lab-category-heading">Building</div>
         <ul class="lab-project-list" role="tablist" aria-label="Building">
           <li role="presentation">
-            <button class="lab-tab active" role="tab" aria-selected="true" data-panel="menstrual-cycle">Understanding Your Cycle</button>
+            <button class="lab-tab" role="tab" aria-selected="false" data-panel="menstrual-cycle">Understanding Your Cycle</button>
           </li>
           <li role="presentation">
             <button class="lab-tab" role="tab" aria-selected="false" data-panel="autonomous-vehicle">Riding with No Driver</button>
@@ -269,10 +269,10 @@
         <label for="lab-project-select">Select a project or journal</label>
         <select id="lab-project-select" aria-label="Select a project or journal">
           <optgroup label="Live">
-            <option value="embr">EMBR Medical Spa</option>
+            <option value="embr" selected>EMBR Medical Spa</option>
           </optgroup>
           <optgroup label="Building">
-            <option value="menstrual-cycle" selected>Understanding Your Cycle</option>
+            <option value="menstrual-cycle">Understanding Your Cycle</option>
             <option value="autonomous-vehicle">Riding with No Driver</option>
             <option value="open-sky">Open Sky</option>
           </optgroup>
@@ -286,7 +286,7 @@
       </div>
 
       <!-- Understanding Your Cycle panel -->
-      <div class="project-panel active" data-panel="menstrual-cycle" role="tabpanel">
+      <div class="project-panel" data-panel="menstrual-cycle" role="tabpanel" hidden>
         <div class="project-header">
           <div class="project-status">
             <span class="status-dot"></span>
@@ -382,7 +382,7 @@
       </div>
 
       <!-- EMBR Medical Spa: Inquiry Intake panel -->
-      <div class="project-panel" data-panel="embr" role="tabpanel" hidden>
+      <div class="project-panel active" data-panel="embr" role="tabpanel">
         <div class="project-header">
           <div class="project-status">
             <span class="status-dot"></span>
