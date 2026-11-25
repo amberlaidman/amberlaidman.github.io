@@ -227,6 +227,15 @@ button,.btn{border-radius:6px}
   #home > h2{font-size:1.2rem !important}
   .home-list.tiles .home-row{padding:10px 9px;row-gap:4px}
 }
+.voice-row{display:none;align-items:center;gap:8px;flex-wrap:wrap}
+body.has-dict .voice-row.mic, body.has-tts .voice-row.say{display:flex}
+body.has-tts .panel.voice-row.say{display:grid}
+body.dict-blocked .mic-btn{display:none}
+.mic-btn[aria-pressed="true"]{border-color:var(--s1);color:var(--s1)}
+.mic-btn[aria-pressed="true"]::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--s1);display:inline-block;margin-right:8px}
+.mic-live{font-style:italic}
+.voice-toggle{display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.voice-toggle input{width:20px;height:20px;margin:0;accent-color:var(--accent)}
 </style>
 
 <div class="wrap">
@@ -536,7 +545,7 @@ button,.btn{border-radius:6px}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.4.5 · Updated November 22, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.5.0 · Updated November 25, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -714,7 +723,7 @@ button,.btn{border-radius:6px}
     if ($("switch-note")) $("switch-note").hidden = true;
     S.current = Object.assign({ question:"", why:"", focus:"", storyIds:[], type:"behavioral" }, q);
     store.set("current", JSON.stringify(S.current));
-    renderQuestion();
+    renderQuestion(); speakOut(S.current.question);
     // Move the cursor to the new question so it's announced and in view.
     requestAnimationFrame(() => { const q = $("q-text"); if (q && !$("practice").hidden){ q.focus({ preventScroll:true }); q.scrollIntoView({ block:"nearest" }); } });
   }
@@ -1054,7 +1063,7 @@ button,.btn{border-radius:6px}
     p.append(fbHead);
     if (savedState !== false && hadFocus) requestAnimationFrame(() => $("fb-head")?.focus());
     // Screen readers hear one short line, and the cursor moves to the top of the feedback, instead of the whole panel being read twice.
-    if (savedState === false){ $("fb-live").textContent = `Feedback ready, average ${o ? o.toFixed(1) : "not scored"} out of 3.`; requestAnimationFrame(() => $("fb-head")?.focus()); }
+    if (savedState === false){ $("fb-live").textContent = `Feedback ready, average ${o ? o.toFixed(1) : "not scored"} out of 3.`; requestAnimationFrame(() => $("fb-head")?.focus()); speakOut(`Average ${o ? o.toFixed(1) : "not scored"} out of 3. What worked: ${s.strength || ""} Try next: ${s.nextStep || ""}`); }
     else if (savedState === "failed") $("fb-live").textContent = "Couldn't save this session. Your feedback is still shown.";
     p.append(
       el("div", {class:"row", style:"justify-content:space-between"}, [
@@ -1155,7 +1164,7 @@ button,.btn{border-radius:6px}
   function renderFollowUpAsk(s, r, out, st, chain, initial){
     const id = "fu-" + Math.random().toString(36).slice(2,7);
     const ta = el("textarea", {id, rows:"5", placeholder:"Answer the follow-up the way you would out loud…"});
-    ta.value = initial || ""; let fails = 0;
+    ta.value = initial || ""; let fails = 0; if (!initial) speakOut(r.followUp);
     const saveDraft = () => { if (s.id) store.set("fuDraft", JSON.stringify({ sid:s.id, r, chain, reply:ta.value, t:Date.now() })); };
     ta.addEventListener("input", saveDraft); if (initial) saveDraft();
     const btn = el("button", {type:"button", class:"primary", style:"justify-self:start"}, "Get feedback on my reply");
@@ -1170,6 +1179,7 @@ button,.btn{border-radius:6px}
       el("div", {class:"field"}, [el("label",{for:id},"Your reply"), ta]),
       btn, status, res, foot
     );
+    addMic(ta, "Speak your reply");
     btn.addEventListener("click", async () => {
       const reply = ta.value.trim();
       if (words(reply) < 8){ res.replaceChildren(el("p",{class:"small", role:"alert"},"Write or dictate a fuller reply first.")); return; }
@@ -2338,6 +2348,7 @@ button,.btn{border-radius:6px}
     try {
       const r = await sample(turns, { signal: chatCtl.signal, cache:false, onText: t => { const txt = typeof t === "string" ? t : (t && typeof t.text === "string" ? t.text : ""); if (txt) live.textContent = txt; } });
       chat.turns.push({role:"assistant", content:String(r.text || "").trim()});
+      speakOut(chat.turns[chat.turns.length-1].content);
       await saveChat();
     } catch (e) {
       if (e?.code !== "cancelled") { live.textContent = errCopy(e?.code); live.classList.add("err"); return; }
@@ -2346,7 +2357,7 @@ button,.btn{border-radius:6px}
   }
   function wireChat(mode){
     const ui = chatEl(mode);
-    const go = () => { const t = ui.input.value.trim(); if (!t || !chat) return; ui.input.value = ""; sendTurn(mode, t); };
+    const go = () => { if (micTa === ui.input && DICT) { DICT.stop().catch(() => {}); micReset(); } const t = ui.input.value.trim(); if (!t || !chat) return; ui.input.value = ""; sendTurn(mode, t); };
     ui.send.addEventListener("click", go);
     ui.input.addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); go(); } });
     ui.end.addEventListener("click", () => wrapUp(mode));
@@ -2464,6 +2475,109 @@ button,.btn{border-radius:6px}
       root.append(el("details",{class:"fold"},[ el("summary",{}, `${sec.title} (${(sec.items||[]).length})`), body ]));
     });
   }
+
+  /* ---------- voice practice: answer out loud and hear questions read aloud (computer only, where Claude offers it) ---------- */
+  let DICT = null, TTS = null, micTa = null, micLive = null, micBtn = null;
+  const voiceOn = () => store.get("voice") === "1";
+  function micLabel(on, b){ return on ? "Stop speaking" : (b && b.dataset.label) || "Speak your answer"; }
+  function micReset(){ if (micBtn){ micBtn.setAttribute("aria-pressed","false"); micBtn.textContent = micLabel(false, micBtn); } micTa = micLive = micBtn = null; }
+  // Adds a "Speak your answer" button under a text box. It only shows when this view offers dictation.
+  function addMic(ta, label){
+    const btn = el("button",{type:"button", class:"ghost mic-btn", "aria-pressed":"false", "data-label": label || "Speak your answer"}, label || "Speak your answer");
+    const live = el("span",{class:"small muted mic-live"});
+    const row = el("div",{class:"voice-row mic"}, [btn, live]);
+    btn.addEventListener("click", () => {
+      if (!DICT) return;
+      if (micTa === ta){ DICT.stop().catch(() => {}); return; }
+      if (TTS) { try { TTS.stop(); } catch {} }
+      if (micTa) { DICT.stop().catch(() => {}); micReset(); }
+      micTa = ta; micLive = live; micBtn = btn;
+      btn.setAttribute("aria-pressed","true"); btn.textContent = micLabel(true); live.textContent = "Listening…";
+      live.setAttribute("role","status");
+      DICT.start().catch(e => { const code = e && e.code; micReset(); if (code === "not_granted") { document.body.classList.add("dict-blocked"); live.textContent = "This page isn't allowed to use the microphone here, so use the microphone on your keyboard instead."; } else live.textContent = "Couldn't start listening. Try again, or use the microphone on your keyboard."; });
+    });
+    ta.after(row);
+    return row;
+  }
+  function wireDictation(d){
+    DICT = d; document.body.classList.add("has-dict");
+    d.onPartial(({text}) => { if (micLive) micLive.textContent = text ? "Hearing: " + text : "Listening…"; });
+    d.onFinal(({text}) => {
+      if (!micTa || !text) return;
+      const v = micTa.value; micTa.value = v + (v && !/\s$/.test(v) ? " " : "") + text.trim();
+      micTa.dispatchEvent(new Event("input", {bubbles:true}));
+      if (micLive) micLive.textContent = "Listening…";
+    });
+    d.onState(({state, reason}) => {
+      if (state !== "idle") return;
+      const live = micLive; micReset();
+      if (!live) return;
+      if (reason === "not_granted") { document.body.classList.add("dict-blocked"); document.querySelectorAll(".mic-live").forEach(x => { x.textContent = "This page isn't allowed to use the microphone here, so use the microphone on your keyboard instead."; }); }
+      else if (reason === "no_speech") live.textContent = "Didn't hear anything. Select Speak again and start talking.";
+      else if (reason === "no_result") live.textContent = "Nothing came through. Your phone may not pass your voice to this page here, so try it in Safari, or use the microphone on your keyboard.";
+      else if (String(reason).startsWith("error_")) live.textContent = `Couldn't listen (${String(reason).slice(6)}). Try again, or use the microphone on your keyboard.`;
+      else live.textContent = "";
+    });
+  }
+  // Reads text aloud in a Claude voice when the viewer has turned on "Read out loud".
+  function speakOut(text, force){
+    if (!TTS || (!force && !voiceOn()) || micTa) return;
+    const t = String(text || "").replace(/\s+/g," ").trim().slice(0, 1900);
+    if (t) TTS.speak(t).catch(() => {});
+  }
+  function deviceDictation(){
+    const R = window.SpeechRecognition || window.webkitSpeechRecognition; let rec = null, h = {}, err = "", heard = false, guard = null;
+    const idle = () => { if (!rec) return; rec = null; clearTimeout(guard); h.s && h.s({state:"idle", reason: err || (heard ? "stopped" : "no_result")}); err = ""; };
+    return {
+      start(){
+        try {
+          rec = new R(); rec.lang = navigator.language || "en-US"; rec.interimResults = true; rec.continuous = true;
+          heard = false;
+          rec.onresult = e => { heard = true; let part = ""; for (let i = e.resultIndex; i < e.results.length; i++){ const r = e.results[i]; if (r.isFinal) h.f && h.f({text:r[0].transcript}); else part += r[0].transcript; } h.p && h.p({text:part}); };
+          rec.onerror = e => { const code = e && e.error; err = (code === "not-allowed" || code === "service-not-allowed") ? "not_granted" : code === "no-speech" ? "no_speech" : "error_" + (code || "unknown"); };
+          rec.onend = idle;
+          rec.start(); h.s && h.s({state:"listening"}); return Promise.resolve();
+        } catch (e) { rec = null; return Promise.reject({code:"failed"}); }
+      },
+      // Some phones never report that listening ended, so Stop always finishes within a second and a half.
+      stop(){ if (rec) { const r = rec; try { r.stop(); } catch {} clearTimeout(guard); guard = setTimeout(() => { try { r.abort(); } catch {} idle(); }, 1500); } return Promise.resolve(); },
+      onPartial(f){ h.p = f; }, onFinal(f){ h.f = f; }, onState(f){ h.s = f; }
+    };
+  }
+  function deviceVoice(){
+    const ss = window.speechSynthesis;
+    // Prefer the more natural voices (Premium or Enhanced, which people can download on an iPhone) when they're installed.
+    const pick = () => { const lang = (navigator.language || "en-US").slice(0,2).toLowerCase(); const v = ss.getVoices().filter(x => String(x.lang).toLowerCase().startsWith(lang)); return v.find(x => /premium/i.test(x.name)) || v.find(x => /enhanced/i.test(x.name)) || v.find(x => x.default) || v[0] || null; };
+    return {
+      speak(text){ return new Promise((res, rej) => { try { ss.cancel(); const u = new SpeechSynthesisUtterance(text); const v = pick(); if (v) u.voice = v; u.onend = () => res(); u.onerror = e => rej({code: e && e.error || "failed"}); ss.speak(u); } catch (e) { rej({code:"failed"}); } }); },
+      stop(){ try { ss.cancel(); } catch {} }
+    };
+  }
+  function voiceToggle(){
+    const cb = el("input",{type:"checkbox", class:"voice-cb"}); cb.checked = voiceOn();
+    cb.addEventListener("change", () => { store.set("voice", cb.checked ? "1" : ""); document.querySelectorAll(".voice-cb").forEach(x => { x.checked = cb.checked; }); if (!cb.checked && TTS) { try { TTS.stop(); } catch {} } if (cb.checked) speakOut("Read out loud is on.", true); });
+    return el("label",{class:"voice-toggle"}, [cb, "Read questions and replies out loud"]);
+  }
+  addMic($("answer")); addMic($("pr-input"), "Speak your reply"); addMic($("talk-input"), "Speak your reply");
+  // One small speaker button to hear the question again, and the on/off switch lives in Settings.
+  { const b = el("button",{type:"button", class:"ghost icon-btn", "aria-label":"Hear the question again", title:"Hear the question again", onclick:() => speakOut(S.current.question, true)});
+    b.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+    $("q-text").after(el("div",{class:"voice-row say"}, [b])); }
+  $("aboutme").after(el("div",{class:"panel voice-row say", style:"display:grid;gap:6px"}, [ el("h2",{style:"font-size:1.05rem;margin:0"},"Read out loud"), voiceToggle(), el("span",{class:"small muted"},"When this is on, new questions, follow-up questions, a short version of your feedback, and replies in Talk and Rehearse are read out loud. On a computer it uses Claude's voice, and on a phone it uses your phone's own voice.") ]));
+  (async () => {
+    const C = window.claude; if (!C || !C.use) return;
+    let [d, t] = await Promise.all([C.use("dictation").catch(() => null), C.use("tts").catch(() => null)]);
+    // Where Claude's dictation isn't offered (for example on an iPhone), fall back to the browser's own speech-to-text if it has one.
+    // iPhones and iPads start listening but don't pass the words back or stop cleanly inside the Claude app (tested Nov 25, 2026), so the backup is left off in the app and people use the keyboard microphone.
+    // On an iPhone it's only tried in Safari itself, where it may work.
+    const ua = navigator.userAgent, iOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const iosSafari = iOS && /Version\/[\d.]+.*Safari\//.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
+    if (!d && (!iOS || iosSafari) && (window.SpeechRecognition || window.webkitSpeechRecognition)) d = deviceDictation();
+    if (d) wireDictation(d);
+    // Where Claude's voice isn't offered (for example on an iPhone), fall back to the device's own reading voice if the browser has one.
+    if (!t && window.speechSynthesis && window.SpeechSynthesisUtterance) t = deviceVoice();
+    if (t) { TTS = t; document.body.classList.add("has-tts"); }
+  })();
 
   { const saved = store.get("tab"); showTab(tabs.includes(saved) ? saved : "home"); }
   /* ---------- boot ---------- */
