@@ -545,7 +545,7 @@ body.dict-blocked .mic-btn{display:none}
           <details class="fold"><summary>The page looks out of date</summary><p class="small" style="margin:8px 0 0">Reload the page to get the newest version.</p></details>
         </div>
       </details>
-      <p class="small muted" id="app-version" style="margin:0">Template version 1.5.0 · Updated November 25, 2026</p>
+      <p class="small muted" id="app-version" style="margin:0">Template version 1.5.1 · Updated November 25, 2026</p>
     </section>
 
     <!-- COMPANIES -->
@@ -863,7 +863,7 @@ body.dict-blocked .mic-btn{display:none}
       "Rubric areas (keys): " + RUBRIC.map(r => `${r.key} = ${r.hint}`).join(" | "),
       "Mix in hypothetical \"how would you\" questions (type hypothetical) about one time in four, more often if they have few hypothetical sessions. They're scored on: " + HYPO.map(r => r.label).join(", ") + ". Behavioral questions should also cover themes their stories show weakly, including failure and conflict.",
       companyOf() ? companyContext(companyOf()) + ` Choose a question that tests one of ${companyOf().name}'s values, using one from this list or one in the same style: ${JSON.stringify(companyOf().questions || [])}. Mention the value in "why".` : "",
-      roleOf() ? roleContext(roleOf()) + ' Choose a question that tests one of these requirements, favoring ones where they have no story yet, and mention the requirement in "why".' : "",
+      roleOf() ? (roleCo() ? roleContext(roleOf()) + " " + companyContext(roleCo()) + ` Choose a question that tests one of these requirements, favoring ones where they have no story yet, and that also lets them show one of ${roleCo().name}'s values. Mention both in "why".` : roleContext(roleOf()) + ' Choose a question that tests one of these requirements, favoring ones where they have no story yet, and mention the requirement in "why".') : "",
       ME.resume ? "Their resume, for background: " + ME.resume.slice(0, 12000) + "\n\nUse it to understand their experience, but still choose the question from their practice history and stories." : "",
       "Reply with only JSON in this shape: {\"question\": string, \"type\": \"behavioral\" or \"hypothetical\", \"why\": string, \"focus\": one rubric key, \"storyIds\": [up to 2 story ids, empty for hypothetical]}. Write \"why\" as one plain sentence to {{NAME}}, using \"you\", that says why this question is next. No praise, no filler."
     ].join("\n\n");
@@ -923,7 +923,7 @@ body.dict-blocked .mic-btn{display:none}
         "You are scoring {{NAME}}'s spoken answer to \"Tell me about yourself,\" the opening interview question. {{NAME}} is {{ABOUT}}, targeting {{TARGETS}}.",
         "Use list_stories and get_story if you need to check their proof points. List in notInBank any number or claim that isn't in their story bank, so they only say it if it's true. Never rewrite their intro or write one for them. List in hedges the exact words that undersell them; leave it empty if none. If {{NAME}} breaks one of their wording rules, say so in nextStep.",
         "Score each criterion 1, 2, or 3 (3 = strong, 2 = partly there, 1 = missing or weak), with one plain sentence of reason addressed to them as \"you\". Criteria: " + INTRO.filter(r => r.key !== "length").map(r => `${r.key} = ${r.hint}`).join(" | "),
-        c ? companyContext(c) + " In companyFit, say in one or two sentences how well the intro sets them up for " + c.name + " and one thing to adjust." : roleOf() ? roleContext(roleOf()) + " In companyFit, say in one or two sentences how well the intro sets them up for this role and one thing to adjust." : "Set companyFit to an empty string.",
+        c ? companyContext(c) + " In companyFit, say in one or two sentences how well the intro sets them up for " + c.name + " and one thing to adjust." : roleOf() ? (roleCo() ? roleContext(roleOf()) + " " + companyContext(roleCo()) + ` In companyFit, say in one or two sentences how well the intro sets them up for this role and for ${roleCo().name}'s values, and one thing to adjust.` : roleContext(roleOf()) + " In companyFit, say in one or two sentences how well the intro sets them up for this role and one thing to adjust.") : "Set companyFit to an empty string.",
         "Then give one strength (one sentence) and one next step (one sentence, the single change that would help most). Plain language, no praise padding, no em-dashes.",
         `Their answer (${w} words):\n${text.slice(0, 8000)}`,
         "Reply with only JSON: {\"scores\": {\"present\":{\"score\":n,\"reason\":s}, \"proof\":{...}, \"thread\":{...}, \"why\":{...}, \"smaller\":{...}}, \"strength\": string, \"nextStep\": string, \"notInBank\": [strings], \"hedges\": [strings], \"companyFit\": string}"
@@ -947,7 +947,7 @@ body.dict-blocked .mic-btn{display:none}
         "Strong answers ask or name clarifying questions, state assumptions, lay out clear steps, weigh trade-offs, say how success would be measured, and tie back to the role. Never rewrite their answer or write a model answer. List in hedges the exact words or short phrases that undersell their confidence; leave it empty if there are none.",
         "Score each criterion 1, 2, or 3 (3 = strong, 2 = partly there, 1 = missing or weak), with one plain sentence of reason addressed to them as \"you\". Criteria: " + HYPO.filter(r => r.key!=="length").map(r => `${r.key} = ${r.hint}`).join(" | "),
         "Then give one strength (one sentence) and one next step (one sentence, the single change that would help most). Plain language, no praise padding, no em-dashes.",
-        companyOf() ? companyContext(companyOf()) + " In companyFit, say in one or two sentences which of its values their answer shows and one way to show a value more clearly. Don't change the scores because of this." : roleOf() ? roleContext(roleOf()) + " In companyFit, say in one or two sentences which of the role's requirements their answer shows and one way to show one more clearly. Don't change the scores because of this." : "Set companyFit to an empty string.",
+        companyOf() ? companyContext(companyOf()) + " In companyFit, say in one or two sentences which of its values their answer shows and one way to show a value more clearly. Don't change the scores because of this." : roleOf() ? (roleCo() ? roleContext(roleOf()) + " " + companyContext(roleCo()) + ` In companyFit, say in one or two sentences how well the answer fits this role and which of ${roleCo().name}'s values it shows, and one thing to adjust. Don't change the scores because of this.` : roleContext(roleOf()) + " In companyFit, say in one or two sentences which of the role's requirements their answer shows and one way to show one more clearly. Don't change the scores because of this.") : "Set companyFit to an empty string.",
         `Question: ${S.current.question}`,
         `Their answer (${w} words):\n${text.slice(0, 12000)}`,
         "Reply with only JSON (include \"companyFit\": string): {\"scores\": {\"clarify\":{\"score\":n,\"reason\":s}, \"assumptions\":{...}, \"approach\":{...}, \"tradeoffs\":{...}, \"measure\":{...}, \"relevance\":{...}, \"smaller\":{...}}, \"strength\": string, \"nextStep\": string, \"hedges\": [strings]}"
@@ -974,7 +974,7 @@ body.dict-blocked .mic-btn{display:none}
       "Rules: Never rewrite their answer or write a model answer. Never invent facts. List in notInBank any number, result, or claim in their answer that does not appear in the story, so they only say it if it's true. List in hedges the exact words or short phrases they used that undersell their part (for example \"just\", \"kind of\", \"helped with\", \"we\" for their own work). Quote them exactly; leave the list empty if there are none.",
       "Score each criterion 1, 2, or 3 (3 = strong, 2 = partly there, 1 = missing or weak), with one plain sentence of reason addressed to them as \"you\". Criteria: " + RUBRIC.filter(r => r.key!=="length").map(r => `${r.key} = ${r.hint}`).join(" | "),
       "Then give one strength (one sentence) and one next step (one sentence, the single change that would help most). Plain language, no praise padding, no em-dashes.",
-      companyOf() ? companyContext(companyOf()) + " In companyFit, say in one or two sentences which of its values their answer shows and one way to show a value more clearly. Don't change the scores because of this." : roleOf() ? roleContext(roleOf()) + " In companyFit, say in one or two sentences which of the role's requirements their answer shows and one way to show one more clearly. Don't change the scores because of this." : "Set companyFit to an empty string.",
+      companyOf() ? companyContext(companyOf()) + " In companyFit, say in one or two sentences which of its values their answer shows and one way to show a value more clearly. Don't change the scores because of this." : roleOf() ? (roleCo() ? roleContext(roleOf()) + " " + companyContext(roleCo()) + ` In companyFit, say in one or two sentences how well the answer fits this role and which of ${roleCo().name}'s values it shows, and one thing to adjust. Don't change the scores because of this.` : roleContext(roleOf()) + " In companyFit, say in one or two sentences which of the role's requirements their answer shows and one way to show one more clearly. Don't change the scores because of this.") : "Set companyFit to an empty string.",
       `Question: ${S.current.question}`,
       `Their answer (${w} words):\n${text.slice(0, 12000)}`,
       "Reply with only JSON (include \"companyFit\": string): {\"storyId\": string or null, \"scores\": {\"structure\":{\"score\":n,\"reason\":s}, \"role\":{...}, \"actions\":{...}, \"result\":{...}, \"reflection\":{...}, \"fit\":{...}, \"smaller\":{...}}, \"strength\": string, \"nextStep\": string, \"notInBank\": [strings], \"hedges\": [strings]}"
@@ -1725,6 +1725,8 @@ body.dict-blocked .mic-btn{display:none}
     if (String(id || "").startsWith("role:")){ const r = S.roles.find(x => "role:" + x.id === id); return r ? r.title : "Role"; }
     return (S.companies.find(c => c.id === id) || {}).name || "Company";
   }
+  // The company profile that matches the saved role being practiced, if there is one.
+  const roleCo = () => { const r = roleOf(); return r ? companyFor(r) : null; };
   const companyFor = r => { const n = String(r.company || "").toLowerCase().trim(); return n ? S.companies.find(c => { const cn = String(c.name || "").toLowerCase(); return cn && (cn === n || n.includes(cn) || cn.includes(n)); }) || null : null; };
   function renderMyIntro(){
     S.myIntro = INTRO_DOC && INTRO_DOC.text ? INTRO_DOC : (POS && POS.myIntro && POS.myIntro.text ? POS.myIntro : null);
